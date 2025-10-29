@@ -29,7 +29,9 @@ SMODS.collection_pool = function(_base_pool)
         if table.contains(y, v.name) then
           local next_index = PkmnDip.dex_order[PkmnDip.find_next_dex_number(v.name)]
           if type(next_index) == "table" then next_index = next_index[1] end
-          table.insert(pool, next_index and PkmnDip.find_pool_index(pool, 'j_poke_'..next_index) or #pool + 1, v)
+          if not table.contains(pool, v) then
+            table.insert(pool, next_index and PkmnDip.find_pool_index(pool, 'j_poke_'..next_index) or #pool + 1, v)
+          end
         end
       end
     end

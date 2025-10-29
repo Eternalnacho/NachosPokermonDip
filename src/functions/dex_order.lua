@@ -192,7 +192,7 @@ PkmnDip.dex_order = {
   "sunkern",
   "sunflora",
   "yanma",
-  { "wooper", "paldean_wooper "},
+  { "wooper", "paldean_wooper" },
   "quagsire",
   "espeon",
   "umbreon",
