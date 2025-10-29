@@ -46,7 +46,7 @@ card.ability.extra.rounds = card.ability.extra.rounds - 1
 '''
 position = "after"
 payload = '''
-if SMODS.find_card('j_nacho_audino') then card.ability.extra.rounds = card.ability.extra.rounds - 1 end
+if SMODS.find_card('j_nacho_audino')[1] then card.ability.extra.rounds = card.ability.extra.rounds - 1 end
 '''
 match_indent = true
 
@@ -58,7 +58,7 @@ card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {m
 '''
 position = "after"
 payload = '''
-if SMODS.find_card('j_nacho_audino') then card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize("poke_evolve_level")}) end
+if SMODS.find_card('j_nacho_audino')[1] then card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize("poke_evolve_level")}) end
 '''
 match_indent = true
 
