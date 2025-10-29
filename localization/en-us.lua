@@ -255,6 +255,7 @@ return {
                     "Retriggers each {C:attention}played{}",
                     "and {C:attention}held{} card with",
                     "a {C:attention}unique edition{}",
+                    "{C:inactive,s:0.8}(held cards counted separately)",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#1#{C:inactive,s:0.8} rounds)",
                 }
             },
@@ -495,6 +496,16 @@ return {
                     "every type",
                 },
             },
+            -- Daycare tooltip for Mega Audino
+            daycare = {
+              name = "Pokemon Day Care",
+              text = {
+                "Created Mystery Eggs can",
+                "exceed Joker slots if",
+                "you have no {C:attention}Basic{} or",
+                "{C:attention}Baby{} Jokers"
+              }
+            },
             -- Rank lists for most common ranks
             rank_lists_1 = {
                 name = "Common Ranks",
@@ -524,16 +535,6 @@ return {
                     '#1#',
                 }
             },
-            -- Daycare tooltip for Mega Audino
-            daycare = {
-              name = "Pokemon Day Care",
-              text = {
-                "Created Mystery Eggs can",
-                "exceed Joker slots if",
-                "you have no {C:attention}Basic{} or",
-                "{C:attention}Baby{} Jokers"
-              }
-            }
         },
     },
     misc = {
