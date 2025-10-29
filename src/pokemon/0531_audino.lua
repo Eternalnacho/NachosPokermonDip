@@ -7,8 +7,8 @@ local audino = {
     return {vars = {card.ability.extra.Xmult, card.ability.extra.Xmult_mod}}
   end,
   designer = "T.F. Wright",
-  rarity = 2,
-  cost = 7,
+  rarity = 3,
+  cost = 8,
   stage = "Basic",
   ptype = "Colorless",
   gen = 5,
