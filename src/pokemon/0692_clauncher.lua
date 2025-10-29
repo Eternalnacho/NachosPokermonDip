@@ -1,10 +1,21 @@
 -- Clauncher 692
 local clauncher = {
   name = "clauncher",
-  config = {extra = {mult = 6, rounds = 4}},
+  config = {extra = {retriggers = 1, editions = {}, rounds = 4}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    return {vars = {card.ability.extra.mult, card.ability.extra.rounds}}
+    if pokermon_config.detailed_tooltips then
+      if not card.edition or (card.edition and not card.edition.polychrome) then
+        info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
+      end
+      if not card.edition or (card.edition and not card.edition.foil) then
+        info_queue[#info_queue+1] = G.P_CENTERS.e_foil
+      end
+      if not card.edition or (card.edition and not card.edition.holo) then
+        info_queue[#info_queue+1] = G.P_CENTERS.e_holo
+      end
+    end
+    return {vars = {card.ability.extra.rounds}}
   end,
   designer = "Eternalnacho",
   rarity = 1,
@@ -14,15 +25,33 @@ local clauncher = {
   blueprint_compat = true,
   custom_pool_func = true,
   calculate = function(self, card, context)
-    if context.joker_main then
-      local editions = 0
-      for k, v in pairs(G.play.cards) do
-        if v.edition and (v.edition.foil or v.edition.holographic or v.edition.polychrome) then editions = editions + 1 end
+    -- Retriggers all the unique editions
+    if context.repetition and (context.cardarea == G.play or context.cardarea == G.hand) and context.other_card.edition and
+        (next(context.card_effects[1]) or #context.card_effects > 1) then
+      if not table.contains(card.ability.extra.editions, context.other_card.edition.key) then
+        if not context.blueprint then
+          card.ability.extra.editions[#card.ability.extra.editions+1] = context.other_card.edition.key
+        end
+        return {
+          message = localize('k_again_ex'),
+          repetitions = card.ability.extra.retriggers,
+          card = card
+        }
       end
-      return {
-        mult = card.ability.extra.mult * (editions),
-        card = card
-      }
+    end
+    -- Resets the table of scored editions between played cards and held cards
+    if context.repetition and context.cardarea == G.play and not context.blueprint then
+      if context.other_card == G.play.cards[#G.play.cards] then
+        if card.ability.extra.editions ~= {} then
+          for i = 1, #card.ability.extra.editions do table.remove(card.ability.extra.editions) end
+        end
+      end
+    end
+    -- Resets the table of scored editions after a hand is scored and before the first hand is calculated
+    if (context.joker_main or context.setting_blind) and not context.blueprint then
+      if card.ability.extra.editions ~= {} then
+        for i = 1, #card.ability.extra.editions do table.remove(card.ability.extra.editions) end
+      end
     end
     return level_evo(self, card, context, "j_nacho_clawitzer")
   end,
@@ -37,36 +66,37 @@ local clauncher = {
 -- Clawitzer 693
 local clawitzer = {
   name = "clawitzer",
-  config = {extra = {Xchips = 1.5, Xmult = 1.3, Xmult1 = 1.2}},
+  config = {extra = {retriggers = 1}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    return {vars = {card.ability.extra.Xchips, card.ability.extra.Xmult, card.ability.extra.Xmult1}}
+    if pokermon_config.detailed_tooltips then
+      if not card.edition or (card.edition and not card.edition.polychrome) then
+        info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
+      end
+      if not card.edition or (card.edition and not card.edition.foil) then
+        info_queue[#info_queue+1] = G.P_CENTERS.e_foil
+      end
+      if not card.edition or (card.edition and not card.edition.holo) then
+        info_queue[#info_queue+1] = G.P_CENTERS.e_holo
+      end
+    end
+    return {vars = {}}
   end,
   designer = "Eternalnacho",
   rarity = "poke_safari",
-  cost = 10,
+  cost = 8,
   stage = "One",
   ptype = "Water",
   blueprint_compat = true,
   custom_pool_func = true,
   calculate = function(self, card, context)
-    if context.individual and context.other_card.edition then
-      if context.other_card.edition.foil and context.cardarea == G.play then
-        return{
-          chips = card.ability.extra.Xchips * poke_total_chips(context.other_card),
-          card = context.other_card or card
-        }
-      elseif context.other_card.edition.holographic and context.cardarea == G.play then
-        return{
-          xmult = card.ability.extra.Xmult,
-          card = context.other_card or card
-        }
-      elseif context.other_card.edition.polychrome and context.cardarea == G.hand and not context.end_of_round then
-        return{
-          xmult = card.ability.extra.Xmult1,
-          card = context.other_card or card
-        }
-      end
+    if context.repetition and (context.cardarea == G.hand or context.cardarea == G.play) and
+        (next(context.card_effects[1]) or #context.card_effects > 1) and context.other_card.edition then
+      return {
+        message = localize('k_again_ex'),
+        repetitions = card.ability.extra.retriggers,
+        card = card
+      }
     end
   end,
   in_pool = function(self, args)

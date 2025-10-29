@@ -252,18 +252,17 @@ return {
             j_nacho_clauncher = {
                 name = "Clauncher",
                 text = {
-                    "{C:red}+#1#{} Mult for each played",
-                    "card with an {C:attention}edition{}",
-                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
+                    "Retriggers each {C:attention}played{}",
+                    "and {C:attention}held{} card with",
+                    "a {C:attention}unique edition{}",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#1#{C:inactive,s:0.8} rounds)",
                 }
             },
             j_nacho_clawitzer = {
                 name = "Clawitzer",
                 text = {
-                    "{C:dark_edition}Foil{} cards give {X:chips,C:white}X#1#{} their total Chips",
-                    "{C:dark_edition}Holographic{} cards give {X:red,C:white}X#2#{} Mult",
-                    "{C:dark_edition}Polychrome{} cards {C:attention}held in hand{}",
-                    "give {X:red,C:white}X#3#{} Mult",
+                    "Retriggers all {C:attention}played{} and",
+                    "{C:attention}held editioned{} cards",
                 }
             },
             j_nacho_dedenne = {
