@@ -180,6 +180,7 @@ local terapagos_stellar={
                 card.children.floating_sprite.atlas = G.ASSET_ATLAS[card.children.center.atlas.name .. "_soul"]
                 card.children.floating_sprite:reset()
               end
+              apply_type_sticker(card, "Stellar")
               return true end }))
     if not G.GAME.energy_plus then
       G.GAME.energy_plus = 5
@@ -209,13 +210,41 @@ local terapagos_stellar={
     end
   end,
   update = function(self, card, dt)
-    card.children.center.VT.x = 0.35 + card.T.x - (G.CARD_H - G.CARD_W) / 2
-    card.children.floating_sprite.VT.x = card.children.center.VT.x
-    card.children.center.VT.w = card.T.w
-    if poke_is_in_collection(card) then
+    if poke_is_in_collection(card) and not type_sticker_applied(card) then
       apply_type_sticker(card, "Stellar")
     end
   end,
+}
+
+SMODS.DrawStep {
+  key = 'terapagos_stellar_stickers',
+  order = 39,
+  func = function(self, layer)
+    if self.config.center.key == 'j_nacho_terapagos_stellar' then
+      if self.sticker and G.shared_stickers[self.sticker] then
+          G.shared_stickers[self.sticker]:set_role({role_type = 'Glued', draw_major = self})
+          G.shared_stickers[self.sticker]:draw_shader('dissolve', nil, nil, nil, self.children.center, 108/71 - 1, nil, 108/71 - 1.04, 71/108 + 0.05)
+          G.shared_stickers[self.sticker]:draw_shader('voucher', nil, self.ARGS.send_to_shader, nil, self.children.center, 108/71 - 1, nil, 108/71 - 1.04, 71/108 + 0.05)
+      elseif (self.sticker_run and G.shared_stickers[self.sticker_run]) and G.SETTINGS.run_stake_stickers then
+          G.shared_stickers[self.sticker_run]:set_role({role_type = 'Glued', draw_major = self})
+          G.shared_stickers[self.sticker_run]:draw_shader('dissolve', nil, nil, nil, self.children.center, 108/71 - 1, nil, 108/71 - 1.04, 71/108 + 0.05)
+          G.shared_stickers[self.sticker_run]:draw_shader('voucher', nil, self.ARGS.send_to_shader, nil, self.children.center, 108/71 - 1, nil, 108/71 - 1.04, 71/108 + 0.05)
+      end
+
+      for k, v in pairs(SMODS.Stickers) do
+          if self.ability[v.key] then
+              if v and v.draw and type(v.draw) == 'function' then
+                  v:draw(self, layer)
+              else
+                  G.shared_stickers[v.key]:set_role({role_type = 'Glued', draw_major = self})
+                  G.shared_stickers[v.key]:draw_shader('dissolve', nil, nil, nil, self.children.center, 108/71 - 1, nil, 108/71 - 1.04, 71/108 + 0.05)
+                  G.shared_stickers[v.key]:draw_shader('voucher', nil, self.ARGS.send_to_shader, nil, self.children.center, 108/71 - 1, nil, 108/71 - 1.04, 71/108 + 0.05)
+              end
+          end
+      end
+    end
+  end,
+  conditions = { vortex = false, facing = 'front' },
 }
 
 return {
