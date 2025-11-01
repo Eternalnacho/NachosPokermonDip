@@ -18,7 +18,7 @@ PokemonSprites["terapagos_terastal"] = { base = { pos = { x = 2, y = 6 }, soul_p
 local subdir = "src/pokemon/"
 
 local function load_pokemon(item)
-  local custom_atlas = item.atlas and string.find(item.atlas, "j_nacho")
+  local custom_atlas = item.atlas and string.find(item.atlas, "nacho")
 
   if not item.atlas then
     poke_load_atlas(item)

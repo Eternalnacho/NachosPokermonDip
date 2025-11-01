@@ -220,42 +220,6 @@ end
 '''
 match_indent = true
 
-# Take out the tiny stickers. Kill them.
-[[patches]]
-[patches.pattern]
-target = '=[SMODS _ "src/card_draw.lua"]'
-pattern = '''
-key = 'stickers',
-    order = 40,
-    func = function(self, layer)
-'''
-position = "after"
-payload = '''
-if self.config.center.key ~= 'j_nacho_terapagos_stellar' then
-'''
-match_indent = true
-
-[[patches]]
-[patches.pattern]
-target = '=[SMODS _ "src/card_draw.lua"]'
-pattern = '''
-G.shared_stickers[v.key]:draw_shader('voucher', nil, self.ARGS.send_to_shader, nil, self.children.center)
-                end
-            end
-        end
-    end,
-'''
-position = "at"
-payload = '''
-G.shared_stickers[v.key]:draw_shader('voucher', nil, self.ARGS.send_to_shader, nil, self.children.center)
-                end
-            end
-        end
-      end
-    end,
-'''
-match_indent = true
-
 
 
 
