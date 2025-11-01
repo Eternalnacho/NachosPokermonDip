@@ -365,7 +365,7 @@ return {
                 }
             },
             j_nacho_galarian_meowth = {
-                name = "Galarian Meowth",
+                name = "{s:0.6}Galarian{}Meowth",
                 text = {
                     "Retriggers the first two",
                     "{C:attention}Steel{} cards {C:attention}held in hand{}",
@@ -387,7 +387,7 @@ return {
                 }
             },
             j_nacho_hisuian_zorua = {
-                name = "Hisuian Zorua",
+                name = "{s:0.6}Hisuian{}Zorua",
                 text = {
                     "{V:1}Copies the ability",
                     "of leftmost {C:attention}Joker{}",
@@ -399,14 +399,14 @@ return {
                 }
             },
             j_nacho_hisuian_zoroark = {
-                name = "Hisuian Zoroark",
+                name = "{s:0.6}Hisuian{}Zoroark",
                 text = {
                     "Copies the ability",
                     "of leftmost {C:attention}Joker{}",
                 }
             },
             j_nacho_hisuian_sliggoo = {
-                name = "Hisuian Sliggoo",
+                name = "{s:0.6}Hisuian{}Sliggoo",
                 text = {
                     "If played hand is a {C:attention}Flush House{},",
                     "creates a {C:item}Metal Coat{}",
@@ -418,7 +418,7 @@ return {
                 }
             },
             j_nacho_hisuian_goodra = {
-                name = "Hisuian Goodra",
+                name = "{s:0.6}Hisuian{}Goodra",
                 text = {
                     "If played hand is a {C:attention}Flush House{},",
                     "creates a {C:item}Metal Coat{}",
