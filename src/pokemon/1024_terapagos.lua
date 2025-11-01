@@ -122,7 +122,7 @@ local terapagos_stellar={
   pos = {x = 0, y = 0},
   soul_pos = {x = 0, y = 0,
     draw = function(card, scale_mod, rotate_mod)
-      -- AAAAA
+      -- AAAAAAAAAAAAAAAAAAAAAAAAAAAAA
       card.children.floating_sprite.scale.x = card.children.center.scale.x * (108/71)
       card.children.floating_sprite.scale.y = card.children.center.scale.y * (108/71)
       local red_scale_mod = scale_mod - (1 - 71/108)
@@ -219,37 +219,6 @@ local terapagos_stellar={
     end
   end,
 }
-
--- SMODS.DrawStep {
---   key = 'terapagos_stellar_stickers',
---   order = 39,
---   func = function(self, layer)
---     if self.config.center.key == 'j_nacho_terapagos_stellar' then
---       if self.sticker and G.shared_stickers[self.sticker] then
---           G.shared_stickers[self.sticker]:set_role({role_type = 'Glued', draw_major = self})
---           G.shared_stickers[self.sticker]:draw_shader('dissolve', nil, nil, nil, self.children.center, 108/71 - 1, nil, 108/71 - 1.04, 71/108 + 0.05)
---           G.shared_stickers[self.sticker]:draw_shader('voucher', nil, self.ARGS.send_to_shader, nil, self.children.center, 108/71 - 1, nil, 108/71 - 1.04, 71/108 + 0.05)
---       elseif (self.sticker_run and G.shared_stickers[self.sticker_run]) and G.SETTINGS.run_stake_stickers then
---           G.shared_stickers[self.sticker_run]:set_role({role_type = 'Glued', draw_major = self})
---           G.shared_stickers[self.sticker_run]:draw_shader('dissolve', nil, nil, nil, self.children.center, 108/71 - 1, nil, 108/71 - 1.04, 71/108 + 0.05)
---           G.shared_stickers[self.sticker_run]:draw_shader('voucher', nil, self.ARGS.send_to_shader, nil, self.children.center, 108/71 - 1, nil, 108/71 - 1.04, 71/108 + 0.05)
---       end
-
---       for k, v in pairs(SMODS.Stickers) do
---           if self.ability[v.key] then
---               if v and v.draw and type(v.draw) == 'function' then
---                   v:draw(self, layer)
---               else
---                   G.shared_stickers[v.key]:set_role({role_type = 'Glued', draw_major = self})
---                   G.shared_stickers[v.key]:draw_shader('dissolve', nil, nil, nil, self.children.center, 108/71 - 1, nil, 108/71 - 1.04, 71/108 + 0.05)
---                   G.shared_stickers[v.key]:draw_shader('voucher', nil, self.ARGS.send_to_shader, nil, self.children.center, 108/71 - 1, nil, 108/71 - 1.04, 71/108 + 0.05)
---               end
---           end
---       end
---     end
---   end,
---   conditions = { vortex = false, facing = 'front' },
--- }
 
 return {
   name = "Nacho's Terapagos Line",
