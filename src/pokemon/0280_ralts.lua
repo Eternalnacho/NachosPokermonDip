@@ -79,12 +79,7 @@ local kirlia={
         }
       end
     end
-    local evolve = item_evo(self, card, context, "j_nacho_gallade")
-    if evolve then
-      return evolve
-    else
-      return level_evo(self, card, context, "j_nacho_gardevoir")
-    end
+    return item_evo(self, card, context, "j_nacho_gallade") or level_evo(self, card, context, "j_nacho_gardevoir")
   end,
 }
 
