@@ -1,13 +1,31 @@
 return {
     descriptions = {
         Joker = {
+            j_nacho_galarian_meowth = {
+                name = "{s:0.6}Galarian{}Meowth",
+                text = {
+                    "Retriggers the first two",
+                    "{C:attention}Steel{} cards {C:attention}held in hand{}",
+                    "{C:inactive,s:0.8}(Evolves when each adjacent Joker",
+                    "{C:inactive,s:0.8}has a {C:metal,s:0.8}Metal{C:inactive,s:0.8} sticker)",
+                }
+            },
+            j_nacho_hisuian_sneasel = {
+              name = "{s:0.6}Hisuian{}Sneasel",
+              text = {
+                  "If played hand is a",
+                  "single {C:attention}enchanced{} card,",
+                  "it becomes {C:attention}Toxic{}",
+                  "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Dawn Stone{C:inactive,s:0.8})",
+              }
+            },
             j_nacho_ralts = {
                 name = "Ralts",
                 text = {
                     "{C:red}+#1#{} Mult per {C:attention}hand level",
                     "above 1 {C:inactive}(Currently {C:red}+#2#{C:inactive} Mult)",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
-                } 
+                }
             },
             j_nacho_kirlia = {
                 name = "Kirlia",
@@ -16,14 +34,14 @@ return {
                     "above 1 {C:inactive}(Currently {C:red}+#2#{C:inactive} Mult)",
                     "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Dawn Stone{C:inactive,s:0.8})",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
-                } 
+                }
             },
             j_nacho_gardevoir = {
                 name = "Gardevoir",
                 text = {
                     "{X:red,C:white}X#1#{} Mult per {C:attention}hand level",
                     "above 1 {C:inactive}(Currently {X:red,C:white}X#2#{C:inactive} Mult)",
-                } 
+                }
             },
             j_nacho_mega_gardevoir = {
                 name = "Mega Gardevoir",
@@ -35,7 +53,7 @@ return {
                     "{br:2}ERROR - CONTACT STEAK",
                     "Held {C:planet}Planet{} cards without an edition",
                     "gain {C:spectral}Polychrome{} at end of round",
-                } 
+                }
             },
             j_nacho_swablu = {
                 name = "Swablu",
@@ -79,7 +97,7 @@ return {
                     "rightmost card {C:attention}held in hand{} by {C:attention}1{}",
                     "{C:inactive,s:0.8}(Evolves when >= 57%#1#",
                     "{C:inactive,s:0.8}of your full deck has {C:attention,s:0.8}rank{C:inactive,s:0.8} >= {C:attention,s:0.8}9{C:inactive,s:0.8})",
-                } 
+                }
             },
             j_nacho_shelgon = {
                 name = "Shelgon",
@@ -120,7 +138,7 @@ return {
                     "earned each round by {C:money}$1{}",
                     "{C:inactive}(Currently {C:money}$#3#{C:inactive})",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
-                } 
+                }
             },
             j_nacho_grotle = {
                 name = "Grotle",
@@ -143,7 +161,7 @@ return {
                     "Raises the cap on interest",
                     "earned each round by {C:money}$3{}",
                     "{C:inactive}(Currently {C:money}$#3#{}{C:inactive})",
-                } 
+                }
             },
             j_nacho_chimchar = {
                 name = "Chimchar",
@@ -183,7 +201,7 @@ return {
                     "{C:chips}-#3#{} Chips per scoring",
                     "card in played hand",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#4#{C:inactive,s:0.8} rounds)",
-                } 
+                }
             },
             j_nacho_prinplup = {
                 name = "Prinplup",
@@ -192,7 +210,7 @@ return {
                     "Each card {C:attention}held in hand{}",
                     "gives Chips equal to its rank",
                     "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#4#{C:inactive,s:0.8} rounds)",
-                } 
+                }
             },
             j_nacho_empoleon = {
                 name = "Empoleon",
@@ -200,7 +218,7 @@ return {
                     "{C:blue}+#1#{} hand, {C:chips}+#2#{} Chips",
                     "Each card {C:attention}held in hand{} gives ",
                     "Chips equal to {C:attention}double{} its rank",
-                } 
+                }
             },
             j_nacho_gallade = {
                 name = "Gallade",
@@ -247,6 +265,25 @@ return {
                     "with an {C:attention}edition{}",
                     "at end of round",
                     "({C:green}#2# in #3#{} to be shiny)",
+                }
+            },
+            j_nacho_hisuian_zorua = {
+                name = "{s:0.6}Hisuian{}Zorua",
+                text = {
+                    "{V:1}Copies the ability",
+                    "of leftmost {C:attention}Joker{}",
+                    "{br:2.5}ERROR - CONTACT STEAK",
+                    "After scoring played hand while",
+                    "copying, remove copy effect",
+                    "until end of round",
+                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#1#{C:inactive,s:0.8} rounds)",
+                }
+            },
+            j_nacho_hisuian_zoroark = {
+                name = "{s:0.6}Hisuian{}Zoroark",
+                text = {
+                    "Copies the ability",
+                    "of leftmost {C:attention}Joker{}",
                 }
             },
             j_nacho_clauncher = {
@@ -301,6 +338,18 @@ return {
                     "{C:inactive,s:0.8}(Evolves after playing {C:attention,s:0.8}#2# {C:inactive,s:0.8}#3#)",
                 }
             },
+            j_nacho_hisuian_sliggoo = {
+                name = "{s:0.6}Hisuian{}Sliggoo",
+                text = {
+                    "If played hand is a {C:attention}Flush House{},",
+                    "creates a {C:item}Metal Coat{}",
+                    "{br:2.5}ERROR - CONTACT STEAK",
+                    "Creates another {C:item}Metal Coat{} if",
+                    "the difference in scoring {C:attention}ranks{} is",
+                    "greater than {C:attention}6{}",
+                    "{C:inactive,s:0.8}(Evolves after playing {C:attention,s:0.8}#1# {C:inactive,s:0.8}#2#)",
+                }
+            },
             j_nacho_goodra = {
                 name = "Goodra",
                 text = {
@@ -308,6 +357,18 @@ return {
                     "and cards {C:attention}held in hand{} with",
                     "the {C:attention}same suit{} gain {X:red,C:white}X#1#{} Mult for each",
                     "unique {C:attention}rank{} among scoring cards",
+                }
+            },
+            j_nacho_hisuian_goodra = {
+                name = "{s:0.6}Hisuian{}Goodra",
+                text = {
+                    "If played hand is a {C:attention}Flush House{},",
+                    "creates a {C:item}Metal Coat{}",
+                    "{br:2.5}ERROR - CONTACT STEAK",
+                    "If played hand is a {C:attention}Flush House{},",
+                    "{C:attention}Steel{} cards {C:attention}held in hand{}",
+                    "give {X:mult,C:white}X{} Mult equal to one third of",
+                    "the difference in scoring {C:attention}ranks{}",
                 }
             },
             j_nacho_oranguru = {
@@ -364,15 +425,6 @@ return {
                     "{C:inactive}(Currently {C:mult}+#1#{} {C:inactive}Mult)",
                 }
             },
-            j_nacho_galarian_meowth = {
-                name = "{s:0.6}Galarian{}Meowth",
-                text = {
-                    "Retriggers the first two",
-                    "{C:attention}Steel{} cards {C:attention}held in hand{}",
-                    "{C:inactive,s:0.8}(Evolves when each adjacent Joker",
-                    "{C:inactive,s:0.8}has a {C:metal,s:0.8}Metal{C:inactive,s:0.8} sticker)",
-                }
-            },
             j_nacho_perrserker = {
                 name = "Perrserker",
                 text = {
@@ -386,48 +438,15 @@ return {
                     "{C:attention}Jokers{} are {C:metal}Metal{}",
                 }
             },
-            j_nacho_hisuian_zorua = {
-                name = "{s:0.6}Hisuian{}Zorua",
-                text = {
-                    "{V:1}Copies the ability",
-                    "of leftmost {C:attention}Joker{}",
-                    "{br:2.5}ERROR - CONTACT STEAK",
-                    "After scoring played hand while",
-                    "copying, remove copy effect",
-                    "until end of round",
-                    "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#1#{C:inactive,s:0.8} rounds)",
-                }
-            },
-            j_nacho_hisuian_zoroark = {
-                name = "{s:0.6}Hisuian{}Zoroark",
-                text = {
-                    "Copies the ability",
-                    "of leftmost {C:attention}Joker{}",
-                }
-            },
-            j_nacho_hisuian_sliggoo = {
-                name = "{s:0.6}Hisuian{}Sliggoo",
-                text = {
-                    "If played hand is a {C:attention}Flush House{},",
-                    "creates a {C:item}Metal Coat{}",
-                    "{br:2.5}ERROR - CONTACT STEAK",
-                    "Creates another {C:item}Metal Coat{} if",
-                    "the difference in scoring {C:attention}ranks{} is",
-                    "greater than {C:attention}6{}",
-                    "{C:inactive,s:0.8}(Evolves after playing {C:attention,s:0.8}#1# {C:inactive,s:0.8}#2#)",
-                }
-            },
-            j_nacho_hisuian_goodra = {
-                name = "{s:0.6}Hisuian{}Goodra",
-                text = {
-                    "If played hand is a {C:attention}Flush House{},",
-                    "creates a {C:item}Metal Coat{}",
-                    "{br:2.5}ERROR - CONTACT STEAK",
-                    "If played hand is a {C:attention}Flush House{},",
-                    "{C:attention}Steel{} cards {C:attention}held in hand{}",
-                    "give {X:mult,C:white}X{} Mult equal to one third of",
-                    "the difference in scoring {C:attention}ranks{}",
-                }
+            j_nacho_sneasler = {
+              name = "Sneasler",
+              text = {
+                  "If played hand is a single",
+                  "{C:attention}enchanced{} card, it and",
+                  "up to two {C:attention}enhanced held{}",
+                  "cards become {C:attention}Toxic{} and",
+                  "{C:attention}Toxic{} cards gain {X:mult,C:white}X#1#{} Mult",
+              }
             },
             j_nacho_terapagos = {
                 name = "Terapagos",
@@ -584,7 +603,7 @@ return {
             nacho_pokemon1 = "Pokemon 1/3",
             nacho_pokemon2 = "Pokemon 2/3",
             nacho_pokemon3 = "Pokemon 3/3",
-            nacho_miscellaneous = "Miscellaneous",
+            nacho_crossMod = "Cross-Mod Pokemon",
         },
         v_text = {
             ch_c_sinnoh_adv={

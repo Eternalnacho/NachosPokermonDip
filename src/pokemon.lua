@@ -1,5 +1,6 @@
 -- Name relevant sprite locations
 
+PokemonSprites["hisuian_sneasel"] = { base = { pos = { x = 4, y = 5 } }, gen_atlas = true }
 PokemonSprites["mega_gardevoir"] = { base = { pos = { x = 6, y = 4 }, soul_pos = { x = 7, y = 4 } }, gen_atlas = true }
 PokemonSprites["mega_altaria"] = { base = { pos = { x = 2, y = 6 }, soul_pos = { x = 3, y = 6 } }, gen_atlas = true }
 PokemonSprites["mega_salamence"] = { base = { pos = { x = 8, y = 6 }, soul_pos = { x = 9, y = 6 } }, gen_atlas = true }
