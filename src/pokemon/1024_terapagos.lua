@@ -128,8 +128,8 @@ local terapagos_stellar={
       local red_scale_mod = scale_mod - (1 - 71/108)
 
       card.children.center.VT.w = card.T.w
-      card.children.floating_sprite:draw_shader('dissolve', 0, nil, nil, card.children.center, red_scale_mod, rotate_mod, -(1 - 71/108), 0.1 + 0.03*math.sin(1.8*G.TIMERS.REAL) - 0.5, nil, 0.6)
-      card.children.floating_sprite:draw_shader('dissolve', nil, nil, nil, card.children.center, red_scale_mod, rotate_mod, -(1 - 71/108), -0.5)
+      card.children.floating_sprite:draw_shader('dissolve', 0, nil, nil, card.children.center, red_scale_mod, rotate_mod, -(1.03 - 71/108), 0.1 + 0.03*math.sin(1.8*G.TIMERS.REAL) - 0.5, nil, 0.6)
+      card.children.floating_sprite:draw_shader('dissolve', nil, nil, nil, card.children.center, red_scale_mod, rotate_mod, -(1.03 - 71/108), -0.5)
       card.children.center.VT.w = card.T.w
     end},
   config = {extra = {Xmult_mod = 0.1, Xmult = 1, energy_total = 0}},
@@ -210,6 +210,8 @@ local terapagos_stellar={
       if card.children.floating_sprite then
         card.children.floating_sprite.atlas = G.ASSET_ATLAS[card.children.center.atlas.name .. "_soul"]
         card.children.floating_sprite:reset()
+        card.children.floating_sprite.scale.x = card.children.center.scale.x * (108/71)
+        card.children.floating_sprite.scale.y = card.children.center.scale.y * (108/71)
       end
     end
   end,

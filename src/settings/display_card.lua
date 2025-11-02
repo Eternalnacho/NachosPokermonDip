@@ -99,4 +99,14 @@ function DisplayCard:init(X, Y, W, H, key)
   self.children.center.parent = self; self.children.center.layered_parallax = nil
 end
 
+if pokermon_config.poke_enable_animations then
+  local upd = Game.update
+  function Game:update(dt)
+     upd(self, dt)
+     for k, v in pairs(AnimatedPokemon) do
+        if templates[k] then NotAura_update_frame(dt, k, templates[k]) end
+     end
+  end
+end
+
 return DisplayCard

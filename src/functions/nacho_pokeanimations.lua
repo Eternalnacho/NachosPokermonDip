@@ -1,7 +1,7 @@
 -- Animation logic stolen completely from https://github.com/MathIsFun0/Aura
 
 NachosAnimatedPokemon = {
-   j_nacho_terapagos_stellar = {native = true, frames_per_row = 7, frames = 13, fps = 12, soul = true, soul_size = {x = 108, y = 145}}
+   j_nacho_terapagos_stellar = {native = true, frames_per_row = 7, frames = 13, fps = 24, soul = true, soul_size = {x = 108, y = 145}}
 }
 
 for k, tbl in pairs(NachosAnimatedPokemon) do
