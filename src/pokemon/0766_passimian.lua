@@ -37,11 +37,18 @@ local passimian={
       if card.ability.received_card then
         values_to_keep = copy_scaled_values(card)
       elseif context and context.card and context.card.ability then
+        -- I guess we have to make sure stickers *don't* get passed along
+        local stickers = {}
+        for k, v in pairs(SMODS.Stickers) do
+          if context.card.ability[v.key] then stickers[#stickers+1] = context.card.ability[v.key] end
+        end
         for k, v in pairs(context.card.ability) do
-          if type(v) == 'table' then
-            values_to_keep[k] = copy_table(v)
-          else
-            values_to_keep[k] = v
+          if not table.contains(stickers, v) then
+            if type(v) == 'table' then
+              values_to_keep[k] = copy_table(v)
+            else
+              values_to_keep[k] = v
+            end
           end
         end
       end
