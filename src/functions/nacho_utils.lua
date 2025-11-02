@@ -8,6 +8,17 @@ SMODS.current_mod.set_debuff = function(card)
   return false
 end
 
+-- Defining Table.contains
+function table.contains(table, element)
+  for _, value in pairs(table) do
+    if value == element then
+      return true
+    end
+  end
+  return false
+end
+
+
 -- Ripped straight from Ortalab
 function Count_ranks()
   -- Count ranks

@@ -1,12 +1,3 @@
-function table.contains(table, element)
-  for _, value in pairs(table) do
-    if value == element then
-      return true
-    end
-  end
-  return false
-end
-
 -- Deck Rank Evo conditions
 deck_rank_evo = function(self, card, context, forced_key, rank, percentage, flat)
   if can_evolve(self, card, context, forced_key) then
