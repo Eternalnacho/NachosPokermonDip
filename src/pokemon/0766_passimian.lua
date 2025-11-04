@@ -38,12 +38,14 @@ local passimian={
         values_to_keep = copy_scaled_values(card)
       elseif context and context.card and context.card.ability then
         -- I guess we have to make sure stickers *don't* get passed along
-        local stickers = {}
+        local exceptions = {}
         for k, v in pairs(SMODS.Stickers) do
-          if context.card.ability[v.key] then stickers[#stickers+1] = context.card.ability[v.key] end
+          if context.card.ability[v.key] then exceptions[#exceptions+1] = context.card.ability[v.key] end
         end
+        -- and also the extra card limit on negatives apparently *sigh*
+        if context.card.ability.card_limit then exceptions[#exceptions+1] = context.card.ability.card_limit end
         for k, v in pairs(context.card.ability) do
-          if not table.contains(stickers, v) then
+          if not table.contains(exceptions, v) then
             if type(v) == 'table' then
               values_to_keep[k] = copy_table(v)
             else
@@ -84,6 +86,7 @@ local passimian={
         end
       end
 
+      -- Keep the fighting type, and re-check blueprint compatibility
       card.ability.extra.ptype = "Fighting"
 
       if _r.blueprint_compat == true then card.config.center.blueprint_compat = true
@@ -92,41 +95,30 @@ local passimian={
       if _r.add_to_deck then _r:add_to_deck(card) end
 
       -- play the funny noises
-      if not (card.edition or context and context.card and context.card.edition) then
+      local edition = context and context.card and context.card.edition and not context.card.edition.negative and context.card.edition or card.edition
+      if not edition then
         card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_receiver_ex')})
-      elseif context.card and context.card.edition then
-        card:juice_up(1, 0.5)
-        if context.card.edition.foil then card_eval_status_text(card, 'extra', nil, nil, nil,
-            {message = localize('poke_receiver_ex'), colour = G.C.DARK_EDITION, sound = 'foil2', percent = 1.2, volume = 0.4}) end
-        if context.card.edition.holo then card_eval_status_text(card, 'extra', nil, nil, nil,
-            {message = localize('poke_receiver_ex'), colour = G.C.DARK_EDITION, sound = 'holo1', percent = 1.2*1.58, volume = 0.4}) end
-        if context.card.edition.polychrome then card_eval_status_text(card, 'extra', nil, nil, nil,
-            {message = localize('poke_receiver_ex'), colour = G.C.DARK_EDITION, sound = 'polychrome1', percent = 1.2, volume = 0.7}) end
-        if context.card.edition.poke_shiny then
-          card_eval_status_text(card, 'extra', nil, nil, nil,
-            {message = localize('poke_receiver_ex'), colour = G.C.DARK_EDITION, sound = 'e_poke_shiny', percent = 1, volume = 0.2})
-        end
-        card.ability.received_edition = true
-        G.jokers.config.card_limit = G.jokers.config.card_limit + 1
       else
+        local sound
+        for k, v in pairs(G.P_CENTER_POOLS['Edition']) do
+          if v.key == 'e_'..edition.type then
+            sound = v.sound
+            sound.pitch = edition.type == 'poke_shiny' and 1 or 2
+          end
+        end
+        if not sound then sound = {sound = nil, per = nil, vol = nil, pitch = nil} end
         card:juice_up(1, 0.5)
-        if card.edition.foil then card_eval_status_text(card, 'extra', nil, nil, nil,
-            {message = localize('poke_receiver_ex'), colour = G.C.DARK_EDITION, sound = 'foil1', percent = 1.2, volume = 0.4}) end
-        if card.edition.holo then card_eval_status_text(card, 'extra', nil, nil, nil,
-            {message = localize('poke_receiver_ex'), colour = G.C.DARK_EDITION, sound = 'holo1', percent = 1.2*1.58, volume = 0.4}) end
-        if card.edition.polychrome then card_eval_status_text(card, 'extra', nil, nil, nil,
-            {message = localize('poke_receiver_ex'), colour = G.C.DARK_EDITION, sound = 'polychrome1', percent = 1.2, volume = 0.7}) end
-        if card.edition.negative then card_eval_status_text(card, 'extra', nil, nil, nil,
-            {message = localize('poke_receiver_ex'), colour = G.C.DARK_EDITION, sound = 'negative', percent = 1.5, volume = 0.4}) end
-        if card.edition.poke_shiny then
-          card_eval_status_text(card, 'extra', nil, nil, nil,
-            {message = localize('poke_receiver_ex'), colour = G.C.DARK_EDITION, sound = 'e_poke_shiny', percent = 1, volume = 0.2})
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_receiver_ex'), colour = G.C.DARK_EDITION,
+          sound = sound.sound, per = sound.per, vol = sound.vol, pitch = sound.pitch})
+        if context and context.card and context.card.edition then
+          card.ability.extra.received_edition = true
+          G.jokers.config.card_limit = G.jokers.config.card_limit + 1
         end
       end
     end
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if card.ability.received_edition and not from_debuff then
+    if card.ability.extra.received_edition and not from_debuff then
       G.jokers.config.card_limit = G.jokers.config.card_limit - 1
     end
     if card.ability.received_card and card.ability.received_card.remove_from_deck then
