@@ -847,7 +847,7 @@ PkmnDip.dex_order = {
   "arrokuda",
   "barraskewda",
   "toxel",
-  { "toxtricity_amped", "toxtricity_lowkey", "gmax_toxtricity" },
+  { "toxtricity", "gmax_toxtricity" },
   "sizzlipede",
   { "centiskorch", "gmax_centiskorch" },
   "clobbopus",
