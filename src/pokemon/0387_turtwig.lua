@@ -11,7 +11,7 @@ local turtwig={
   cost = 6,
   stage = "Basic",
   ptype = "Grass",
-  starter = true,
+  starter = 'turtwig' and true or false,
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,
@@ -156,6 +156,6 @@ local torterra={
 
 return {
   name = "Nacho's Turtwig Evo Line",
-  enabled = nacho_config.turtwig or false,
+  enabled = 'turtwig',
   list = { turtwig, grotle, torterra }
 }

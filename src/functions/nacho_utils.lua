@@ -18,6 +18,29 @@ function table.contains(table, element)
   return false
 end
 
+-- Stealing this from Sonfive
+function get_base_evo_name(card)
+  -- Get the name of the base form if you can
+  local fam = poke_get_family_list(card.name)
+  -- Default is your own name, you may have no family T.T
+  local base_evo_name = card.name
+  if #fam > 0 then
+      -- Found a base evo, use it's name
+      base_evo_name = fam[1]
+  end
+  return base_evo_name
+end
+
+-- Hooking Pokemon in Pool
+local original_pokemon_in_pool = pokemon_in_pool
+function pokemon_in_pool(v)
+  local base_evo_name = get_base_evo_name(v)
+  if v and v.tagged == 'nacho' then
+    if not string.find(v.key, 'nacho') then if nacho_config[base_evo_name] then return false else end
+    else return nacho_config[base_evo_name] or false end
+  end
+  return original_pokemon_in_pool(v)
+end
 
 -- Ripped straight from Ortalab
 function Count_ranks()

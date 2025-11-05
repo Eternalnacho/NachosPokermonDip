@@ -268,18 +268,16 @@ local mega_gallade={
 }
 
 
-local init = function()
-  if (SMODS.Mods["PokermonMaelmc"] or {}).can_load then
-    SMODS.Joker:take_ownership('maelmc_ralts', {aux_poke = true, no_collection = true, custom_pool_func = true, in_pool = function(self) return false end}, true)
-    SMODS.Joker:take_ownership('maelmc_kirlia', {aux_poke = true, no_collection = true, custom_pool_func = true, in_pool = function(self) return false end}, true)
-    SMODS.Joker:take_ownership('maelmc_gardevoir', {aux_poke = true, no_collection = true, custom_pool_func = true, in_pool = function(self) return false end}, true)
-    SMODS.Joker:take_ownership('maelmc_mega_gardevoir', {aux_poke = true, no_collection = true, custom_pool_func = true, in_pool = function(self) return false end}, true)
-  end
+local yoink = function()
+  SMODS.Joker:take_ownership('maelmc_ralts', {tagged = 'nacho', rarity = 3, cost = 8})
+  SMODS.Joker:take_ownership('maelmc_kirlia', {tagged = 'nacho'})
+  SMODS.Joker:take_ownership('maelmc_gardevoir', {tagged = 'nacho'})
+  SMODS.Joker:take_ownership('maelmc_mega_gardevoir', {tagged = 'nacho'})
 end
 
 return {
   name = "Nacho's Ralts Evo Line",
-  enabled = nacho_config.ralts or false,
-  init = init,
+  enabled = 'ralts',
+  yoink = yoink,
   list = { ralts, kirlia, gardevoir, mega_gardevoir, gallade, mega_gallade }
 }

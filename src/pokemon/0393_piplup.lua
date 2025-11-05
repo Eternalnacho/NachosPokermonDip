@@ -11,7 +11,7 @@ local piplup={
   cost = 6,
   stage = "Basic",
   ptype = "Water",
-  starter = true,
+  starter = 'piplup' and true or false,
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,
@@ -145,6 +145,6 @@ local empoleon={
 
 return {
   name = "Nacho's Piplup Evo Line",
-  enabled = nacho_config.piplup or false,
+  enabled = 'piplup',
   list = { piplup, prinplup, empoleon }
 }

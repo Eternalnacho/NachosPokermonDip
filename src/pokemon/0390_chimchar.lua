@@ -11,7 +11,7 @@ local chimchar={
   cost = 6,
   stage = "Basic",
   ptype = "Fire",
-  starter = true,
+  starter = 'chimchar' and true or false,
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,
@@ -193,6 +193,6 @@ local infernape = {
 
 return {
   name = "Nacho's Chimchar Evo Line",
-  enabled = nacho_config.chimchar or false,
+  enabled = 'chimchar',
   list = { chimchar, monferno, infernape }
 }
