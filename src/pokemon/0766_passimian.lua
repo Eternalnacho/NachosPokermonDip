@@ -221,7 +221,7 @@ end
 
 return {
   name = "Nacho's Passimian",
-  enabled = nacho_config.Passimian or false,
+  enabled = nacho_config.passimian or false,
   init = init,
   list = { passimian }
 }

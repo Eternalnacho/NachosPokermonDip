@@ -279,7 +279,7 @@ end
 
 return {
   name = "Nacho's Ralts Evo Line",
-  enabled = nacho_config.Ralts or false,
+  enabled = nacho_config.ralts or false,
   init = init,
   list = { ralts, kirlia, gardevoir, mega_gardevoir, gallade, mega_gallade }
 }

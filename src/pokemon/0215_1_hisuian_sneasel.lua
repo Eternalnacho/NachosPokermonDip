@@ -109,6 +109,6 @@ local sneasler={
 
 return {
   name = "Nacho's Hisuian Sneasel Evo Line",
-  enabled = (SMODS.Mods["ToxicStall"] or {}).can_load and nacho_config.Hisuian_Sneasel or false,
+  enabled = (SMODS.Mods["ToxicStall"] or {}).can_load and nacho_config.hisuian_sneasel or false,
   list = {hisuian_sneasel, sneasler}
 }

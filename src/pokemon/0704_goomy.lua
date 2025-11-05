@@ -297,6 +297,6 @@ local hisuian_goodra={
 
 return {
   name = "Nacho's Goomy Evo Line",
-  enabled = nacho_config.Goomy or false,
+  enabled = nacho_config.goomy or false,
   list = { goomy, sliggoo, goodra, hisuian_sliggoo, hisuian_goodra}
 }

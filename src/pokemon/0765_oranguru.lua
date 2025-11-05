@@ -78,6 +78,6 @@ local oranguru={
 
 return {
   name = "Nacho's Oranguru",
-  enabled = nacho_config.Oranguru or false,
+  enabled = nacho_config.oranguru or false,
   list = { oranguru }
 }

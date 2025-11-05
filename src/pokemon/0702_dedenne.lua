@@ -42,6 +42,6 @@ local dedenne = {
 
 return {
   name = "Nacho's Dedenne",
-  enabled = nacho_config.Dedenne or false,
+  enabled = nacho_config.dedenne or false,
   list = { dedenne }
 }

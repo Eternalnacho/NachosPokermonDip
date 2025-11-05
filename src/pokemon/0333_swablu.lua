@@ -108,6 +108,6 @@ local mega_altaria={
 
 return {
   name = "Nacho's Swablu Evo Line",
-  enabled = nacho_config.Swablu or false,
+  enabled = nacho_config.swablu or false,
   list = { swablu, altaria, mega_altaria }
 }

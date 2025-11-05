@@ -236,7 +236,7 @@ pattern = '''
 '''
 position = "before"
 payload = '''
-if (SMODS.Mods["PokermonMaelmc"] or {}).can_load and (SMODS.Mods["NachosPokermonDip"] or {}).can_load and nacho_config.Ralts then
+if (SMODS.Mods["PokermonMaelmc"] or {}).can_load and (SMODS.Mods["NachosPokermonDip"] or {}).can_load and nacho_config.ralts then
   local yoink_ralts = assert(SMODS.load_file("src/pokemon/0280_ralts.lua", "NachosPokermonDip"))()
   if yoink_ralts.enabled then yoink_ralts:init() end
 end
@@ -252,7 +252,7 @@ pokermon.add_family({"ralts","kirlia","gardevoir","mega_gardevoir"})
 '''
 position = "at"
 payload = '''
-if not ((SMODS.Mods["NachosPokermonDip"] or {}).can_load and nacho_config.Ralts) then
+if not ((SMODS.Mods["NachosPokermonDip"] or {}).can_load and nacho_config.ralts) then
   pokermon.add_family({"ralts","kirlia","gardevoir","mega_gardevoir"}) end
 '''
 match_indent = true

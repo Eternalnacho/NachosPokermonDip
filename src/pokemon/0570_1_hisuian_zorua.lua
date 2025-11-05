@@ -282,6 +282,6 @@ local hisuian_zoroark = {
 
 return {
   name = "Nacho's Hisuian Zorua Evo Line",
-  enabled = nacho_config.Hisuian_Zorua or false,
+  enabled = nacho_config.hisuian_zorua or false,
   list = { hisuian_zorua, hisuian_zoroark }
 }

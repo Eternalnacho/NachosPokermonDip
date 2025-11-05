@@ -112,6 +112,6 @@ local greedent={
 
 return {
   name = "Nacho's Skwovet Evo Line",
-  enabled = nacho_config.Skwovet or false,
+  enabled = nacho_config.skwovet or false,
   list = { skwovet, greedent }
 }
