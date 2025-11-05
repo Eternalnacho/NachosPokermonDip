@@ -1,5 +1,5 @@
 nacho_config = SMODS.current_mod.config
-SMODS.current_mod.optional_features = { retrigger_joker = true, quantum_enhancements = true }
+SMODS.current_mod.optional_features = { retrigger_joker = true, quantum_enhancements = true, post_trigger = true }
 mod_dir = ''..SMODS.current_mod.path
 if (SMODS.Mods["Pokermon"] or {}).can_load then
     pokermon_config = SMODS.Mods["Pokermon"].config

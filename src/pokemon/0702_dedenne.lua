@@ -1,11 +1,13 @@
 -- Dedenne 702
 local dedenne = {
   name = "dedenne",
-  config = {extra = {odds = 4}},
+  config = {extra = {num = 1, den = 4}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = G.P_CENTERS.m_gold
-    return {vars = {card.ability.extra.odds}}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'pickup'}
+    local num, den = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.den, 'dedenne')
+    return {vars = {num, den}}
   end,
   designer = "Eternalnacho",
   rarity = 1,
@@ -15,26 +17,23 @@ local dedenne = {
   ptype = "Lightning",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.repetition and context.cardarea == G.hand then
-      if (next(context.card_effects[1]) or #context.card_effects > 1) and SMODS.has_enhancement(context.other_card, 'm_gold') and
-      #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-        if pseudorandom('dedenne') < G.GAME.probabilities.normal/card.ability.extra.odds then
+    if context.post_trigger and context.other_context.individual and context.other_context.cardarea == G.hand and SMODS.has_enhancement(context.other_context.other_card, 'm_gold') or
+        context.end_of_round and context.individual and SMODS.has_enhancement(context.other_card, 'm_gold') then
+      if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+        if SMODS.pseudorandom_probability(card, 'dedenne', card.ability.extra.num, card.ability.extra.den, 'dedenne') then
           G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
           G.E_MANAGER:add_event(Event({
             trigger = 'before',
             delay = 0.0,
             func = (function()
-                  local _card = create_card('Item', G.consumeables, nil, nil, nil, nil)
-                  _card:add_to_deck()
-                  G.consumeables:emplace(_card)
-                  card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.ARGS.LOC_COLOURS.item})
-                  G.GAME.consumeable_buffer = 0
-                  return true
+              local card_type = 'Item'
+              local _card = create_card(card_type, G.consumeables, nil, nil, nil, nil, generate_pickup_item_key('dedenne'))
+              _card:add_to_deck()
+              G.consumeables:emplace(_card)
+              card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.ARGS.LOC_COLOURS.item})
+              G.GAME.consumeable_buffer = 0
+              return true
           end)}))
-          return {
-            repetitions = 0,
-            card = card,
-          }
         end
       end
     end

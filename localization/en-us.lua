@@ -307,8 +307,9 @@ return {
                 name = "Dedenne",
                 text = {
                     "{C:attention}Gold{} cards {C:attention}held in hand{}",
-                    "have a {C:green}1 in #1#{} chance to",
-                    "create an {C:item}Item{} when triggered",
+                    "have a {C:green}#1# in #2#{} chance to",
+                    "create a {C:attention}Pickup {C:item}Item{}",
+                    "when triggered",
                 }
             },
             j_nacho_carbink = {
