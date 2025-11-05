@@ -49,11 +49,11 @@ This is an add-on mod for Pokermon - an add-on mod for Balatro.
 
 | Joker | Effect |
 | ------ | ------ |
-| Dedenne | 1 in 4 chance to create an Item card when a Gold card triggers |
+| Dedenne | 1 in 4 chance to create a Pickup Item card when a held Gold card triggers |
 
 | Joker | Effect |
 | ------ | ------ |
-| Carbink | Hazard cards are also considered Gold cards |
+| Carbink | Cards with no rank are also considered Gold cards |
 
 | Joker | Effect |
 | ------ | ------ |
