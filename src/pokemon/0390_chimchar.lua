@@ -193,6 +193,6 @@ local infernape = {
 
 return {
   name = "Nacho's Chimchar Evo Line",
-  enabled = 'chimchar',
+  enabled = nacho_config.chimchar or false,
   list = { chimchar, monferno, infernape }
 }
