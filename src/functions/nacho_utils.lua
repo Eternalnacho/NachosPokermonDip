@@ -37,7 +37,7 @@ function pokemon_in_pool(v)
   local base_evo_name = get_base_evo_name(v)
   if v and v.tagged == 'nacho' then
     if not string.find(v.key, 'nacho') then if nacho_config[base_evo_name] then return false else end
-    else return nacho_config[base_evo_name] or false end
+    elseif not nacho_config[base_evo_name] then return false end
   end
   return original_pokemon_in_pool(v)
 end
