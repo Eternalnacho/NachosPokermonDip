@@ -68,15 +68,12 @@ PkmnDip.find_next_dex_number = function(name)
     if type(pokemon) == 'table' then
       for _, mon in ipairs(pokemon) do
         if i > dexNo and not table.contains(group_list, mon) and G.P_CENTERS['j_poke_'..mon] then
-          --for k, v in pairs(poke_get_family_list(mon)) do if string.find(name, v) then goto continue end end
           return i
         end
       end
     elseif i > dexNo and not table.contains(group_list, pokemon) and G.P_CENTERS['j_poke_'..pokemon] then
-      --for k, v in pairs(poke_get_family_list(mon)) do if string.find(name, v) then goto continue end end
       return i
     elseif pokemon == "missingno" then return i end
-    --::continue::
   end
 end
 
@@ -94,11 +91,4 @@ if nacho_config.gallery_width then
   end
 else
   create_UIBox_your_collection_jokers = joker_collection_box
-end
-
--- Adding an "in collection" state
-local old_FUNCS_your_collection = G.FUNCS.your_collection
-function G.FUNCS.your_collection(...)
-    G.STATES.in_collection = true
-    return old_FUNCS_your_collection(...)
 end

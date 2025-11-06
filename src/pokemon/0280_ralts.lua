@@ -269,7 +269,7 @@ local mega_gallade={
 
 
 local yoink = function()
-  SMODS.Joker:take_ownership( 'maelmc_ralts', { aux_poke = true, no_collection = true, custom_pool_func = true, in_pool = function() return false end }, true)
+  SMODS.Joker:take_ownership('maelmc_ralts', { aux_poke = true, no_collection = true, custom_pool_func = true, in_pool = function() return false end }, true)
   SMODS.Joker:take_ownership('maelmc_kirlia', { aux_poke = true, no_collection = true, custom_pool_func = true, in_pool = function() return false end }, true)
   SMODS.Joker:take_ownership('maelmc_gardevoir', { aux_poke = true, no_collection = true, custom_pool_func = true, in_pool = function() return false end }, true)
   SMODS.Joker:take_ownership('maelmc_mega_gardevoir', { aux_poke = true, no_collection = true, custom_pool_func = true, in_pool = function() return false end }, true)

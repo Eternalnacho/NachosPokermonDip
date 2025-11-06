@@ -31,17 +31,6 @@ function get_base_evo_name(card)
   return base_evo_name
 end
 
--- Hooking Pokemon in Pool
-local original_pokemon_in_pool = pokemon_in_pool
-function pokemon_in_pool(v)
-  local base_evo_name = get_base_evo_name(v)
-  if v and v.tagged == 'nacho' then
-    if not string.find(v.key, 'nacho') then if nacho_config[base_evo_name] then return false else end
-    elseif not nacho_config[base_evo_name] then return false end
-  end
-  return original_pokemon_in_pool(v)
-end
-
 -- Ripped straight from Ortalab
 function Count_ranks()
   -- Count ranks
