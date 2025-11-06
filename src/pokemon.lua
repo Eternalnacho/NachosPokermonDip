@@ -40,7 +40,7 @@ local function load_pokemon_folder(folder)
       local poke = assert(SMODS.load_file(folder .. filename))()
 
       -- init contains functions for disabling conflicts from other mods et al so we skip when loading shells
-      if poke.init then
+      if poke.init and poke.enabled then
         poke:init()
       end
 
@@ -52,8 +52,9 @@ local function load_pokemon_folder(folder)
           family[#family + 1] = item.name
           orderlist[#orderlist+1] = item.name
 
-          item.tagged = 'nacho'
-          load_pokemon(item)
+          if poke.enabled then
+            load_pokemon(item)
+          end
         end
       end
 

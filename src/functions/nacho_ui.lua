@@ -29,7 +29,7 @@ SMODS.collection_pool = function(_base_pool)
         if table.contains(y, v.name) then
           local next_index = PkmnDip.dex_order[PkmnDip.find_next_dex_number(v.name)]
           if type(next_index) == "table" then next_index = next_index[1] end
-          if not table.contains(pool, v) and PkmnDip.check_tags(v) then
+          if not table.contains(pool, v) then
             table.insert(pool, next_index and PkmnDip.find_pool_index(pool, 'j_poke_'..next_index) or #pool + 1, v)
           end
         end
@@ -80,11 +80,6 @@ PkmnDip.find_next_dex_number = function(name)
   end
 end
 
-PkmnDip.check_tags = function(v)
-  if v.tagged then return pokemon_in_pool(v)
-  else return true end
-end
-
 
 -- Wide Gallery Settings
 local joker_collection_box = create_UIBox_your_collection_jokers
@@ -101,5 +96,9 @@ else
   create_UIBox_your_collection_jokers = joker_collection_box
 end
 
--- Take out vanilla jokers from collection maybe?
-
+-- Adding an "in collection" state
+local old_FUNCS_your_collection = G.FUNCS.your_collection
+function G.FUNCS.your_collection(...)
+    G.STATES.in_collection = true
+    return old_FUNCS_your_collection(...)
+end
