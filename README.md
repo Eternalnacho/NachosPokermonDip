@@ -39,6 +39,12 @@ This is an add-on mod for Pokermon - an add-on mod for Balatro.
 
 | Joker | Effect |
 | ------ | ------ |
+| Snover | Glass cards earn $2 when scored <br/> The first time a Glass card breaks in a round, one random unenhanced card in deck becomes a Glass card |
+| Abomasnow | Glass cards earn $3 when scored <br/> When a Glass card breaks, one random unenhanced card in deck becomes a Foil Glass card |
+| Mega Abomasnow | When a Glass card breaks, earn $20 |
+
+| Joker | Effect |
+| ------ | ------ |
 | Hisuian Zorua | Copies the leftmost joker <br/>After scoring played hand while copying,<br/> remove copy effect |
 | Hisuian Zoroark | Copies the leftmost joker |
 
@@ -90,6 +96,13 @@ This is an add-on mod for Pokermon - an add-on mod for Balatro.
 | Terapagos | Holding Negative Tera Orb <br/>Creates a Negative Tera Orb at end of round |
 | Terapagos-Terastal | +3 Energy limit <br/>Using a Tera Orb on this joker applies a Tera Orb to each other joker <br/>X0.4 Mult for each joker that shares a type with Terapagos |
 | Terapagos-Stellar | +5 Energy limit <br/>Each Joker with a Type Sticker becomes Stellar type <br/>Using a Tera Orb on this joker applies a Tera Orb to each other joker <br/> Each Stellar joker gives X1.1 Mult for each Energy applied to it |
+
+## Cross-Mod Jokers
+
+| Joker | Effect | Mod |
+| ------ | ------ | ------ |
+| Hisuian Sneasel | When played hand is a single enhanced card, it becomes Toxic | The Toxic Stall |
+| Sneasler | When played hand is a single enhanced card, it and two held enhanced cards become Toxic, and Toxic cards gain X0.1 mult | The Toxic Stall |
 
 ## Stakes
 
