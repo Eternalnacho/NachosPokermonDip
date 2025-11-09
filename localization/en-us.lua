@@ -220,6 +220,36 @@ return {
                     "Chips equal to {C:attention}double{} its rank",
                 }
             },
+            j_nacho_snover = {
+                name = "Snover",
+                text = {
+                    "Scoring {C:attention}Glass{} cards earn {C:money}$#1#{}",
+                    "{br:2}ERROR - CONTACT STEAK",
+                    "The first time a {C:attention}Glass{} card",
+                    "breaks this round, one random",
+                    "unenhanced card in deck",
+                    "becomes a {C:attention}Glass{} card",
+                    "{C:inactive,s:0.8}(Evolves when deck is >= 12.5% #2#{C:attention,s:0.8}Glass{C:inactive,s:0.8} cards)"
+                }
+            },
+            j_nacho_abomasnow = {
+                name = "Abomasnow",
+                text = {
+                    "Scoring {C:attention}Glass{} cards earn {C:money}$#1#{}",
+                    "{br:2}ERROR - CONTACT STEAK",
+                    "When a {C:attention}Glass{} card breaks,",
+                    "one random unenhanced",
+                    "card in deck becomes",
+                    "a {C:dark_edition}Foil {C:attention}Glass{} card",
+                }
+            },
+            j_nacho_mega_abomasnow = {
+                name = "Mega Abomasnow",
+                text = {
+                    "Earn {C:money}$#1#{} when a",
+                    "{C:attention}Glass{} card breaks",
+                }
+            },
             j_nacho_gallade = {
                 name = "Gallade",
                 text = {
@@ -555,6 +585,12 @@ return {
                     '#1#',
                 }
             },
+            modname_tooltip = {
+                name = "Required Mod",
+                text = {
+                    '{C:attention}#1#{}',
+                }
+            },
         },
     },
     misc = {
@@ -571,6 +607,8 @@ return {
             poke_close_combat_ex = "Close Combat!",
             -- From Empoleon
             poke_brine_ex = "Brine!",
+            -- From Snover
+            poke_ice_shard_ex = "Ice Shard!",
             -- From Gallade
             poke_psycho_cut_ex = "Psycho Cut!",
             -- From Passimian
@@ -601,9 +639,10 @@ return {
             terapagos_line = "Terapagos line?",
 
             -- Settings
-            nacho_pokemon1 = "Pokemon 1/3",
-            nacho_pokemon2 = "Pokemon 2/3",
-            nacho_pokemon3 = "Pokemon 3/3",
+            nacho_pokemon1 = "Pokemon 1/4",
+            nacho_pokemon2 = "Pokemon 2/4",
+            nacho_pokemon3 = "Pokemon 3/4",
+            nacho_pokemon4 = "Pokemon 4/4",
             nacho_crossMod = "Cross-Mod Pokemon",
         },
         v_text = {

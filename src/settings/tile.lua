@@ -10,8 +10,9 @@ local backdrop_colour_disabled = mix_colours(G.C.UI.BACKGROUND_INACTIVE, G.C.BLA
 local outline_colour_enabled = mix_colours(tile_colour_enabled, G.C.BLACK, 0.5)
 local outline_colour_disabled = mix_colours(tile_colour_disabled, G.C.BLACK, 0.5)
 
-function G.FUNCS.toggle_settings_tile(e)
+function G.FUNCS.toggle_nacho_settings_tile(e)
   e.config.ref_table[e.config.ref_value] = not e.config.ref_table[e.config.ref_value]
+  if e.config.condition == false then e.config.ref_table[e.config.ref_value] = false end
   local enabled = e.config.ref_table[e.config.ref_value]
 
   e.config.colour = enabled and backdrop_colour_enabled or backdrop_colour_disabled
@@ -28,6 +29,8 @@ function Tile:init(args)
   self.label = args.label or ''
   self.ref_value = args.ref_value
   self.ref_table = args.ref_table
+  self.condition = args.condition
+  self.mod_tVal = args.mod_tVal
   self.display_cards = args.display_cards or {}
   self.cardarea = CardArea(0, 0, G.CARD_W * (2 - 1 / #self.display_cards), G.CARD_H, { card_limit = #self.display_cards, type = 'title' })
   for _, key in ipairs(self.display_cards) do
@@ -38,6 +41,7 @@ end
 
 function Tile:render()
   local enabled = self.ref_table[self.ref_value]
+  if self.condition == false then enabled = false end
 
   return {
     n = G.UIT.C,
@@ -48,9 +52,11 @@ function Tile:render()
       colour = enabled and backdrop_colour_enabled or backdrop_colour_disabled,
       outline = 1,
       outline_colour = enabled and outline_colour_enabled or outline_colour_disabled,
-      button = "toggle_settings_tile",
+      button = "toggle_nacho_settings_tile",
       ref_table = self.ref_table,
       ref_value = self.ref_value,
+      condition = self.condition,
+      detailed_tooltip = self.mod_tVal and {set = 'Other', key = 'modname_tooltip', vars = {self.mod_tVal}} or nil,
       hover = true,
     },
     nodes = {

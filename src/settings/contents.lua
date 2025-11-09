@@ -13,22 +13,28 @@ local pages = {
   {
     title = function() return localize("nacho_pokemon2") end,
     tiles = {
+      { list = { 'j_nacho_snover', 'j_nacho_abomasnow', 'j_nacho_mega_abomasnow' }, label = function() return localize { type = "name_text", set = "Joker", key = "j_nacho_snover" } end, config_key = "snover" },
       { list = { 'j_nacho_audino', 'j_nacho_mega_audino' }, label = function() return localize { type = "name_text", set = "Joker", key = "j_nacho_audino" } end, config_key = "audino" },
       { list = { 'j_nacho_hisuian_zorua', 'j_nacho_hisuian_zoroark' }, label = function() return "Hisuian Zorua" end, config_key = "hisuian_zorua" },
       { list = { 'j_nacho_clauncher', 'j_nacho_clawitzer' }, label = function() return localize { type = "name_text", set = "Joker", key = "j_nacho_clauncher" } end, config_key = "clauncher" },
       { list = { 'j_nacho_dedenne' }, label = function() return localize { type = "name_text", set = "Joker", key = "j_nacho_dedenne" } end, config_key = "dedenne" },
       { list = { 'j_nacho_carbink' }, label = function() return localize { type = "name_text", set = "Joker", key = "j_nacho_carbink" } end, config_key = "carbink" },
-      { list = { 'j_nacho_goomy', 'j_nacho_sliggoo', 'j_nacho_goodra', 'j_nacho_hisuian_sliggoo', 'j_nacho_hisuian_goodra' }, label = function() return localize { type = "name_text", set = "Joker", key = "j_nacho_goomy" } end, config_key = "goomy" },
     }
   },
   {
     title = function() return localize("nacho_pokemon3") end,
     tiles = {
+      { list = { 'j_nacho_goomy', 'j_nacho_sliggoo', 'j_nacho_goodra', 'j_nacho_hisuian_sliggoo', 'j_nacho_hisuian_goodra' }, label = function() return localize { type = "name_text", set = "Joker", key = "j_nacho_goomy" } end, config_key = "goomy" },
       { list = { 'j_nacho_oranguru' }, label = function() return localize { type = "name_text", set = "Joker", key = "j_nacho_oranguru" } end, config_key = "oranguru" },
       { list = { 'j_nacho_passimian' }, label = function() return localize { type = "name_text", set = "Joker", key = "j_nacho_passimian" } end, config_key = "passimian" },
       { list = { 'j_nacho_turtonator' }, label = function() return localize { type = "name_text", set = "Joker", key = "j_nacho_turtonator" } end, config_key = "turtonator" },
       { list = { 'j_nacho_skwovet', 'j_nacho_greedent' }, label = function() return localize { type = "name_text", set = "Joker", key = "j_nacho_skwovet" } end, config_key = "skwovet" },
       { list = { 'j_nacho_galarian_meowth', 'j_nacho_perrserker' }, label = function() return "Galarian Meowth" end, config_key = "galarian_meowth" },
+    }
+  },
+  {
+    title = function() return localize("nacho_pokemon4") end,
+    tiles = {
       { list = { 'j_nacho_terapagos', 'j_nacho_terapagos_terastal', 'j_nacho_terapagos_stellar' }, label = function() return localize { type = "name_text", set = "Joker", key = "j_nacho_terapagos" } end, config_key = "terapagos" },
     }
   },
@@ -37,8 +43,8 @@ local pages = {
 -- Adding in the Cross-Mod joker pages
 pages[#pages+1] = { title = function() return localize("nacho_crossMod") end, tiles = {} }
 
-if (SMODS.Mods["ToxicStall"] or {}).can_load then pages[4].tiles[#pages[4].tiles+1] =
-{ list = { 'j_nacho_hisuian_sneasel', 'j_nacho_sneasler' }, label = function() return "Hisuian Sneasel" end, config_key = "hisuian_sneasel" } end
+pages[#pages].tiles[#pages[#pages].tiles+1] =
+  { list = { 'j_nacho_hisuian_sneasel', 'j_nacho_sneasler' }, label = function() return "Hisuian Sneasel" end, config_key = "hisuian_sneasel", condition = (SMODS.Mods["ToxicStall"] or {}).can_load, mod_tVal = "The Toxic Stall" }
 
 
 return {
