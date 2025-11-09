@@ -1,7 +1,7 @@
 -- Hisuian Sneasel 215-1
 local hisuian_sneasel={
   name = "hisuian_sneasel",
-  config = {extra = {triggered = false}},
+  config = {extra = {Xmult_mod = 0.1, triggered = false}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = G.P_CENTERS.m_stall_toxic

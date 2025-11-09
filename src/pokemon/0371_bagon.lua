@@ -1,7 +1,7 @@
 -- Bagon 371
 local bagon={
   name = "bagon",
-  config = {extra = {}},
+  config = {extra = {mult = 0}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     local deck_data = ''
@@ -97,7 +97,7 @@ local bagon={
 -- Shelgon 372
 local shelgon={
   name = "shelgon",
-  config = {extra = {}},
+  config = {extra = {mult = 0}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     local deck_data = ''
