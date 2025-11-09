@@ -101,8 +101,8 @@ This is an add-on mod for Pokermon - an add-on mod for Balatro.
 
 | Joker | Effect | Mod |
 | ------ | ------ | ------ |
-| Hisuian Sneasel | When played hand is a single enhanced card, it becomes Toxic | The Toxic Stall |
-| Sneasler | When played hand is a single enhanced card, it and two held enhanced cards become Toxic, and Toxic cards gain X0.1 mult | The Toxic Stall |
+| Hisuian Sneasel | If played hand is a single enhanced card, it becomes Toxic | The Toxic Stall |
+| Sneasler | If played hand is a single enhanced card, it and two held enhanced cards become Toxic,<br/> and Toxic cards gain X0.1 mult | The Toxic Stall |
 
 ## Stakes
 
