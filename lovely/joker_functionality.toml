@@ -193,7 +193,7 @@ match_indent = true
 [[patches]]
 [patches.pattern]
 target = '=[SMODS Pokermon "consumables/mart1.lua"]'
-pattern = '''card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset')})'''
+pattern = '''if card.ability.extra.used_on and target.config.center.key ~= card.ability.extra.used_on and next(SMODS.find_card(card.ability.extra.used_on)) then return false end'''
 position = "before"
 payload = '''
 for k, v in pairs(G.jokers.cards) do
