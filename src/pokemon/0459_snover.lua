@@ -21,7 +21,6 @@ local snover = {
   stage = "Basic",
   ptype = "Grass",
   blueprint_compat = true,
-  custom_pool_func = true,
   calculate = function(self, card, context)
     local a = card.ability.extra
 
@@ -75,7 +74,6 @@ local abomasnow = {
   stage = "One",
   ptype = "Grass",
   blueprint_compat = true,
-  custom_pool_func = true,
   calculate = function(self, card, context)
     -- Check if glass card breaks, then convert an unenhanced card in deck to glass
     if context.remove_playing_cards then
