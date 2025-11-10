@@ -101,7 +101,7 @@ local clawitzer = {
   end,
   in_pool = function(self, args)
     for k, v in pairs(G.playing_cards) do
-      if v.edition and (v.edition.foil or v.edition.holographic or v.edition.polychrome) then return true end
+      if v.edition and (v.edition.foil or v.edition.holographic or v.edition.polychrome) then return pokemon_in_pool(self) end
     end
     return false
   end,
