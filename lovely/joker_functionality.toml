@@ -5,22 +5,6 @@ priority = 21
 
 ### Gallade and Mega Gallade
 
-# Gallade Planet Insert
-[[patches]]
-[patches.pattern]
-target = "functions/common_events.lua"
-pattern = '''
-function level_up_hand(card, hand, instant, amount)
-'''
-position = "after"
-payload = '''
-    if next(SMODS.find_card('j_nacho_gallade')) and card and card.ability and card.ability.set == 'Planet' then
-        return true
-    end
-'''
-match_indent = true
-
-
 # Mega Gallade Hand Debuff Logic
 [[patches]]
 [patches.pattern]

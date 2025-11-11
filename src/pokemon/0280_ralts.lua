@@ -208,20 +208,6 @@ local gallade={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    -- Consumable used - Planet
-    if context.using_consumeable and context.consumeable and context.consumeable.ability then
-      if context.consumeable.ability.set == 'Planet' then
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_psycho_cut_ex'), colour = G.C.SECONDARY_SET.Planet, sound = 'slice1', pitch = 0.96+math.random()*0.08})
-        -- Find most played hand
-        local _hand = calc_most_played_hand()
-        -- Level up most played hand by three
-        card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_level_up_ex')})
-        update_hand_text({sound = 'button', volume = 0.7, pitch = 0.8, delay = 0.3}, {handname=localize(_hand, 'poker_hands'),chips = G.GAME.hands[_hand].chips, mult = G.GAME.hands[_hand].mult, level=G.GAME.hands[_hand].level})
-        level_up_hand(context.blueprint_card or card, _hand, nil, 1)
-        update_hand_text({sound = 'button', volume = 0.7, pitch = 1.1, delay = 0}, {mult = 0, chips = 0, handname = '', level = ''})
-      end
-    end
-
     -- Main Scoring
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
@@ -275,9 +261,26 @@ local yoink = function()
   SMODS.Joker:take_ownership('maelmc_mega_gardevoir', { aux_poke = true, no_collection = true, custom_pool_func = true, in_pool = function() return false end }, true)
 end
 
+local init = function()
+  -- Gallade level_up_hand hook
+  level_up_hand_ref = level_up_hand
+  level_up_hand = function(card, hand, instant, amount)
+    local _hand
+    if next(SMODS.find_card('j_nacho_gallade')) and card and card.ability and card.ability.set == 'Planet' then
+      local gallade = SMODS.find_card('j_nacho_gallade')[1]
+      _hand = calc_most_played_hand()
+      card_eval_status_text(gallade, 'extra', nil, nil, nil, {message = localize('poke_psycho_cut_ex'), colour = G.C.SECONDARY_SET.Planet, sound = 'slice1', pitch = 0.96+math.random()*0.08})
+      delay(0.4)
+      update_hand_text({sound = 'button', volume = 0.7, pitch = 0.8, delay = 0.3}, {handname=localize(_hand, 'poker_hands'),chips = G.GAME.hands[_hand].chips, mult = G.GAME.hands[_hand].mult, level=G.GAME.hands[_hand].level})
+    end
+    level_up_hand_ref(card, _hand or hand, instant, amount)
+  end
+end
+
 return {
   name = "Nacho's Ralts Evo Line",
   enabled = nacho_config.ralts or false,
+  init = init,
   yoink = yoink,
   list = { ralts, kirlia, gardevoir, mega_gardevoir, gallade, mega_gallade }
 }
