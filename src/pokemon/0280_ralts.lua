@@ -240,6 +240,10 @@ local mega_gallade={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
+    -- Prevent most played hand from being debuffed
+    if context.debuff_hand and context.scoring_name == calc_most_played_hand() then
+      return { prevent_debuff = true }
+    end
     -- Main Scoring
     if context.cardarea == G.jokers and context.scoring_hand then
       if context.joker_main then
@@ -276,8 +280,23 @@ local init = function()
     level_up_hand_ref(card, _hand or hand, instant, amount)
   end
 
-  -- Mega Gallade hand debuff override
-
+  -- Mega Gallade card debuffing/un-debuffing function
+  local parse_highlighted = CardArea.parse_highlighted
+  CardArea.parse_highlighted = function(self)
+    for _, card in ipairs(self.highlighted) do
+      if card.debuff then card:set_debuff(false) end
+    end
+    local text, _, _ = G.FUNCS.get_poker_hand_info(self.highlighted)
+    for _, card in ipairs(self.cards) do
+      SMODS.recalc_debuff(card)
+    end
+    if text == calc_most_played_hand() and next(SMODS.find_card('j_nacho_mega_gallade')) then
+      for _, card in ipairs(self.highlighted) do
+        if card.debuff then card:set_debuff(false) end
+      end
+    end
+    parse_highlighted(self)
+  end
 end
 
 return {

@@ -5,21 +5,6 @@ priority = 21
 
 ### Gallade and Mega Gallade
 
-# Mega Gallade Hand Debuff Logic
-[[patches]]
-[patches.pattern]
-target = "blind.lua"
-pattern = '''
-if self.disabled then return end
-    local obj = self.config.blind
-    if obj.debuff_hand and type(obj.debuff_hand) == 'function' then
-'''
-position = "before"
-payload = '''
-    if next(SMODS.find_card('j_nacho_mega_gallade')) then return end
-'''
-match_indent = true
-
 ### Audino
 # Extra Levels at end of Round
 [[patches]]

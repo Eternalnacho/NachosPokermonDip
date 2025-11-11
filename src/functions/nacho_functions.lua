@@ -62,23 +62,3 @@ poke_family_present = function(center)
   
   return ret
 end
-
--- POKEMON SPECIFIC FUNCTIONS/OVERRIDES --
-
--- mega gallade card debuffing/un-debuffing function
-local parse_highlighted = CardArea.parse_highlighted
-CardArea.parse_highlighted = function(self)
-  for _, card in ipairs(self.highlighted) do
-    if card.debuff then card:set_debuff(false) end
-  end
-  local text, _, _ = G.FUNCS.get_poker_hand_info(self.highlighted)
-  for _, card in ipairs(self.cards) do
-    SMODS.recalc_debuff(card)
-  end
-  if text == calc_most_played_hand() and next(SMODS.find_card('j_nacho_mega_gallade')) then
-    for _, card in ipairs(self.highlighted) do
-      if card.debuff then card:set_debuff(false) end
-    end
-  end
-  parse_highlighted(self)
-end
