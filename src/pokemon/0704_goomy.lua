@@ -17,6 +17,8 @@ local goomy={
   cost = 6,
   stage = "Basic",
   ptype = "Dragon",
+  gen = 6,
+  pseudol = true,
   blueprint_compat = true,
   calculate = function(self, card, context)
     -- Check if Flush House played
@@ -83,6 +85,7 @@ local sliggoo={
   cost = 8,
   stage = "One",
   ptype = "Dragon",
+  gen = 6,
   blueprint_compat = true,
   calculate = function(self, card, context)
     -- Count # of Flushes played
@@ -143,6 +146,7 @@ local goodra={
   cost = 11,
   stage = "Two",
   ptype = "Dragon",
+  gen = 6,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.individual and (context.cardarea == G.hand or G.play) and not context.end_of_round then

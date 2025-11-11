@@ -17,6 +17,7 @@ return {
   turtonator = true,
   skwovet = true,
   galarian_meowth = true,
+  frigibax = true,
   terapagos = true,
   hisuian_sneasel = (SMODS.Mods["ToxicStall"] or {}).can_load and true or false,
   customStakes = true,

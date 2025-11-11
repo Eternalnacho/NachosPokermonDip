@@ -32,7 +32,7 @@ local snover = {
       end
       if glass_cards > 0 and not a.triggered then
         local viable_targets = {}
-        for k, v in pairs(G.playing_cards) do
+        for k, v in pairs(G.deck.cards) do
           if v.config.center == G.P_CENTERS.c_base then viable_targets[#viable_targets+1] = v end
         end
         local target = pseudorandom_element(viable_targets, pseudoseed('snover'))
@@ -84,7 +84,7 @@ local abomasnow = {
       if glass_cards > 0 then
         for i = 1, glass_cards do
           local viable_targets = {}
-          for k, v in pairs(G.playing_cards) do
+          for k, v in pairs(G.deck.cards) do
             if v.config.center == G.P_CENTERS.c_base then viable_targets[#viable_targets+1] = v end
           end
           local target = pseudorandom_element(viable_targets, pseudoseed('abomasnow'))
