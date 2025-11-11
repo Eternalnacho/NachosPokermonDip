@@ -263,7 +263,7 @@ end
 
 local init = function()
   -- Gallade level_up_hand hook
-  level_up_hand_ref = level_up_hand
+  local level_up_hand_ref = level_up_hand
   level_up_hand = function(card, hand, instant, amount)
     local _hand
     if next(SMODS.find_card('j_nacho_gallade')) and card and card.ability and card.ability.set == 'Planet' then
@@ -275,6 +275,9 @@ local init = function()
     end
     level_up_hand_ref(card, _hand or hand, instant, amount)
   end
+
+  -- Mega Gallade hand debuff override
+
 end
 
 return {
