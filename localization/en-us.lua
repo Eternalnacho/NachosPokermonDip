@@ -482,11 +482,11 @@ return {
       j_nacho_frigibax = {
         name = "Frigibax",
         text = {
-          "When a {C:attention}Five of a Kind{} is played,",
+          "If played hand is a {C:attention}Five of a Kind{},",
           "{C:attention}held{} cards become {C:dark_edition}Foil{}",
           "{br:2.5}ERROR - CONTACT STEAK",
-          "If poker hand contains",
-          "cards with {C:red}Mult{}, one random",
+          "If poker hand contains cards",
+          "that give {C:red}Mult{}, one random",
           "card in deck becomes {C:dark_edition}Foil{}",
           "{C:inactive,s:0.8}(Evolves when deck has #1#{C:dark_edition,s:0.8}Foil{C:inactive,s:0.8} cards)"
         }
@@ -494,13 +494,13 @@ return {
       j_nacho_arctibax = {
         name = "Arctibax",
         text = {
-          "When a {C:attention}Five of a Kind{} is played,",
+          "If played hand is a {C:attention}Five of a Kind{},",
           "{C:attention}held{} cards become {C:dark_edition}Foil{}",
           "{br:2.5}ERROR - CONTACT STEAK",
           "One random card in deck",
           "becomes {C:dark_edition}Foil{} for each card",
-          "with {C:red}Mult{} of the same {C:attention}rank{}",
-          "in poker hand",
+          "that gives {C:red}Mult{} of the",
+          "same {C:attention}rank{} in poker hand",
           "{C:inactive,s:0.8}(Evolves when deck has #1#{C:dark_edition,s:0.8}Foil{C:inactive,s:0.8} cards)"
         }
       },
