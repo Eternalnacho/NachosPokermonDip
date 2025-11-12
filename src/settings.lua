@@ -1,12 +1,6 @@
 local Tile = assert(SMODS.load_file("src/settings/tile.lua"))()
 
-local list_map = function(list, func)
-  new_list = {}
-  for _, v in pairs(list) do
-    new_list[#new_list + 1] = func(v)
-  end
-  return new_list
-end
+local list_map = PkmnDip.utils.map_list
 
 local content = assert(SMODS.load_file("src/settings/contents.lua"))()
 
