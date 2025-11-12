@@ -1,0 +1,73 @@
+-- TAKING OWNERSHIP / OVERRIDES FOR MULTIPLE JOKERS
+
+
+-- poke_family_present hook for modded starters / pseudos
+local poke_family_present_ref = poke_family_present
+poke_family_present = function(center)
+  if next(find_joker("Showman")) or next(find_joker("pokedex")) then return false end
+  local family_list = poke_get_family_list(center.name)
+  local prefix = center.poke_custom_prefix
+  local ret = poke_family_present_ref(center)
+
+  if prefix then for _, fam in pairs(family_list) do
+      if G.GAME.used_jokers["j_"..prefix.."_"..((type(fam) == "table" and fam.key) or fam)] then
+        ret = true
+      end
+    end
+  end
+  
+  return ret
+end
+
+
+-- Booster Functionality for Oranguru (and maybe smth else...)
+SMODS.Booster:take_ownership_by_kind('Standard', {
+  create_card = function(self, card)
+      local _card
+      local _edition = poll_edition('standard_edition'..G.GAME.round_resets.ante, 2, true)
+      local _seal = SMODS.poll_seal({ mod = 10 })
+      local _rank
+      local _suit
+
+      if next(SMODS.find_card('j_nacho_oranguru')) then
+        local _ranks = get_common_ranks()
+        _rank = pseudorandom_element(_ranks, pseudoseed("staranks"..G.GAME.round_resets.ante)).card_key
+      end
+
+      if _rank or _suit then
+        if not _rank then _rank = pseudorandom_element(SMODS.Ranks, pseudoseed("staranks"..G.GAME.round_resets.ante)).card_key end
+        if not _suit then _suit = pseudorandom_element(SMODS.Suits, pseudoseed("stasuits"..G.GAME.round_resets.ante)).card_key end
+        _card = {
+          set = (pseudorandom(pseudoseed('stdset'..G.GAME.round_resets.ante)) > 0.6) and "Enhanced" or "Base",
+          front = _suit.."_".._rank,
+          edition = _edition,
+          seal = _seal,
+          area = G.pack_cards,
+          skip_materialize = true,
+          soulable = true,
+        }
+      else
+        local _edition = poll_edition('standard_edition' .. G.GAME.round_resets.ante, 2, true)
+        local _seal = SMODS.poll_seal({ mod = 10 })
+        _card = {
+          set = (pseudorandom(pseudoseed('stdset'..G.GAME.round_resets.ante)) > 0.6) and "Enhanced" or "Base",
+          edition = _edition,
+          seal = _seal,
+          area = G.pack_cards,
+          skip_materialize = true,
+          soulable = true,
+          key_append = "sta"
+        }
+      end
+      return _card
+  end,
+  loc_vars = function(self, info_queue, card)
+      local cfg = (card and card.ability) or self.config
+      return {
+          vars = { cfg.choose, cfg.extra },
+          key = self.key:sub(1, -3), -- This uses the description key of the booster without the number at the end
+      }
+  end,
+},
+true
+)
