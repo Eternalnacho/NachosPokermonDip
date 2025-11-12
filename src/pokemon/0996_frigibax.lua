@@ -6,10 +6,7 @@ local frigibax = {
     type_tooltip(self, info_queue, card)
     local deck_data = card.ability.evo_rqmt..' '
     if G.playing_cards then
-      local foil_count = 0
-      for k, v in pairs(G.playing_cards) do
-        if v.edition and v.edition.foil then foil_count = foil_count + 1 end
-      end
+      local foil_count = #PkmnDip.utils.filter(G.playing_cards, function(card) return (card.edition and card.edition.foil) end)
       deck_data = '['..tostring(foil_count)..'/'..card.ability.evo_rqmt..'] '
     end
     return { vars = { deck_data } }
@@ -37,10 +34,7 @@ local frigibax = {
         end
         -- Scoring mult cards give *a* card in deck foil
         if has_mult > 0 then
-          local viable_targets = {}
-          for k, v in pairs(G.deck.cards) do
-            if not (v.edition and v.edition.foil) then viable_targets[#viable_targets+1] = v end
-          end
+          local viable_targets = PkmnDip.utils.filter(G.deck.cards, function(card) return not (card.edition and card.edition.foil) end)
           local target = pseudorandom_element(viable_targets, pseudoseed('frigibax'))
           if target then target:set_edition({foil = true}, true) end
         end
@@ -58,10 +52,7 @@ local arctibax = {
     type_tooltip(self, info_queue, card)
     local deck_data = card.ability.evo_rqmt..' '
     if G.playing_cards then
-      local foil_count = 0
-      for k, v in pairs(G.playing_cards) do
-        if v.edition and v.edition.foil then foil_count = foil_count + 1 end
-      end
+      local foil_count = #PkmnDip.utils.filter(G.playing_cards, function(card) return (card.edition and card.edition.foil) end)
       deck_data = '['..tostring(foil_count)..'/'..card.ability.evo_rqmt..'] '
     end
     return { vars = { deck_data } }
@@ -91,10 +82,7 @@ local arctibax = {
         -- Scoring mult cards with the same rank give cards in deck foil
         if has_mult > 0 then
           for i = 1, has_mult do
-            local viable_targets = {}
-            for k, v in pairs(G.deck.cards) do
-              if not (v.edition and v.edition.foil) then viable_targets[#viable_targets+1] = v end
-            end
+            local viable_targets = PkmnDip.utils.filter(G.deck.cards, function(card) return not (card.edition and card.edition.foil) end)
             local target = pseudorandom_element(viable_targets, pseudoseed('arctibax'))
             if target then target:set_edition({foil = true}, true) end
           end
@@ -111,12 +99,7 @@ local baxcalibur = {
   config = { extra = { Xmult_multi = 0.03 } },
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    local foil_count = 0
-    if G.playing_cards then
-      for k, v in pairs(G.playing_cards) do
-        if v.edition and v.edition.foil then foil_count = foil_count + 1 end
-      end
-    end
+    local foil_count = #PkmnDip.utils.filter(G.deck.cards, function(card) return card.edition and card.edition.foil end)
     return { vars = { card.ability.extra.Xmult_multi, 1 + card.ability.extra.Xmult_multi * foil_count } }
   end,
   designer = "king_alloy, roxie",
@@ -136,10 +119,7 @@ local baxcalibur = {
     -- Five of a Kinds go stoopid
     if context.scoring_hand and context.scoring_name == "Five of a Kind" and not card.ability.extra.disabled then
       if context.individual and context.cardarea == G.play then
-        local foil_count = 0
-        for k, v in pairs(G.playing_cards) do
-          if v.edition and v.edition.foil then foil_count = foil_count + 1 end
-        end
+        local foil_count = #PkmnDip.utils.filter(G.playing_cards, function(card) return (card.edition and card.edition.foil) end)
         return {
           Xmult = 1 + card.ability.extra.Xmult_multi * foil_count
         }

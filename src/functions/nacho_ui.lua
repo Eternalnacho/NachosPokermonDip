@@ -11,7 +11,7 @@ SMODS.collection_pool = function(_base_pool)
     if (not G.ACTIVE_MOD_UI or v.mod == G.ACTIVE_MOD_UI) and not v.no_collection then
       if nacho_config.orderJokers then
         for x, y in pairs(PkmnDip.dex_order_groups) do
-          if table.contains(y, v.name) then
+          if PkmnDip.utils.contains(y, v.name) then
             inserts[#inserts+1] = v
             moved = true
           end
@@ -26,10 +26,10 @@ SMODS.collection_pool = function(_base_pool)
     table.sort(inserts, function(a, b) return PkmnDip.get_dex_number(a.name) < PkmnDip.get_dex_number(b.name) end)
     for k, v in pairs(inserts) do
       for x, y in pairs(PkmnDip.dex_order_groups) do
-        if table.contains(y, v.name) then
+        if PkmnDip.utils.contains(y, v.name) then
           local next_index = PkmnDip.dex_order[PkmnDip.find_next_dex_number(v.name)]
           if type(next_index) == "table" then next_index = next_index[1] end
-          if not table.contains(pool, v) then
+          if not PkmnDip.utils.contains(pool, v) then
             table.insert(pool, next_index and PkmnDip.find_pool_index(pool, 'j_poke_'..next_index) or #pool + 1, v)
           end
         end
@@ -62,16 +62,16 @@ PkmnDip.find_next_dex_number = function(name)
   local dexNo = PkmnDip.get_dex_number(name)
   local group_list
   for k, v in pairs(PkmnDip.dex_order_groups) do
-    if table.contains(v, name) then group_list = v break end
+    if PkmnDip.utils.contains(v, name) then group_list = v break end
   end
   for i, pokemon in ipairs(PkmnDip.dex_order) do
     if type(pokemon) == 'table' then
       for _, mon in ipairs(pokemon) do
-        if i > dexNo and not table.contains(group_list, mon) and G.P_CENTERS['j_poke_'..mon] then
+        if i > dexNo and not PkmnDip.utils.contains(group_list, mon) and G.P_CENTERS['j_poke_'..mon] then
           return i
         end
       end
-    elseif i > dexNo and not table.contains(group_list, pokemon) and G.P_CENTERS['j_poke_'..pokemon] then
+    elseif i > dexNo and not PkmnDip.utils.contains(group_list, pokemon) and G.P_CENTERS['j_poke_'..pokemon] then
       return i
     elseif pokemon == "missingno" then return i end
   end

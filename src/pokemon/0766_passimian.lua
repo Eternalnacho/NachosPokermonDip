@@ -17,11 +17,11 @@ local passimian={
   calculate = function(self, card, context)
     if not card.ability.received_card then
       if context.selling_card and not context.selling_self and context.cardarea == G.jokers and not context.blueprint
-          and not table.contains(self.banlist, context.card.config.center.key) then
+          and not PkmnDip.utils.contains(self.banlist, context.card.config.center.key) then
         if context.card.area == G.jokers then self:receive_card(card, context.card.config.center.key, context) end
       end
       if context.joker_type_destroyed and context.cardarea == G.jokers and not context.blueprint
-          and not table.contains(self.banlist, context.card.config.center.key) then
+          and not PkmnDip.utils.contains(self.banlist, context.card.config.center.key) then
         self:receive_card(card, context.card.config.center.key, context)
       end
     elseif card.ability.received_card.calculate then
@@ -45,7 +45,7 @@ local passimian={
         -- and also the extra card limit on negatives apparently *sigh*
         if context.card.ability.card_limit then exceptions[#exceptions+1] = context.card.ability.card_limit end
         for k, v in pairs(context.card.ability) do
-          if not table.contains(exceptions, v) then
+          if not PkmnDip.utils.contains(exceptions, v) then
             if type(v) == 'table' then
               values_to_keep[k] = copy_table(v)
             else

@@ -4,14 +4,8 @@ local bagon={
   config = {extra = {mult = 0}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    local deck_data = ''
-    if G.playing_cards then
-      local high_count = 0
-      for k, v in pairs(G.playing_cards) do
-        if v.base.nominal >= 9 then high_count = high_count + 1 end
-      end
-      deck_data = ' ['..tostring(high_count)..'/'..tostring(math.ceil(#G.playing_cards * 9 / 16))..']'
-    end
+    local high_count = G.playing_cards and #PkmnDip.utils.filter(G.playing_cards, function(v) return v.base.nominal >= 9 end) or 0
+    local deck_data = G.playing_cards and ' ['..tostring(high_count)..'/'..tostring(math.ceil(#G.playing_cards * 9 / 16))..']' or ''
     return {vars = {deck_data}}
   end,
   designer = "Eternalnacho",
@@ -81,17 +75,6 @@ local bagon={
         card = context.other_card or card
       }
     end
-    if context.cardarea == G.jokers and context.scoring_hand and context.scoring_name == "Two Pair" then
-      if context.joker_main then
-        if not context.blueprint then
-          local high_count = 0
-          for k, v in pairs(G.playing_cards) do
-            if v.base.nominal > 9 then high_count = high_count + 1 end
-          end
-          card.ability.extra.high_ranks = high_count
-        end
-      end
-    end
     return deck_rank_evo(self, card, context, "j_nacho_shelgon", 9, .57)
   end
 }
@@ -102,14 +85,8 @@ local shelgon={
   config = {extra = {mult = 0}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    local deck_data = ''
-    if G.playing_cards then
-      local high_count = 0
-      for k, v in pairs(G.playing_cards) do
-        if v.base.nominal >= 9 then high_count = high_count + 1 end
-      end
-      deck_data = ' ['..tostring(high_count)..'/'..tostring(math.ceil(#G.playing_cards * 3 / 4))..']'
-    end
+    local high_count = G.playing_cards and #PkmnDip.utils.filter(G.playing_cards, function(v) return v.base.nominal >= 9 end) or 0
+    local deck_data = G.playing_cards and ' ['..tostring(high_count)..'/'..tostring(math.ceil(#G.playing_cards * 3 / 4))..']' or ''
     return {vars = {deck_data}}
   end,
   designer = "Eternalnacho",
@@ -177,17 +154,6 @@ local shelgon={
         mult = context.other_card.base.nominal / 2,
         card = context.other_card or card
       }
-    end
-    if context.cardarea == G.jokers and context.scoring_hand and context.scoring_name == "Two Pair" then
-      if context.joker_main then
-        if not context.blueprint then
-          local high_count = 0
-          for k, v in pairs(G.playing_cards) do
-            if v.base.nominal > 9 then high_count = high_count + 1 end
-          end
-          card.ability.extra.high_ranks = high_count
-        end
-      end
     end
     return deck_rank_evo(self, card, context, "j_nacho_salamence", 9, .75)
   end

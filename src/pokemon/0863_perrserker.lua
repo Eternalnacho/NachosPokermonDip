@@ -101,10 +101,7 @@ local perrserker = {
     end
 
     if context.retrigger_joker_check and not context.retrigger_joker then
-      local metals = 0
-      for k, v in pairs(G.jokers.cards) do
-          if is_type(v, "Metal") then metals = metals + 1 end
-      end
+      local metals = #PkmnDip.utils.filter(G.jokers.cards, function(v) return is_type(v, "Metal") end)
       if metals == #G.jokers.cards and (context.other_card.ability and context.other_card == card) then
         return {
           message = localize("k_again_ex"),

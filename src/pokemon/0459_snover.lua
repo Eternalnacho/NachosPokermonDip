@@ -6,10 +6,7 @@ local snover = {
     type_tooltip(self, info_queue, card)
     local deck_data = ''
     if G.playing_cards then
-      local enhance_count = 0
-      for k, v in pairs(G.playing_cards) do
-        if SMODS.has_enhancement(v, 'm_glass') then enhance_count = enhance_count  + 1 end
-      end
+      local enhance_count = #PkmnDip.utils.filter(G.playing_cards, function(v) return SMODS.has_enhancement(v, 'm_glass') end)
       deck_data = '['..tostring(enhance_count)..'/'..tostring(math.ceil(#G.playing_cards/8))..'] '
     end
 		return {vars = {card.ability.extra.money_mod, deck_data}}
@@ -31,10 +28,7 @@ local snover = {
         if removed_card.shattered then glass_cards = glass_cards + 1 end
       end
       if glass_cards > 0 and not a.triggered then
-        local viable_targets = {}
-        for k, v in pairs(G.deck.cards) do
-          if v.config.center == G.P_CENTERS.c_base then viable_targets[#viable_targets+1] = v end
-        end
+        local viable_targets = PkmnDip.utils.filter(G.deck.cards, function(card) return card.config.center == G.P_CENTERS.c_base end)
         local target = pseudorandom_element(viable_targets, pseudoseed('snover'))
         poke_convert_cards_to(target, {mod_conv = 'm_glass'}, true, true)
         card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_ice_shard_ex')})
@@ -83,10 +77,7 @@ local abomasnow = {
       end
       if glass_cards > 0 then
         for i = 1, glass_cards do
-          local viable_targets = {}
-          for k, v in pairs(G.deck.cards) do
-            if v.config.center == G.P_CENTERS.c_base then viable_targets[#viable_targets+1] = v end
-          end
+          local viable_targets = PkmnDip.utils.filter(G.deck.cards, function(card) return card.config.center == G.P_CENTERS.c_base end)
           local target = pseudorandom_element(viable_targets, pseudoseed('abomasnow'))
           if target then
             poke_convert_cards_to(target, {mod_conv = 'm_glass', edition = "e_foil"}, true, true)

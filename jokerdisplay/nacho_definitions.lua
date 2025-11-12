@@ -63,12 +63,7 @@ jd_def["j_nacho_swablu"] = {
   },
   text_config = { colour = G.C.GOLD },
   calc_function = function(card)
-    local nine_tally = 0
-    if G.playing_cards then
-        for k, v in ipairs(G.playing_cards) do
-            if v:get_id() == 9 then nine_tally = nine_tally + 1 end
-        end
-    end
+    local nine_tally = G.playing_cards and #PkmnDip.utils.filter(G.playing_cards, function(v) return v:get_id() == 9 end) or 0
     card.joker_display_values.money = nine_tally
     card.joker_display_values.localized_text = "(" .. localize("k_round") .. ")"
   end
@@ -87,11 +82,9 @@ jd_def["j_nacho_altaria"] = {
   calc_function = function(card)
     local nine_tally = 0
     if G.playing_cards then
-      for k, v in ipairs(G.playing_cards) do
-          if v:get_id() == 9 then
-            nine_tally = nine_tally + 1
-            if v.config.center ~= G.P_CENTERS.c_base then nine_tally = nine_tally + 1 end
-          end
+      local nines = PkmnDip.utils.filter(G.playing_cards, function(v) return v:get_id() == 9 end); nine_tally = #nines
+      for k, v in pairs(nines) do
+        if v.config.center ~= G.P_CENTERS.c_base then nine_tally = nine_tally + 1 end
       end
     end
     card.joker_display_values.money = nine_tally
@@ -420,30 +413,13 @@ jd_def["j_nacho_perrserker"] = {
         { text = ")" },
     },
     calc_function = function(card)
-        local count = 0
-        if G.jokers then
-            for _, joker_card in ipairs(G.jokers.cards) do
-                if joker_card.config.center.rarity and is_type(joker_card, "Metal") then
-                    count = count + 1
-                end
-            end
-        end
+        local count = G.jokers and #PkmnDip.utils.filter(G.jokers.cards, function(v) return v.config.center.rarity and is_type(v, "Metal") end) or 0
         card.joker_display_values.count = count
         card.joker_display_values.localized_text = "Metal"
     end,
     mod_function = function(card, mod_joker)
-        local count = 0
-        local all_metal = 1
-        if G.jokers then
-            for _, joker_card in ipairs(G.jokers.cards) do
-                if joker_card.config.center.rarity and is_type(joker_card, "Metal") then
-                    count = count + 1
-                end
-            end
-            if count == #G.jokers.cards then
-                all_metal = 2
-            end
-        end
+        local count = G.jokers and #PkmnDip.utils.filter(G.jokers.cards, function(v) return v.config.center.rarity and is_type(v, "Metal") end) or 0
+        local all_metal = G.jokers and count == #G.jokers.cards and 2 or 1
         return { x_mult = (is_type(card, "Metal") and (mod_joker.ability.extra.Ymult ^ all_metal) ^ JokerDisplay.calculate_joker_triggers(mod_joker) or nil) }
     end
 }
@@ -499,14 +475,8 @@ jd_def["j_nacho_terapagos_terastal"] = {
         },
     },
     calc_function = function(card)
-        local count = 0
-        if G.jokers then
-            for _, joker_card in ipairs(G.jokers.cards) do
-                if joker_card.config.center.rarity and is_type(joker_card, card.ability.extra.ptype) and joker_card ~= card then
-                    count = count + 1
-                end
-            end
-        end
+        local count = G.jokers and #PkmnDip.utils.filter(G.jokers.cards,
+          function(v) return v.config.center.rarity and is_type(v, card.ability.extra.ptype) and v ~= card end) or 0
         card.joker_display_values.count = count
         card.joker_display_values.Xmult = 1 + count * card.ability.extra.Xmult_mod
         card.joker_display_values.localized_text = card.ability.extra.ptype
@@ -523,26 +493,11 @@ jd_def["j_nacho_terapagos_stellar"] = {
         { text = ")" },
     },
     calc_function = function(card)
-        local count = 0
-        if G.jokers then
-            for _, joker_card in ipairs(G.jokers.cards) do
-                if joker_card.config.center.rarity and is_type(joker_card, "Stellar") then
-                    count = count + 1
-                end
-            end
-        end
+        local count = G.jokers and #PkmnDip.utils.filter(G.jokers.cards, function(v) return v.config.center.rarity and is_type(v, "Stellar") end) or 0
         card.joker_display_values.count = count
         card.joker_display_values.localized_text = "Stellar"
     end,
     mod_function = function(card, mod_joker)
-        local count = 0
-        if G.jokers then
-            for _, joker_card in ipairs(G.jokers.cards) do
-                if joker_card.config.center.rarity and is_type(joker_card, "Stellar") then
-                    count = count + 1
-                end
-            end
-        end
         return { x_mult = (is_type(card, "Stellar") and (1 + mod_joker.ability.extra.Xmult_mod * get_total_energy(card)) ^ JokerDisplay.calculate_joker_triggers(mod_joker) or nil) }
     end
 }

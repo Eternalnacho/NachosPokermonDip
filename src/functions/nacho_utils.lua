@@ -1,5 +1,6 @@
--- Defining Table.contains
-function table.contains(table, element)
+PkmnDip.utils = {}
+
+function PkmnDip.utils.contains(table, element)
   for _, value in pairs(table) do
     if value == element then
       return true
@@ -8,15 +9,28 @@ function table.contains(table, element)
   return false
 end
 
--- Stealing this from Sonfive
-function get_base_evo_name(card)
-  -- Get the name of the base form if you can
-  local fam = poke_get_family_list(card.name)
-  -- Default is your own name, you may have no family T.T
-  local base_evo_name = card.name
-  if #fam > 0 then
-      -- Found a base evo, use it's name
-      base_evo_name = fam[1]
+function PkmnDip.utils.filter(list, func)
+  new_list = {}
+  for _, v in pairs(list) do
+    if func(v) then
+      new_list[#new_list + 1] = v
+    end
   end
-  return base_evo_name
+  return new_list
+end
+
+function PkmnDip.utils.copy_list(list)
+  return PkmnDip.utils.map_list(list, PkmnDip.utils.id)
+end
+
+function PkmnDip.utils.map_list(list, func)
+  new_list = {}
+  for _, v in pairs(list) do
+    new_list[#new_list + 1] = func(v)
+  end
+  return new_list
+end
+
+function PkmnDip.utils.id(a)
+  return a
 end

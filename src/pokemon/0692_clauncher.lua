@@ -28,7 +28,7 @@ local clauncher = {
     -- Retriggers all the unique editions
     if context.repetition and (context.cardarea == G.play or context.cardarea == G.hand) and context.other_card.edition and
         (next(context.card_effects[1]) or #context.card_effects > 1) then
-      if not table.contains(card.ability.extra.editions, context.other_card.edition.key) then
+      if not PkmnDip.utils.contains(card.ability.extra.editions, context.other_card.edition.key) then
         if not context.blueprint then
           card.ability.extra.editions[#card.ability.extra.editions+1] = context.other_card.edition.key
         end

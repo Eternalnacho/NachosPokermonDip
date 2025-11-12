@@ -4,12 +4,7 @@ local swablu={
   config = {extra = {money = 1, rounds = 4}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    local nine_tally = 0
-    if G.playing_cards then
-        for k, v in ipairs(G.playing_cards) do
-            if v:get_id() == 9 then nine_tally = nine_tally + 1 end
-        end
-    end
+    local nine_tally = G.playing_cards and #PkmnDip.utils.filter(G.playing_cards, function(v) return v:get_id() == 9 end) or 0
     return {vars = {card.ability.extra.money, card.ability.extra.money * nine_tally, card.ability.extra.rounds}}
   end,
   designer = "roxie",
@@ -25,12 +20,7 @@ local swablu={
     return level_evo(self, card, context, "j_nacho_altaria")
   end,
   calc_dollar_bonus = function(self, card)
-    local nine_tally = 0
-    if G.playing_cards then
-        for k, v in ipairs(G.playing_cards) do
-            if v:get_id() == 9 then nine_tally = nine_tally + 1 end
-        end
-    end
+    local nine_tally = G.playing_cards and #PkmnDip.utils.filter(G.playing_cards, function(v) return v:get_id() == 9 end) or 0
     return ease_poke_dollars(card, "swablu", card.ability.extra.money * nine_tally, true)
 	end
 }
@@ -43,12 +33,10 @@ local altaria={
     type_tooltip(self, info_queue, card)
     local nine_tally = 0
     if G.playing_cards then
-        for k, v in ipairs(G.playing_cards) do
-            if v:get_id() == 9 then
-              nine_tally = nine_tally + 1
-              if v.config.center ~= G.P_CENTERS.c_base then nine_tally = nine_tally + 1 end
-            end
-        end
+      local nines = PkmnDip.utils.filter(G.playing_cards, function(v) return v:get_id() == 9 end); nine_tally = #nines
+      for k, v in pairs(nines) do
+        if v.config.center ~= G.P_CENTERS.c_base then nine_tally = nine_tally + 1 end
+      end
     end
     return {vars = {card.ability.extra.money, card.ability.extra.money * 2, card.ability.extra.money * nine_tally}}
   end,
