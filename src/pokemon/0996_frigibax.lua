@@ -99,7 +99,7 @@ local baxcalibur = {
   config = { extra = { Xmult_multi = 0.03 } },
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    local foil_count = #PkmnDip.utils.filter(G.deck.cards, function(card) return card.edition and card.edition.foil end)
+    local foil_count = #PkmnDip.utils.filter(G.playing_cards, function(card) return card.edition and card.edition.foil end)
     return { vars = { card.ability.extra.Xmult_multi, 1 + card.ability.extra.Xmult_multi * foil_count } }
   end,
   designer = "king_alloy, roxie",
