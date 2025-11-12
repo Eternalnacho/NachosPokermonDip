@@ -4,11 +4,8 @@ local frigibax = {
   config = { extra = {}, evo_rqmt = 9 },
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    local deck_data = card.ability.evo_rqmt..' '
-    if G.playing_cards then
-      local foil_count = #PkmnDip.utils.filter(G.playing_cards, function(card) return (card.edition and card.edition.foil) end)
-      deck_data = '['..tostring(foil_count)..'/'..card.ability.evo_rqmt..'] '
-    end
+    local foil_count = G.playing_cards and G.STAGE == G.STAGES.RUN and #PkmnDip.utils.filter(G.playing_cards, function(card) return (card.edition and card.edition.foil) end) or 0
+    local deck_data = G.playing_cards and G.STAGE == G.STAGES.RUN and '['..tostring(foil_count)..'/'..card.ability.evo_rqmt..'] ' or card.ability.evo_rqmt..' '
     return { vars = { deck_data } }
   end,
   designer = "king_alloy, roxie",
@@ -50,11 +47,8 @@ local arctibax = {
   config = { extra = { }, evo_rqmt = 18 },
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    local deck_data = card.ability.evo_rqmt..' '
-    if G.playing_cards then
-      local foil_count = #PkmnDip.utils.filter(G.playing_cards, function(card) return (card.edition and card.edition.foil) end)
-      deck_data = '['..tostring(foil_count)..'/'..card.ability.evo_rqmt..'] '
-    end
+    local foil_count = G.playing_cards and G.STAGE == G.STAGES.RUN and #PkmnDip.utils.filter(G.playing_cards, function(card) return (card.edition and card.edition.foil) end) or 0
+    local deck_data = G.playing_cards and G.STAGE == G.STAGES.RUN and '['..tostring(foil_count)..'/'..card.ability.evo_rqmt..'] ' or card.ability.evo_rqmt..' '
     return { vars = { deck_data } }
   end,
   designer = "king_alloy, roxie",
@@ -99,7 +93,7 @@ local baxcalibur = {
   config = { extra = { Xmult_multi = 0.03 } },
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    local foil_count = #PkmnDip.utils.filter(G.playing_cards, function(card) return card.edition and card.edition.foil end)
+    local foil_count = G.playing_cards and #PkmnDip.utils.filter(G.playing_cards, function(card) return card.edition and card.edition.foil end) or 0
     return { vars = { card.ability.extra.Xmult_multi, 1 + card.ability.extra.Xmult_multi * foil_count } }
   end,
   designer = "king_alloy, roxie",

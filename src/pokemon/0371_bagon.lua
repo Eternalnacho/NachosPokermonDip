@@ -4,8 +4,8 @@ local bagon={
   config = {extra = {mult = 0}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    local high_count = G.playing_cards and #PkmnDip.utils.filter(G.playing_cards, function(v) return v.base.nominal >= 9 end) or 0
-    local deck_data = G.playing_cards and ' ['..tostring(high_count)..'/'..tostring(math.ceil(#G.playing_cards * 9 / 16))..']' or ''
+    local high_count = G.playing_cards and G.STAGE == G.STAGES.RUN and #PkmnDip.utils.filter(G.playing_cards, function(v) return v.base.nominal >= 9 end) or 0
+    local deck_data = G.playing_cards and G.STAGE == G.STAGES.RUN and ' ['..tostring(high_count)..'/'..tostring(math.ceil(#G.playing_cards * 9 / 16))..']' or ''
     return {vars = {deck_data}}
   end,
   designer = "Eternalnacho",
@@ -85,8 +85,8 @@ local shelgon={
   config = {extra = {mult = 0}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    local high_count = G.playing_cards and #PkmnDip.utils.filter(G.playing_cards, function(v) return v.base.nominal >= 9 end) or 0
-    local deck_data = G.playing_cards and ' ['..tostring(high_count)..'/'..tostring(math.ceil(#G.playing_cards * 3 / 4))..']' or ''
+    local high_count = G.playing_cards and G.STAGE == G.STAGES.RUN and #PkmnDip.utils.filter(G.playing_cards, function(v) return v.base.nominal >= 9 end) or 0
+    local deck_data = G.playing_cards and G.STAGE == G.STAGES.RUN and ' ['..tostring(high_count)..'/'..tostring(math.ceil(#G.playing_cards * 3 / 4))..']' or ''
     return {vars = {deck_data}}
   end,
   designer = "Eternalnacho",
