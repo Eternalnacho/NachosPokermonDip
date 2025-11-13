@@ -224,6 +224,6 @@ local terapagos_stellar={
 
 return {
   name = "Nacho's Terapagos Line",
-  enabled = nacho_config.Terapagos or false,
+  enabled = nacho_config.terapagos or false,
   list = {terapagos, terapagos_terastal, terapagos_stellar}
 }
