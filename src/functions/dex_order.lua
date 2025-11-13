@@ -890,7 +890,7 @@ PkmnDip.dex_order = {
   "zamazenta",
   "eternatus",
   "kubfu",
-  { "urshifu", "urshifu_rapid", "gmax_urshifu", "gmax_urshifu_rapid" },
+  { "urshifu_single_strike", "urshifu_rapid_strike", "gmax_urshifu_single_strike", "gmax_urshifu_rapid_strike" },
   "zarude",
   "regieleki",
   "regidrago",
