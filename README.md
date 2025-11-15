@@ -28,7 +28,7 @@ This is an add-on mod for Pokermon - an add-on mod for Balatro.
 | Gardevoir | X0.1 Mult for every hand level above 1 |
 | Mega Gardevoir | Holds Negative Black Hole<br/>Create an Orbital Tag when a Planet card is used<br/>Held Planet cards gain Polychrome at end of round |
 | Gallade | Planet cards only raise the level of your most played poker hand<br/>X0.15 Mult for each time poker hand has been played this run<br/>|
-| Mega Gallade | Poker hands cannot be debuffed, This Joker can't be debuffed <br/>Scoring cards can't be debuffed if scoring hand is your most played hand<br/>X0.3 Mult for each time poker hand has been played this run<br/>|
+| Mega Gallade | This Joker can't be debuffed <br/>Scoring cards can't be debuffed if scoring hand is your most played hand<br/>X0.3 Mult for each time poker hand has been played this run<br/>|
 
 | Joker | Effect |
 | ------ | ------ |
@@ -90,6 +90,20 @@ This is an add-on mod for Pokermon - an add-on mod for Balatro.
 | ------ | ------ |
 | Galarian Meowth | Retriggers the first two Steel cards held in hand |
 | Perrserker | Each Metal Joker gives X1.5 Mult <br/> Retriggers if all Jokers are Metal |
+
+| Joker | Effect |
+| ------ | ------ |
+| Applin | +1 Hand Size<br/>Destroys a random card remaining in deck at end of round |
+| Flapple | When a playing card is destroyed, gain X0.4 Mult <br/>When a hand is played, lose X0.1 Mult |
+| Appletun | +1 Hand Size, +1 Hand Size if a rank is missing from your full deck<br/>When a playing card is destroyed, earn $3 |
+| Dipplin | When a playing card is destroyed, add a Wild copy of it to deck<br/>If a Wild card was destroyed, add 2 copies instead |
+| Hydrapple | When a playing card is destroyed, add a Wild copy of it to deck and gain X0.2 Mult<br/>If a Wild card was destroyed, gain X0.4 Mult instead |
+
+| Joker | Effect |
+| ------ | ------ |
+| Frigibax | If played hand is a Five of a Kind, held cards become foil<br/>One random card in deck becomes foil is scoring hand contains a card that gives Mult |
+| Arctibax | If played hand is a Five of a Kind, held cards become foil<br/>One random card in deck becomes foil for each scoring card that gives Mult with the same rank |
+| Baxcalibur | If played hand is a Five of a Kind, scoring cards give X0.3 mult for each foil card in deck<br/> Scoring cards that give Mult gain Foil |
 
 | Joker | Effect |
 | ------ | ------ |
