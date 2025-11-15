@@ -25,3 +25,10 @@ SMODS.Atlas({
     py = 95,
     path = "stickers.png"
 })
+
+SMODS.Atlas({
+  key = "nacho_consumables",
+  px = 71,
+  py = 95,
+  path = "consumables.png"
+})

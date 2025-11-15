@@ -1,6 +1,6 @@
 local subdir = "src/stakes/"
 
-local stakes = NFS.getDirectoryItems(mod_dir..subdir)
+local stakes = NFS.getDirectoryItems(nacho_mod_dir..subdir)
 for _, file in ipairs(stakes) do
     sendDebugMessage ("The file is: "..file)
     local stakes, load_error = SMODS.load_file(subdir..file)

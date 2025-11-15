@@ -4,6 +4,9 @@ local snover = {
   config = {extra = {money_mod = 2, triggered = false}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.m_glass
+    end
     local deck_data = ''
     if G.playing_cards then
       local enhance_count = #PkmnDip.utils.filter(G.playing_cards, function(v) return SMODS.has_enhancement(v, 'm_glass') end)
@@ -59,6 +62,9 @@ local abomasnow = {
   config = {extra = {money_mod = 3}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.m_glass
+    end
     return {vars = {card.ability.extra.money_mod}}
   end,
   designer = "CBMX",
@@ -105,6 +111,9 @@ local mega_abomasnow={
   config = {extra = {money_mod = 20}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = G.P_CENTERS.m_glass
+    end
     return {vars = {card.ability.extra.money_mod}}
   end,
   designer = "CBMX",

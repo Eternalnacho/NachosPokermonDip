@@ -35,6 +35,7 @@ local pages = {
   {
     title = function() return localize("nacho_pokemon4") end,
     tiles = {
+      { list = { 'j_nacho_applin', 'j_nacho_flapple', 'j_nacho_appletun', 'j_nacho_dipplin', 'j_nacho_hydrapple' }, label = function() return localize { type = "name_text", set = "Joker", key = "j_nacho_applin" } end, config_key = "applin" },
       { list = { 'j_nacho_frigibax', 'j_nacho_arctibax', 'j_nacho_baxcalibur' }, label = function() return localize { type = "name_text", set = "Joker", key = "j_nacho_frigibax" } end, config_key = "frigibax" },
       { list = { 'j_nacho_terapagos', 'j_nacho_terapagos_terastal', 'j_nacho_terapagos_stellar' }, label = function() return localize { type = "name_text", set = "Joker", key = "j_nacho_terapagos" } end, config_key = "terapagos" },
     }

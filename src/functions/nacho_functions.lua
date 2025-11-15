@@ -73,6 +73,7 @@ end
 
 -- Get most common rank(s) in a list of cards
 get_common_ranks = function(cards)
+  if not cards then cards = G.playing_cards end
   local _ranks, _tally = {}, 0
   for x, y in pairs(SMODS.Ranks) do
     local count = 0
@@ -89,6 +90,21 @@ get_common_ranks = function(cards)
   end
 
   return _ranks
+end
+
+-- Ripped straight from Ortalab
+function count_ranks()
+  -- Count ranks
+  local ranks = {}
+  for _, pcard in ipairs(G.playing_cards) do
+    if not SMODS.has_no_rank(pcard) then ranks[pcard:get_id()] = (ranks[pcard:get_id()] or 0) + 1 end
+  end
+  local ranks_by_count = {}
+  for rank, count in pairs(ranks) do
+    table.insert(ranks_by_count, { rank = rank, count = count })
+  end
+  table.sort(ranks_by_count, function(a, b) return a.count > b.count end)
+  return ranks_by_count
 end
 
 -- Create tooltip for common ranks (Oranguru)
@@ -208,18 +224,3 @@ calc_boss_trigger = function(context)
     end
   end
 end
-
--- -- Ripped straight from Ortalab
--- function count_ranks()
---   -- Count ranks
---   local ranks = {}
---   for _, pcard in ipairs(G.playing_cards) do
---     if not SMODS.has_no_rank(pcard) then ranks[pcard:get_id()] = (ranks[pcard:get_id()] or 0) + 1 end
---   end
---   local ranks_by_count = {}
---   for rank, count in pairs(ranks) do
---     table.insert(ranks_by_count, { rank = rank, count = count })
---   end
---   table.sort(ranks_by_count, function(a, b) return a.count > b.count end)
---   return ranks_by_count
--- end

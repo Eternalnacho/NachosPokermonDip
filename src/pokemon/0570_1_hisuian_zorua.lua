@@ -81,7 +81,7 @@ local hisuian_zorua = {
       card.ability.extra.hidden_key = card.ability.extra.hidden_key or get_random_poke_key('zorua', nil, 1)
       _o = G.P_CENTERS[card.ability.extra.hidden_key]
     end
-    if card.area ~= G.jokers and not poke_is_in_collection(card) and card.ability and card.ability.extra then
+    if card.area ~= G.jokers and not poke_is_in_collection(card) and _o then
       local temp_ability = card.ability
       card.ability = _o.config
       _o:generate_ui(info_queue, card, desc_nodes, specific_vars, full_UI_table)
@@ -119,7 +119,7 @@ local hisuian_zorua = {
       } or nil
       local rounds = 5
       local active
-      if card.ability and card.ability.extra then rounds = card.ability.extra.rounds active = card.ability.extra.active end
+      if _o then rounds = card.ability.extra.rounds; active = card.ability.extra.active end
       localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = {rounds, colours = {not active and G.C.UI.TEXT_INACTIVE}}}
       desc_nodes[#desc_nodes+1] = main_end
     end

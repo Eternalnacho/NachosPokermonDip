@@ -456,6 +456,36 @@ return {
           "{C:inactive}(Currently {C:mult}+#1#{} {C:inactive}Mult)",
         }
       },
+      j_nacho_applin = {
+        name = "Applin",
+        text = {
+          "{C:attention}+#1#{} hand size",
+          "{br:2}ERROR - CONTACT STEAK",
+          "{C:attention}Destroys{} one card remaining",
+          "in deck at end of round"
+        }
+      },
+      j_nacho_flapple = {
+        name = "Flapple",
+        text = {
+          "Whenever a {C:attention}playing card{}",
+          "is {C:attention}destroyed{}, gain {X:mult,C:white}X#1#{} Mult",
+          "{br:2}ERROR - CONTACT STEAK",
+          "Whenever a hand is {C:attention}played{},",
+          "lose {X:mult,C:white}X#2#{} Mult",
+          "{C:inactive}(Currently {X:mult,C:white}X#3#{C:inactive} Mult)",
+        }
+      },
+      j_nacho_appletun = {
+        name = "Appletun",
+        text = {
+          "{C:attention}+1{} hand size, {C:attention}+1{} hand size if a {C:attention}rank{}",
+          "is missing from your {C:attention}full deck{}",
+          "{br:2}ERROR - CONTACT STEAK",
+          "Whenever a {C:attention}playing card{}",
+          "is {C:attention}destroyed{}, earn {C:money}$#1#{}",
+        }
+      },
       j_nacho_perrserker = {
         name = "Perrserker",
         text = {
@@ -515,6 +545,28 @@ return {
           "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult){}"
         }
       },
+      j_nacho_dipplin = {
+        name = "Dipplin",
+        text = {
+          "Whenever a {C:attention}playing card{} is {C:attention}destroyed{},",
+          "add a {C:attention}Wild copy{} of it to your {C:attention}deck{}",
+          "If the {C:attention}destroyed{} card was {C:attention}Wild{},",
+          "add {C:attention}2 copies{} instead",
+          "{C:inactive,s:0.8}(Evolves when deck is >= 25% #1#{C:attention,s:0.8}Wild{C:inactive,s:0.8} cards)"
+        }
+      },
+      j_nacho_hydrapple = {
+        name = "Hydrapple",
+        text = {
+          "Whenever a {C:attention}playing card{} is {C:attention}destroyed{},",
+          "add a {C:attention}Wild copy{} of it to your {C:attention}deck{}",
+          "and this Joker gains {X:mult,C:white}X#2#{} Mult",
+          "{br:2.5}ERROR - CONTACT STEAK",
+          "If the {C:attention}destroyed{} card was {C:attention}Wild{},",
+          "gain {X:mult,C:white}X#3#{} Mult instead",
+          "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult)",
+        }
+      },
       j_nacho_terapagos = {
         name = "Terapagos",
         text = {
@@ -554,6 +606,43 @@ return {
           "Each {C:nacho_sg1}S{C:nacho_sg2}t{C:nacho_sg3}e{C:nacho_sg4}l{C:nacho_sg5}l{C:nacho_sg6}a{C:nacho_sg7}r{} Joker gives {X:mult,C:white}X#1#{} Mult",
           "for each Energy applied to it",
         }
+      },
+    },
+    Item = {
+      c_nacho_tartapple = {
+        name = "Tart Apple",
+        text = {
+          "{C:attention}Evolution Card{}",
+          "{br:2}ERROR - CONTACT STEAK",
+          "Select {C:attention}#1#{} cards,",
+          "{C:attention}destroy{} the {C:attention}right{} card",
+          "and the {C:attention}left{} card gains",
+          "{C:mult}+1{} Mult",
+          "{C:inactive}(Drag to rearrange)",
+        },
+      },
+      c_nacho_sweetapple = {
+        name = "Sweet Apple",
+        text = {
+          "{C:attention}Evolution Card{}",
+          "{br:2}ERROR - CONTACT STEAK",
+          "Select {C:attention}#1#{} cards,",
+          "{C:attention}destroy{} the {C:attention}right{} card",
+          "and the {C:attention}left{} card",
+          "earns {C:money}$2{}",
+          "{C:inactive}(Drag to rearrange)",
+        },
+      },
+      c_nacho_syrupyapple = {
+        name = "Syrupy Apple",
+        text = {
+          "{C:attention}Evolution Card{}",
+          "{br:2}ERROR - CONTACT STEAK",
+          "Enhances {C:attention}#2#{} random {C:attention}held{}",
+          "cards and {C:attention}#1#{} selected card",
+          "into {C:attention}Wild{} cards, destroys a",
+          "random non-{C:attention}Wild{} {C:attention}held{} card",
+        },
       },
     },
     Stake = {
@@ -621,6 +710,7 @@ return {
           '#1#',
         }
       },
+      -- Mod Req tooltip for config menu
       modname_tooltip = {
         name = "Required Mod",
         text = {
@@ -653,6 +743,8 @@ return {
       poke_shell_trap_ex = "Shell Trap!",
       -- From Greedent
       poke_stuff_cheeks_ex = "Stuff Cheeks!",
+      -- From Hydrapple
+      poke_fickle_beam_ex = "Fickle Beam!",
 
 
       -- Config Descriptions

@@ -16,6 +16,7 @@ return {
   passimian = true,
   turtonator = true,
   skwovet = true,
+  applin = true,
   galarian_meowth = true,
   frigibax = true,
   terapagos = true,

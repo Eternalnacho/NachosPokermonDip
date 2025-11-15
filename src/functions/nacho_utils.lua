@@ -19,6 +19,12 @@ function PkmnDip.utils.filter(list, func)
   return new_list
 end
 
+function PkmnDip.utils.for_each(list, func)
+  for _, v in pairs(list) do
+    func(v)
+  end
+end
+
 function PkmnDip.utils.copy_list(list)
   return PkmnDip.utils.map_list(list, PkmnDip.utils.id)
 end

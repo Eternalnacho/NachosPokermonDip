@@ -1,6 +1,6 @@
 local subdir = "src/challenges/"
 
-local pchallenges = NFS.getDirectoryItems(mod_dir..subdir)
+local pchallenges = NFS.getDirectoryItems(nacho_mod_dir..subdir)
 for _, file in ipairs(pchallenges) do
   local challenge, load_error = SMODS.load_file(subdir..file)
   if load_error then
