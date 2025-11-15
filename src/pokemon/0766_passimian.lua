@@ -1,7 +1,7 @@
 -- Passimian 766
 local passimian={
   name = "passimian",
-  config = {extra = {to_key = nil, kept_vals = {}}},
+  config = {extra = {kept_vals = {}}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     return {vars = {}}
@@ -30,7 +30,7 @@ local passimian={
     end
   end,
   receive_card = function(self, card, to_key, context)
-    if to_key and card.area == G.jokers then
+    if to_key then
       local _r = G.P_CENTERS[to_key]
       -- Keep relevant values stored
       local values_to_keep = {}
