@@ -3,8 +3,6 @@ version = "1.0.0"
 dump_lua = true
 priority = 21
 
-### Gallade and Mega Gallade
-
 ### Audino
 # Extra Levels at end of Round
 [[patches]]
@@ -203,6 +201,44 @@ for k, v in pairs(other.ability) do
 end
 
 ::continue::
+'''
+match_indent = true
+
+
+### Applin item_evo functionality
+[[patches]]
+[patches.pattern]
+target = '=[SMODS Pokermon "boosters/packs1.lua"]'
+pattern = '''
+if v.config.center.item_req then
+'''
+position = "after"
+payload = '''
+local prefix = G.P_CENTERS[v.config.center.key].mod.prefix ~= 'poke' and G.P_CENTERS[v.config.center.key].mod.prefix or 'poke'
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = '=[SMODS Pokermon "boosters/packs1.lua"]'
+pattern = '''
+item_key = "c_poke_"..pseudorandom_element(v.config.center.item_req, pseudoseed('match'))
+'''
+position = "at"
+payload = '''
+item_key = "c_"..prefix.."_"..pseudorandom_element(v.config.center.item_req, pseudoseed('match'))
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = '=[SMODS Pokermon "boosters/packs1.lua"]'
+pattern = '''
+item_key = "c_poke_"..v.config.center.item_req
+'''
+position = "at"
+payload = '''
+item_key = "c_"..prefix.."_"..v.config.center.item_req
 '''
 match_indent = true
 
