@@ -493,7 +493,7 @@ return {
           "{C:attention}Steel{} cards {C:attention}held in hand{}",
           "{br:2}ERROR - CONTACT STEAK",
           "Each {C:metal}Metal {C:attention}Joker{}",
-          "gives {X:mult,C:white}X#1#{} Mult",
+          "increases Mult by {C:red}50%{}",
           "{br:2}ERROR - CONTACT STEAK",
           "Retriggers if all",
           "{C:attention}Jokers{} are {C:metal}Metal{}",
