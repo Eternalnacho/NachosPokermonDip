@@ -46,8 +46,8 @@ local tartapple = {
     end
   end,
   in_pool = function(self)
-    return next(find_joker("applin")) or next(find_joker("appletun")) or next(find_joker("dipplin")) or next(find_joker("hydrapple"))
-    -- return true
+    return not (SMODS.find_card('c_nacho_sweetapple') or SMODS.find_card('c_nacho_syrupyapple')) and
+      next(find_joker("applin")) or next(find_joker("appletun")) or next(find_joker("dipplin")) or next(find_joker("hydrapple"))
   end
 }
 
@@ -98,8 +98,8 @@ local sweetapple = {
     end
   end,
   in_pool = function(self)
-    return next(find_joker("applin")) or next(find_joker("flapple")) or next(find_joker("dipplin")) or next(find_joker("hydrapple"))
-    -- return true
+    return not (SMODS.find_card('c_nacho_tartapple') or SMODS.find_card('c_nacho_syrupyapple')) and
+      next(find_joker("applin")) or next(find_joker("flapple")) or next(find_joker("dipplin")) or next(find_joker("hydrapple"))
   end
 }
 
@@ -152,10 +152,12 @@ local syrupyapple = {
     end
   end,
   in_pool = function(self)
-    return next(find_joker("applin")) or next(find_joker("flapple")) or next(find_joker("appletun")) or next(find_joker("hydrapple"))
-    -- return true
+    return not (SMODS.find_card('c_nacho_tartapple') or SMODS.find_card('c_nacho_sweetapple')) and
+      (next(find_joker("applin")) or next(find_joker("flapple")) or next(find_joker("appletun")) or next(find_joker("hydrapple")))
   end
 }
+
+PkmnDip.item_families[#PkmnDip.item_families+1] = {'c_nacho_tartapple', 'c_nacho_sweetapple', 'c_nacho_syrupyapple'}
 
 return {
   name = "Nacho's Apples",

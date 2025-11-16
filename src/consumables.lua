@@ -1,3 +1,5 @@
+PkmnDip.item_families = {}
+
 local subdir = "src/consumables/"
 local files = NFS.getDirectoryItems(nacho_mod_dir .. subdir)
 
