@@ -46,7 +46,8 @@ local tartapple = {
     end
   end,
   in_pool = function(self)
-    return true
+    return next(find_joker("applin")) or next(find_joker("appletun")) or next(find_joker("dipplin")) or next(find_joker("hydrapple"))
+    -- return true
   end
 }
 
@@ -97,7 +98,8 @@ local sweetapple = {
     end
   end,
   in_pool = function(self)
-    return true
+    return next(find_joker("applin")) or next(find_joker("flapple")) or next(find_joker("dipplin")) or next(find_joker("hydrapple"))
+    -- return true
   end
 }
 
@@ -150,7 +152,8 @@ local syrupyapple = {
     end
   end,
   in_pool = function(self)
-    return true
+    return next(find_joker("applin")) or next(find_joker("flapple")) or next(find_joker("appletun")) or next(find_joker("hydrapple"))
+    -- return true
   end
 }
 

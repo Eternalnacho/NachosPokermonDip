@@ -13,6 +13,7 @@ local applin = {
   ptype = "Dragon",
   gen = 8,
   item_req = {"sweetapple", "tartapple", "syrupyapple"},
+  custom_item_evo = true,
   evo_list = {sweetapple = "j_nacho_appletun", tartapple = 'j_nacho_flapple', syrupyapple = 'j_nacho_dipplin'},
   blueprint_compat = true,
   calculate = function(self, card, context)

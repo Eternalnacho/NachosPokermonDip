@@ -214,7 +214,7 @@ if v.config.center.item_req then
 '''
 position = "after"
 payload = '''
-local prefix = G.P_CENTERS[v.config.center.key].mod.prefix ~= 'poke' and G.P_CENTERS[v.config.center.key].mod.prefix or 'poke'
+local prefix = G.P_CENTERS[v.config.center.key].mod.prefix ~= 'poke' and v.config.center.custom_item_evo and G.P_CENTERS[v.config.center.key].mod.prefix or 'poke'
 '''
 match_indent = true
 
