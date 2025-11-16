@@ -294,7 +294,7 @@ return {
           "Creates a Mystery Egg",
           "with an {C:attention}edition{}",
           "at end of round",
-          "({C:green}#2# in #3#{} to be shiny)",
+          "{C:inactive}({C:green}#2# in #3#{C:inactive} to be shiny){}",
         }
       },
       j_nacho_hisuian_zorua = {
