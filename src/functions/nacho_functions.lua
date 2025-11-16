@@ -153,7 +153,8 @@ calc_boss_trigger = function(context)
     -- These boss blinds trigger only at the start
     -- The Wall, The Water, The Manacle, The Needle, Amber Acorn, Violet Vessel
     if (boss_name == "The Wall" or boss_name == "The Water" or boss_name == "The Manacle"
-          or boss_name == "The Needle" or boss_name == "Amber Acorn" or boss_name == "Violet Vessel")
+          or boss_name == "The Needle" or boss_name == "Amber Acorn" or boss_name == "Violet Vessel"
+            or boss_name == "The Mirror")
         and not G.GAME.blind.disabled then
       return true
     end
