@@ -71,7 +71,10 @@ if immediate then
 position = "before"
 payload = '''
 if card.config.center.key == 'j_nacho_passimian' then
+  if not transformation then 
+    card.ability.extra.evolving = true
     immediate = true
+  end
 end
 '''
 match_indent = true
@@ -83,7 +86,8 @@ pattern = '''local custom_values_to_keep = {}'''
 position = "before"
 payload = '''
 -- Passimian passed abilities don't "Evolve" per se
-if card.config.center.key == 'j_nacho_passimian' then
+if card.config.center.key == 'j_nacho_passimian' and card.ability.extra.evolving then
+  card.ability.extra.evolving = nil
   card.config.center:receive_card(card, to_key)
   return
 end
