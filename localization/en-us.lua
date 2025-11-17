@@ -710,6 +710,14 @@ return {
           '#1#',
         }
       },
+      apple_evolutions = {
+        name = "Evolutions",
+        text = {
+            "{C:attention}Tart Apple{} - {X:grass,C:white}Flapple{}",
+            "{C:attention}Sweet Apple{} - {X:fire,C:white}Appletun{}",
+            "{C:attention}Syrupy Apple{} - {X:dragon,C:white}Dipplin{}",
+        }
+      },
       -- Mod Req tooltip for config menu
       modname_tooltip = {
         name = "Required Mod",

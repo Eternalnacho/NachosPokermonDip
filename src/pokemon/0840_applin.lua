@@ -4,6 +4,9 @@ local applin = {
   config = { extra = {h_size = 1} },
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
+    if pokermon_config.detailed_tooltips then
+      info_queue[#info_queue+1] = {set = 'Other', key = 'apple_evolutions'}
+    end
     return { vars = { card.ability.extra.h_size } }
   end,
   designer = "Kek",
