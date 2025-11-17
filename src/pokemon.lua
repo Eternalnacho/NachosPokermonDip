@@ -1,19 +1,19 @@
 -- Name relevant sprite locations
 
-PokemonSprites["hisuian_sneasel"] = { base = { pos = { x = 4, y = 5 } }, gen_atlas = true }
-PokemonSprites["mega_gardevoir"] = { base = { pos = { x = 6, y = 4 }, soul_pos = { x = 7, y = 4 } }, gen_atlas = true }
-PokemonSprites["mega_altaria"] = { base = { pos = { x = 2, y = 6 }, soul_pos = { x = 3, y = 6 } }, gen_atlas = true }
-PokemonSprites["mega_salamence"] = { base = { pos = { x = 8, y = 6 }, soul_pos = { x = 9, y = 6 } }, gen_atlas = true }
-PokemonSprites["mega_abomasnow"] = { base = { pos = { x = 10, y = 6 }, soul_pos = { x = 11, y = 6 } }, gen_atlas = true }
-PokemonSprites["mega_gallade"] = { base = { pos = { x = 0, y = 7 }, soul_pos = { x = 1, y = 7 } }, gen_atlas = true }
-PokemonSprites["mega_audino"] = { base = { pos = { x = 6, y = 7 }, soul_pos = { x = 7, y = 7 } }, gen_atlas = true }
-PokemonSprites["galarian_meowth"] = { base = { pos = { x = 8, y = 4 } }, gen_atlas = true }
-PokemonSprites["hisuian_zorua"] = { base = { pos = { x = 0, y = 9 }, soul_pos = { x = 99, y = 99 } }, gen_atlas = true }
-PokemonSprites["hisuian_zoroark"] = { base = { pos = { x = 2, y = 9 }, soul_pos = { x = 99, y = 99 } }, gen_atlas = true }
-PokemonSprites["hisuian_sliggoo"] = { base = { pos = { x = 0, y = 12 } }, gen_atlas = true }
-PokemonSprites["hisuian_goodra"] = { base = { pos = { x = 2, y = 12 } }, gen_atlas = true }
-PokemonSprites["terapagos"] = { base = { pos = { x = 0, y = 6 }, soul_pos = { x = 1, y = 6 } }, gen_atlas = true }
-PokemonSprites["terapagos_terastal"] = { base = { pos = { x = 2, y = 6 }, soul_pos = { x = 3, y = 6 } }, gen_atlas = true }
+PokemonSprites["hisuian_sneasel"] = { base = { pos = { x = 4, y = 5 } }, gen_atlas = 2 }
+PokemonSprites["mega_gardevoir"] = { base = { pos = { x = 6, y = 4 }, soul_pos = { x = 7, y = 4 } }, gen_atlas = 3 }
+PokemonSprites["mega_altaria"] = { base = { pos = { x = 2, y = 6 }, soul_pos = { x = 3, y = 6 } }, gen_atlas = 3 }
+PokemonSprites["mega_salamence"] = { base = { pos = { x = 8, y = 6 }, soul_pos = { x = 9, y = 6 } }, gen_atlas = 3 }
+PokemonSprites["mega_abomasnow"] = { base = { pos = { x = 10, y = 6 }, soul_pos = { x = 11, y = 6 } }, gen_atlas = 4 }
+PokemonSprites["mega_gallade"] = { base = { pos = { x = 0, y = 7 }, soul_pos = { x = 1, y = 7 } }, gen_atlas = 4 }
+PokemonSprites["mega_audino"] = { base = { pos = { x = 6, y = 7 }, soul_pos = { x = 7, y = 7 } }, gen_atlas = 5 }
+PokemonSprites["galarian_meowth"] = { base = { pos = { x = 8, y = 4 } }, gen_atlas = 1 }
+PokemonSprites["hisuian_zorua"] = { base = { pos = { x = 0, y = 9 }, soul_pos = { x = 99, y = 99 } }, gen_atlas = 5 }
+PokemonSprites["hisuian_zoroark"] = { base = { pos = { x = 2, y = 9 }, soul_pos = { x = 99, y = 99 } }, gen_atlas = 5 }
+PokemonSprites["hisuian_sliggoo"] = { base = { pos = { x = 0, y = 12 } }, gen_atlas = 6 }
+PokemonSprites["hisuian_goodra"] = { base = { pos = { x = 2, y = 12 } }, gen_atlas = 6 }
+PokemonSprites["terapagos"] = { base = { pos = { x = 0, y = 6 }, soul_pos = { x = 1, y = 6 } }, gen_atlas = 9 }
+PokemonSprites["terapagos_terastal"] = { base = { pos = { x = 2, y = 6 }, soul_pos = { x = 3, y = 6 } }, gen_atlas = 9 }
 
 -- load pokemon folder
 
