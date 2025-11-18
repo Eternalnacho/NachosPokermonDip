@@ -11,8 +11,8 @@ local ralts={
     return {vars = {card.ability.extra.mult_mod, mult, card.ability.extra.rounds}}
   end,
   designer = "Foxthor, One Punch Idiot",
-  rarity = 3,
-  cost = 8,
+  rarity = 2,
+  cost = 6,
   stage = "Basic",
   ptype = "Psychic",
   gen = 3,
@@ -193,7 +193,7 @@ local mega_gardevoir={
 -- Gallade 475
 local gallade={
   name = "gallade",
-  config = {extra = {Xmult_mod = 0.15}},
+  config = {extra = {Xmult_mod = 0.1}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.Xmult_mod}}
@@ -225,7 +225,7 @@ local gallade={
 -- Mega-Gallade 475-1
 local mega_gallade={
   name = "mega_gallade",
-  config = {extra = {Xmult_mod = 0.3}},
+  config = {extra = {Xmult_mod = 0.25}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.Xmult_mod}}
