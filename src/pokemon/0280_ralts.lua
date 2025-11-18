@@ -257,15 +257,25 @@ local mega_gallade={
   end,
 }
 
-
-local yoink = function()
-  SMODS.Joker:take_ownership('maelmc_ralts', { aux_poke = true, no_collection = true, custom_pool_func = true, in_pool = function() return false end }, true)
-  SMODS.Joker:take_ownership('maelmc_kirlia', { aux_poke = true, no_collection = true, custom_pool_func = true, in_pool = function() return false end }, true)
-  SMODS.Joker:take_ownership('maelmc_gardevoir', { aux_poke = true, no_collection = true, custom_pool_func = true, in_pool = function() return false end }, true)
-  SMODS.Joker:take_ownership('maelmc_mega_gardevoir', { aux_poke = true, no_collection = true, custom_pool_func = true, in_pool = function() return false end }, true)
-end
-
 local init = function()
+  -- Ralts take ownership event thing
+
+  G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.0, func = function()
+    SMODS.Joker:take_ownership('maelmc_ralts', { aux_poke = true, no_collection = true, custom_pool_func = true, in_pool = function() return false end }, true)
+    SMODS.Joker:take_ownership('maelmc_kirlia', { aux_poke = true, no_collection = true, custom_pool_func = true, in_pool = function() return false end }, true)
+    SMODS.Joker:take_ownership('maelmc_gardevoir', { aux_poke = true, no_collection = true, custom_pool_func = true, in_pool = function() return false end }, true)
+    SMODS.Joker:take_ownership('maelmc_mega_gardevoir', { aux_poke = true, no_collection = true, custom_pool_func = true, in_pool = function() return false end }, true)
+
+    if PkmnDip.find_family('ralts') then
+      PkmnDip.append_to_family('ralts', 'gallade', true)
+      PkmnDip.append_to_family('ralts', 'mega_gallade', true)
+    else
+      pokermon.add_family({ 'ralts', 'kirlia', 'gardevoir', 'mega_gardevoir', 'gallade', 'mega_gallade' })
+    end
+
+    return true end
+  }))
+
   -- Gallade level_up_hand hook
   local level_up_hand_ref = level_up_hand
   level_up_hand = function(card, hand, instant, amount)
@@ -303,6 +313,6 @@ return {
   name = "Nacho's Ralts Evo Line",
   enabled = nacho_config.ralts or false,
   init = init,
-  yoink = yoink,
+  find_family = true,
   list = { ralts, kirlia, gardevoir, mega_gardevoir, gallade, mega_gallade }
 }
