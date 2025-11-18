@@ -20,13 +20,15 @@ local applin = {
   evo_list = {sweetapple = "j_nacho_appletun", tartapple = 'j_nacho_flapple', syrupyapple = 'j_nacho_dipplin'},
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.end_of_round and not context.individual and not context.repetition then
+    if context.end_of_round and not context.individual and not context.repetition and not context.game_over then
       local target = pseudorandom_element(G.deck.cards, pseudoseed('applin'))
-      SMODS.destroy_cards(target, nil, true)
-      for i = 1, #G.jokers.cards do
-          G.jokers.cards[i]:calculate_joker({remove_playing_cards = true, removed = {target}})
+      if target then
+        SMODS.destroy_cards(target, nil, true)
+        for i = 1, #G.jokers.cards do
+            G.jokers.cards[i]:calculate_joker({remove_playing_cards = true, removed = {target}})
+        end
+        card:juice_up()
       end
-      card:juice_up()
     end
     return item_evo(self, card, context)
   end,
@@ -103,7 +105,8 @@ local appletun = {
       G.hand:change_size(a.h_size - old_h_size)
     end
     if context.remove_playing_cards then
-      local earned = ease_poke_dollars(card, "appletun", a.money * #context.removed, true)
+      local total_removed = #context.removed
+      local earned = ease_poke_dollars(card, "appletun", a.money * total_removed, true)
       return {
         dollars = earned,
         card = card
