@@ -25,6 +25,9 @@ local carbink = {
     for k, v in pairs(G.playing_cards) do
       if SMODS.has_no_rank(v) then return true end
     end
+    for k, v in pairs(G.jokers.cards) do
+      if v.hazard_poke then return true end
+    end
     return false
   end,
 }
