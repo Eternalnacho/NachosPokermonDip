@@ -310,6 +310,6 @@ return {
   name = "Nacho's Ralts Evo Line",
   enabled = nacho_config.ralts or false,
   init = init,
-  find_family = true,
+  family = true,
   list = { ralts, kirlia, gardevoir, mega_gardevoir, gallade, mega_gallade }
 }
