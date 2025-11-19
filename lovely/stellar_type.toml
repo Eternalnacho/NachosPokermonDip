@@ -5,7 +5,24 @@ priority = 21
 
 # # # Terapagos Tera Logic Suite
 
-# Adding Stellar type to the list of Stickers
+# Ensuring that Terapagos-Stellar makes Pokemon always Tera Stellar
+[[patches]]
+[patches.pattern]
+target = '=[SMODS Pokermon "functions/pokefunctions.lua"]'
+pattern = '''
+if sticker_type then
+    apply_type = sticker_type
+'''
+position = "before"
+payload = '''
+if next(SMODS.find_card('j_nacho_terapagos_stellar')) then
+    sticker_type = "Stellar"
+end
+'''
+match_indent = true
+
+# # Adding Stellar type to the list of Stickers
+
 [[patches]]
 [patches.pattern]
 target = '=[SMODS Pokermon "functions/pokefunctions.lua"]'
@@ -32,7 +49,8 @@ poke_stellar_badge = "Stellar",
 '''
 match_indent = true
 
-# Creating the Stellar Type Badge
+# # Creating the Stellar Type Badge
+
 [[patches]]
 [patches.pattern]
 target = '=[SMODS Pokermon "functions/pokefunctions.lua"]'
@@ -49,7 +67,6 @@ else
 end
 '''
 match_indent = true
-
 
 
 # # Tera Stellar counts for Every Type

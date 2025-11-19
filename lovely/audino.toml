@@ -1,0 +1,44 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 21
+
+### Audino
+# Extra Levels at end of Round
+[[patches]]
+[patches.pattern]
+target = '=[SMODS Pokermon "functions/pokefunctions.lua"]'
+pattern = '''
+card.ability.extra.rounds = card.ability.extra.rounds - 1
+'''
+position = "after"
+payload = '''
+for k, v in pairs(G.jokers.cards) do if v.config.center_key == 'j_nacho_audino' and not v.debuff then card.ability.extra.rounds = card.ability.extra.rounds - 1 end end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = '=[SMODS Pokermon "functions/pokefunctions.lua"]'
+pattern = '''
+card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize("poke_evolve_level")})
+'''
+position = "after"
+payload = '''
+for k, v in pairs(G.jokers.cards) do if v.config.center_key == 'j_nacho_audino' and not v.debuff then card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize("poke_evolve_level")}) end end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = '=[SMODS Pokermon "functions/pokefunctions.lua"]'
+pattern = '''
+card:set_ability(new_card, true)
+card:set_cost()
+'''
+position = "after"
+payload = '''
+
+if G.P_CENTERS[to_key].rarity ~= "poke_mega" and G.P_CENTERS[old_key].rarity ~= "poke_mega" then SMODS.calculate_context({poke_evolved = true}) end
+'''
+match_indent = true

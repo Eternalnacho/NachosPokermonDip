@@ -3,62 +3,6 @@ version = "1.0.0"
 dump_lua = true
 priority = 21
 
-### Audino
-# Extra Levels at end of Round
-[[patches]]
-[patches.pattern]
-target = '=[SMODS Pokermon "functions/pokefunctions.lua"]'
-pattern = '''
-card.ability.extra.rounds = card.ability.extra.rounds - 1
-'''
-position = "after"
-payload = '''
-for k, v in pairs(G.jokers.cards) do if v.config.center_key == 'j_nacho_audino' and not v.debuff then card.ability.extra.rounds = card.ability.extra.rounds - 1 end end
-'''
-match_indent = true
-
-[[patches]]
-[patches.pattern]
-target = '=[SMODS Pokermon "functions/pokefunctions.lua"]'
-pattern = '''
-card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize("poke_evolve_level")})
-'''
-position = "after"
-payload = '''
-for k, v in pairs(G.jokers.cards) do if v.config.center_key == 'j_nacho_audino' and not v.debuff then card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize("poke_evolve_level")}) end end
-'''
-match_indent = true
-
-[[patches]]
-[patches.pattern]
-target = '=[SMODS Pokermon "functions/pokefunctions.lua"]'
-pattern = '''
-card:set_ability(new_card, true)
-card:set_cost()
-'''
-position = "after"
-payload = '''
-
-if G.P_CENTERS[to_key].rarity ~= "poke_mega" and G.P_CENTERS[old_key].rarity ~= "poke_mega" then SMODS.calculate_context({poke_evolved = true}) end
-'''
-match_indent = true
-
-### Turtonator
-# Turtonator Cerulean Bell Compat.
-[[patches]]
-[patches.pattern]
-target = "blind.lua"
-pattern = '''
-forced_card.ability.forced_selection = true
-'''
-position = "after"
-payload = '''
-forced_card.ability.pokermon_forced_selection = true
-'''
-match_indent = true
-
-
-### Passimian
 # Passimian Evo Logic
 [[patches]]
 [patches.pattern]
@@ -94,6 +38,7 @@ end
 
 '''
 match_indent = true
+
 
 # Ensuring Passimian is Energy Compatible
 [[patches]]
@@ -138,6 +83,7 @@ end
 '''
 match_indent = true
 
+
 # Ensure Smeargle finds Passimian's *Copied* Card so it doesn't crash
 [[patches]]
 [patches.pattern]
@@ -173,7 +119,8 @@ end
 '''
 match_indent = true
 
-# Passimian Copy Card fix?
+
+# Passimian Copy Card fix
 [[patches]]
 [patches.pattern]
 target = "functions/common_events.lua"
@@ -205,86 +152,5 @@ for k, v in pairs(other.ability) do
 end
 
 ::continue::
-'''
-match_indent = true
-
-
-### Applin item_evo functionality
-[[patches]]
-[patches.pattern]
-target = '=[SMODS Pokermon "boosters/packs1.lua"]'
-pattern = '''
-if v.config.center.item_req then
-'''
-position = "after"
-payload = '''
-local prefix = v.config.center.custom_item_evo and G.P_CENTERS[v.config.center.key].mod.prefix or 'poke'
-'''
-match_indent = true
-
-[[patches]]
-[patches.pattern]
-target = '=[SMODS Pokermon "boosters/packs1.lua"]'
-pattern = '''
-item_key = "c_poke_"..pseudorandom_element(v.config.center.item_req, pseudoseed('match'))
-'''
-position = "at"
-payload = '''
-item_key = "c_"..prefix.."_"..pseudorandom_element(v.config.center.item_req, pseudoseed('match'))
-'''
-match_indent = true
-
-[[patches]]
-[patches.pattern]
-target = '=[SMODS Pokermon "boosters/packs1.lua"]'
-pattern = '''
-item_key = "c_poke_"..v.config.center.item_req
-'''
-position = "at"
-payload = '''
-item_key = "c_"..prefix.."_"..v.config.center.item_req
-'''
-match_indent = true
-
-[[patches]]
-[patches.pattern]
-target = '=[SMODS Pokermon "boosters/packs1.lua"]'
-pattern = '''
-for k, v in pairs(self.config.c_keys) do
-  if v == item_key then
-    already_created = true
-  end
-end
-'''
-position = "after"
-payload = '''
-local item_family
-for _, family in pairs(PkmnDip.item_families) do if PkmnDip.utils.contains(family, item_key) then item_family = family end end
-if item_family then
-  for _, item in pairs(item_family) do  
-    for k, v in pairs(self.config.c_keys) do
-      if v == item then already_created = true end
-    end
-    if next(SMODS.find_card(item)) then already_created = true end
-  end
-end
-'''
-match_indent = true
-
-
-### Terapagos
-# Ensuring that Terapagos-Stellar makes Pokemon always Tera Stellar
-[[patches]]
-[patches.pattern]
-target = '=[SMODS Pokermon "functions/pokefunctions.lua"]'
-pattern = '''
-if sticker_type then
-    apply_type = sticker_type
-'''
-position = "before"
-payload = '''
-if next(SMODS.find_card('j_nacho_terapagos_stellar')) then
-    sticker_type = "Stellar"
-end
 '''
 match_indent = true

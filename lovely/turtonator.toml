@@ -1,0 +1,18 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 21
+
+### Turtonator
+# Turtonator Cerulean Bell Compat.
+[[patches]]
+[patches.pattern]
+target = "blind.lua"
+pattern = '''
+forced_card.ability.forced_selection = true
+'''
+position = "after"
+payload = '''
+forced_card.ability.pokermon_forced_selection = true
+'''
+match_indent = true
