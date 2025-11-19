@@ -294,7 +294,7 @@ return {
           "Creates a Mystery Egg",
           "with an {C:attention}edition{}",
           "at end of round",
-          "{C:inactive}({C:green}#2# in #3#{C:inactive} to be {C:dark_edition}shiny{C:inactive}){}",
+          "{C:inactive}({C:green}#2# in #3#{C:inactive} to be {C:dark_edition}Shiny{C:inactive}){}",
         }
       },
       j_nacho_hisuian_zorua = {
@@ -462,7 +462,8 @@ return {
           "{C:attention}+#1#{} hand size",
           "{br:2}ERROR - CONTACT STEAK",
           "{C:attention}Destroys{} one card remaining",
-          "in deck at end of round"
+          "in deck at end of round",
+          "{C:inactive,s:0.8}(Evolves with different Apples)",
         }
       },
       j_nacho_flapple = {
