@@ -1,7 +1,7 @@
 return {
   ralts = true,
   swablu = true,
-  bagon = true,
+  bagon = false,
   turtwig = true,
   chimchar = true,
   piplup = true,
