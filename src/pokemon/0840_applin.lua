@@ -106,11 +106,7 @@ local appletun = {
     end
     if context.remove_playing_cards then
       local total_removed = #context.removed
-      local earned = ease_poke_dollars(card, "appletun", a.money * total_removed, true)
-      return {
-        dollars = earned,
-        card = card
-      }
+      ease_poke_dollars(card, "appletun", a.money * total_removed)
     end
   end,
   add_to_deck = function(self, card, from_debuff)
