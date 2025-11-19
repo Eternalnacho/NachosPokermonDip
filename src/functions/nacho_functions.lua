@@ -225,19 +225,3 @@ calc_boss_trigger = function(context)
     end
   end
 end
-
-
-function PkmnDip.find_family(cardname, get_index)
-  for k, v in pairs(pokermon.family) do
-    for x, y in pairs(v) do
-      if y == cardname or (type(y) == "table" and y.key == cardname) then
-        return get_index and {line = k, index = x} or k
-      end
-    end
-  end
-end
-
-function PkmnDip.append_to_family(existing_name, new_name, to_end)
-  local family_line, family_index = pokermon.family[PkmnDip.find_family(existing_name, true).line], PkmnDip.find_family(existing_name, true).index
-  table.insert(family_line, to_end and #family_line + 1 or family_index + 1, new_name)
-end
