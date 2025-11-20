@@ -70,12 +70,8 @@ local hisuian_zorua = {
       card.children.center.atlas = G.ASSET_ATLAS[_o.atlas]
       card.children.center:set_sprite_pos(_o.pos)
     else
-      if not card.discovered then
-        card.children.center:set_sprite_pos(G.j_undiscovered.pos)
-      else
-        card.children.center.atlas = G.ASSET_ATLAS[self.atlas]
-        card.children.center:set_sprite_pos(self.pos)
-      end
+      card.children.center.atlas = G.ASSET_ATLAS[self.atlas]
+      card.children.center:set_sprite_pos(self.pos)
     end
   end,
   generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
@@ -211,12 +207,8 @@ local hisuian_zoroark = {
       card.children.center.atlas = G.ASSET_ATLAS[_o.atlas]
       card.children.center:set_sprite_pos(_o.pos)
     else
-      if not card.discovered then
-        card.children.center:set_sprite_pos(G.j_undiscovered.pos)
-      else
-        card.children.center.atlas = G.ASSET_ATLAS[self.atlas]
-        card.children.center:set_sprite_pos(self.pos)
-      end
+      card.children.center.atlas = G.ASSET_ATLAS[self.atlas]
+      card.children.center:set_sprite_pos(self.pos)
     end
   end,
   generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
