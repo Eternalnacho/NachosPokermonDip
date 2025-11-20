@@ -24,9 +24,6 @@ local applin = {
       local target = pseudorandom_element(G.deck.cards, pseudoseed('applin'))
       if target then
         SMODS.destroy_cards(target, nil, true)
-        for i = 1, #G.jokers.cards do
-            G.jokers.cards[i]:calculate_joker({remove_playing_cards = true, removed = {target}})
-        end
         card:juice_up()
       end
     end
