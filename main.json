@@ -11,9 +11,9 @@
   "display_name": "Pokermon Dip",
 	"version": "1.6.9",
 	"dependencies": [
-			"Steamodded (>=1.0.0~BETA-0711a)",
+			"Steamodded (>=1.0.0~BETA-1016c)",
       "Lovely (>=0.7)",
-      "Pokermon (>=3.2.0)"
+      "Pokermon (>=3.5.0-1117a)"
 	],
   "conflicts": [],
 	"provides": [],
