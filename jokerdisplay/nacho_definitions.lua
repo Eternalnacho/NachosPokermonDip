@@ -405,23 +405,23 @@ jd_def["j_nacho_greedent"] = {
 
 -- Perrserker
 jd_def["j_nacho_perrserker"] = {
-    reminder_text = {
-        { text = "(" },
-        { ref_table = "card.joker_display_values", ref_value = "count",          colour = G.C.ORANGE },
-        { text = "x" },
-        { ref_table = "card.joker_display_values", ref_value = "localized_text", colour = G.C.GREEN },
-        { text = ")" },
+    text = {
+        {
+            border_nodes = {
+                { text = "X" },
+                { ref_table = "card.joker_display_values", ref_value = "x_mult", retrigger_type = "exp" },
+            },
+        },
     },
     calc_function = function(card)
-        local count = G.jokers and #PkmnDip.utils.filter(G.jokers.cards, function(v) return v.config.center.rarity and is_type(v, "Metal") end) or 0
-        card.joker_display_values.count = count
-        card.joker_display_values.localized_text = "Metal"
+      local total_xmult = 1.5
+      if G.jokers then
+        local total_energy = 0
+        PkmnDip.utils.for_each(SMODS.find_card('j_nacho_perrserker'), function(v) total_energy = total_energy + get_total_energy(v) end)
+        total_xmult = total_xmult + total_xmult * .05 * total_energy
+      end
+      card.joker_display_values.x_mult = total_xmult
     end,
-    mod_function = function(card, mod_joker)
-        local count = G.jokers and #PkmnDip.utils.filter(G.jokers.cards, function(v) return v.config.center.rarity and is_type(v, "Metal") end) or 0
-        local all_metal = G.jokers and count == #G.jokers.cards and 2 or 1
-        return { x_mult = (is_type(card, "Metal") and (mod_joker.ability.extra.Ymult ^ all_metal) ^ JokerDisplay.calculate_joker_triggers(mod_joker) or nil) }
-    end
 }
 
 -- Hisuian Goodra

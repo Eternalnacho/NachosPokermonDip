@@ -2,18 +2,19 @@ local pages = {
   {
     title = function() return localize("nacho_pokemon1") end,
     tiles = {
-      { list = { 'j_nacho_ralts', 'j_nacho_kirlia', 'j_nacho_gardevoir', 'j_nacho_mega_gardevoir', 'j_nacho_gallade', 'j_nacho_mega_gallade' }, label = function() return localize { type = "name_text", set = "Joker", key = "j_nacho_ralts" } end, config_key = "ralts" },
-      { list = { 'j_nacho_swablu', 'j_nacho_altaria', 'j_nacho_mega_altaria' }, label = function() return localize { type = "name_text", set = "Joker", key = "j_nacho_swablu" } end, config_key = "swablu" },
-      { list = { 'j_nacho_bagon', 'j_nacho_shelgon', 'j_nacho_salamence', 'j_nacho_mega_salamence' }, label = function() return localize { type = "name_text", set = "Joker", key = "j_nacho_bagon" } end, config_key = "bagon" },
+      -- { list = { 'j_nacho_bagon', 'j_nacho_shelgon', 'j_nacho_salamence', 'j_nacho_mega_salamence' }, label = function() return localize { type = "name_text", set = "Joker", key = "j_nacho_bagon" } end, config_key = "bagon" },
       { list = { 'j_nacho_turtwig', 'j_nacho_grotle', 'j_nacho_torterra' }, label = function() return localize { type = "name_text", set = "Joker", key = "j_nacho_turtwig" } end, config_key = "turtwig" },
       { list = { 'j_nacho_chimchar', 'j_nacho_monferno', 'j_nacho_infernape'  }, label = function() return localize { type = "name_text", set = "Joker", key = "j_nacho_chimchar" } end, config_key = "chimchar" },
       { list = { 'j_nacho_piplup', 'j_nacho_prinplup', 'j_nacho_empoleon'  }, label = function() return localize { type = "name_text", set = "Joker", key = "j_nacho_piplup" } end, config_key = "piplup" },
+      { list = { 'j_nacho_ralts', 'j_nacho_kirlia', 'j_nacho_gardevoir', 'j_nacho_mega_gardevoir', 'j_nacho_gallade', 'j_nacho_mega_gallade' }, label = function() return localize { type = "name_text", set = "Joker", key = "j_nacho_ralts" } end, config_key = "ralts" },
+      { list = { 'j_nacho_swablu', 'j_nacho_altaria', 'j_nacho_mega_altaria' }, label = function() return localize { type = "name_text", set = "Joker", key = "j_nacho_swablu" } end, config_key = "swablu" },
+      { list = { 'j_nacho_snover', 'j_nacho_abomasnow', 'j_nacho_mega_abomasnow' }, label = function() return localize { type = "name_text", set = "Joker", key = "j_nacho_snover" } end, config_key = "snover" },
     }
   },
   {
     title = function() return localize("nacho_pokemon2") end,
     tiles = {
-      { list = { 'j_nacho_snover', 'j_nacho_abomasnow', 'j_nacho_mega_abomasnow' }, label = function() return localize { type = "name_text", set = "Joker", key = "j_nacho_snover" } end, config_key = "snover" },
+      { list = { 'j_nacho_victini' }, label = function() return localize { type = "name_text", set = "Joker", key = "j_nacho_victini" } end, config_key = "victini" },
       { list = { 'j_nacho_audino', 'j_nacho_mega_audino' }, label = function() return localize { type = "name_text", set = "Joker", key = "j_nacho_audino" } end, config_key = "audino" },
       { list = { 'j_nacho_hisuian_zorua', 'j_nacho_hisuian_zoroark' }, label = function() return "Hisuian Zorua" end, config_key = "hisuian_zorua" },
       { list = { 'j_nacho_clauncher', 'j_nacho_clawitzer' }, label = function() return localize { type = "name_text", set = "Joker", key = "j_nacho_clauncher" } end, config_key = "clauncher" },

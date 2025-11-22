@@ -6,6 +6,7 @@ return {
   chimchar = true,
   piplup = true,
   snover = true,
+  victini = true,
   audino = true,
   hisuian_zorua = true,
   clauncher = true,

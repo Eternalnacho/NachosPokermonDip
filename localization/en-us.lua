@@ -4,10 +4,9 @@ return {
       j_nacho_galarian_meowth = {
         name = "{s:0.6}Galarian{}Meowth",
         text = {
-          "Retriggers the first two",
-          "{C:attention}Steel{} cards {C:attention}held in hand{}",
-          "{C:inactive,s:0.8}(Evolves when each adjacent Joker",
-          "{C:inactive,s:0.8}has a {C:metal,s:0.8}Metal{C:inactive,s:0.8} sticker)",
+          "Retrigger each {C:attention}held Steel{} card",
+          "{C:inactive,s:0.8}(Evolves when adjacent Jokers",
+          "{C:inactive,s:0.8}have a {C:metal,s:0.8}Metal{C:inactive,s:0.8} sticker)",
         }
       },
       j_nacho_hisuian_sneasel = {
@@ -274,6 +273,16 @@ return {
           "This Joker can't be debuffed",
         }
       },
+      j_nacho_victini = {
+        name = "Victini",
+        text = {
+          "{C:attention}Triple{} all {C:attention}listed{} {C:green,E:1,S:1.1}probabilities",
+          "{br:2}ERROR - CONTACT STEAK",
+          "Gain {X:red,C:white}X#2#{} Mult when",
+          "a {C:attention}listed{} {C:green,E:1,S:1.1}probability{} succeeds",
+          "{C:inactive}(Currently {X:red,C:white}X#1#{C:inactive} Mult){}"
+        }
+      },
       j_nacho_audino = {
         name = "Audino",
         text = {
@@ -281,7 +290,7 @@ return {
           "an extra {C:attention}level{} at",
           "end of round",
           "{br:2}ERROR - CONTACT STEAK",
-          "Gains {X:red,C:white}X#2#{} Mult when",
+          "Gain {X:red,C:white}X#2#{} Mult when",
           "a Pokemon {C:attention}evolves{}",
           "{C:inactive}(Currently {X:red,C:white}X#1#{} {C:inactive}Mult)",
         }
@@ -490,14 +499,10 @@ return {
       j_nacho_perrserker = {
         name = "Perrserker",
         text = {
-          "Retriggers the first three",
-          "{C:attention}Steel{} cards {C:attention}held in hand{}",
+          "Retrigger each {C:attention}held Steel{} card",
           "{br:2}ERROR - CONTACT STEAK",
-          "Each {C:metal}Metal {C:attention}Joker{}",
-          "increases Mult by {C:red}50%{}",
-          "{br:2}ERROR - CONTACT STEAK",
-          "Retriggers if all",
-          "{C:attention}Jokers{} are {C:metal}Metal{}",
+          "{C:pink}Energy{} on this Joker applies to",
+          "{C:attention}held Steel{} cards",
         }
       },
       j_nacho_sneasler = {

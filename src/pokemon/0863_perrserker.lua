@@ -1,7 +1,7 @@
 -- Meowth 52-2
 local galarian_meowth={
   name = "galarian_meowth",
-  config = {extra = {metals = 0, retriggers = 1, counter = 0}, evo_rqmt = 2},
+  config = {extra = { retriggers = 1 }, evo_rqmt = 2},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = G.P_CENTERS.m_steel
@@ -18,15 +18,8 @@ local galarian_meowth={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.before and context.cardarea == G.jokers and not context.blueprint and not context.retrigger_joker then
-      card.ability.extra.counter = 0
-      return{}
-    end
     if context.repetition and context.cardarea == G.hand and (next(context.card_effects[1]) or #context.card_effects > 1) 
-    and SMODS.has_enhancement(context.other_card, "m_steel") and card.ability.extra.counter < 2 then
-      if not context.blueprint and not context.retrigger_joker then
-        card.ability.extra.counter = card.ability.extra.counter + 1
-      end
+    and SMODS.has_enhancement(context.other_card, "m_steel") then
       return {
         message = localize('k_again_ex'),
         repetitions = card.ability.extra.retriggers,
@@ -34,29 +27,23 @@ local galarian_meowth={
       }
     end
 
-    return scaling_evo(self, card, context, "j_nacho_perrserker", card.ability.extra.metals, self.config.evo_rqmt)
-  end,
-  update = function(self, card, dt)
-    if G.STAGE == G.STAGES.RUN and card.area == G.jokers then
-      local metals = 0
-      local adjacent_jokers = poke_get_adjacent_jokers(card)
-      for i = 1, #adjacent_jokers do
-        if is_type(adjacent_jokers[i], "Metal") then metals = metals + 1 end
-      end
-      card.ability.extra.metals = metals
-      return {}
-    end
+    local metals = #PkmnDip.utils.filter(poke_get_adjacent_jokers(card), function(v) return is_type(v, "Metal") end)
+    return scaling_evo(self, card, context, "j_nacho_perrserker", metals, self.config.evo_rqmt)
   end,
 }
 
 -- Perrserker 863
 local perrserker = {
   name = "perrserker",
-  config = { extra = {Ymult = 1.5, retriggers = 1, counter = 0}},
+  config = { extra = { Xmult_multi = 1.5, retriggers = 1 } },
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = G.P_CENTERS.m_steel
-    return { vars = {card.ability.extra.Ymult} }
+    local total_xmult = 1.5
+    local total_energy = 0
+    PkmnDip.utils.for_each(SMODS.find_card('j_nacho_perrserker'), function(v) total_energy = total_energy + get_total_energy(v) end)
+    total_xmult = total_xmult + total_xmult * .05 * total_energy
+    return { vars = { total_xmult } }
   end,
   designer = "Eternalnacho",
   rarity = "poke_safari",
@@ -67,55 +54,105 @@ local perrserker = {
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.before and context.cardarea == G.jokers and not context.blueprint and not context.retrigger_joker then
-      card.ability.extra.counter = 0
-      return{}
-    end
-
     if context.repetition and context.cardarea == G.hand and (next(context.card_effects[1]) or #context.card_effects > 1) 
     and SMODS.has_enhancement(context.other_card, "m_steel") then
-      if not context.blueprint and not context.retrigger_joker then
-        card.ability.extra.counter = card.ability.extra.counter + 1
-      end
-      if card.ability.extra.counter > 3 then return end
       return {
-        message = localize('k_again_ex'),
+        message = not context.retrigger_joker and localize('k_again_ex') or nil,
         repetitions = card.ability.extra.retriggers,
         card = card
       }
     end
-
-    if context.other_joker and is_type(context.other_joker, "Metal") then
-      G.E_MANAGER:add_event(Event({
-        func = function()
-            context.other_joker:juice_up(0.5, 0.5)
-            return true
-        end
-      })) 
-      return {
-        message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Ymult}}, 
-        colour = G.C.XMULT,
-        Xmult_mod = card.ability.extra.Ymult,
-        message_card = context.other_joker,
-      }
-    end
-
-    if context.retrigger_joker_check and not context.retrigger_joker then
-      local metals = #PkmnDip.utils.filter(G.jokers.cards, function(v) return is_type(v, "Metal") end)
-      if metals == #G.jokers.cards and (context.other_card.ability and context.other_card == card) then
-        return {
-          message = localize("k_again_ex"),
-          colour = G.C.BLACK,
-          repetitions = 1,
-          card = card,
-        }
-      end
-		end
   end,
 }
+
+local init = function()
+  get_h_x_mult_ref = Card.get_chip_h_x_mult
+  Card.get_chip_h_x_mult = function(self)
+    local data = self.ability.h_x_mult
+    if next(SMODS.find_card('j_nacho_perrserker')) and SMODS.has_enhancement(self, 'm_steel') then
+      local total_energy = 0
+      PkmnDip.utils.for_each(SMODS.find_card('j_nacho_perrserker'), function(v) total_energy = total_energy + get_total_energy(v) end)
+      self.ability.h_x_mult = (data + self.ability.h_x_mult * .05 * total_energy) or 1
+    end
+    local ret = get_h_x_mult_ref(self)
+    self.ability.h_x_mult = data
+    return ret
+  end
+end
 
 return {
   name = "Nacho's Galarian Meowth Evo Line",
   enabled = nacho_config.galarian_meowth or false,
+  init = init,
   list = { galarian_meowth, perrserker }
 }
+
+-- local score_metal_jokers = function(card, context)
+--   local temp_steel = SMODS.create_card({set = 'Enhanced', enhancement = 'm_steel'})
+--   temp_steel.states.visible = nil
+--   temp_steel:hard_set_T(context.other_joker.T.x, context.other_joker.T.y, context.other_joker.T.w, context.other_joker.T.h)
+--   local temp_context = {
+--     cardarea = G.hand,
+--     individual = true,
+--     main_scoring = true,
+--     other_card = temp_steel,
+--     full_hand = context.full_hand,
+--     poker_hands = context.poker_hands,
+--     scoring_hand = context.scoring_hand,
+--     scoring_name = context.scoring_name,
+--     retrigger_joker = context.retrigger_joker
+--   }
+--   local reps = { 1 }
+--   local j = 1
+--   while j <= #reps do
+--     if reps[j] ~= 1 then
+--         local _, eff = next(reps[j])
+--         eff.message_card = context.other_joker
+--         while eff.retrigger_flag do
+--             SMODS.calculate_effect(eff, temp_steel); j = j+1; _, eff = next(reps[j])
+--             G.E_MANAGER:add_event(Event({
+--               func = function()
+--                   context.other_joker:juice_up(0.5, 0.5)
+--                   return true
+--               end
+--             }))
+--         end
+--         SMODS.calculate_effect(eff, temp_steel)
+--         G.E_MANAGER:add_event(Event({
+--           func = function()
+--               context.other_joker:juice_up(0.5, 0.5)
+--               return true
+--           end
+--         }))
+--     end
+
+--     temp_context.main_scoring = true
+--     local effects = { eval_card(temp_steel, temp_context) }
+--     effects.message_card = context.other_joker
+--     SMODS.calculate_quantum_enhancements(temp_steel, effects, temp_context)
+--     temp_context.main_scoring = nil
+--     temp_context.individual = true
+--     temp_context.other_card = temp_steel
+
+--     if next(effects) then
+--         SMODS.calculate_card_areas('jokers', temp_context, effects, { main_scoring = true })
+--         SMODS.calculate_card_areas('individual', temp_context, effects, { main_scoring = true })
+--     end
+
+--     local flags = SMODS.trigger_effects(effects, temp_steel)
+
+--     temp_context.individual = nil
+--     if reps[j] == 1 and flags.calculated then
+--         temp_context.repetition = true
+--         temp_context.card_effects = effects
+--         SMODS.calculate_repetitions(temp_steel, temp_context, reps)
+--         temp_context.repetition = nil
+--         temp_context.card_effects = nil
+--     end
+--     j = j + (flags.calculated and 1 or #reps)
+--     temp_context.other_card = nil
+--     temp_steel.lucky_trigger = nil
+--   end
+
+--   temp_steel:start_dissolve(nil, true)
+-- end
