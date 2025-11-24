@@ -213,11 +213,12 @@ local hisuian_zoroark = {
   end,
   generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
     local _c = card and card.config.center or card
+    local _o
     if card.ability and card.ability.extra then
       card.ability.extra.hidden_key = card.ability.extra.hidden_key or get_random_poke_key('zoroark', nil, 'poke_safari', nil, nil, {j_poke_zoroark = true})
-      local _o = G.P_CENTERS[card.ability.extra.hidden_key]
+      _o = G.P_CENTERS[card.ability.extra.hidden_key]
     end
-    if card.area ~= G.jokers and not poke_is_in_collection(card) and card.ability and card.ability.extra then
+    if card.area ~= G.jokers and not poke_is_in_collection(card) and _o then
       local temp_ability = card.ability
       card.ability = _o.config
       _o:generate_ui(info_queue, card, desc_nodes, specific_vars, full_UI_table)
