@@ -109,7 +109,7 @@ local baxcalibur = {
     -- Scoring cards with Mult gain Foil
     if context.before and context.cardarea == G.jokers and not context.blueprint then
       for k, v in pairs(G.play.cards) do
-        if poke_total_mult(v) > 0 then v:set_edition({foil = true}, true, true) end
+        if poke_total_mult(v) > 0 and not v.edition.foil then v:set_edition({foil = true}, true, true) end
       end
       play_sound('foil2', 0.5, 0.4)
     end
