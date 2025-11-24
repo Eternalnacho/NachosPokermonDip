@@ -26,8 +26,9 @@ local frigibax = {
         -- Five of a Kind gives held cards foil
         if context.scoring_name == "Five of a Kind" then
           for k, v in pairs(G.hand.cards) do
-            v:set_edition({foil = true}, true)
+            v:set_edition({foil = true}, true, true)
           end
+          play_sound('foil2', 0.5, 0.4)
         end
         -- Scoring mult cards give *a* card in deck foil
         if has_mult > 0 then
@@ -70,8 +71,9 @@ local arctibax = {
         -- Five of a Kind gives held cards foil
         if context.scoring_name == "Five of a Kind" then
           for k, v in pairs(G.hand.cards) do
-            v:set_edition({foil = true}, true)
+            v:set_edition({foil = true}, true, true)
           end
+          play_sound('foil2', 0.5, 0.4)
         end
         -- Scoring mult cards with the same rank give cards in deck foil
         if has_mult > 0 then
@@ -107,8 +109,9 @@ local baxcalibur = {
     -- Scoring cards with Mult gain Foil
     if context.before and context.cardarea == G.jokers and not context.blueprint then
       for k, v in pairs(G.play.cards) do
-        if poke_total_mult(v) > 0 then v:set_edition({foil = true}, true) end
+        if poke_total_mult(v) > 0 then v:set_edition({foil = true}, true, true) end
       end
+      play_sound('foil2', 0.5, 0.4)
     end
     -- Five of a Kinds go stoopid
     if context.scoring_hand and context.scoring_name == "Five of a Kind" and not card.ability.extra.disabled then
