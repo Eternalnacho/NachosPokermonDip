@@ -147,15 +147,22 @@ local dipplin = {
         local copies = SMODS.has_enhancement(removed, 'm_wild') and 2 or 1
         for i = 1, copies do
           -- copy destroyed card and convert to wild
-          local copy = copy_card(removed, nil, nil, G.playing_card)
-          copy:add_to_deck()
-          G.deck.config.card_limit = G.deck.config.card_limit + 1
-          table.insert(G.playing_cards, copy)
-          G.deck:emplace(copy)
-          copy.states.visible = nil
-          copy:start_materialize()
-          poke_convert_cards_to(copy, {mod_conv = 'm_wild'}, true, true)
-          playing_card_joker_effects({copy})
+          G.E_MANAGER:add_event(Event({
+            trigger = 'after',
+            delay = 0.1,
+            func = function()
+              local copy = copy_card(removed, nil, nil, G.playing_card)
+              copy:add_to_deck()
+              G.deck.config.card_limit = G.deck.config.card_limit + 1
+              table.insert(G.playing_cards, copy)
+              G.deck:emplace(copy)
+              copy.states.visible = nil
+              copy:start_materialize()
+              poke_convert_cards_to(copy, {mod_conv = 'm_wild'}, true, true)
+              playing_card_joker_effects({copy})
+              return true
+            end
+          }))
           -- "copied" status text
           card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_copied_ex'), colour = G.C.FILTER})
         end
@@ -193,15 +200,22 @@ local hydrapple = {
     if context.remove_playing_cards then
       for _, removed in pairs(context.removed) do
         -- copy destroyed card and convert to wild
-        local copy = copy_card(removed, nil, nil, G.playing_card)
-        copy:add_to_deck()
-        G.deck.config.card_limit = G.deck.config.card_limit + 1
-        table.insert(G.playing_cards, copy)
-        G.deck:emplace(copy)
-        copy.states.visible = nil
-        copy:start_materialize()
-        poke_convert_cards_to(copy, {mod_conv = 'm_wild'}, true, true)
-        playing_card_joker_effects({copy})
+        G.E_MANAGER:add_event(Event({
+          trigger = 'after',
+          delay = 0.1,
+          func = function()
+            local copy = copy_card(removed, nil, nil, G.playing_card)
+            copy:add_to_deck()
+            G.deck.config.card_limit = G.deck.config.card_limit + 1
+            table.insert(G.playing_cards, copy)
+            G.deck:emplace(copy)
+            copy.states.visible = nil
+            copy:start_materialize()
+            poke_convert_cards_to(copy, {mod_conv = 'm_wild'}, true, true)
+            playing_card_joker_effects({copy})
+            return true
+          end
+        }))
 
         -- increment Xmult
         a.Xmult = a.Xmult + a.Xmult_mod * (SMODS.has_enhancement(removed, 'm_wild') and 2 or 1)
