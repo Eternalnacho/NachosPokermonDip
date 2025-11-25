@@ -154,3 +154,35 @@ end
 ::continue::
 '''
 match_indent = true
+
+
+
+
+# Passimian Cross-Mod w/ Sonfive's Energy Shift
+[[patches]]
+[patches.pattern]
+target = '=[SMODS SonfivesPokermonPlus "src/functions/functions.lua"]'
+pattern = '''
+if (card.ability.extra.ptype ~= "Colorless" and not card.ability.colorless_sticker) and etype == "Colorless" then
+  card.ability.extra[name] = data + (card.config.center.config.extra[name] * addition/2) * (card.ability.extra.escale or 1)
+else
+  card.ability.extra[name] = data + (card.config.center.config.extra[name] * addition) * (card.ability.extra.escale or 1)
+end
+'''
+position = "at"
+payload = '''
+if card.config.center.key == 'j_nacho_passimian' then
+  if (card.ability.extra.ptype ~= "Colorless" and not card.ability.colorless_sticker) and etype == "Colorless" then
+    card.ability.extra[name] = data + (card.ability.received_card.config.extra[name] * addition/2) * (card.ability.extra.escale or 1)
+  else
+    card.ability.extra[name] = data + (card.ability.received_card.config.extra[name] * addition) * (card.ability.extra.escale or 1)
+  end
+else
+  if (card.ability.extra.ptype ~= "Colorless" and not card.ability.colorless_sticker) and etype == "Colorless" then
+    card.ability.extra[name] = data + (card.config.center.config.extra[name] * addition/2) * (card.ability.extra.escale or 1)
+  else
+    card.ability.extra[name] = data + (card.config.center.config.extra[name] * addition) * (card.ability.extra.escale or 1)
+  end
+end
+'''
+match_indent = true
