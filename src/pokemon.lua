@@ -29,7 +29,6 @@ local function load_pokemon_folder(folder)
       end
 
       local family = {}
-      local orderlist = {}
 
       if poke.list and #poke.list > 0 then
         for _, item in ipairs(poke.list) do
@@ -44,10 +43,6 @@ local function load_pokemon_folder(folder)
 
       if #family > 1 and not poke.family then
         pokermon.add_family(family)
-      end
-      
-      if #orderlist > 0 then
-        PkmnDip.dex_order_groups[#PkmnDip.dex_order_groups+1] = orderlist
       end
     end
   end
