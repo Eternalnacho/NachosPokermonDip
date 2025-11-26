@@ -33,7 +33,6 @@ local function load_pokemon_folder(folder)
       if poke.list and #poke.list > 0 then
         for _, item in ipairs(poke.list) do
           family[#family + 1] = item.name
-          orderlist[#orderlist+1] = item.name
 
           if poke.enabled then
             load_pokemon(item)
