@@ -23,8 +23,6 @@ return {
   terapagos = true,
   hisuian_sneasel = (SMODS.Mods["ToxicStall"] or {}).can_load and true or false,
   customStakes = true,
-  orderJokers = true,
-  pokemon_only = false,
   gallery_width = 5,
   -- customItems = true,
 }

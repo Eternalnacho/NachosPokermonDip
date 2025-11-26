@@ -183,16 +183,6 @@ function SMODS.current_mod.extra_tabs()
                   }
                 }},
               },
-              create_toggle({
-                  label = "Dex Order Jokers?",
-                  ref_table = nacho_config,
-                  ref_value = "orderJokers",
-              }),
-              create_toggle({
-                label = "Only Pokemon Jokers in Gallery?",
-                ref_table = nacho_config,
-                ref_value = "pokemon_only",
-              }),
               create_slider({label = 'Joker Gallery Width', w = 4, h = 0.3, ref_table = nacho_config, ref_value = 'gallery_width', min = 5, max = 11})
             }
           }
