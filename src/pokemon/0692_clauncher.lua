@@ -56,8 +56,10 @@ local clauncher = {
     return level_evo(self, card, context, "j_nacho_clawitzer")
   end,
   in_pool = function(self, args)
-    for k, v in pairs(G.playing_cards) do
-      if v.edition and (v.edition.foil or v.edition.holographic or v.edition.polychrome) then return true end
+    if G.playing_cards then
+      for k, v in pairs(G.playing_cards) do
+        if v.edition and (v.edition.foil or v.edition.holographic or v.edition.polychrome) then return true end
+      end
     end
     return false
   end,
@@ -100,8 +102,10 @@ local clawitzer = {
     end
   end,
   in_pool = function(self, args)
-    for k, v in pairs(G.playing_cards) do
-      if v.edition and (v.edition.foil or v.edition.holographic or v.edition.polychrome) then return pokemon_in_pool(self) end
+    if G.playing_cards then
+      for k, v in pairs(G.playing_cards) do
+        if v.edition and (v.edition.foil or v.edition.holographic or v.edition.polychrome) then return pokemon_in_pool(self) end
+      end
     end
     return false
   end,
