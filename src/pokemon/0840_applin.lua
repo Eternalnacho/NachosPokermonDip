@@ -15,9 +15,9 @@ local applin = {
   stage = "Basic",
   ptype = "Dragon",
   gen = 8,
-  item_req = {"sweetapple", "tartapple", "syrupyapple"},
+  item_req = {"tartapple", "sweetapple", "syrupyapple"},
   custom_item_evo = true,
-  evo_list = {sweetapple = "j_nacho_appletun", tartapple = 'j_nacho_flapple', syrupyapple = 'j_nacho_dipplin'},
+  evo_list = {tartapple = 'j_nacho_flapple', sweetapple = "j_nacho_appletun", syrupyapple = 'j_nacho_dipplin'},
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.end_of_round and not context.individual and not context.repetition and not context.game_over then
