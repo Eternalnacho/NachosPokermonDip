@@ -125,6 +125,11 @@ local passimian={
       card.ability.received_card:remove_from_deck(card)
     end
   end,
+  calc_dollar_bonus = function(self, card)
+    if card.ability.received_card and card.ability.received_card.calc_dollar_bonus then
+      return card.ability.received_card:calc_dollar_bonus(card)
+    end
+  end,
   generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
     type_tooltip(self, info_queue, card)
     local _c = card and card.config.center or card
@@ -201,22 +206,49 @@ local init = function()
     return saved_table
   end
 
-  -- Passimian Find_Card override
+  -- Passimian Find_Card Hook
   local find_card = SMODS.find_card
   function SMODS.find_card(key, count_debuffed)
     local results = find_card(key, count_debuffed)
     if not G.jokers or not G.jokers.cards then return {} end
-      for _, area in ipairs(SMODS.get_card_areas('jokers')) do
-          if area.cards then
-              for _, v in pairs(area.cards) do
-                  if v and type(v) == 'table' and v.ability and v.ability.received_card and v.ability.received_card.key == key and (count_debuffed or not v.debuff) then
-                      table.insert(results, v)
-                  end
-              end
+    for _, area in ipairs(SMODS.get_card_areas('jokers')) do
+      if area.cards then
+        for _, v in pairs(area.cards) do
+          if v and type(v) == 'table' and v.ability and v.ability.received_card and v.ability.received_card.key == key and (count_debuffed or not v.debuff) then
+            table.insert(results, v)
           end
+        end
       end
+    end
     return results
   end
+
+  -- function poke_find_card(key_or_function, use_highlighted)
+  --   local is_target = function(card)
+  --     return (type(key_or_function) == "function") and key_or_function(card)
+  --       or card.config.center.key == key_or_function
+  --       or card.ability.received_card and card.ability.received_card == key_or_function
+  --   end
+  --   for _, cardarea in pairs(SMODS.get_card_areas("jokers")) do
+  --     if use_highlighted and cardarea.highlighted and #cardarea.highlighted == 1 then
+  --       local highlighted = cardarea.highlighted[1]
+  --       if is_target(highlighted) then return highlighted end
+  --     elseif cardarea.cards then
+  --       for _, card in pairs(cardarea.cards) do
+  --         if is_target(card) then return card end
+  --       end
+  --     end
+  --   end
+  -- end
+
+  -- -- Passimian Energize Hook
+  -- local energize_ref = energize
+  -- energize = function(card, etype, evolving, silent, amount, center)
+  --   if card.config.center.key == 'j_nacho_passimian' and card.ability.received_card then
+  --     center = card.ability.received_card
+  --   end
+  --   energize_ref(card, etype, evolving, silent, amount, center)
+  -- end
 end
 
 return {
