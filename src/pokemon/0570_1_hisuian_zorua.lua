@@ -125,7 +125,7 @@ local hisuian_zorua = {
     end
   end,
   update = function(self, card, dt)
-    if G.STAGE == G.STAGES.RUN and card.area == G.jokers  then
+    if G.STAGE == G.STAGES.RUN and card.area == G.jokers then
       local other_joker = G.jokers.cards[1]
       card.ability.blueprint_compat = ( other_joker and other_joker ~= card and not other_joker.debuff and other_joker.config.center.blueprint_compat and 'compatible') or 'incompatible'
       if card.ability.blueprint_compat == 'compatible' and not card.debuff and card.ability.extra.active and other_joker.children.center.atlas.px == 71 then
@@ -134,6 +134,7 @@ local hisuian_zorua = {
         if other_joker.children.floating_sprite then
           card.children.floating_sprite.atlas = other_joker.children.floating_sprite.atlas
           card.children.floating_sprite:set_sprite_pos(other_joker.children.floating_sprite.sprite_pos)
+          card.config.center.soul_pos.draw = other_joker.config.center.soul_pos.draw
         else
           card.children.floating_sprite.atlas = G.ASSET_ATLAS[self.atlas]
           card.children.floating_sprite:set_sprite_pos(self.soul_pos)
@@ -265,6 +266,7 @@ local hisuian_zoroark = {
         if other_joker.children.floating_sprite then
           card.children.floating_sprite.atlas = other_joker.children.floating_sprite.atlas
           card.children.floating_sprite:set_sprite_pos(other_joker.children.floating_sprite.sprite_pos)
+          card.config.center.soul_pos.draw = other_joker.config.center.soul_pos.draw
         else
           card.children.floating_sprite.atlas = G.ASSET_ATLAS[self.atlas]
           card.children.floating_sprite:set_sprite_pos(self.soul_pos)
