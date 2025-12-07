@@ -102,13 +102,7 @@ local sliggoo={
         local unique_ranks = {}
         -- Count the unique ranks in scoring hand
         for i = 1, #context.scoring_hand do
-          local contains = false
-          if unique_ranks ~= {} then
-            for j = 1, #unique_ranks do
-              if context.scoring_hand[i]:get_id() == unique_ranks[j] then contains = true end
-            end
-          end
-          if not contains then
+          if not PkmnDip.utils.contains(unique_ranks, context.scoring_hand[i]:get_id()) then
             unique_ranks[#unique_ranks+1] = context.scoring_hand[i]:get_id()
           end
         end
@@ -136,10 +130,10 @@ local sliggoo={
 -- Goodra 706
 local goodra={
   name = "goodra",
-  config = {extra = {Xmult_mod = 0.02}},
+  config = {extra = {Xmult_multi = 0.02}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    return {vars = {card.ability.extra.Xmult_mod}}
+    return {vars = {card.ability.extra.Xmult_multi}}
   end,
   designer = "Eternalnacho",
   rarity = "poke_safari",
@@ -158,13 +152,7 @@ local goodra={
         local unique_ranks = {}
         -- Count the unique ranks in scoring hand
         for i = 1, #context.scoring_hand do
-          local contains = false
-          if unique_ranks ~= {} then
-            for j = 1, #unique_ranks do
-              if context.scoring_hand[i]:get_id() == unique_ranks[j] then contains = true end
-            end
-          end
-          if not contains then
+          if not PkmnDip.utils.contains(unique_ranks, context.scoring_hand[i]:get_id()) then
             unique_ranks[#unique_ranks+1] = context.scoring_hand[i]:get_id()
           end
         end
@@ -176,7 +164,7 @@ local goodra={
         -- Increment permamult if card matches Flush suit
         if wildcount == #scoring_flush or context.other_card:is_suit(matching_suit) then
           context.other_card.ability.perma_x_mult = context.other_card.ability.perma_x_mult or 0
-          context.other_card.ability.perma_x_mult = context.other_card.ability.perma_x_mult + card.ability.extra.Xmult_mod * #unique_ranks
+          context.other_card.ability.perma_x_mult = context.other_card.ability.perma_x_mult + card.ability.extra.Xmult_multi * #unique_ranks
           return {
             extra = {message = localize('k_upgrade_ex'), colour = G.C.MULT},
             colour = G.C.MULT,
@@ -221,7 +209,7 @@ local hisuian_sliggoo={
             first_rank_id = scoring_card:get_id()
             first_rank = scoring_card.base.nominal
           elseif not second_rank and scoring_card:get_id() > 0 and scoring_card:get_id() ~= first_rank_id then
-              second_rank = scoring_card.base.nominal
+            second_rank = scoring_card.base.nominal
           end
       end
       -- Create metal coat

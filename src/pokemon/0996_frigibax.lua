@@ -19,13 +19,13 @@ local frigibax = {
   calculate = function(self, card, context)
     if context.scoring_hand then
       local has_mult = 0
-      for k, v in pairs(context.scoring_hand) do
+      for _, v in pairs(context.scoring_hand) do
         if poke_total_mult(v) > 0 then has_mult = has_mult + 1 end
       end
       if context.before and context.cardarea == G.jokers then
         -- Five of a Kind gives held cards foil
         if context.scoring_name == "Five of a Kind" then
-          for k, v in pairs(G.hand.cards) do
+          for _, v in pairs(G.hand.cards) do
             v:set_edition({foil = true}, true, true)
           end
           play_sound('foil2', 0.5, 0.4)
@@ -63,21 +63,21 @@ local arctibax = {
     if context.scoring_hand then
       local has_mult = 0
       local is_rank
-      for k, v in pairs(context.scoring_hand) do
+      for _, v in pairs(context.scoring_hand) do
         if poke_total_mult(v) > 0 and not is_rank then has_mult = has_mult + 1; is_rank = v:get_id()
         elseif poke_total_mult(v) > 0 and v:get_id() == is_rank then has_mult = has_mult + 1 end
       end
       if context.before and context.cardarea == G.jokers then
         -- Five of a Kind gives held cards foil
         if context.scoring_name == "Five of a Kind" then
-          for k, v in pairs(G.hand.cards) do
+          for _, v in pairs(G.hand.cards) do
             v:set_edition({foil = true}, true, true)
           end
           play_sound('foil2', 0.5, 0.4)
         end
         -- Scoring mult cards with the same rank give cards in deck foil
         if has_mult > 0 then
-          for i = 1, has_mult do
+          for _ = 1, has_mult do
             local viable_targets = PkmnDip.utils.filter(G.deck.cards, function(card) return not (card.edition and card.edition.foil) end)
             local target = pseudorandom_element(viable_targets, pseudoseed('arctibax'))
             if target then target:set_edition({foil = true}, true) end
@@ -95,7 +95,7 @@ local baxcalibur = {
   config = { extra = { Xmult_multi = 0.03 } },
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    local foil_count = G.playing_cards and #PkmnDip.utils.filter(G.playing_cards, function(card) return card.edition and card.edition.foil end) or 0
+    local foil_count = G.playing_cards and #PkmnDip.utils.filter(G.playing_cards, function(v) return v.edition and v.edition.foil end) or 0
     return { vars = { card.ability.extra.Xmult_multi, 1 + card.ability.extra.Xmult_multi * foil_count } }
   end,
   designer = "king_alloy, roxie",
@@ -108,7 +108,7 @@ local baxcalibur = {
   calculate = function(self, card, context)
     -- Scoring cards with Mult gain Foil
     if context.before and context.cardarea == G.jokers and not context.blueprint then
-      for k, v in pairs(G.play.cards) do
+      for _, v in pairs(G.play.cards) do
         if poke_total_mult(v) > 0 then v:set_edition({foil = true}, true, true) end
       end
       play_sound('foil2', 0.5, 0.4)
@@ -116,7 +116,7 @@ local baxcalibur = {
     -- Five of a Kinds go stoopid
     if context.scoring_hand and context.scoring_name == "Five of a Kind" and not card.ability.extra.disabled then
       if context.individual and context.cardarea == G.play then
-        local foil_count = #PkmnDip.utils.filter(G.playing_cards, function(card) return (card.edition and card.edition.foil) end)
+        local foil_count = #PkmnDip.utils.filter(G.playing_cards, function(v) return (v.edition and v.edition.foil) end)
         return {
           Xmult = 1 + card.ability.extra.Xmult_multi * foil_count
         }

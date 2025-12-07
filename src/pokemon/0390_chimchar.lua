@@ -137,10 +137,10 @@ local monferno={
 -- Infernape 392
 local infernape = {
   name = "infernape",
-  config = {extra = {d_size = 1, mult = 30, Ymult = 1.0, Xmult_mod = 0.3}},
+  config = {extra = {d_size = 1, mult = 30, Xmult = 1.0, Xmult_mod = 0.3}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    return {vars = {card.ability.extra.d_size, card.ability.extra.mult, card.ability.extra.Xmult_mod, card.ability.extra.Ymult}}
+    return {vars = {card.ability.extra.d_size, card.ability.extra.mult, card.ability.extra.Xmult_mod, card.ability.extra.Xmult}}
   end,
   designer = "Eternalnacho",
   rarity = "poke_safari",
@@ -154,7 +154,7 @@ local infernape = {
 
     if context.discard and not context.blueprint and not context.other_card.debuff then
       if context.other_card:is_face() or context.other_card:get_id() == 14 then 
-        card.ability.extra.Ymult = card.ability.extra.Ymult + card.ability.extra.Xmult_mod
+        card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
         return {
               message = localize('k_upgrade_ex'),
               colour = G.C.RED
@@ -168,13 +168,13 @@ local infernape = {
           message = localize("poke_close_combat_ex"),
           colour = G.C.XMULT,
           mult_mod = card.ability.extra.mult,
-          Xmult_mod = card.ability.extra.Ymult,
+          Xmult_mod = card.ability.extra.Xmult,
         }
       end
     end
 
     if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
-        card.ability.extra.Ymult = 1.0
+        card.ability.extra.Xmult = 1.0
         return {
             message = localize('k_reset'),
             colour = G.C.RED
