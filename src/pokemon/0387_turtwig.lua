@@ -1,7 +1,7 @@
 -- Turtwig 387
 local turtwig={
   name = "turtwig",
-  config = {extra = {h_size = 1, interest = 5, counter = 0, money = 0, money_mod = 0, rounds = 4}},
+  config = {extra = {h_size = 1, interest = 5, counter = 0, rounds = 4}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.h_size, card.ability.extra.rounds, G.GAME.interest_cap / 5}}
@@ -42,7 +42,7 @@ local turtwig={
 -- Grotle 388
 local grotle={
   name = "grotle",
-  config = {extra = {h_size = 1, interest = 5, counter = 0, money = 0, money_mod = 0, rounds = 5}},
+  config = {extra = {h_size = 1, interest = 5, counter = 0, rounds = 5}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.h_size, card.ability.extra.rounds, G.GAME.interest_cap / 5}}
@@ -102,7 +102,7 @@ local grotle={
 -- Torterra 389
 local torterra={
   name = "torterra",
-  config = {extra = {h_size = 0, interest = 5, counter = 0, money = 0, money_mod = 0}},
+  config = {extra = {h_size = 0, interest = 5, counter = 0}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.h_size, card.ability.extra.mult, G.GAME.interest_cap / 5}}
