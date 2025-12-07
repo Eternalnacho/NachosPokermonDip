@@ -39,17 +39,7 @@ end)
 
 --Load Joker Display if the mod is enabled
 if (SMODS.Mods["JokerDisplay"] or {}).can_load then
-  local jokerdisplays = NFS.getDirectoryItems(''..SMODS.current_mod.path.."jokerdisplay")
-
-  for _, file in ipairs(jokerdisplays) do
-    sendDebugMessage ("The file is: "..file)
-    local helper, load_error = SMODS.load_file("jokerdisplay/"..file)
-    if load_error then
-      sendDebugMessage ("The error is: "..load_error)
-    else
-      helper()
-    end
-  end
+  load_directory("jokerdisplay")
 end
 
 PkmnDip.utils.hook_before_function(SMODS.current_mod, 'reset_game_globals', function(run_start)
