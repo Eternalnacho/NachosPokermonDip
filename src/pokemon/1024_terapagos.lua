@@ -50,7 +50,7 @@ local terapagos_terastal={
   name = "terapagos_terastal",
   config = {extra = {Xmult_mod = 0.4, changedtype = "Colorless"}},
   loc_vars = function(self, info_queue, card)
-    local count = #find_pokemon_type(card.ability.extra.ptype) - 1
+    local count = not poke_is_in_collection(card) and (#find_pokemon_type(card.ability.extra.ptype) - 1) or 0
     type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
     return {vars = {card.ability.extra.Xmult_mod, math.max(1, 1 + card.ability.extra.Xmult_mod * count)}}
@@ -128,7 +128,7 @@ local terapagos_stellar={
       local red_scale_mod = scale_mod - (1 - 71/108)
 
       card.children.center.VT.w = card.T.w
-      card.children.floating_sprite:draw_shader('dissolve', 0, nil, nil, card.children.center, red_scale_mod, rotate_mod, -(1.03 - 71/108), 0.1 + 0.03*math.sin(1.8*G.TIMERS.REAL) - 0.5, nil, 0.6)
+      card.children.floating_sprite:draw_shader('dissolve', 0, nil, nil, card.children.center, red_scale_mod, rotate_mod, -(1.03 - 71/108), -0.5, nil, 0.6)
       card.children.floating_sprite:draw_shader('dissolve', nil, nil, nil, card.children.center, red_scale_mod, rotate_mod, -(1.03 - 71/108), -0.5)
       card.children.center.VT.w = card.T.w
     end},
@@ -155,10 +155,11 @@ local terapagos_stellar={
     if context.using_consumeable and context.consumeable and context.consumeable.ability then
       if context.consumeable.ability.name == 'teraorb' then
         if (G.jokers.highlighted[1] == card and #G.jokers.highlighted == 1) or (G.jokers.cards[1] == card and #G.jokers.highlighted == 0) then
-          for i = 1, #G.jokers.cards do
-            energy_increase(G.jokers.cards[i], G.jokers.cards[i].ability.extra.ptype)
-	          apply_type_sticker(G.jokers.cards[i], "Stellar")
-          end
+          PkmnDip.utils.for_each(G.jokers.cards,
+            function(joker)
+              energy_increase(joker, get_type(joker))
+              apply_type_sticker(joker, "Stellar")
+              end)
         end
       end
     end
@@ -179,30 +180,16 @@ local terapagos_stellar={
   end,
   add_to_deck = function(self, card, from_debuff)
     G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.0, func = function()
-              card.children.center:reset()
-              if card.children.floating_sprite then
-                card.children.floating_sprite.atlas = G.ASSET_ATLAS[card.children.center.atlas.name .. "_soul"]
-                card.children.floating_sprite:reset()
-              end
-              apply_type_sticker(card, "Stellar")
-              return true end }))
-    if not G.GAME.energy_plus then
-      G.GAME.energy_plus = 5
-    else
-      G.GAME.energy_plus = G.GAME.energy_plus + 5
-    end
+        self:set_sprites(card)
+        apply_type_sticker(card, "Stellar")
+      return true end }))
+    G.GAME.energy_plus = G.GAME.energy_plus and G.GAME.energy_plus + 5 or 5
     if not from_debuff then
-      for i = 1, #G.jokers.cards do
-        apply_type_sticker(G.jokers.cards[i], "Stellar")
-      end
+      PkmnDip.utils.for_each(G.jokers.cards, function(joker) apply_type_sticker(joker, "Stellar") end)
     end
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if not G.GAME.energy_plus then
-      G.GAME.energy_plus = 0
-    else
-      G.GAME.energy_plus = G.GAME.energy_plus - 5
-    end
+    G.GAME.energy_plus = G.GAME.energy_plus and G.GAME.energy_plus - 5 or 0
   end,
   set_sprites = function(self, card, front)
     if self.discovered or card.bypass_discovery_center then
@@ -210,8 +197,6 @@ local terapagos_stellar={
       if card.children.floating_sprite then
         card.children.floating_sprite.atlas = G.ASSET_ATLAS[card.children.center.atlas.name .. "_soul"]
         card.children.floating_sprite:reset()
-        card.children.floating_sprite.scale.x = card.children.center.scale.x * (108/71)
-        card.children.floating_sprite.scale.y = card.children.center.scale.y * (108/71)
       end
     end
   end,
@@ -222,8 +207,39 @@ local terapagos_stellar={
   end,
 }
 
+local init = function()
+  is_type_ref = is_type
+  is_type = function(card, target_type)
+    if card.ability and card.ability.stellar_sticker then return true end
+    return is_type_ref(card, target_type)
+  end
+
+  energy_matches_ref = energy_matches
+  energy_matches = function(card, etype, include_colorless)
+    if card.ability and card.ability.stellar_sticker then return true
+    else return energy_matches_ref(card, etype, include_colorless) end
+  end
+
+  matching_energy_ref = matching_energy
+  matching_energy = function(card, allow_bird)
+    if card.ability and card.ability.stellar_sticker then return "c_poke_colorless_energy"
+    else return matching_energy_ref(card, allow_bird) end
+  end
+
+  find_pokemon_type_ref = find_pokemon_type
+  find_pokemon_type = function(target_type, exclude_card)
+    local ret = find_pokemon_type_ref(target_type, exclude_card)
+    if type(ret) == "table" and G.jokers then
+      for k, v in pairs(G.jokers.cards) do
+        if v.ability.stellar_sticker and v ~= exclude_card and not PkmnDip.utils.contains(ret, v) then table.insert(ret, v) end
+      end
+    end
+    return ret
+  end
+end
+
 return {
-  name = "Nacho's Terapagos Line",
-  enabled = nacho_config.terapagos or false,
+  config_key = "terapagos",
+  init = init,
   list = {terapagos, terapagos_terastal, terapagos_stellar}
 }

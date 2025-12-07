@@ -76,7 +76,6 @@ local mega_audino = {
 }
 
 return {
-  name = "Nacho's Audino Line",
-  enabled = nacho_config.audino or false,
+  config_key = "audino",
   list = { audino, mega_audino }
 }

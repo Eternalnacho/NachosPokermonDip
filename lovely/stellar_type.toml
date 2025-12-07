@@ -71,62 +71,6 @@ match_indent = true
 
 # # Tera Stellar counts for Every Type
 
-# is_type always returns true
-[[patches]]
-[patches.pattern]
-target = '=[SMODS Pokermon "functions/pokefunctions.lua"]'
-pattern = '''
-if card.ability and ((card.ability.extra and type(card.ability.extra) == "table" and target_type == card.ability.extra.ptype) or card.ability[string.lower(target_type).."_sticker"]) then
-'''
-position = "before"
-payload = '''
-if card.ability and card.ability["stellar_sticker"] then
-    return true
-end
-'''
-match_indent = true
-
-# energy_matches always returns true
-[[patches]]
-[patches.pattern]
-target = '=[SMODS Pokermon "functions/energyfunctions.lua"]'
-pattern = '''
-if (card.ability.extra.ptype and etype and card.ability.extra.ptype == etype and not type_sticker_applied(card)) or (card.ability[string.lower(etype).."_sticker"]) then
-'''
-position = "before"
-payload = '''
-if (card.ability["stellar_sticker"]) then return true end
-'''
-match_indent = true
-
-# matching_energy does not create "stellar energy"
-[[patches]]
-[patches.pattern]
-target = '=[SMODS Pokermon "functions/energyfunctions.lua"]'
-pattern = '''
-local poketype_list = {"grass", "fire", "water", "lightning", "psychic", "fighting", "colorless", "dark", "metal", "fairy", "dragon", "earth", "bird"}
-'''
-position = "after"
-payload = '''
-if card.ability["stellar_sticker"] then return end
-'''
-match_indent = true
-
-# find_pokemon_type always sees Stellar type
-[[patches]]
-[patches.pattern]
-target = '=[SMODS Pokermon "functions/pokefunctions.lua"]'
-pattern = '''
-if v.ability and ((v.ability.extra and type(v.ability.extra) == "table" and target_type == v.ability.extra.ptype) or v.ability[string.lower(target_type).."_sticker"]) then
-        table.insert(found, v)
-'''
-position = "at"
-payload = '''
-if v.ability and ((v.ability.extra and type(v.ability.extra) == "table" and target_type == v.ability.extra.ptype) or v.ability["stellar_sticker"] or v.ability[string.lower(target_type).."_sticker"]) then
-        table.insert(found, v)
-'''
-match_indent = true
-
 # Stellar type guarantees type_evo
 [[patches]]
 [patches.pattern]

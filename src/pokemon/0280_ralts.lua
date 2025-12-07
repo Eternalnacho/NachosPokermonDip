@@ -307,9 +307,8 @@ local init = function()
 end
 
 return {
-  name = "Nacho's Ralts Evo Line",
-  enabled = nacho_config.ralts or false,
+  config_key = "ralts",
   init = init,
-  family = true,
+  no_family = true,
   list = { ralts, kirlia, gardevoir, mega_gardevoir, gallade, mega_gallade }
 }

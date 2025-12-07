@@ -2,7 +2,6 @@ local pages = {
   {
     title = function() return localize("nacho_pokemon1") end,
     tiles = {
-      -- { list = { 'j_nacho_bagon', 'j_nacho_shelgon', 'j_nacho_salamence', 'j_nacho_mega_salamence' }, label = function() return localize { type = "name_text", set = "Joker", key = "j_nacho_bagon" } end, config_key = "bagon" },
       { list = { 'j_nacho_turtwig', 'j_nacho_grotle', 'j_nacho_torterra' }, label = function() return localize { type = "name_text", set = "Joker", key = "j_nacho_turtwig" } end, config_key = "turtwig" },
       { list = { 'j_nacho_chimchar', 'j_nacho_monferno', 'j_nacho_infernape'  }, label = function() return localize { type = "name_text", set = "Joker", key = "j_nacho_chimchar" } end, config_key = "chimchar" },
       { list = { 'j_nacho_piplup', 'j_nacho_prinplup', 'j_nacho_empoleon'  }, label = function() return localize { type = "name_text", set = "Joker", key = "j_nacho_piplup" } end, config_key = "piplup" },
@@ -47,8 +46,16 @@ local pages = {
 pages[#pages+1] = { title = function() return localize("nacho_crossMod") end, tiles = {} }
 
 pages[#pages].tiles[#pages[#pages].tiles+1] =
-  { list = { 'j_nacho_hisuian_sneasel', 'j_nacho_sneasler' }, label = function() return "Hisuian Sneasel" end, config_key = "hisuian_sneasel", condition = (SMODS.Mods["ToxicStall"] or {}).can_load, mod_tVal = "The Toxic Stall" }
+  { list = { 'j_nacho_hisuian_sneasel', 'j_nacho_sneasler' }, label = function() return "Hisuian Sneasel" end,
+    config_key = "hisuian_sneasel", condition = (SMODS.Mods["ToxicStall"] or {}).can_load, mod_tVal = "The Toxic Stall" }
 
+-- Legacy content page (which is really just bagon lmao)
+pages[#pages+1] = { title = function() return "Legacy Content" end, tiles = {} }
+
+pages[#pages].tiles[#pages[#pages].tiles+1] =
+  { list = { 'j_nacho_bagon', 'j_nacho_shelgon', 'j_nacho_salamence', 'j_nacho_mega_salamence' },
+    label = function() return localize { type = "name_text", set = "Joker", key = "j_nacho_bagon" } end,
+    config_key = "bagon", condition = pokermon_config.pokemon_legacy, mod_tVal = "Pokermon (Legacy Content)" }
 
 return {
   pages = pages

@@ -37,7 +37,6 @@ local carbink = {
 }
 
 return {
-  name = "Nacho's Carbink",
-  enabled = nacho_config.carbink or false,
+  config_key = "carbink",
   list = { carbink }
 }

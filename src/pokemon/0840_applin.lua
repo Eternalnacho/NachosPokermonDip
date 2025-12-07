@@ -240,7 +240,6 @@ local hydrapple = {
 }
 
 return {
-  name = "Nacho's Applin Evo Line",
-  enabled = nacho_config.applin or false,
+  config_key = "applin",
   list = { applin, flapple, appletun, dipplin, hydrapple }
 }

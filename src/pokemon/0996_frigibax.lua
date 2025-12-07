@@ -126,7 +126,6 @@ local baxcalibur = {
 }
 
 return {
-  name = "Nacho's Frigibax Evo Line",
-  enabled = nacho_config.frigibax or false,
+  config_key = "frigibax",
   list = { frigibax, arctibax, baxcalibur }
 }

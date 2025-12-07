@@ -41,8 +41,7 @@ function PkmnDip.utils.id(a)
   return a
 end
 
-
--- family functions
+-- family utils functions
 function PkmnDip.find_family(cardname, get_index)
   for k, v in pairs(pokermon.family) do
     for x, y in pairs(v) do
@@ -56,4 +55,29 @@ end
 function PkmnDip.append_to_family(existing_name, new_name, to_end)
   local family_line, family_index = pokermon.family[PkmnDip.find_family(existing_name, true).line], PkmnDip.find_family(existing_name, true).index
   table.insert(family_line, to_end and #family_line + 1 or family_index + 1, new_name)
+end
+
+-- metafunctions
+function PkmnDip.utils.hook_before_function(table, funcname, hook)
+  if not table[funcname] then
+    table[funcname] = hook
+  else
+    local orig = table[funcname]
+    table[funcname] = function(...)
+      return hook(...)
+          or orig(...)
+    end
+  end
+end
+
+function PkmnDip.utils.hook_after_function(table, funcname, hook)
+  if not table[funcname] then
+    table[funcname] = hook
+  else
+    local orig = table[funcname]
+    table[funcname] = function(...)
+      return orig(...)
+          or hook(...)
+    end
+  end
 end

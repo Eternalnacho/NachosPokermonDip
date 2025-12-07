@@ -112,7 +112,6 @@ local clawitzer = {
 }
 
 return {
-  name = "Nacho's Clauncher Evo Line",
-  enabled = nacho_config.clauncher or false,
+  config_key = "clauncher",
   list = { clauncher, clawitzer }
 }

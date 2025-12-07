@@ -230,7 +230,6 @@ local mega_salamence={
 }
 
 return {
-  name = "Nacho's Bagon Evo Line",
-  enabled = nacho_config.bagon or false,
+  config_key = "bagon",
   list = { bagon, shelgon, salamence, mega_salamence }
 }

@@ -143,7 +143,6 @@ local mega_abomasnow={
 }
 
 return {
-  name = "Nacho's Snover Evo Line",
-  enabled = nacho_config.snover or false,
+  config_key = "snover",
   list = { snover, abomasnow, mega_abomasnow }
 }

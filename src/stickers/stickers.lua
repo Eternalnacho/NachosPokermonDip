@@ -1,9 +1,9 @@
 local stellar_sticker = {
   key = "stellar_sticker",
+  hide_badge = true,
   prefix_config = {key = false},
   rate = 0.0,
   atlas = "stickers",
-  no_collection = true,
   pos = { x = 0, y = 0 },
 }
 

@@ -1,4 +1,4 @@
-local Tile = assert(SMODS.load_file("src/settings/tile.lua"))()
+local DipTile = assert(SMODS.load_file("src/settings/tile.lua"))()
 
 local list_map = PkmnDip.utils.map_list
 
@@ -21,7 +21,7 @@ local function create_tile_grid(args)
   local second_row = { n = G.UIT.R, config = { align = "cm" }, nodes = { create_tile_spacer() } }
 
   local tiles = current_page.tiles and list_map(current_page.tiles, function(tile)
-    return Tile {
+    return DipTile {
       label = tile.label(),
       display_cards = tile.list,
       ref_table = nacho_config,

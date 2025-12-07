@@ -41,7 +41,6 @@ local dedenne = {
 }
 
 return {
-  name = "Nacho's Dedenne",
-  enabled = nacho_config.dedenne or false,
+  config_key = "dedenne",
   list = { dedenne }
 }

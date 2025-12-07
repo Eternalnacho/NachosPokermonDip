@@ -95,7 +95,6 @@ local mega_altaria={
 }
 
 return {
-  name = "Nacho's Swablu Evo Line",
-  enabled = nacho_config.swablu or false,
+  config_key = "swablu",
   list = { swablu, altaria, mega_altaria }
 }

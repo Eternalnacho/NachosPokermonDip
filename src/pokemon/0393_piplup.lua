@@ -144,7 +144,6 @@ local empoleon={
 }
 
 return {
-  name = "Nacho's Piplup Evo Line",
-  enabled = nacho_config.piplup or false,
+  config_key = "piplup",
   list = { piplup, prinplup, empoleon }
 }

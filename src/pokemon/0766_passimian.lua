@@ -57,28 +57,20 @@ local passimian={
 
       -- Set ability to received card's
       for k, v in pairs(_r.config) do
-        if type(v) == 'table' then
-            card.ability[k] = copy_table(v)
-        else
-            card.ability[k] = v
-        end
+        card.ability[k] = type(v) == 'table' and copy_table(v) or v
       end
       card.ability.received_card = _r
 
       -- Re-add kept values
       if values_to_keep ~= {} then
         for k, v in pairs(values_to_keep) do
-          if type(v) == 'table' then
-              card.ability[k] = copy_table(v)
-          else
-              card.ability[k] = v
-          end
+          card.ability[k] = type(v) == 'table' and copy_table(v) or v
         end
       end
 
       if type(card.ability.extra) == "table" and values_to_keep ~= {} then
         for k, v in pairs(values_to_keep) do
-          if card.ability.extra[k] or k == "energy_count" or k == "c_energy_count" then
+          if card.ability.extra[k] or k == "energy_count" or k == "c_energy_count" or k == "e_limit_up" then
             if type(card.ability.extra[k]) ~= "number" or (type(v) == "number" and v > card.ability.extra[k]) then
               card.ability.extra[k] = v
             end
@@ -223,37 +215,36 @@ local init = function()
     return results
   end
 
-  -- function poke_find_card(key_or_function, use_highlighted)
-  --   local is_target = function(card)
-  --     return (type(key_or_function) == "function") and key_or_function(card)
-  --       or card.config.center.key == key_or_function
-  --       or card.ability.received_card and card.ability.received_card == key_or_function
-  --   end
-  --   for _, cardarea in pairs(SMODS.get_card_areas("jokers")) do
-  --     if use_highlighted and cardarea.highlighted and #cardarea.highlighted == 1 then
-  --       local highlighted = cardarea.highlighted[1]
-  --       if is_target(highlighted) then return highlighted end
-  --     elseif cardarea.cards then
-  --       for _, card in pairs(cardarea.cards) do
-  --         if is_target(card) then return card end
-  --       end
-  --     end
-  --   end
-  -- end
+  function poke_find_card(key_or_function, use_highlighted)
+    local is_target = function(card)
+      return (type(key_or_function) == "function") and key_or_function(card)
+        or card.config.center.key == key_or_function
+        or card.ability.received_card and card.ability.received_card == key_or_function
+    end
+    for _, cardarea in pairs(SMODS.get_card_areas("jokers")) do
+      if use_highlighted and cardarea.highlighted and #cardarea.highlighted == 1 then
+        local highlighted = cardarea.highlighted[1]
+        if is_target(highlighted) then return highlighted end
+      elseif cardarea.cards then
+        for _, card in pairs(cardarea.cards) do
+          if is_target(card) then return card end
+        end
+      end
+    end
+  end
 
-  -- -- Passimian Energize Hook
-  -- local energize_ref = energize
-  -- energize = function(card, etype, evolving, silent, amount, center)
-  --   if card.config.center.key == 'j_nacho_passimian' and card.ability.received_card then
-  --     center = card.ability.received_card
-  --   end
-  --   energize_ref(card, etype, evolving, silent, amount, center)
-  -- end
+  -- Passimian Energize Hook
+  local energize_ref = energize
+  energize = function(card, etype, evolving, silent, amount, center)
+    if card.config.center.key == 'j_nacho_passimian' and card.ability.received_card then
+      center = card.ability.received_card
+    end
+    energize_ref(card, etype, evolving, silent, amount, center)
+  end
 end
 
 return {
-  name = "Nacho's Passimian",
-  enabled = nacho_config.passimian or false,
+  config_key = "passimian",
   init = init,
   list = { passimian }
 }

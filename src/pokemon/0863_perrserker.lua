@@ -81,8 +81,7 @@ local init = function()
 end
 
 return {
-  name = "Nacho's Galarian Meowth Evo Line",
-  enabled = nacho_config.galarian_meowth or false,
+  config_key = "galarian_meowth",
   init = init,
   list = { galarian_meowth, perrserker }
 }

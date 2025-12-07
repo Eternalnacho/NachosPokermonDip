@@ -160,7 +160,6 @@ local syrupyapple = {
 PkmnDip.item_families[#PkmnDip.item_families+1] = {'c_nacho_tartapple', 'c_nacho_sweetapple', 'c_nacho_syrupyapple'}
 
 return {
-  name = "Nacho's Apples",
-  enabled = nacho_config.applin or false,
+  config_key = "applin",
   list = { tartapple, sweetapple, syrupyapple }
 }

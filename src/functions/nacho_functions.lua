@@ -47,7 +47,6 @@ edition_evo = function(self, card, context, forced_key, edition, percentage, fla
   end
 end
 
-
 -- Get card's total mult (parallels poke_total_chips)
 poke_total_mult = function(card)
   local total_mult = (card.ability.mult) + (card.ability.perma_mult or 0)
@@ -56,7 +55,6 @@ poke_total_mult = function(card)
   end
   return total_mult
 end
-
 
 -- calculate most played hand
 calc_most_played_hand = function()
@@ -69,7 +67,6 @@ calc_most_played_hand = function()
   end
   return _hand
 end
-
 
 -- Get most common rank(s) in a list of cards
 get_common_ranks = function(cards)
@@ -92,25 +89,9 @@ get_common_ranks = function(cards)
   return _ranks
 end
 
--- Ripped straight from Ortalab
-function count_ranks()
-  -- Count ranks
-  local ranks = {}
-  for _, pcard in ipairs(G.playing_cards) do
-    if not SMODS.has_no_rank(pcard) then ranks[pcard:get_id()] = (ranks[pcard:get_id()] or 0) + 1 end
-  end
-  local ranks_by_count = {}
-  for rank, count in pairs(ranks) do
-    table.insert(ranks_by_count, { rank = rank, count = count })
-  end
-  table.sort(ranks_by_count, function(a, b) return a.count > b.count end)
-  return ranks_by_count
-end
-
 -- Create tooltip for common ranks (Oranguru)
 common_ranks_tooltip = function(self, info_queue)
   local _ranks = {}
-
   if G.playing_cards and G.STAGE == G.STAGES.RUN then
     _ranks = get_common_ranks(G.playing_cards)
     -- sort in descending order if multiple
@@ -123,7 +104,6 @@ common_ranks_tooltip = function(self, info_queue)
       if _ranks[i] == 'T' then _ranks[i] = '10' end
     end
   end
-
   -- Organize into even lists (max 3)
   local rank_lists = {}
   local rows = math.min(3, math.ceil(#_ranks / 4))
@@ -133,7 +113,6 @@ common_ranks_tooltip = function(self, info_queue)
       rank_lists[i] = table.concat(_ranks, ", ", 1 + (i - 1) * math.ceil(#_ranks / rows), math.min(#_ranks, i * math.ceil(#_ranks / rows)))
     end
   end
-
   -- Only show tooltip if there is at least one rank
   if #rank_lists > 0 then
     local key = "rank_lists_" .. #rank_lists     -- dynamic key

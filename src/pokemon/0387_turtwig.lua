@@ -155,7 +155,6 @@ local torterra={
 }
 
 return {
-  name = "Nacho's Turtwig Evo Line",
-  enabled = nacho_config.turtwig or false,
+  config_key = "turtwig",
   list = { turtwig, grotle, torterra }
 }

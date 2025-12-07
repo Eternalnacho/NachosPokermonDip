@@ -26,7 +26,6 @@ local victini = {
 }
 
 return {
-  name = "Nacho's Victini",
-  enabled = nacho_config.victini or false,
+  config_key = "victini",
   list = { victini }
 }

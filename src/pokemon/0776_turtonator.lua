@@ -51,7 +51,6 @@ local turtonator={
 }
 
 return {
-  name = "Nacho's Turtonator",
-  enabled = nacho_config.turtonator or false,
+  config_key = "turtonator",
   list = { turtonator }
 }

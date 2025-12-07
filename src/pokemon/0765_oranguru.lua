@@ -1,7 +1,7 @@
 -- Oranguru 765
 local oranguru={
   name = "oranguru",
-  config = {extra = {raised = false}},
+  config = {extra = {booster_choice_mod = 1}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     common_ranks_tooltip(self, info_queue)
@@ -44,41 +44,21 @@ local oranguru={
   end,
   add_to_deck = function(self, card, from_debuff)
     if (G.STATE == G.STATES.SMODS_BOOSTER_OPENED and SMODS.OPENED_BOOSTER.ability.name:find('Standard') or G.STATE == G.STATES.STANDARD_PACK) then
-      if not card.ability.extra.raised then
-        if G.GAME.modifiers.booster_choice_mod then
-          G.GAME.modifiers.booster_choice_mod = G.GAME.modifiers.booster_choice_mod + 1
-        else
-          G.GAME.modifiers.booster_choice_mod = 1
-        end
-        G.GAME.pack_choices =
-            math.min((context.card.ability.choose or context.card.config.center.config.choose or 1) + (G.GAME.modifiers.booster_choice_mod or 0),
-            context.card.ability.extra and math.max(1, context.card.ability.extra + (G.GAME.modifiers.booster_size_mod or 0)) or
-            context.card.config.center.extra and math.max(1, context.card.config.center.extra + (G.GAME.modifiers.booster_size_mod or 0)) or 1)
-        card.ability.extra.raised = true
-      end
+      G.GAME.modifiers.booster_choice_mod =
+          (G.GAME.modifiers.booster_choice_mod or 0) + card.ability.extra.booster_choice_mod
+        G.GAME.pack_choices = G.GAME.pack_choices + 1
     end
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if card.ability.extra.raised then
-      if G.GAME.modifiers.booster_choice_mod then
-        G.GAME.modifiers.booster_choice_mod = G.GAME.modifiers.booster_choice_mod - 1
-      else
-        G.GAME.modifiers.booster_choice_mod = 0
-      end
-      if (G.STATE == G.STATES.SMODS_BOOSTER_OPENED and SMODS.OPENED_BOOSTER.ability.name:find('Standard') or G.STATE == G.STATES.STANDARD_PACK) then
-        G.GAME.pack_choices =
-            math.min((context.card.ability.choose or context.card.config.center.config.choose or 1) + (G.GAME.modifiers.booster_choice_mod or 0),
-            context.card.ability.extra and math.max(1, context.card.ability.extra + (G.GAME.modifiers.booster_size_mod or 0)) or
-            context.card.config.center.extra and math.max(1, context.card.config.center.extra + (G.GAME.modifiers.booster_size_mod or 0)) or 1)
-      end
-      card.ability.extra.raised = false
+    if (G.STATE == G.STATES.SMODS_BOOSTER_OPENED and SMODS.OPENED_BOOSTER.ability.name:find('Standard') or G.STATE == G.STATES.STANDARD_PACK) then
+      G.GAME.modifiers.booster_choice_mod = G.GAME.modifiers.booster_choice_mod and G.GAME.modifiers.booster_choice_mod - 1 or 0
+      G.GAME.pack_choices = math.max(0, G.GAME.pack_choices - 1)
     end
   end,
 }
 
 return {
-  name = "Nacho's Oranguru",
-  enabled = nacho_config.oranguru or false,
+  config_key = "oranguru",
   init = init,
   list = { oranguru }
 }
