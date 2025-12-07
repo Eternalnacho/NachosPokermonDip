@@ -162,7 +162,32 @@ local torterra={
   end,
 }
 
+local init = function()
+  -- until I find a better way to do this I'm just gonna make the vouchers increase the interest cap instead of set it.
+  SMODS.Voucher:take_ownership('seed_money', {
+    redeem = function(self, card)
+      G.E_MANAGER:add_event(Event({
+          func = function()
+              G.GAME.interest_cap = G.GAME.interest_cap + 25
+              return true
+          end
+      }))
+    end
+  })
+  SMODS.Voucher:take_ownership('money_tree', {
+    redeem = function(self, card)
+      G.E_MANAGER:add_event(Event({
+          func = function()
+              G.GAME.interest_cap = G.GAME.interest_cap + 50
+              return true
+          end
+      }))
+    end
+  })
+end
+
 return {
   config_key = "turtwig",
+  init = init,
   list = { turtwig, grotle, torterra }
 }
