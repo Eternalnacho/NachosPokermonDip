@@ -15,15 +15,15 @@ local turtwig={
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,
+  poke_custom_values_to_keep = { "counter" },
   calculate = function(self, card, context)
     if context.end_of_round and context.cardarea == G.jokers then
-      local evolved = level_evo(self, card, context, "j_nacho_grotle")
-      if evolved then
-        card.ability.extra.money = card.ability.extra.counter
-        return evolved
-      end
       card.ability.extra.counter = card.ability.extra.counter + 1
       G.GAME.interest_cap = G.GAME.interest_cap + card.ability.extra.interest
+      local evolved = level_evo(self, card, context, "j_nacho_grotle")
+      if evolved then
+        return evolved
+      end
       return {
           message = localize("poke_leech_seed_ex"),
           card = card,
@@ -55,6 +55,7 @@ local grotle={
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,
+  poke_custom_values_to_keep = { "counter" },
   calculate = function(self, card, context)
     if context.setting_blind or context.pre_discard then
       local old_h_size = card.ability.extra.h_size
@@ -73,13 +74,12 @@ local grotle={
       G.hand:change_size(card.ability.extra.h_size - old_h_size)
     end
     if context.end_of_round and context.cardarea == G.jokers then
-      local evolved = level_evo(self, card, context, "j_nacho_torterra")
-      if evolved then
-        card.ability.extra.money = card.ability.extra.counter
-        return evolved
-      end
       card.ability.extra.counter = card.ability.extra.counter + 2
       G.GAME.interest_cap = G.GAME.interest_cap + card.ability.extra.interest * 2
+      local evolved = level_evo(self, card, context, "j_nacho_torterra")
+      if evolved then
+        return evolved
+      end
       return {
           message = localize("poke_leech_seed_ex"),
           card = card,
@@ -88,10 +88,14 @@ local grotle={
   end,
   add_to_deck = function(self, card, from_debuff)
     G.hand:change_size(card.ability.extra.h_size)
-    G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.0, func = function()
-              card.ability.extra.counter = card.ability.extra.money
-              G.GAME.interest_cap = G.GAME.interest_cap + card.ability.extra.counter * card.ability.extra.interest
-              return true end }))
+    G.E_MANAGER:add_event(Event({
+      trigger = 'after',
+      delay = 0.1,
+      func = function()
+        G.GAME.interest_cap = G.GAME.interest_cap + card.ability.extra.counter * card.ability.extra.interest
+        return true
+      end
+    }))
   end,
   remove_from_deck = function(self, card, from_debuff)
     G.hand:change_size(-card.ability.extra.h_size)
@@ -143,10 +147,14 @@ local torterra={
   end,
   add_to_deck = function(self, card, from_debuff)
     G.hand:change_size(card.ability.extra.h_size)
-    G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.0, func = function()
-              card.ability.extra.counter = card.ability.extra.money
-              G.GAME.interest_cap = G.GAME.interest_cap + card.ability.extra.counter * card.ability.extra.interest
-              return true end }))
+    G.E_MANAGER:add_event(Event({
+      trigger = 'after',
+      delay = 0.1,
+      func = function()
+        G.GAME.interest_cap = G.GAME.interest_cap + card.ability.extra.counter * card.ability.extra.interest
+        return true
+      end
+    }))
   end,
   remove_from_deck = function(self, card, from_debuff)
     G.hand:change_size(-card.ability.extra.h_size)
