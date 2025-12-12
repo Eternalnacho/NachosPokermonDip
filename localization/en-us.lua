@@ -5,8 +5,7 @@ return {
         name = "{s:0.6}Galarian{}Meowth",
         text = {
           "Retrigger each {C:attention}held Steel{} card",
-          "{C:inactive,s:0.8}(Evolves when adjacent Jokers",
-          "{C:inactive,s:0.8}have a {C:metal,s:0.8}Metal{C:inactive,s:0.8} sticker)",
+          "{C:inactive,s:0.8}(Evolves after retriggering {C:attention,s:0.8}#2# Steel{C:inactive,s:0.8} cards)",
         }
       },
       j_nacho_hisuian_sneasel = {
@@ -45,13 +44,11 @@ return {
       j_nacho_mega_gardevoir = {
         name = "Mega Gardevoir",
         text = {
-          "{C:attention}Holding{} {C:dark_edition}Negative{} {C:spectral}Black Hole{}",
+          "{X:red,C:white}X#1#{} Mult per {C:attention}hand level",
+          "above 1 {C:inactive}(Currently {X:red,C:white}X#2#{C:inactive} Mult)",
           "{br:2}ERROR - CONTACT STEAK",
-          "Create an {C:attention}Orbital Tag{}",
-          "when a {C:planet}Planet{} card is used",
-          "{br:2}ERROR - CONTACT STEAK",
-          "Held {C:planet}Planet{} cards without an edition",
-          "gain {C:spectral}Polychrome{} at end of round",
+          "Creates a {C:dark_edition}Negative{} {C:spectral}Black Hole{}",
+          "after using {C:attention}#3#{} unique {C:planet}Planet{} cards",
         }
       },
       j_nacho_swablu = {
