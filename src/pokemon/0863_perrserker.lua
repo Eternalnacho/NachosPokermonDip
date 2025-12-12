@@ -1,11 +1,11 @@
 -- Meowth 52-2
 local galarian_meowth={
   name = "galarian_meowth",
-  config = {extra = { retriggers = 1 }, evo_rqmt = 2},
+  config = {extra = { retriggers = 1, triggered = 0 }, evo_rqmt = 20},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = G.P_CENTERS.m_steel
-		return {vars = {card.ability.extra.retriggers}}
+		return {vars = {card.ability.extra.retriggers, math.max(card.ability.evo_rqmt - card.ability.extra.triggered, 0)}}
   end,
   designer = "Eternalnacho",
   rarity = 2,
@@ -18,17 +18,23 @@ local galarian_meowth={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.repetition and context.cardarea == G.hand and (next(context.card_effects[1]) or #context.card_effects > 1) 
-    and SMODS.has_enhancement(context.other_card, "m_steel") then
+    if context.post_trigger and context.other_context.individual and context.other_context.cardarea == G.hand
+    and SMODS.has_enhancement(context.other_context.other_card, 'm_steel') then
+      card.ability.extra.to_retrigger = true
+    end
+    if context.repetition and context.cardarea == G.hand and (next(context.card_effects[1]) or #context.card_effects > 1)
+    and SMODS.has_enhancement(context.other_card, "m_steel") and (not context.end_of_round or card.ability.extra.to_retrigger) then
+      card.ability.extra.to_retrigger = nil
+      if not context.blueprint then
+        card.ability.extra.triggered = card.ability.extra.triggered + 1
+      end
       return {
         message = localize('k_again_ex'),
         repetitions = card.ability.extra.retriggers,
         card = card
       }
     end
-
-    local metals = #PkmnDip.utils.filter(poke_get_adjacent_jokers(card), function(v) return is_type(v, "Metal") end)
-    return scaling_evo(self, card, context, "j_nacho_perrserker", metals, self.config.evo_rqmt)
+    return scaling_evo(self, card, context, "j_nacho_perrserker", card.ability.extra.triggered, self.config.evo_rqmt)
   end,
 }
 
