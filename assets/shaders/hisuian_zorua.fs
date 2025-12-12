@@ -120,7 +120,7 @@ vec4 effect( vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords
 
     float res = (.5 + .5* cos( (hisuian_zorua.x) * 2.612 + ( field + -.5 ) *3.14));
 
-	tex = vec4(1., 1., 1., min(tex.a, res * min(0.3, 0.075/length(adjusted_uv))));
+	tex = vec4(1., 1., 1., 1.6 * min(tex.a, res * min(0.3, 0.075/length(adjusted_uv))));
 
 	return dissolve_mask(tex*colour, texture_coords, uv);
 }
