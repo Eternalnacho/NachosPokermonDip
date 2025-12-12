@@ -51,6 +51,25 @@ jd_def["j_nacho_gardevoir"] = {
     end
 }
 
+-- Mega Gardevoir
+jd_def["j_nacho_mega_gardevoir"] = {
+    text = {
+        {
+            border_nodes = {
+                { text = "X" },
+                { ref_table = "card.joker_display_values", ref_value = "Xmult", retrigger_type = "exp" },
+            },
+        },
+    },
+    calc_function = function(card)
+        local xmult = 1
+        for _, v in pairs(G.GAME.hands) do
+            xmult = xmult + (v.level - 1) * card.ability.extra.Xmult_mod
+        end
+        card.joker_display_values.Xmult = xmult
+    end
+}
+
 -- Gallade
 jd_def["j_nacho_gallade"] = {
     text = {

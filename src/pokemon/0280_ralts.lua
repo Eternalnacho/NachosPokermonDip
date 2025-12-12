@@ -6,7 +6,7 @@ local ralts={
     type_tooltip(self, info_queue, card)
     local mult = 0
     for _, v in pairs(G.GAME.hands) do
-      mult = mult + (v.level - 1) * card.ability.extra.mult_mod
+      mult = mult + math.max((v.level - 1) * card.ability.extra.mult_mod, 0)
     end
     return {vars = {card.ability.extra.mult_mod, mult, card.ability.extra.rounds}}
   end,
@@ -20,21 +20,16 @@ local ralts={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        local mult = 0
-        for _, v in pairs(G.GAME.hands) do
-          if (SMODS.Mods["Talisman"] or {}).can_load then
-            mult = mult + (to_number(v.level) - 1) * card.ability.extra.mult_mod
-          else
-            mult = mult + (v.level - 1) * card.ability.extra.mult_mod
-          end
-        end
-        return {
-          mult = mult,
-          card = card
-        }
+    if context.joker_main then
+      local mult = 0
+      for _, v in pairs(G.GAME.hands) do
+        local hand_level = (SMODS.Mods["Talisman"] or {}).can_load and (to_number(v.level) - 1) or (v.level - 1)
+        mult = mult + math.max(hand_level * card.ability.extra.mult_mod, 0)
       end
+      return {
+        mult = mult,
+        card = card
+      }
     end
     return level_evo(self, card, context, "j_nacho_kirlia")
   end,
@@ -48,7 +43,7 @@ local kirlia={
     type_tooltip(self, info_queue, card)
     local mult = 0
     for _, v in pairs(G.GAME.hands) do
-      mult = mult + (v.level - 1) * card.ability.extra.mult_mod
+      mult = mult + math.max((v.level - 1) * card.ability.extra.mult_mod, 0)
     end
     return {vars = {card.ability.extra.mult_mod, mult, card.ability.extra.rounds}}
   end,
@@ -63,21 +58,16 @@ local kirlia={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        local mult = 0
-        for _, v in pairs(G.GAME.hands) do
-          if (SMODS.Mods["Talisman"] or {}).can_load then
-            mult = mult + (to_number(v.level) - 1) * card.ability.extra.mult_mod
-          else
-            mult = mult + (v.level - 1) * card.ability.extra.mult_mod
-          end
-        end
-        return {
-          mult = mult,
-          card = card
-        }
+    if context.joker_main then
+      local mult = 0
+      for _, v in pairs(G.GAME.hands) do
+        local hand_level = (SMODS.Mods["Talisman"] or {}).can_load and (to_number(v.level) - 1) or (v.level - 1)
+        mult = mult + math.max(hand_level * card.ability.extra.mult_mod, 0)
       end
+      return {
+        mult = mult,
+        card = card
+      }
     end
     return item_evo(self, card, context, "j_nacho_gallade") or level_evo(self, card, context, "j_nacho_gardevoir")
   end,
@@ -89,9 +79,9 @@ local gardevoir={
   config = {extra = {Xmult_mod = 0.1, Xmult = 1.0}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    local xmult = 1
+    local xmult = card.ability.extra.Xmult
     for _, v in pairs(G.GAME.hands) do
-      xmult = xmult + (v.level - 1) * card.ability.extra.Xmult_mod
+      xmult = xmult + math.max((v.level - 1) * card.ability.extra.Xmult_mod, 0)
     end
     return {vars = {card.ability.extra.Xmult_mod, xmult}}
   end,
@@ -105,22 +95,17 @@ local gardevoir={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        local xmult = 1
-        for _, v in pairs(G.GAME.hands) do
-          if (SMODS.Mods["Talisman"] or {}).can_load then
-            xmult = xmult + (to_number(v.level) - 1) * card.ability.extra.Xmult_mod
-          else
-            xmult = xmult + (v.level - 1) * card.ability.extra.Xmult_mod
-          end
-        end
-        if xmult > 1 then
-          return {
-            xmult = xmult,
-            card = card
-          }
-        end
+    if context.joker_main then
+      local xmult = card.ability.extra.Xmult
+      for _, v in pairs(G.GAME.hands) do
+        local hand_level = (SMODS.Mods["Talisman"] or {}).can_load and (to_number(v.level) - 1) or (v.level - 1)
+        xmult = xmult + math.max(hand_level * card.ability.extra.Xmult_mod, 0)
+      end
+      if xmult > 1 then
+        return {
+          xmult = xmult,
+          card = card
+        }
       end
     end
   end,
@@ -130,11 +115,14 @@ local gardevoir={
 -- Mega Gardevoir 282-1
 local mega_gardevoir={
   name = "mega_gardevoir",
-  config = {extra = {blackhole_amount = 2}},
+  config = {extra = {Xmult_mod = 0.1, Xmult = 1.0, planets = {}}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    info_queue[#info_queue+1] = {key = 'tag_orbital', set = 'Tag', specific_vars = {"Random Hand", 3}}
-    return {vars = {card.ability.extra.blackhole_amount}}
+    local xmult = card.ability.extra.Xmult
+    for _, v in pairs(G.GAME.hands) do
+      xmult = xmult + math.max((v.level - 1) * card.ability.extra.Xmult_mod, 0)
+    end
+    return {vars = {card.ability.extra.Xmult_mod, xmult, 4 - #card.ability.extra.planets}}
   end,
   designer = "Eternalnacho, Maelmc",
   rarity = "poke_mega",
@@ -146,46 +134,29 @@ local mega_gardevoir={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    -- Create Orbital Tag on Planet Use
+    -- Create Negative black hole every four unique planets
     if context.using_consumeable and context.consumeable and context.consumeable.ability then
-      if context.consumeable.ability.set == 'Planet' then
-        local tag = Tag('tag_orbital')
-        local _poker_hands = {}
-        for k, v in pairs(G.GAME.hands) do
-          if v.visible then
-            _poker_hands[#_poker_hands + 1] = k
-          end
-        end
-        tag.ability.orbital_hand = pseudorandom_element(_poker_hands, pseudoseed('mega_gardevoir'))
-        G.E_MANAGER:add_event(Event({
-          func = (function()
-              add_tag(tag)
-              play_sound('generic1', 0.9 + math.random()*0.1, 0.8)
-              play_sound('holo1', 1.2 + math.random()*0.1, 0.4)
-              return true
-          end)
-        }))
-      end
-    end
-    -- Set Planet Cards in Hand to Polychrome at end of round
-    if context.end_of_round and not context.blueprint then
-      for k, v in ipairs(G.consumeables.cards) do
-        if v.ability.set == 'Planet' and not v.edition then
-          local edition = {polychrome = true}
-          v:set_edition(edition, true)
+      if context.consumeable.ability.set == 'Planet' and not PkmnDip.utils.contains(card.ability.extra.planets, context.consumeable.config.center_key) then
+        table.insert(card.ability.extra.planets, context.consumeable.config.center_key)
+        if #card.ability.extra.planets >= 4 then
+          SMODS.add_card({edition = 'e_negative', key = 'c_black_hole', area = G.consumeables})
+          card.ability.extra.planets = {}
         end
       end
     end
-  end,
-  -- Negative Black Hole generation on entry
-  add_to_deck = function(self, card, from_debuff)
-    if not from_debuff then
-      local _card = create_card("Spectral", G.consumeables, nil, nil, nil, nil, "c_black_hole")
-      local edition = {negative = true}
-      _card:set_edition(edition, true)
-      _card:add_to_deck()
-      G.consumeables:emplace(_card)
-      card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_spectral'), colour = G.C.SECONDARY_SET.Spectral})
+
+    if context.joker_main then
+      local xmult = card.ability.extra.Xmult
+      for _, v in pairs(G.GAME.hands) do
+        local hand_level = (SMODS.Mods["Talisman"] or {}).can_load and (to_number(v.level) - 1) or (v.level - 1)
+        xmult = xmult + math.max(hand_level * card.ability.extra.Xmult_mod, 0)
+      end
+      if xmult > 1 then
+        return {
+          xmult = xmult,
+          card = card
+        }
+      end
     end
   end,
 }
@@ -241,6 +212,12 @@ local mega_gallade={
   eternal_compat = true,
   calculate = function(self, card, context)
     -- Prevent most played hand from being debuffed
+    if context.debuff_card and context.cardarea == G.hand then
+      local text, _, _ = G.FUNCS.get_poker_hand_info(context.cardarea.highlighted)
+      if text ~= calc_most_played_hand() and not PkmnDip.utils.contains(context.cardarea.highlighted, context.debuff_card) then
+        return { debuff = true }
+      end
+    end
     if context.debuff_hand and context.scoring_name == calc_most_played_hand() then
       return { prevent_debuff = true }
     end
@@ -278,9 +255,9 @@ local init = function()
   level_up_hand = function(card, hand, instant, amount)
     local _hand
     if next(SMODS.find_card('j_nacho_gallade')) and card and card.ability and card.ability.set == 'Planet' then
-      local gallade = SMODS.find_card('j_nacho_gallade')[1]
+      local next_gallade = SMODS.find_card('j_nacho_gallade')[1]
       _hand = calc_most_played_hand()
-      card_eval_status_text(gallade, 'extra', nil, nil, nil, {message = localize('poke_psycho_cut_ex'), colour = G.C.SECONDARY_SET.Planet, sound = 'slice1', pitch = 0.96+math.random()*0.08})
+      card_eval_status_text(next_gallade, 'extra', nil, nil, nil, {message = localize('poke_psycho_cut_ex'), colour = G.C.SECONDARY_SET.Planet, sound = 'slice1', pitch = 0.96+math.random()*0.08})
       delay(0.4)
       update_hand_text({sound = 'button', volume = 0.7, pitch = 0.8, delay = 0.3}, {handname=localize(_hand, 'poker_hands'),chips = G.GAME.hands[_hand].chips, mult = G.GAME.hands[_hand].mult, level=G.GAME.hands[_hand].level})
     end
@@ -290,16 +267,18 @@ local init = function()
   -- Mega Gallade card debuffing/un-debuffing function
   local parse_highlighted = CardArea.parse_highlighted
   CardArea.parse_highlighted = function(self)
-    for _, card in ipairs(self.highlighted) do
-      if card.debuff then card:set_debuff(false) end
-    end
-    local text, _, _ = G.FUNCS.get_poker_hand_info(self.highlighted)
-    for _, card in ipairs(self.cards) do
-      SMODS.recalc_debuff(card)
-    end
-    if text == calc_most_played_hand() and next(SMODS.find_card('j_nacho_mega_gallade')) then
+    if next(SMODS.find_card('j_nacho_mega_gallade')) then
       for _, card in ipairs(self.highlighted) do
         if card.debuff then card:set_debuff(false) end
+      end
+      local text, _, _ = G.FUNCS.get_poker_hand_info(self.highlighted)
+      for _, card in ipairs(self.cards) do
+        SMODS.recalc_debuff(card)
+      end
+      if text == calc_most_played_hand() then
+        for _, card in ipairs(self.highlighted) do
+          card:set_debuff(false)
+        end
       end
     end
     parse_highlighted(self)
