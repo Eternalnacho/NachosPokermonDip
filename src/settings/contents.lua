@@ -47,7 +47,7 @@ pages[#pages+1] = { title = function() return localize("nacho_crossMod") end, ti
 
 pages[#pages].tiles[#pages[#pages].tiles+1] =
   { list = { 'j_nacho_hisuian_sneasel', 'j_nacho_sneasler' }, label = function() return "Hisuian Sneasel" end,
-    config_key = "hisuian_sneasel", condition = (SMODS.Mods["ToxicStall"] or {}).can_load, mod_tVal = "The Toxic Stall" }
+    config_key = "hisuian_sneasel", condition = (SMODS.Mods["ToxicStall"] or {}).can_load and true or false, mod_tVal = "The Toxic Stall" }
 
 -- Legacy content page (which is really just bagon lmao)
 pages[#pages+1] = { title = function() return "Legacy Content" end, tiles = {} }

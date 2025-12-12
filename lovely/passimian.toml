@@ -9,7 +9,7 @@ priority = 21
 target = '=[SMODS Pokermon "functions/pokefunctions.lua"]'
 pattern = '''
 if immediate then
-    poke_backend_evolve(card, to_key)
+    poke_backend_evolve(card, to_key, energize_amount)
   else
 '''
 position = "before"
@@ -60,20 +60,6 @@ else
 end
 '''
 match_indent = true
-
-# Make sure the Mega Stone *doesn't* see Passimian
-[[patches]]
-[patches.pattern]
-target = '=[SMODS Pokermon "consumables/mart1.lua"]'
-pattern = '''if card.ability.extra.used_on and target.config.center.key ~= card.ability.extra.used_on and next(SMODS.find_card(card.ability.extra.used_on)) then return false end'''
-position = "before"
-payload = '''
-for k, v in pairs(G.jokers.cards) do
-  if v.ability and v.ability.received_card and v.ability.received_card.key == card.ability.extra.used_on then card.ability.extra.used_on = nil end
-end
-'''
-match_indent = true
-
 
 # Passimian Copy Card fix
 [[patches]]

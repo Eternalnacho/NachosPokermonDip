@@ -206,7 +206,9 @@ local init = function()
     for _, area in ipairs(SMODS.get_card_areas('jokers')) do
       if area.cards then
         for _, v in pairs(area.cards) do
-          if v and type(v) == 'table' and v.ability and v.ability.received_card and v.ability.received_card.key == key and (count_debuffed or not v.debuff) then
+          if v and type(v) == 'table' and v.ability
+              and v.ability.received_card and v.ability.received_card.key == key
+              and (count_debuffed or not v.debuff) then
             table.insert(results, v)
           end
         end
@@ -215,22 +217,12 @@ local init = function()
     return results
   end
 
+  local poke_find_card_ref = poke_find_card
   function poke_find_card(key_or_function, use_highlighted)
-    local is_target = function(card)
-      return (type(key_or_function) == "function") and key_or_function(card)
-        or card.config.center.key == key_or_function
-        or card.ability.received_card and card.ability.received_card == key_or_function
-    end
-    for _, cardarea in pairs(SMODS.get_card_areas("jokers")) do
-      if use_highlighted and cardarea.highlighted and #cardarea.highlighted == 1 then
-        local highlighted = cardarea.highlighted[1]
-        if is_target(highlighted) then return highlighted end
-      elseif cardarea.cards then
-        for _, card in pairs(cardarea.cards) do
-          if is_target(card) then return card end
-        end
-      end
-    end
+    return poke_find_card_ref(function (joker)
+        return joker.ability.received_card and (joker.ability.received_card == key_or_function
+        or joker.ability.received_card.key == key_or_function) end, use_highlighted)
+      or poke_find_card_ref(key_or_function, use_highlighted)
   end
 
   -- Passimian Energize Hook
