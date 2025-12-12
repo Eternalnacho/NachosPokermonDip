@@ -1,7 +1,7 @@
-SMODS.Shader({ key = 'zorua', path = 'zorua.fs' }):register()
+SMODS.Shader({ key = 'hisuian_zorua', path = 'hisuian_zorua.fs' }):register()
 
 SMODS.DrawStep({
-   key = 'zorua_shadow',
+   key = 'hisuian_zorua_shadow',
    order = 69,
    func = function(card, layer)
       if not card or not card.ability or not card.children.center or (card.ability.name ~= 'hisuian_zorua' and card.ability.name ~= 'hisuian_zoroark') then return end
@@ -18,7 +18,7 @@ SMODS.DrawStep({
       card.children.center.atlas = G.ASSET_ATLAS[new_atlas]
       card.children.center:set_sprite_pos(center.pos)
 
-      card.children.center:draw_shader('poke_zorua', nil, card.ARGS.send_to_shader)
+      card.children.center:draw_shader('nacho_hisuian_zorua', nil, card.ARGS.send_to_shader)
 
       card.children.center.atlas = prev_atlas
       card.children.center:set_sprite_pos(prev_pos)

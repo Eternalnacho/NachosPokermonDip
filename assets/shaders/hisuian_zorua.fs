@@ -5,7 +5,7 @@
 #endif
 
 
-extern MY_HIGHP_OR_MEDIUMP vec2 zorua;
+extern MY_HIGHP_OR_MEDIUMP vec2 hisuian_zorua;
 extern MY_HIGHP_OR_MEDIUMP number dissolve;
 extern MY_HIGHP_OR_MEDIUMP number time;
 extern MY_HIGHP_OR_MEDIUMP vec4 texture_details;
@@ -14,6 +14,7 @@ extern bool shadow;
 extern MY_HIGHP_OR_MEDIUMP vec4 burn_colour_1;
 extern MY_HIGHP_OR_MEDIUMP vec4 burn_colour_2;
 
+// This is literally just the Dissolve shader btw
 vec4 dissolve_mask(vec4 tex, vec2 texture_coords, vec2 uv)
 {
     if (dissolve < 0.001) {
@@ -52,6 +53,7 @@ vec4 dissolve_mask(vec4 tex, vec2 texture_coords, vec2 uv)
     return vec4(shadow ? vec3(0.,0.,0.) : tex.xyz, res > adjusted_dissolve ? (shadow ? tex.a*0.3: tex.a) : .0);
 }
 
+// Color functions
 number hue(number s, number t, number h)
 {
 	number hs = mod(h, 1.)*6.;
@@ -95,6 +97,7 @@ vec4 HSL(vec4 c)
 	return hsl;
 }
 
+// The only one that matters thanks Kek
 vec4 effect( vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords )
 {
 	vec4 tex = Texel(texture, texture_coords);
@@ -103,7 +106,7 @@ vec4 effect( vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords
 
 	tex = vec4(0., 0., 0., tex.a);
 
-	float t = zorua.y*22.221 + time;
+	float t = hisuian_zorua.y*22.221 + time;
 	vec2 floored_uv = (floor((uv*texture_details.ba)))/texture_details.ba;
     vec2 uv_scaled_centered = (floored_uv - 0.5);
 	
@@ -115,13 +118,14 @@ vec4 effect( vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords
         cos(length(field_part1) / 19.483) + sin(length(field_part2) / 33.155) * cos(field_part2.y / 15.73) +
         cos(length(field_part3) / 27.193) * sin(field_part3.x / 21.92) ))/2.;
 
-    float res = (.5 + .5* cos( (zorua.x) * 2.612 + ( field + -.5 ) *3.14));
+    float res = (.5 + .5* cos( (hisuian_zorua.x) * 2.612 + ( field + -.5 ) *3.14));
 
-	tex = vec4(0., 0., 0., min(tex.a, res * min(0.3, 0.075/length(adjusted_uv))));
+	tex = vec4(1., 1., 1., min(tex.a, res * min(0.3, 0.075/length(adjusted_uv))));
 
 	return dissolve_mask(tex*colour, texture_coords, uv);
 }
 
+// Tilt variables.
 extern MY_HIGHP_OR_MEDIUMP vec2 mouse_screen_pos;
 extern MY_HIGHP_OR_MEDIUMP float hovering;
 extern MY_HIGHP_OR_MEDIUMP float screen_scale;
