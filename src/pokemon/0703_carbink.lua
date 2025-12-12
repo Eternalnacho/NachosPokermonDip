@@ -23,12 +23,12 @@ local carbink = {
   end,
   in_pool = function(self, args)
     if G.playing_cards then
-      for k, v in pairs(G.playing_cards) do
+      for _, v in pairs(G.playing_cards) do
         if SMODS.has_no_rank(v) then return true end
       end
     end
     if G.jokers and G.jokers.cards then
-      for k, v in pairs(G.jokers.cards) do
+      for _, v in pairs(G.jokers.cards) do
         if v.hazard_poke then return true end
       end
     end

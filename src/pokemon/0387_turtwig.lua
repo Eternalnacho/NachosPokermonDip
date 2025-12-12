@@ -57,21 +57,13 @@ local grotle={
   eternal_compat = true,
   poke_custom_values_to_keep = { "counter" },
   calculate = function(self, card, context)
-    if context.setting_blind or context.pre_discard then
+    if context.setting_blind or context.pre_discard or context.drawing_cards then
       local old_h_size = card.ability.extra.h_size
-      if (SMODS.Mods["Talisman"] or {}).can_load then
-        local dollars = to_number(G.GAME.dollars)
-        if card.ability.extra.h_size ~= math.floor(((dollars or 0) + (G.GAME.dollar_buffer or 0)) / 15) then
-          card.ability.extra.h_size = math.floor(((dollars or 0) + (G.GAME.dollar_buffer or 0)) / 15)
-        end
-      else
-        if card.ability.extra.h_size ~= math.floor(((G.GAME.dollars or 0) + (G.GAME.dollar_buffer or 0)) / 15) then
-          card.ability.extra.h_size = math.floor(((G.GAME.dollars or 0) + (G.GAME.dollar_buffer or 0)) / 15)
-        end
+      local dollars = (SMODS.Mods["Talisman"] or {}).can_load and to_number(G.GAME.dollars) or G.GAME.dollars
+      if card.ability.extra.h_size ~= math.floor(((dollars or 0) + (G.GAME.dollar_buffer or 0)) / 15) then
+        card.ability.extra.h_size = math.max( math.min(math.floor(((dollars or 0) + (G.GAME.dollar_buffer or 0)) / 15), 2), 0 )
       end
-      if card.ability.extra.h_size > 2 then card.ability.extra.h_size = 2 end
-      if card.ability.extra.h_size == old_h_size then return end
-      G.hand:change_size(card.ability.extra.h_size - old_h_size)
+      if card.ability.extra.h_size ~= old_h_size then G.hand:change_size(card.ability.extra.h_size - old_h_size) end
     end
     if context.end_of_round and context.cardarea == G.jokers then
       card.ability.extra.counter = card.ability.extra.counter + 2
@@ -120,21 +112,13 @@ local torterra={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.setting_blind or context.pre_discard then
+    if context.setting_blind or context.pre_discard or context.drawing_cards then
       local old_h_size = card.ability.extra.h_size
-      if (SMODS.Mods["Talisman"] or {}).can_load then
-        local dollars = to_number(G.GAME.dollars)
-        if card.ability.extra.h_size ~= math.floor(((dollars or 0) + (G.GAME.dollar_buffer or 0)) / 15) then
-          card.ability.extra.h_size = math.floor(((dollars or 0) + (G.GAME.dollar_buffer or 0)) / 15)
-        end
-      else
-        if card.ability.extra.h_size ~= math.floor(((G.GAME.dollars or 0) + (G.GAME.dollar_buffer or 0)) / 15) then
-          card.ability.extra.h_size = math.floor(((G.GAME.dollars or 0) + (G.GAME.dollar_buffer or 0)) / 15)
-        end
+      local dollars = (SMODS.Mods["Talisman"] or {}).can_load and to_number(G.GAME.dollars) or G.GAME.dollars
+      if card.ability.extra.h_size ~= math.floor(((dollars or 0) + (G.GAME.dollar_buffer or 0)) / 15) then
+        card.ability.extra.h_size = math.max( math.min(math.floor(((dollars or 0) + (G.GAME.dollar_buffer or 0)) / 15), 4), 0 )
       end
-      if card.ability.extra.h_size > 4 then card.ability.extra.h_size = 4 end
-      if card.ability.extra.h_size == old_h_size then return end
-      G.hand:change_size(card.ability.extra.h_size - old_h_size)
+      if card.ability.extra.h_size ~= old_h_size then G.hand:change_size(card.ability.extra.h_size - old_h_size) end
     end
     if context.end_of_round and context.cardarea == G.jokers then
       card.ability.extra.counter = card.ability.extra.counter + 3

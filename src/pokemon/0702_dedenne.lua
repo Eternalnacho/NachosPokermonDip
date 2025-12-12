@@ -26,10 +26,7 @@ local dedenne = {
             trigger = 'before',
             delay = 0.0,
             func = (function()
-              local card_type = 'Item'
-              local _card = create_card(card_type, G.consumeables, nil, nil, nil, nil, generate_pickup_item_key('dedenne'))
-              _card:add_to_deck()
-              G.consumeables:emplace(_card)
+              local _card = SMODS.add_card({set = 'Item', area = G.consumeables, key = generate_pickup_item_key('dedenne')})
               card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.ARGS.LOC_COLOURS.item})
               G.GAME.consumeable_buffer = 0
               return true

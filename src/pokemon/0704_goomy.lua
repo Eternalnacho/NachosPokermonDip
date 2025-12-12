@@ -46,8 +46,7 @@ local goomy={
           end
           -- Give cards in hand with matching suit permamult
           if wildcount == #scoring_flush or context.other_card:is_suit(matching_suit) then
-            context.other_card.ability.perma_mult = context.other_card.ability.perma_mult or 0
-            context.other_card.ability.perma_mult = context.other_card.ability.perma_mult + card.ability.extra.mult_mod
+            context.other_card.ability.perma_mult = (context.other_card.ability.perma_mult or 0) + card.ability.extra.mult_mod
             return {
               extra = {message = localize('k_upgrade_ex'), colour = G.C.MULT},
               colour = G.C.MULT,
@@ -57,12 +56,8 @@ local goomy={
         end
       end
     end
-    local evolve = scaling_evo(self, card, context, "j_nacho_hisuian_sliggoo", card.ability.extra.flush_houses, self.config.evo_rqmt2)
-    if evolve then
-      return evolve
-    else
-      return scaling_evo(self, card, context, "j_nacho_sliggoo", card.ability.extra.flushes, self.config.evo_rqmt1)
-    end
+    return scaling_evo(self, card, context, "j_nacho_hisuian_sliggoo", card.ability.extra.flush_houses, self.config.evo_rqmt2)
+        or scaling_evo(self, card, context, "j_nacho_sliggoo", card.ability.extra.flushes, self.config.evo_rqmt1)
   end
 }
 
@@ -113,8 +108,7 @@ local sliggoo={
         end
         -- Increment permamult if card matches Flush suit
         if wildcount == #scoring_flush or context.other_card:is_suit(matching_suit) then
-          context.other_card.ability.perma_mult = context.other_card.ability.perma_mult or 0
-          context.other_card.ability.perma_mult = context.other_card.ability.perma_mult + card.ability.extra.mult_mod * #unique_ranks
+          context.other_card.ability.perma_mult = (context.other_card.ability.perma_mult or 0) + card.ability.extra.mult_mod * #unique_ranks
           return {
             extra = {message = localize('k_upgrade_ex'), colour = G.C.MULT},
             colour = G.C.MULT,
@@ -163,8 +157,7 @@ local goodra={
         end
         -- Increment permamult if card matches Flush suit
         if wildcount == #scoring_flush or context.other_card:is_suit(matching_suit) then
-          context.other_card.ability.perma_x_mult = context.other_card.ability.perma_x_mult or 0
-          context.other_card.ability.perma_x_mult = context.other_card.ability.perma_x_mult + card.ability.extra.Xmult_multi * #unique_ranks
+          context.other_card.ability.perma_x_mult = (context.other_card.ability.perma_x_mult or 0) + card.ability.extra.Xmult_multi * #unique_ranks
           return {
             extra = {message = localize('k_upgrade_ex'), colour = G.C.MULT},
             colour = G.C.MULT,
@@ -200,31 +193,20 @@ local hisuian_sliggoo={
     end
     -- Main function
     if context.joker_main and context.scoring_name == 'Flush House' then
-      -- Get first rank id + rank, compare id to second rank id, get second rank
-      local first_rank_id = nil
-      local first_rank = nil
-      local second_rank = nil
-      for _, scoring_card in pairs(context.scoring_hand) do
-          if not first_rank and scoring_card:get_id() > 0 then
-            first_rank_id = scoring_card:get_id()
-            first_rank = scoring_card.base.nominal
-          elseif not second_rank and scoring_card:get_id() > 0 and scoring_card:get_id() ~= first_rank_id then
-            second_rank = scoring_card.base.nominal
-          end
-      end
+      -- get the different ranks of the Full House
+      local part_major = get_X_same(3, context.scoring_hand, true)[1][1]
+      local part_minor = get_X_same(2, PkmnDip.utils.filter(context.scoring_hand, function(v) return v:get_id() ~= part_major:get_id() end), true)[1][1]
+      local first_rank = part_major.base.nominal
+      local second_rank = part_minor.base.nominal
       -- Create metal coat
       if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-        local _card = create_card('Item', G.consumeables, nil, nil, nil, nil, 'c_poke_metalcoat')
-        _card:add_to_deck()
-        G.consumeables:emplace(_card)
+        local _card = SMODS.add_card({set = 'Item', area = G.consumeables, key = 'c_poke_metalcoat'})
         card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.C.FILTER})
       end
       -- Create second metal coat if the difference in scoring ranks is > 6
       if math.abs(second_rank - first_rank) > 6 then
         if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-          local _card = create_card('Item', G.consumeables, nil, nil, nil, nil, 'c_poke_metalcoat')
-          _card:add_to_deck()
-          G.consumeables:emplace(_card)
+          local _card = SMODS.add_card({set = 'Item', area = G.consumeables, key = 'c_poke_metalcoat'})
           card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.C.FILTER})
         end
       end
@@ -253,26 +235,17 @@ local hisuian_goodra={
     if context.before and context.main_eval and context.scoring_name == 'Flush House' then
       -- Create metal coat
       if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-        local _card = create_card('Item', G.consumeables, nil, nil, nil, nil, 'c_poke_metalcoat')
-        _card:add_to_deck()
-        G.consumeables:emplace(_card)
+        local _card = SMODS.add_card({set = 'Item', area = G.consumeables, key = 'c_poke_metalcoat'})
         card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.C.FILTER})
       end
     end
     if context.individual and context.cardarea == G.hand and not context.end_of_round then
       if context.scoring_name == 'Flush House' then
-        -- Get first and second ranks of flush house
-        local first_rank_id = nil
-        local first_rank = nil
-        local second_rank = nil
-        for _, scoring_card in pairs(context.scoring_hand) do
-            if not first_rank and scoring_card:get_id() > 0 then
-              first_rank_id = scoring_card:get_id()
-              first_rank = scoring_card.base.nominal
-            elseif not second_rank and scoring_card:get_id() > 0 and scoring_card:get_id() ~= first_rank_id then
-                second_rank = scoring_card.base.nominal
-            end
-        end
+        -- get the different ranks of the Full House
+        local part_major = get_X_same(3, context.scoring_hand, true)[1][1]
+        local part_minor = get_X_same(2, PkmnDip.utils.filter(context.scoring_hand, function(v) return v:get_id() ~= part_major:get_id() end), true)[1][1]
+        local first_rank = part_major.base.nominal
+        local second_rank = part_minor.base.nominal
         -- Set Xmult_mod
         card.ability.extra.Xmult = math.abs(second_rank - first_rank) / 3
         -- Score Steel cards in hand

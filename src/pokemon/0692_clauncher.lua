@@ -42,22 +42,20 @@ local clauncher = {
     -- Resets the table of scored editions between played cards and held cards
     if context.repetition and context.cardarea == G.play and not context.blueprint then
       if context.other_card == G.play.cards[#G.play.cards] then
-        if card.ability.extra.editions ~= {} then
-          for i = 1, #card.ability.extra.editions do table.remove(card.ability.extra.editions) end
-        end
+        card.ability.extra.editions = {}
       end
     end
     -- Resets the table of scored editions after a hand is scored and before the first hand is calculated
     if (context.joker_main or context.setting_blind) and not context.blueprint then
       if card.ability.extra.editions ~= {} then
-        for i = 1, #card.ability.extra.editions do table.remove(card.ability.extra.editions) end
+        card.ability.extra.editions = {}
       end
     end
     return level_evo(self, card, context, "j_nacho_clawitzer")
   end,
   in_pool = function(self, args)
     if G.playing_cards then
-      for k, v in pairs(G.playing_cards) do
+      for _, v in pairs(G.playing_cards) do
         if v.edition and (v.edition.foil or v.edition.holographic or v.edition.polychrome) then return true end
       end
     end

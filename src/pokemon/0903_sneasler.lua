@@ -1,7 +1,7 @@
 -- Hisuian Sneasel 215-1
 local hisuian_sneasel={
   name = "hisuian_sneasel",
-  config = {extra = {Xmult_mod = 0.1, triggered = false}},
+  config = {extra = {Xmult_mod = 0.1}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = G.P_CENTERS.m_stall_toxic
@@ -25,9 +25,8 @@ local hisuian_sneasel={
       card.ability.extra.triggered = true
 
       -- Change to toxic and do the fancy flippy thing
-      juice_flip(context.full_hand[1])
-      G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.1,func = function() context.full_hand[1]:set_ability(G.P_CENTERS.m_stall_toxic);return true end }))
-      juice_flip(context.full_hand[1])
+      poke_convert_cards_to(context.full_hand[1], {mod_conv = 'm_stall_toxic'}, true, true)
+      context.full_hand[1]:juice_up()
 
       -- I dunno if I need to specify this or not but it seems to work so eh
       if G.GAME.toxic_triggered then
@@ -39,7 +38,7 @@ local hisuian_sneasel={
     end
     
     -- Undo the check for the conversion trigger
-    if context.joker_main then card.ability.extra.triggered = false end
+    if context.joker_main then card.ability.extra.triggered = nil end
 
     return item_evo(self, card, context, "j_nacho_sneasler")
   end,
@@ -48,7 +47,7 @@ local hisuian_sneasel={
 -- Sneasler 903
 local sneasler={
   name = "sneasler",
-  config = {extra = {Xmult_mod = 0.1, triggered = false}},
+  config = {extra = {Xmult_mod = 0.1}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = G.P_CENTERS.m_stall_toxic
@@ -71,10 +70,8 @@ local sneasler={
       card.ability.extra.triggered = true
 
       -- Change to toxic and do the fancy flippy thing
-      juice_flip(context.full_hand[1])
-      G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.1,func = function() context.full_hand[1]:set_ability(G.P_CENTERS.m_stall_toxic);return true end }))
-      juice_flip(context.full_hand[1])
-      card_eval_status_text(context.full_hand[1], 'extra', nil, nil, nil, {message = localize('k_upgrade_ex')})
+      poke_convert_cards_to(context.full_hand[1], {mod_conv = 'm_stall_toxic'}, true, true)
+      context.full_hand[1]:juice_up()
 
       -- I dunno if I need to specify this or not but it seems to work so eh
       if G.GAME.toxic_triggered then
@@ -82,24 +79,19 @@ local sneasler={
       foongus_xmult(card.ability.extra.Xmult_mod)
       toxic_scaling()
       SMODS.calculate_effect({x_mult = G.GAME.current_round.toxic.toxicXMult}, context.full_hand[1])
-			context.full_hand[1]:juice_up()
+      context.full_hand[1]:juice_up()
 
       -- Now also do the change to toxic thing for two random enhanced cards in hand (thanks Black Sludge)
-      local cards_held = {}
-      for k, v in ipairs(G.hand.cards) do
-        if v.config.center ~= G.P_CENTERS.c_base then
-          table.insert(cards_held, v)
-        end
-      end
+      local cards_held = PkmnDip.utils.filter(G.hand.cards, function(v) return v.config.center ~= G.P_CENTERS.c_base end)
       pseudoshuffle(cards_held, pseudoseed('blacksludge'))
       local limit = math.min(#cards_held, 2)
-			juice_flip_table(card, cards_held, false, limit)
       for i = 1, limit do
-        G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.1,func = function() cards_held[i]:set_ability(G.P_CENTERS.m_stall_toxic);return true end }))
+        poke_convert_cards_to(cards_held[i], {mod_conv = 'm_stall_toxic'}, true, true)
+        cards_held[i]:juice_up()
         toxic_scaling()
         SMODS.calculate_effect({x_mult = G.GAME.current_round.toxic.toxicXMult}, cards_held[i])
+        cards_held[i]:juice_up()
       end
-      juice_flip_table(card, cards_held, true, limit)
     end
 
     -- Undo the check for the conversion trigger
@@ -108,7 +100,6 @@ local sneasler={
 }
 
 return {
-  name = "Nacho's Hisuian Sneasel Evo Line",
-  enabled = (SMODS.Mods["ToxicStall"] or {}).can_load and nacho_config.hisuian_sneasel or false,
+  config_key = "hisuian_sneasel",
   list = {hisuian_sneasel, sneasler}
 }

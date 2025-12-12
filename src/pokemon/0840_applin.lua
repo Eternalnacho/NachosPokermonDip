@@ -94,7 +94,7 @@ local appletun = {
       local old_h_size = a.h_size
       local ranks = {}
       for i = 2, 14 do
-        for k, v in pairs(G.deck.cards) do
+        for _, v in pairs(G.deck.cards) do
           if v:get_id() == i and not PkmnDip.utils.contains(ranks, i) then ranks[#ranks+1] = i end
         end
       end
@@ -109,7 +109,7 @@ local appletun = {
   add_to_deck = function(self, card, from_debuff)
     local ranks = {}
     for i = 2, 14 do
-      for k, v in pairs(G.deck.cards) do
+      for _, v in pairs(G.deck.cards) do
         if v:get_id() == i and not PkmnDip.utils.contains(ranks, i) then ranks[#ranks+1] = i end
       end
     end
@@ -145,7 +145,7 @@ local dipplin = {
     if context.remove_playing_cards then
       for _, removed in pairs(context.removed) do
         local copies = SMODS.has_enhancement(removed, 'm_wild') and 2 or 1
-        for i = 1, copies do
+        for _ = 1, copies do
           -- copy destroyed card and convert to wild
           G.E_MANAGER:add_event(Event({
             trigger = 'after',

@@ -16,14 +16,10 @@ local piplup={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-     if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        local chip_total = card.ability.extra.chips - card.ability.extra.chip_loss * (#context.scoring_hand)
-        if chip_total < 0 then chip_total = 0 end
-        return {
-          chips = chip_total,
-        }
-      end
+    if context.joker_main then
+      return {
+        chips = math.max(card.ability.extra.chips - card.ability.extra.chip_loss * (#context.scoring_hand), 0)
+      }
     end
     return level_evo(self, card, context, "j_nacho_prinplup")
   end,
@@ -58,7 +54,7 @@ local prinplup={
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,
-  calculate = function(self, card, context)    
+  calculate = function(self, card, context)
     if context.individual and not context.end_of_round and context.cardarea == G.hand then
       if not SMODS.has_no_rank(context.other_card) then
         card.ability.extra.chip_mod = context.other_card.base.nominal
@@ -68,13 +64,10 @@ local prinplup={
         card = card,
       }
     end
-
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        return {
-          chips = card.ability.extra.chips,
-        }
-      end
+    if context.joker_main then
+      return {
+        chips = card.ability.extra.chips,
+      }
     end
     return level_evo(self, card, context, "j_nacho_empoleon")
   end,
@@ -110,7 +103,7 @@ local empoleon={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)    
-     if context.individual and not context.end_of_round and context.cardarea == G.hand then
+    if context.individual and not context.end_of_round and context.cardarea == G.hand then
       if not SMODS.has_no_rank(context.other_card) then
         card.ability.extra.chip_mod = context.other_card.base.nominal * 2
       end
@@ -120,12 +113,10 @@ local empoleon={
       }
     end
 
-    if context.cardarea == G.jokers and context.scoring_hand then
-      if context.joker_main then
-        return {
-          chips = card.ability.extra.chips,
-        }
-      end
+    if context.joker_main then
+      return {
+        chips = card.ability.extra.chips,
+      }
     end
   end,
   add_to_deck = function(self, card, from_debuff)

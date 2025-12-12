@@ -153,7 +153,7 @@ local infernape = {
   calculate = function(self, card, context)
 
     if context.discard and not context.blueprint and not context.other_card.debuff then
-      if context.other_card:is_face() or context.other_card:get_id() == 14 then 
+      if context.other_card:is_face() or context.other_card:get_id() == 14 then
         card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
         return {
               message = localize('k_upgrade_ex'),

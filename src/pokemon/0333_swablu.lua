@@ -34,9 +34,7 @@ local altaria={
     local nine_tally = 0
     if G.playing_cards then
       local nines = PkmnDip.utils.filter(G.playing_cards, function(v) return v:get_id() == 9 end); nine_tally = #nines
-      for k, v in pairs(nines) do
-        if v.config.center ~= G.P_CENTERS.c_base then nine_tally = nine_tally + 1 end
-      end
+      PkmnDip.utils.for_each(nines, function(v) if v.config.center ~= G.P_CENTERS.c_base then nine_tally = nine_tally + 1 end end)
     end
     return {vars = {card.ability.extra.money, card.ability.extra.money * 2, card.ability.extra.money * nine_tally}}
   end,
@@ -51,14 +49,8 @@ local altaria={
   eternal_compat = true,
   calc_dollar_bonus = function(self, card)
     local nine_tally = 0
-    if G.playing_cards then
-        for k, v in ipairs(G.playing_cards) do
-            if v:get_id() == 9 then
-              nine_tally = nine_tally + 1
-              if v.config.center ~= G.P_CENTERS.c_base then nine_tally = nine_tally + 1 end
-            end
-        end
-    end
+    local nines = PkmnDip.utils.filter(G.playing_cards, function(v) return v:get_id() == 9 end); nine_tally = #nines
+    PkmnDip.utils.for_each(nines, function(v) if v.config.center ~= G.P_CENTERS.c_base then nine_tally = nine_tally + 1 end end)
     return ease_poke_dollars(card, "altaria", card.ability.extra.money * nine_tally, true)
 	end,
   megas = {"mega_altaria"},
@@ -83,7 +75,7 @@ local mega_altaria={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.before and context.cardarea == G.jokers and not context.blueprint then
-      for k, v in pairs(G.play.cards) do
+      for _, v in pairs(G.play.cards) do
         if v:get_id() == 9 and not v.edition then
           local edition = poll_edition('aura', nil, true, true)
           v:set_edition(edition, true, true)

@@ -50,23 +50,19 @@ local mega_audino = {
       return {xmult = card.ability.extra.Xmult}
     end
     if context.end_of_round and context.game_over == false and not context.blueprint then
-      local hatchlings
-      for k, v in pairs(G.jokers.cards) do
-        if v.config.center.stage == "Baby" or v.config.center.stage == "Basic" or v.config.center_key == 'j_poke_mystery_egg' then hatchlings = true end
-      end
+      local hatchlings = #PkmnDip.utils.filter(G.jokers.cards, function(v)
+        return v.config.center.stage == "Baby" or v.config.center.stage == "Basic" or v.config.center_key == 'j_poke_mystery_egg' 
+      end)
       G.GAME.joker_buffer = G.GAME.joker_buffer + 1
-      if (#G.jokers.cards <= G.jokers.config.card_limit) or not hatchlings then
+      if (#G.jokers.cards <= G.jokers.config.card_limit) or hatchlings <= 0 then
           G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
             G.GAME.joker_buffer = 0
             play_sound('timpani')
-            local _card = SMODS.create_card({set = 'Joker', key = 'j_poke_mystery_egg'})
             local _edition = poll_edition('aura', nil, true, true)
             if SMODS.pseudorandom_probability(card, 'mega_audino', card.ability.extra.num, card.ability.extra.den, 'mega_audino') then
               _edition = 'e_poke_shiny'
             end
-            _card:set_edition(_edition, true)
-            _card:add_to_deck()
-            G.jokers:emplace(_card)
+            local _card = SMODS.add_card({set = 'Joker', key = 'j_poke_mystery_egg', edition = _edition})
             if _card.ability and _card.ability.extra then _card.ability.extra.rounds = 1 end
             return true end }))
           delay(0.6)

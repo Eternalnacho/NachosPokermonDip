@@ -16,30 +16,18 @@ local terapagos={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.using_consumeable and context.consumeable and context.consumeable.ability then
-      if context.consumeable.ability.name == 'teraorb' then
-        if G.jokers.highlighted[1] == card and #G.jokers.highlighted == 1 then
-          poke_evolve(card, 'j_nacho_terapagos_terastal')
-        elseif G.jokers.cards[1] == card and #G.jokers.highlighted == 0 then
-          poke_evolve(card, 'j_nacho_terapagos_terastal')
-        end
+      if context.consumeable.ability.name == 'teraorb' and card == poke_find_leftmost_or_highlighted() then
+        poke_evolve(card, 'j_nacho_terapagos_terastal')
       end
     end
-    if context.end_of_round and not context.individual and context.main_eval and not from_debuff then
-      local _card = create_card("Item", G.consumeables, nil, nil, nil, nil, "c_poke_teraorb")
-      local edition = {negative = true}
-      _card:set_edition(edition, true)
-      _card:add_to_deck()
-      G.consumeables:emplace(_card)
+    if context.end_of_round and not context.individual and context.main_eval then
+      local _card = SMODS.add_card({set = "Item", area = G.consumeables, edition = 'e_negative', key = "c_poke_teraorb"})
       card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.ARGS.LOC_COLOURS.item})
     end
   end,
   add_to_deck = function(self, card, from_debuff)
     if not from_debuff then
-      local _card = create_card("Item", G.consumeables, nil, nil, nil, nil, "c_poke_teraorb")
-      local edition = {negative = true}
-      _card:set_edition(edition, true)
-      _card:add_to_deck()
-      G.consumeables:emplace(_card)
+      local _card = SMODS.add_card({set = "Item", area = G.consumeables, edition = 'e_negative', key = "c_poke_teraorb"})
       card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.ARGS.LOC_COLOURS.item})
     end
   end,
@@ -69,20 +57,18 @@ local terapagos_terastal={
   end,
   calculate = function(self, card, context)
     if context.using_consumeable and context.consumeable and context.consumeable.ability then
-      if context.consumeable.ability.name == 'teraorb' then
-        if (G.jokers.highlighted[1] == card and #G.jokers.highlighted == 1) or (G.jokers.cards[1] == card and #G.jokers.highlighted == 0) then
-          if not (context.consumeable.ability.extra.change_to_type == card.ability.extra.changedtype) then
-            energy_increase(card, type_sticker_applied(card))
-            card.ability.extra.changedtype = card.ability.extra.ptype
+      if context.consumeable.ability.name == 'teraorb' and card == poke_find_leftmost_or_highlighted() then
+        if not (context.consumeable.ability.extra.change_to_type == card.ability.extra.changedtype) then
+          energy_increase(card, get_type(card))
+          card.ability.extra.changedtype = card.ability.extra.ptype
+        end
+        for i = 1, #G.jokers.cards do
+          if G.jokers.cards[i] ~= card then
+            apply_type_sticker(G.jokers.cards[i], card.ability.extra.ptype)
           end
-          for i = 1, #G.jokers.cards do
-            if G.jokers.cards[i] ~= card then
-              apply_type_sticker(G.jokers.cards[i], card.ability.extra.ptype)
-            end
-          end
-          if get_total_energy(card) >= 6 then
-            poke_evolve(card, 'j_nacho_terapagos_stellar')
-          end
+        end
+        if get_total_energy(card) >= 6 then
+          poke_evolve(card, 'j_nacho_terapagos_stellar')
         end
       end
     end
@@ -95,22 +81,14 @@ local terapagos_terastal={
   end,
   add_to_deck = function(self, card, from_debuff)
     if not from_debuff then
-      if not G.GAME.energy_plus then
-        G.GAME.energy_plus = 3
-      else
-        G.GAME.energy_plus = G.GAME.energy_plus + 3
-      end
+      G.GAME.energy_plus = G.GAME.energy_plus and (G.GAME.energy_plus + 3) or 3
       for i = 1, #G.jokers.cards do
-        apply_type_sticker(G.jokers.cards[i], type_sticker_applied(card))
+        apply_type_sticker(G.jokers.cards[i], get_type(card))
       end
     end
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if not G.GAME.energy_plus then
-      G.GAME.energy_plus = 0
-    else
-      G.GAME.energy_plus = G.GAME.energy_plus - 3
-    end
+    G.GAME.energy_plus = G.GAME.energy_plus and (G.GAME.energy_plus - 3) or 0
   end,
 }
 
@@ -153,14 +131,12 @@ local terapagos_stellar={
   end,
   calculate = function(self, card, context)
     if context.using_consumeable and context.consumeable and context.consumeable.ability then
-      if context.consumeable.ability.name == 'teraorb' then
-        if (G.jokers.highlighted[1] == card and #G.jokers.highlighted == 1) or (G.jokers.cards[1] == card and #G.jokers.highlighted == 0) then
-          PkmnDip.utils.for_each(G.jokers.cards,
-            function(joker)
-              energy_increase(joker, get_type(joker))
-              apply_type_sticker(joker, "Stellar")
-              end)
-        end
+      if context.consumeable.ability.name == 'teraorb' and card == poke_find_leftmost_or_highlighted() then
+        PkmnDip.utils.for_each(G.jokers.cards,
+          function(joker)
+            energy_increase(joker, get_type(joker))
+            apply_type_sticker(joker, "Stellar")
+          end)
       end
     end
     if context.other_joker and is_type(context.other_joker, "Stellar") then
@@ -183,13 +159,13 @@ local terapagos_stellar={
         self:set_sprites(card)
         apply_type_sticker(card, "Stellar")
       return true end }))
-    G.GAME.energy_plus = G.GAME.energy_plus and G.GAME.energy_plus + 5 or 5
+    G.GAME.energy_plus = G.GAME.energy_plus and (G.GAME.energy_plus + 5) or 5
     if not from_debuff then
       PkmnDip.utils.for_each(G.jokers.cards, function(joker) apply_type_sticker(joker, "Stellar") end)
     end
   end,
   remove_from_deck = function(self, card, from_debuff)
-    G.GAME.energy_plus = G.GAME.energy_plus and G.GAME.energy_plus - 5 or 0
+    G.GAME.energy_plus = G.GAME.energy_plus and (G.GAME.energy_plus - 5) or 0
   end,
   set_sprites = function(self, card, front)
     if self.discovered or card.bypass_discovery_center then
