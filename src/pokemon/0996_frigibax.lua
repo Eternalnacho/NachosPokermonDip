@@ -108,10 +108,14 @@ local baxcalibur = {
   calculate = function(self, card, context)
     -- Scoring cards with Mult gain Foil
     if context.before and context.cardarea == G.jokers and not context.blueprint then
+      local converted
       for _, v in pairs(G.play.cards) do
-        if poke_total_mult(v) > 0 then v:set_edition({foil = true}, true, true) end
+        if poke_total_mult(v) > 0 then
+          v:set_edition({foil = true}, true, true)
+          converted = true
+        end
       end
-      play_sound('foil2', 0.5, 0.4)
+      if converted then play_sound('foil2', 0.5, 0.4) end
     end
     -- Five of a Kinds go stoopid
     if context.scoring_hand and context.scoring_name == "Five of a Kind" and not card.ability.extra.disabled then
