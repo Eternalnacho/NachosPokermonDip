@@ -127,6 +127,7 @@ local passimian={
     if card and card.ability and card.ability.received_card then
       local r_center = card.ability.received_card
       local r_config = copy_table(card.ability.received_card.config)
+      -- get the local variables from received card's loc_vars function
       if type(r_center.loc_vars) == "function" then
         local other_queue = {}
         local other_vars = r_center:loc_vars(other_queue, card)
@@ -134,12 +135,23 @@ local passimian={
           r_config.loc_vars_replacement = other_vars.vars
         end
       end
+      -- UI table should still have Passimian's name
       if not full_UI_table.name then
         full_UI_table.name = localize({ type = "name", set = _c.set, key = _c.key, nodes = full_UI_table.name })
       end
+      -- Name formatting nonsense
       local r_name = localize({type = "name_text", set = r_center.set, key = r_center.key})
-      localize{type = 'descriptions', set = 'Joker', key = r_center.key, name = r_center.name, vars = r_config.loc_vars_replacement, nodes = desc_nodes}
+      if string.match(G.localization.descriptions.Joker[r_center.key].name, '{s:0.6}'..'%u%l+'..'{}') then -- {s:0.6}Hisuian{}Sneasel
+        r_name = G.localization.descriptions.Joker[r_center.key].name
+        r_name = string.gsub(r_name, '{}', ' '); r_name = string.sub(r_name, 8, -1) -- Hisuian Sneasel
+      end
+      -- These two don't have a loc_vars function and it's irritating
+      if r_center.key == 'j_nacho_hisuian_zorua' or r_center.key == 'j_poke_zorua' then
+        r_config.loc_vars_replacement = {card.ability.extra.rounds}
+      end
       info_queue[#info_queue + 1] = {set = 'Other', key = 'received_card', vars = {r_name}}
+      localize{type = 'descriptions', set = 'Joker', key = r_center.key, name = r_center.name, vars = r_config.loc_vars_replacement, nodes = desc_nodes}
+      if r_center.generate_ui then r_center:generate_ui(info_queue, card, {}, specific_vars, full_UI_table) end
     else
       if not full_UI_table.name then
         full_UI_table.name = localize({ type = "name", set = _c.set, key = _c.key, nodes = full_UI_table.name })
@@ -147,7 +159,7 @@ local passimian={
       localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes}
     end
   end,
-  banlist = {'j_nacho_passimian', 'j_poke_zorua', 'j_poke_zoroark', 'j_nacho_hisuian_zorua', 'j_nacho_hisuian_zoroark', 'j_poke_smeargle'},
+  banlist = {'j_nacho_passimian'},
   load = function(self, card, card_table, other_card)
     if card_table.ability.received_card then
       card_table.ability.received_card = G.P_CENTERS[card_table.received_key]
