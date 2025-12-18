@@ -64,7 +64,6 @@ local mega_altaria={
     type_tooltip(self, info_queue, card)
     return {vars = {}}
   end,
-  designer = "Eternalnacho",
   rarity = "poke_mega",
   cost = 12,
   stage = "Mega",

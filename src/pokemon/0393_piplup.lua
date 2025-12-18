@@ -6,7 +6,6 @@ local piplup={
     type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.hands, card.ability.extra.chips, card.ability.extra.chip_loss, card.ability.extra.rounds}}
   end,
-  designer = "Eternalnacho",
   rarity = 2,
   cost = 6,
   stage = "Basic",
@@ -46,7 +45,6 @@ local prinplup={
     type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.hands, card.ability.extra.chips, card.ability.extra.chip_mod, card.ability.extra.rounds}}
   end,
-  designer = "Eternalnacho",
   rarity = "poke_safari",
   cost = 8,
   stage = "One",
@@ -94,7 +92,6 @@ local empoleon={
     type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.hands, card.ability.extra.chips, card.ability.extra.chip_mod, card.ability.extra.rounds}}
   end,
-  designer = "Eternalnacho",
   rarity = "poke_safari",
   cost = 10,
   stage = "Two",

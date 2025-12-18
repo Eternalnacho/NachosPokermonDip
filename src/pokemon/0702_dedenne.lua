@@ -9,7 +9,6 @@ local dedenne = {
     local num, den = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.den, 'dedenne')
     return {vars = {num, den}}
   end,
-  designer = "Eternalnacho",
   rarity = 1,
   cost = 4,
   enhancement_gate = "m_gold",

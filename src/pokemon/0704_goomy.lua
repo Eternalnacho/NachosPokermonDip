@@ -12,7 +12,6 @@ local goomy={
       }
     }
   end,
-  designer = "Eternalnacho",
   rarity = 2,
   cost = 6,
   stage = "Basic",
@@ -75,7 +74,6 @@ local sliggoo={
       }
     }
   end,
-  designer = "Eternalnacho",
   rarity = "poke_safari",
   cost = 8,
   stage = "One",
@@ -129,7 +127,6 @@ local goodra={
     type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.Xmult_multi}}
   end,
-  designer = "Eternalnacho",
   rarity = "poke_safari",
   cost = 11,
   stage = "Two",
@@ -178,7 +175,6 @@ local hisuian_sliggoo={
     return {vars = {math.max(0, self.config.evo_rqmt - card.ability.extra.flush_houses),
       self.config.evo_rqmt - card.ability.extra.flush_houses == 1 and "Flush House" or "Flush Houses"}}
   end,
-  designer = "Eternalnacho",
   rarity = "poke_safari",
   cost = 8,
   stage = "One",
@@ -223,7 +219,6 @@ local hisuian_goodra={
     type_tooltip(self, info_queue, card)
     return {vars = {}}
   end,
-  designer = "Eternalnacho",
   rarity = "poke_safari",
   cost = 11,
   stage = "Two",

@@ -134,7 +134,6 @@ local dipplin = {
     local deck_data = G.playing_cards and G.STAGE == G.STAGES.RUN and '['..tostring(enhance_count)..'/'..tostring(math.ceil(#G.playing_cards/4))..'] ' or ''
     return { vars = { deck_data } }
   end,
-  designer = "Eternalnacho",
   rarity = "poke_safari",
   cost = 8,
   stage = "One",
@@ -187,7 +186,6 @@ local hydrapple = {
     local a = card.ability.extra
     return { vars = { a.Xmult, a.Xmult_mod, a.Xmult_mod * 2 } }
   end,
-  designer = "Eternalnacho",
   rarity = "poke_safari",
   cost = 10,
   stage = "Two",

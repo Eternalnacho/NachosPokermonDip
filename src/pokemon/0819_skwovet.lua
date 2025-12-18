@@ -6,7 +6,6 @@ local skwovet={
     type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.mult, card.ability.extra.mult_mod}}
   end,
-  designer = "Eternalnacho",
   rarity = 1,
   cost = 5,
   stage = "Basic",
@@ -56,7 +55,6 @@ local greedent={
     local num, den = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.den, 'greedent')
     return {vars = {card.ability.extra.mult, card.ability.extra.mult_mod, num, den}}
   end,
-  designer = "Eternalnacho",
   rarity = "poke_safari",
   cost = 10,
   stage = "One",

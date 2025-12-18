@@ -7,7 +7,6 @@ local terapagos={
     info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
     return {vars = {}}
   end,
-  designer = "Eternalnacho",
   rarity = 4,
   cost = 20,
   stage = "Legendary",
@@ -43,7 +42,6 @@ local terapagos_terastal={
     info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
     return {vars = {card.ability.extra.Xmult_mod, math.max(1, 1 + card.ability.extra.Xmult_mod * count)}}
   end,
-  designer = "Eternalnacho",
   rarity = 4,
   cost = 20,
   stage = "Legendary",
@@ -116,7 +114,6 @@ local terapagos_stellar={
     info_queue[#info_queue+1] = {set = 'Other', key = 'stellar_type'}
     return {vars = {card.ability.extra.Xmult_mod, card.ability.extra.Xmult}}
   end,
-  designer = "Eternalnacho",
   rarity = 4,
   cost = 20,
   stage = "Legendary",

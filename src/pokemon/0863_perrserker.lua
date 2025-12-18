@@ -7,7 +7,6 @@ local galarian_meowth={
     info_queue[#info_queue+1] = G.P_CENTERS.m_steel
 		return {vars = {card.ability.extra.retriggers, math.max(card.ability.evo_rqmt - card.ability.extra.triggered, 0)}}
   end,
-  designer = "Eternalnacho",
   rarity = 2,
   cost = 6,
   enhancement_gate = 'm_steel',
@@ -51,7 +50,6 @@ local perrserker = {
     total_xmult = total_xmult + total_xmult * .05 * total_energy
     return { vars = { total_xmult } }
   end,
-  designer = "Eternalnacho",
   rarity = "poke_safari",
   cost = 10,
   stage = "One",

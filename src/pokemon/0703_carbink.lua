@@ -7,7 +7,6 @@ local carbink = {
     info_queue[#info_queue+1] = G.P_CENTERS.m_gold
     return {vars = {}}
   end,
-  designer = "Eternalnacho",
   rarity = 1,
   cost = 5,
   stage = "Basic",

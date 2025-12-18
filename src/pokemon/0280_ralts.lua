@@ -169,7 +169,6 @@ local gallade={
     type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.Xmult_mod}}
   end,
-  designer = "Eternalnacho",
   rarity = "poke_safari",
   cost = 10,
   stage = "Two",
@@ -201,7 +200,6 @@ local mega_gallade={
     type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.Xmult_mod}}
   end,
-  designer = "Eternalnacho",
   rarity = "poke_mega",
   cost = 12,
   stage = "Mega",

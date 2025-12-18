@@ -7,7 +7,6 @@ local oranguru={
     common_ranks_tooltip(self, info_queue)
     return {vars = {}}
   end,
-  designer = "Eternalnacho",
   rarity = 3,
   cost = 8,
   stage = "Basic",

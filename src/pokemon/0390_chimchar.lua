@@ -6,7 +6,6 @@ local chimchar={
     type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.d_size, card.ability.extra.mult, math.max(0, self.config.evo_rqmt - card.ability.extra.max_scored)}}
   end,
-  designer = "Eternalnacho",
   rarity = 2,
   cost = 6,
   stage = "Basic",
@@ -75,7 +74,6 @@ local monferno={
     type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.d_size, card.ability.extra.mult, math.max(0, self.config.evo_rqmt - card.ability.extra.max_scored)}}
   end,
-  designer = "Eternalnacho",
   rarity = "poke_safari",
   cost = 8,
   stage = "One",
@@ -142,7 +140,6 @@ local infernape = {
     type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.d_size, card.ability.extra.mult, card.ability.extra.Xmult_mod, card.ability.extra.Xmult}}
   end,
-  designer = "Eternalnacho",
   rarity = "poke_safari",
   cost = 10,
   stage = "Two",

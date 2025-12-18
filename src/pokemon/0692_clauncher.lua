@@ -17,7 +17,6 @@ local clauncher = {
     end
     return {vars = {card.ability.extra.rounds}}
   end,
-  designer = "Eternalnacho",
   rarity = 1,
   cost = 5,
   stage = "Basic",
@@ -82,7 +81,6 @@ local clawitzer = {
     end
     return {vars = {}}
   end,
-  designer = "Eternalnacho",
   rarity = "poke_safari",
   cost = 8,
   stage = "One",

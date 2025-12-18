@@ -9,7 +9,6 @@ local turtonator={
     else active = "Inactive" end
     return {vars = {card.ability.extra.Xmult_mod, active}}
   end,
-  designer = "Eternalnacho",
   rarity = 2,
   cost = 8,
   stage = "Basic",

@@ -38,7 +38,6 @@ local mega_audino = {
     local num, den = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.den, 'mega_audino')
     return {vars = {card.ability.extra.Xmult, num, den}}
   end,
-  designer = "Eternalnacho",
   rarity = "poke_mega",
   cost = 12,
   stage = "Mega",

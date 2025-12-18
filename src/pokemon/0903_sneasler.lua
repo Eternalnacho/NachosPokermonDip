@@ -7,7 +7,6 @@ local hisuian_sneasel={
     info_queue[#info_queue+1] = G.P_CENTERS.m_stall_toxic
     return {vars = {}}
   end,
-  designer = "Eternalnacho",
   rarity = 2,
   cost = 6,
   stage = "Basic",
@@ -53,7 +52,6 @@ local sneasler={
     info_queue[#info_queue+1] = G.P_CENTERS.m_stall_toxic
     return {vars = {card.ability.extra.Xmult_mod}}
   end,
-  designer = "Eternalnacho",
   rarity = "poke_safari",
   cost = 10,
   stage = "One",

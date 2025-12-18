@@ -8,7 +8,6 @@ local bagon={
     local deck_data = G.playing_cards and G.STAGE == G.STAGES.RUN and ' ['..tostring(high_count)..'/'..tostring(math.ceil(#G.playing_cards * 9 / 16))..']' or ''
     return {vars = {deck_data}}
   end,
-  designer = "Eternalnacho",
   rarity = 2,
   cost = 6,
   stage = "Basic",
@@ -89,7 +88,6 @@ local shelgon={
     local deck_data = G.playing_cards and G.STAGE == G.STAGES.RUN and ' ['..tostring(high_count)..'/'..tostring(math.ceil(#G.playing_cards * 3 / 4))..']' or ''
     return {vars = {deck_data}}
   end,
-  designer = "Eternalnacho",
   rarity = "poke_safari",
   cost = 9,
   stage = "One",
@@ -167,7 +165,6 @@ local salamence={
     type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.Xmult}}
   end,
-  designer = "Eternalnacho",
   rarity = "poke_safari",
   cost = 11,
   stage = "Two",
@@ -202,7 +199,6 @@ local mega_salamence={
     type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult}}
   end,
-  designer = "Eternalnacho",
   rarity = "poke_mega",
   cost = 12,
   stage = "Mega",

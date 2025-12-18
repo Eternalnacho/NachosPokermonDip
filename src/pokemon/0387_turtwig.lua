@@ -6,7 +6,6 @@ local turtwig={
     type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.h_size, card.ability.extra.rounds, G.GAME.interest_cap / 5}}
   end,
-  designer = "Eternalnacho",
   rarity = 2,
   cost = 6,
   stage = "Basic",
@@ -47,7 +46,7 @@ local grotle={
     type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.h_size, card.ability.extra.rounds, G.GAME.interest_cap / 5}}
   end,
-  designer = "Eternalnacho, ESN64",
+  designer = "ESN64",
   rarity = "poke_safari",
   cost = 8,
   stage = "One",
@@ -103,7 +102,7 @@ local torterra={
     type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.h_size, card.ability.extra.mult, G.GAME.interest_cap / 5}}
   end,
-  designer = "Eternalnacho, ESN64",
+  designer = "ESN64",
   rarity = "poke_safari",
   cost = 10,
   stage = "Two",
