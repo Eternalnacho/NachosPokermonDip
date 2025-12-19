@@ -114,10 +114,10 @@ local goomygoomy = {
 }
 
 local list = {}
-if nacho_config.Piplup and nacho_config.Chimchar and nacho_config.Turtwig then list[#list+1] = sinnoh_adv end
-if nacho_config.Skwovet then list[#list+1] = hibernation end
-if nacho_config.Carbink then list[#list+1] = gems end
-if nacho_config.Goomy then list[#list+1] = goomygoomy end
+if nacho_config.piplup and nacho_config.chimchar and nacho_config.turtwig then list[#list+1] = sinnoh_adv end
+if nacho_config.skwovet then list[#list+1] = hibernation end
+if nacho_config.carbink then list[#list+1] = gems end
+if nacho_config.goomy then list[#list+1] = goomygoomy end
 
 return {name = "Challenges",
     list = list

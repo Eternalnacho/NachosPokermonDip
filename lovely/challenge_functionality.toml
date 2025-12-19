@@ -17,8 +17,11 @@ else
 position = "before"
 payload = '''
 elseif G.GAME.modifiers.sinnoh_adv and SMODS.calculate_context({starting_shop = true}) then
-  G.shop_jokers:emplace(SMODS.create_card({key = 'j_nacho_turtwig'}))
-  G.shop_jokers:emplace(SMODS.create_card({key = 'j_nacho_chimchar'}))
-  G.shop_jokers:emplace(SMODS.create_card({key = 'j_nacho_piplup'}))
+  local turtwig = SMODS.add_card({key = 'j_nacho_turtwig', area = G.shop_jokers})
+  create_shop_card_ui(turtwig)
+  local chimchar = SMODS.add_card({key = 'j_nacho_chimchar', area = G.shop_jokers})
+  create_shop_card_ui(chimchar)
+  local piplup = SMODS.add_card({key = 'j_nacho_piplup', area = G.shop_jokers})
+  create_shop_card_ui(piplup)
 '''
 match_indent = true
