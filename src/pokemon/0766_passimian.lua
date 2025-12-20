@@ -91,7 +91,7 @@ local passimian={
         card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_receiver_ex')})
       else
         local sound
-        for k, v in pairs(G.P_CENTER_POOLS['Edition']) do
+        for _, v in pairs(G.P_CENTER_POOLS['Edition']) do
           if v.key == 'e_'..edition.type then
             sound = v.sound
             sound.pitch = edition.type == 'poke_shiny' and 1 or 2
@@ -159,7 +159,7 @@ local passimian={
       localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes}
     end
   end,
-  banlist = {'j_nacho_passimian'},
+  banlist = {'j_nacho_passimian', 'j_poke_smeargle'},
   load = function(self, card, card_table, other_card)
     if card_table.ability.received_card then
       card_table.ability.received_card = G.P_CENTERS[card_table.received_key]
