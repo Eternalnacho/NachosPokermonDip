@@ -36,6 +36,10 @@ local passimian={
       if card.ability.received_card then
         values_to_keep = copy_scaled_values(card)
       elseif context and context.card and context.card.ability then
+        -- Smeargle is annoying to make work
+        if context.card.ability.extra and context.card.ability.extra.copy_joker then
+          context.card.ability.extra.copy_joker = nil
+        end
         -- I guess we have to make sure stickers *don't* get passed along
         local exceptions = {}
         for k, v in pairs(SMODS.Stickers) do
@@ -80,8 +84,7 @@ local passimian={
       -- Keep the fighting type, and re-check blueprint compatibility
       card.ability.extra.ptype = "Fighting"
 
-      if _r.blueprint_compat == true then card.config.center.blueprint_compat = true
-      else card.config.center.blueprint_compat = false end
+      card.config.center.blueprint_compat = _r.blueprint_compat
 
       if _r.add_to_deck then _r:add_to_deck(card) end
 
@@ -159,7 +162,7 @@ local passimian={
       localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes}
     end
   end,
-  banlist = {'j_nacho_passimian', 'j_poke_smeargle'},
+  banlist = {'j_nacho_passimian'},
   load = function(self, card, card_table, other_card)
     if card_table.ability.received_card then
       card_table.ability.received_card = G.P_CENTERS[card_table.received_key]

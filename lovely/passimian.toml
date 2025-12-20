@@ -61,6 +61,22 @@ end
 '''
 match_indent = true
 
+# Add a blueprint check to Smeargle's calculate function so Passimian can find it
+[[patches]]
+[patches.pattern]
+target = '=[SMODS Pokermon "pokemon/pokejokers_08.lua"]'
+pattern = '''
+if G.jokers.cards[found_pos] and card.ability.blueprint_compat == 'compatible' then
+'''
+position = "before"
+payload = '''
+local r_joker = G.jokers.cards[found_pos]
+card.ability.blueprint_compat = ( r_joker and r_joker ~= card and not r_joker.debuff
+    and r_joker.config.center.blueprint_compat and 'compatible')
+    or 'incompatible'
+'''
+match_indent = true
+
 # Passimian Copy Card fix
 [[patches]]
 [patches.pattern]
