@@ -74,7 +74,7 @@ local greedent={
       if not context.blueprint then
         card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
       end
-      -- 1 in 4 chance for Leftovers
+      -- 1 in 8 chance for Leftovers
       if SMODS.pseudorandom_probability(card, 'greedent', card.ability.extra.num, card.ability.extra.den, 'greedent') and not card.debuff and
           context.consumeable.config.center.key ~= 'c_poke_leftovers' then
         SMODS.add_card({set = 'Item', area = G.consumeables, edition = 'e_negative', key = 'c_poke_leftovers'})
