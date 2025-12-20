@@ -297,9 +297,9 @@ return {
         text = {
           "{X:red,C:white}X#1#{} Mult",
           "{br:2}ERROR - CONTACT STEAK",
-          "Creates a Mystery Egg",
-          "with an {C:attention}edition{}",
-          "at end of round",
+          "{C:attention}Breeds{} adjacent Pokemon Jokers",
+          "when a {C:attention}Boss Blind{} is defeated,",
+          "then adds an {C:attention}edition{} to the {C:attention}Egg{}",
           "{C:inactive}({C:green}#2# in #3#{C:inactive} to be {C:dark_edition}Shiny{C:inactive}){}",
         }
       },
@@ -674,14 +674,15 @@ return {
           "every type",
         },
       },
-      -- Daycare tooltip for Mega Audino
-      daycare = {
-        name = "Pokemon Day Care",
+      -- Breeding tooltip for Mega Audino
+      breed_alt = {
+        name = "Breed",
         text = {
-          "Created Mystery Eggs can",
-          "exceed Joker slots if",
-          "you have no {C:attention}Basic{} or",
-          "{C:attention}Baby{} Jokers"
+            "Create a {C:attention}Mystery Egg{}",
+            "that will hatch into",
+            "the lowest {C:attention}stage{} of",
+            "one of the {C:attention}parents",
+            "{C:inactive}(Always {C:attention}#1#{C:inactive} round#2# to hatch){}"
         }
       },
       -- Rank lists for most common ranks
