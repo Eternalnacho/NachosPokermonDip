@@ -48,8 +48,11 @@ edition_evo = function(self, card, context, forced_key, edition, percentage, fla
 end
 
 -- Get card's total mult (parallels poke_total_chips)
-poke_total_mult = function(card)
-  local total_mult = (card.ability.mult) + (card.ability.perma_mult or 0)
+poke_total_mult = poke_total_mult or function(card)
+  local total_mult = (card.ability.perma_mult or 0)
+  if card.config.center ~= G.P_CENTERS.m_lucky then
+    total_mult = total_mult + card.ability.mult
+  end
   if card.edition then
     total_mult = total_mult + (card.edition.mult or 0)
   end
