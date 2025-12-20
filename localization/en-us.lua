@@ -297,9 +297,10 @@ return {
         text = {
           "{X:red,C:white}X#1#{} Mult",
           "{br:2}ERROR - CONTACT STEAK",
-          "{C:attention}Breeds{} adjacent Pokemon Jokers",
+          "Creates a {C:attention}Mystery Egg{} based",
+          "on adjacent Pokemon Jokers",
           "when a {C:attention}Boss Blind{} is defeated,",
-          "then adds an {C:attention}edition{} to the {C:attention}Egg{}",
+          "then adds an {C:attention}edition{} to it",
           "{C:inactive}({C:green}#2# in #3#{C:inactive} to be {C:dark_edition}Shiny{C:inactive}){}",
         }
       },
@@ -434,10 +435,10 @@ return {
       j_nacho_turtonator = {
         name = "Turtonator",
         text = {
-          "If the {C:attention}Boss Blind{} ability",
-          "triggers, scoring cards give",
-          "{X:red,C:white}X#1#{} Mult during your",
-          "next played hand",
+          "If a played card, {C:attention}poker hand{},",
+          "or Joker is {C:attention}debuffed{}, {C:attention}scoring{}",
+          "cards give {X:red,C:white}X#1#{} Mult during",
+          "your next played hand",
           "{C:inactive}(#2#){}",
         }
       },
@@ -674,15 +675,12 @@ return {
           "every type",
         },
       },
-      -- Breeding tooltip for Mega Audino
-      breed_alt = {
-        name = "Breed",
+      -- Incubator tooltip for Mega Audino
+      incubator = {
+        name = "Fast Incubator",
         text = {
-            "Create a {C:attention}Mystery Egg{}",
-            "that will hatch into",
-            "the lowest {C:attention}stage{} of",
-            "one of the {C:attention}parents",
-            "{C:inactive}(Always {C:attention}#1#{C:inactive} round#2# to hatch){}"
+            "Created {C:attention}Mystery Eggs{}",
+            "will always hatch in {C:attention}1{} round",
         }
       },
       -- Rank lists for most common ranks
