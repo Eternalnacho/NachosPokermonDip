@@ -130,14 +130,12 @@ calc_boss_trigger = function(context)
     G.GAME.blind.nametracker = context.blind.name
   end
 
-  if context.setting_blind and context.blind and context.blind.boss then
+  if context.setting_blind and context.blind and context.blind.boss and not G.GAME.blind.disabled then
     local boss_name = context.blind.name
     -- These boss blinds trigger only at the start
     -- The Wall, The Water, The Manacle, The Needle, Amber Acorn, Violet Vessel
-    if (boss_name == "The Wall" or boss_name == "The Water" or boss_name == "The Manacle"
-          or boss_name == "The Needle" or boss_name == "Amber Acorn" or boss_name == "Violet Vessel"
-            or boss_name == "The Mirror")
-        and not G.GAME.blind.disabled then
+    if context.blind.mult ~= 2 then return true end
+    if (boss_name == "The Water" or boss_name == "The Manacle" or boss_name == "Amber Acorn" or boss_name == "The Mirror") then
       return true
     end
   end
@@ -162,13 +160,7 @@ calc_boss_trigger = function(context)
 
       -- The Hook, The Tooth, Crimson Heart, Cerulean Bell, Chartreuse Chamber (cgoose)
     elseif context.press_play then
-      local jokdebuff = false
-      for i = 1, #G.jokers.cards do
-        if G.jokers.cards[i].debuff then
-          jokdebuff = true
-          break
-        end
-      end
+      local jokdebuff = poke_find_card(function(v) return v.debuff end)
       local forcedselection = false
       for k, v in pairs(G.hand.highlighted) do
         if v.ability.forced_selection or v.ability.pokermon_forced_selection then
@@ -176,10 +168,10 @@ calc_boss_trigger = function(context)
           forcedselection = true
         end
       end
-      if (boss_name == "The Hook" and (#G.hand.cards - #G.hand.highlighted) > 0) or
-          boss_name == "The Tooth" or
-          ((boss_name == "Crimson Heart" or boss_name == "bl_poke_cgoose") and jokdebuff) or
-          (boss_name == "Cerulean Bell" and forcedselection) then
+      if (boss_name == "The Hook" and (#G.hand.cards - #G.hand.highlighted) > 0)
+        or boss_name == "The Tooth"
+        or ((boss_name == "Crimson Heart" or boss_name == "bl_poke_cgoose") and jokdebuff)
+        or (boss_name == "Cerulean Bell" and forcedselection) then
         G.GAME.blind.nametracker = nil
         return true
       end
@@ -192,8 +184,8 @@ calc_boss_trigger = function(context)
           facedown = true
         end
       end
-      if (boss_name == "The Serpent" and G.GAME.blind.serpentcheck) or
-          ((boss_name == "The Wheel" or boss_name == "The Mark" or boss_name == "The Fish") and facedown) then
+      if (boss_name == "The Serpent" and G.GAME.blind.serpentcheck)
+        or ((boss_name == "The Wheel" or boss_name == "The Mark" or boss_name == "The Fish") and facedown) then
         -- first set the flag when hand is played or discarded, then
         -- only apply boss_trigger when the hand is drawn
         if G.GAME.blind.serpentcheck then G.GAME.blind.serpentcheck = nil end
@@ -201,7 +193,7 @@ calc_boss_trigger = function(context)
         return true
       end
 
-      -- End of round, AKA cleaning up the mess
+    -- End of round, AKA cleaning up the mess
     elseif context.end_of_round then
       G.GAME.blind.nametracker = nil
     end

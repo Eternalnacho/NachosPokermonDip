@@ -70,14 +70,22 @@ function PkmnDip.utils.hook_before_function(table, funcname, hook)
   end
 end
 
-function PkmnDip.utils.hook_after_function(table, funcname, hook)
+function PkmnDip.utils.hook_after_function(table, funcname, hook, always_run)
   if not table[funcname] then
     table[funcname] = hook
   else
     local orig = table[funcname]
-    table[funcname] = function(...)
-      return orig(...)
-          or hook(...)
+    if always_run then
+      table[funcname] = function(...)
+        local ret = orig(...)
+        local hook_ret = hook(...)
+        return ret or hook_ret
+      end
+    else
+      table[funcname] = function(...)
+        return orig(...)
+            or hook(...)
+      end
     end
   end
 end
