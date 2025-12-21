@@ -16,8 +16,7 @@ local dedenne = {
   ptype = "Lightning",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.post_trigger and context.other_context.individual and context.other_context.cardarea == G.hand and SMODS.has_enhancement(context.other_context.other_card, 'm_gold') or
-        context.end_of_round and context.individual and SMODS.has_enhancement(context.other_card, 'm_gold') then
+    if context.dedenne_trig then
       if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
         if SMODS.pseudorandom_probability(card, 'dedenne', card.ability.extra.num, card.ability.extra.den, 'dedenne') then
           G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1

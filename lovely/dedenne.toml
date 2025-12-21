@@ -1,0 +1,36 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 21
+
+### Dedenne
+# Check for held Gold cards scoring
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = '''
+-- TARGET: main scoring on held cards
+'''
+position = "after"
+match_indent = true
+payload = '''
+if context.other_card and (ret.playing_card.h_chips or ret.playing_card.h_mult
+    or ret.playing_card.x_chips or ret.playing_card.x_mult)
+    and SMODS.has_enhancement(context.other_card, 'm_gold') then
+  SMODS.calculate_context({dedenne_trig = true})
+end
+'''
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''
+local o, t = obj:calculate(self, context)
+'''
+position = "after"
+match_indent = true
+payload = '''
+if context.other_card and context.individual and context.cardarea == G.hand and (o or t) and SMODS.has_enhancement(context.other_card, 'm_gold') then
+  SMODS.calculate_context({dedenne_trig = true})
+end
+'''
