@@ -97,15 +97,22 @@ local terapagos_stellar={
   pos = {x = 0, y = 0},
   soul_pos = {x = 0, y = 0,
     draw = function(card, scale_mod, rotate_mod)
-      -- AAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-      card.children.floating_sprite.scale.x = card.children.center.scale.x * (108/71)
-      card.children.floating_sprite.scale.y = card.children.center.scale.y * (108/71)
-      local red_scale_mod = scale_mod - (1 - 71/108)
-
+      -- Honestly this is just a scaling function atp, it's really not terrible
+      card.children.center.VT.x = card.T.x + 0.05
+      card.children.center.VT.w = card.T.w * 71 / 108
+      card.children.center.VT.h = card.T.h * 95 / 145
+      card.children.floating_sprite:draw_shader('dissolve', nil, nil, nil, card.children.center, scale_mod, rotate_mod)
+      card.children.floating_sprite:draw_shader('dissolve', nil, nil, nil, card.children.center, scale_mod, rotate_mod)
+      if card.edition then
+        local edition = G.P_CENTERS[card.edition.key]
+        if edition.apply_to_float then
+          edition.apply_to_float = false
+          card.children.floating_sprite:draw_shader(edition.shader, nil, nil, nil, card.children.center, scale_mod, rotate_mod)
+        end
+      end
+      card.children.center.VT.x = card.T.x
       card.children.center.VT.w = card.T.w
-      card.children.floating_sprite:draw_shader('dissolve', 0, nil, nil, card.children.center, red_scale_mod, rotate_mod, -(1.03 - 71/108), -0.5, nil, 0.6)
-      card.children.floating_sprite:draw_shader('dissolve', nil, nil, nil, card.children.center, red_scale_mod, rotate_mod, -(1.03 - 71/108), -0.5)
-      card.children.center.VT.w = card.T.w
+      card.children.center.VT.h = card.T.h
     end},
   config = {extra = {Xmult_mod = 0.1, Xmult = 1, energy_total = 0}},
   loc_vars = function(self, info_queue, card)
@@ -118,7 +125,7 @@ local terapagos_stellar={
   cost = 20,
   stage = "Legendary",
   ptype = "Stellar",
-  atlas = "j_nacho_terapagos_stellar",
+  atlas = "nacho_terapagos_stellar",
   blueprint_compat = true,
   custom_pool_func = true,
   in_pool = function(self)
@@ -165,10 +172,12 @@ local terapagos_stellar={
   set_sprites = function(self, card, front)
     if self.discovered or card.bypass_discovery_center then
       card.children.center:reset()
-      if card.children.floating_sprite then
-        card.children.floating_sprite.atlas = G.ASSET_ATLAS[card.children.center.atlas.name .. "_soul"]
-        card.children.floating_sprite:reset()
-      end
+      -- these 4 lines are what do it
+      local soul_altas = 'nacho_'..(card.edition and card.edition.poke_shiny and 'shiny_' or '')..'terapagos_stellar_soul'
+      card.children.floating_sprite = SMODS.create_sprite(card.T.x , card.T.y, card.T.w * (108/71), card.T.h * (108/71), soul_altas, card.config.center.soul_pos)
+      card.children.floating_sprite.role.draw_major = card
+      card.children.floating_sprite.states.hover.can = false
+      card.children.floating_sprite.states.click.can = false
     end
   end,
   update = function(self, card, dt)
