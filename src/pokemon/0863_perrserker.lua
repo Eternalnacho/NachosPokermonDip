@@ -17,15 +17,17 @@ local galarian_meowth={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.post_trigger and context.other_context.individual and context.other_context.cardarea == G.hand
-    and SMODS.has_enhancement(context.other_context.other_card, 'm_steel') then
-      card.ability.extra.to_retrigger = true
-    end
     if context.repetition and context.cardarea == G.hand and (next(context.card_effects[1]) or #context.card_effects > 1)
-    and SMODS.has_enhancement(context.other_card, "m_steel") and (not context.end_of_round or card.ability.extra.to_retrigger) then
-      card.ability.extra.to_retrigger = nil
+    and SMODS.has_enhancement(context.other_card, "m_steel") then
       if not context.blueprint then
-        card.ability.extra.triggered = card.ability.extra.triggered + 1
+        local eor
+        for i = 1, #context.card_effects do
+          if context.card_effects[i].end_of_round and next(context.card_effects[i].end_of_round) then eor = true
+          elseif context.end_of_round and context.card_effects[i].jokers then eor = true end
+        end
+        if not context.end_of_round or eor then
+          card.ability.extra.triggered = card.ability.extra.triggered + 1
+        end
       end
       return {
         message = localize('k_again_ex'),
