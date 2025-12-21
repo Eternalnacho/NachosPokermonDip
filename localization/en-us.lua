@@ -436,7 +436,7 @@ return {
         name = "Turtonator",
         text = {
           "If a played card, {C:attention}poker hand{},",
-          "or Joker is {C:attention}debuffed{}, {C:attention}scoring{}",
+          "or Joker is {C:attention}debuffed{}, scoring",
           "cards give {X:red,C:white}X#1#{} Mult during",
           "your next played hand",
           "{C:inactive}(#2#){}",
