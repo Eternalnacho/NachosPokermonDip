@@ -55,7 +55,6 @@ local score_metal_jokers = function(card, context)
       temp_context.card_effects = nil
     end
     j = j + (flags.calculated and 1 or #reps)
-    temp_context.other_card = nil
     temp_steel.lucky_trigger = nil
   end
 
