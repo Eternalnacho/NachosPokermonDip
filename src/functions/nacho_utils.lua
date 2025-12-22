@@ -10,7 +10,7 @@ function PkmnDip.utils.contains(table, element)
 end
 
 function PkmnDip.utils.filter(list, func)
-  new_list = {}
+  local new_list = {}
   for _, v in pairs(list) do
     if func(v) then
       new_list[#new_list + 1] = v
@@ -30,7 +30,7 @@ function PkmnDip.utils.copy_list(list)
 end
 
 function PkmnDip.utils.map_list(list, func)
-  new_list = {}
+  local new_list = {}
   for _, v in pairs(list) do
     new_list[#new_list + 1] = func(v)
   end
