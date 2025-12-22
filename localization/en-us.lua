@@ -216,6 +216,21 @@ return {
           "Chips equal to {C:attention}double{} its rank",
         }
       },
+      j_nacho_bronzor = {
+        name = "Bronzor",
+        text = {
+          "This Joker scores",
+          "as a {C:attention}held Steel{} card",
+          "{C:inactive,s:0.8}(Evolves after triggering {C:attention,s:0.8}#1#{C:inactive,s:0.8} times)",
+        }
+      },
+      j_nacho_bronzong = {
+        name = "Bronzong",
+        text = {
+          "This Joker and adjacent {X:Metal,C:white}Metal{}",
+          "Jokers score as {C:attention}held Steel{} cards",
+        }
+      },
       j_nacho_snover = {
         name = "Snover",
         text = {
