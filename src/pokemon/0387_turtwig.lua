@@ -156,7 +156,7 @@ local init = function()
           end
       }))
     end
-  })
+  }, true)
   SMODS.Voucher:take_ownership('money_tree', {
     redeem = function(self, card)
       G.E_MANAGER:add_event(Event({
@@ -166,7 +166,7 @@ local init = function()
           end
       }))
     end
-  })
+  }, true)
 end
 
 return {
