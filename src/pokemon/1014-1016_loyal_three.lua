@@ -31,20 +31,15 @@ local okidogi = {
     if context.first_hand_drawn and card.ability.extra.toxic_chain then
       toxic_chain(card)
     end
-    -- Scale toxic cards twice
+    -- Scale scoring toxic cards twice
     if context.individual and context.cardarea == G.play and not context.end_of_round and SMODS.has_enhancement(context.other_card, 'm_stall_toxic') then
       toxic_scaling()
-    end
-    if context.cardarea == G.hand and not context.end_of_round and context.card_effects and (next(context.card_effects[1]) or #context.card_effects > 1)
-    and SMODS.has_enhancement(context.other_card, 'm_stall_toxic') then
-			toxic_scaling()
     end
     -- Destroy unenhanced cards by threshold
     if context.end_of_round and not context.individual and not context.repetition and not context.game_over then
       local area = PkmnDip.utils.copy_list(PkmnDip.utils.filter(G.deck.cards, function(v) return v.config.center == G.P_CENTERS.c_base end))
       pseudoshuffle(area, pseudoseed('blacksludge'))
       local limit = math.min(#area, math.floor((G.GAME.current_round.toxic.toxicXMult - 1) / card.ability.extra.threshold))
-      print(limit)
       local targets = PkmnDip.utils.filter(area, function(v) return get_index(area, v) <= limit end)
       SMODS.destroy_cards(targets, nil, true)
       card:juice_up()

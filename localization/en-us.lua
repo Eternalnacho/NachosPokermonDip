@@ -579,8 +579,8 @@ return {
         text = {
           "{C:attention}Toxic Chain{}",
           "{br:2.5}ERROR - CONTACT STEAK",
-          "{C:attention}Toxic{} cards scale {C:attention}1{} more",
-          "time when triggered",
+          "Scoring {C:attention}Toxic{} cards scale",
+          "{C:attention}Toxic{} cards {C:attention}1{} more time",
           "{br:2.5}ERROR - CONTACT STEAK",
           "Destroy {C:attention}1 unenhanced{}",
           "card remaining in deck",
