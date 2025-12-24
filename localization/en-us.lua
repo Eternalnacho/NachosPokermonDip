@@ -574,6 +574,44 @@ return {
           "{C:inactive,s:0.8}(Evolves when deck is >= 25% #1#{C:attention,s:0.8}Wild{C:inactive,s:0.8} cards)"
         }
       },
+      j_nacho_okidogi = {
+        name = "Okidogi",
+        text = {
+          "{C:attention}Toxic Chain{}",
+          "{br:2.5}ERROR - CONTACT STEAK",
+          "{C:attention}Toxic{} cards scale {C:attention}1{} more",
+          "time when triggered",
+          "{br:2.5}ERROR - CONTACT STEAK",
+          "Destroy {C:attention}1 unenhanced{}",
+          "card remaining in deck",
+          "at end of round per",
+          "{X:mult,C:white}X#1#{} extra {C:attention}Toxic{} Mult",
+        }
+      },
+      j_nacho_munkidori = {
+        name = "Munkidori",
+        text = {
+          "{C:attention}Toxic Chain{}, {C:purple}+#1# Foresight",
+          "{br:2.5}ERROR - CONTACT STEAK",
+          "Triggers {C:attention}Foreseen Toxic{} cards",
+          "{br:2.5}ERROR - CONTACT STEAK",
+          "Gain {C:purple}+1 Foresight{} per",
+          "{X:mult,C:white}X#2#{} extra {C:attention}Toxic{} Mult",
+          "{C:inactive,s:0.8}(Resets at end of round)",
+        }
+      },
+      j_nacho_fezandipiti = {
+        name = "Fezandipiti",
+        text = {
+          "{C:attention}Toxic Chain",
+          "{br:2.5}ERROR - CONTACT STEAK",
+          "{C:attention}Toxic{} cards are also {C:attention}Lucky{}",
+          "{C:attention}Lucky{} cards are also {C:attention}Toxic{}",
+          "{br:2.5}ERROR - CONTACT STEAK",
+          "{C:attention}Lucky{} card triggers",
+          "scale {C:attention}Toxic{} cards",
+        }
+      },
       j_nacho_hydrapple = {
         name = "Hydrapple",
         text = {
@@ -605,12 +643,11 @@ return {
           "Using a {C:item}Tera Orb{} on Terapagos",
           "applies a {C:item}Tera Orb{} to each Joker",
           "{br:2.5}ERROR - CONTACT STEAK",
-          "{X:mult,C:white}X#1#{} Mult for each Joker",
-          "with the same type",
-          "as Terapagos {C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)",
-          "{br:2.5}ERROR - CONTACT STEAK",
+          "{X:mult,C:white}X#1#{} Mult for each Joker with",
+          "the same type as Terapagos",
+          "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)",
           "{C:inactive,s:0.8}(Transforms after using a {C:item,s:0.8}Tera Orb{}",
-          "{C:inactive,s:0.8}on Terapagos {C:inactive,s:0.8}if it has 6 Energy or more)",
+          "{C:inactive,s:0.8}on Terapagos {C:inactive,s:0.8}if it has >= 6 Energy)",
         }
       },
       j_nacho_terapagos_stellar = {
@@ -624,6 +661,16 @@ return {
           "{br:2.5}ERROR - CONTACT STEAK",
           "Each {C:nacho_sg1}S{C:nacho_sg2}t{C:nacho_sg3}e{C:nacho_sg4}l{C:nacho_sg5}l{C:nacho_sg6}a{C:nacho_sg7}r{} Joker gives {X:mult,C:white}X#1#{} Mult",
           "for each Energy applied to it",
+        }
+      },
+      j_nacho_pecharunt = {
+        name = "Pecharunt",
+        text = {
+          "{C:attention}Malignant Chain",
+          "{br:2.5}ERROR - CONTACT STEAK",
+          "Scored {C:attention}8s{} increase",
+          "{C:attention}Toxic scaling{} by {X:mult,C:white}X#1#{} Mult",
+          "{C:inactive,s:0.8}(Resets at end of round)",
         }
       },
     },
@@ -735,6 +782,26 @@ return {
             "{C:attention}Syrupy Apple{} - {X:dragon,C:white}Dipplin{}",
         }
       },
+      -- Toxic Chain tooltip for Loyal Three
+      toxic_chain = {
+        name = "Toxic Chain",
+        text = {
+            "The first time this",
+            "Joker enters a blind,",
+            "converts {C:attention}4{} cards",
+            "in hand to {C:attention}Toxic{}",
+        }
+      },
+      -- Malignant Chain tooltip for Pecharunt
+      malignant_chain = {
+        name = "Malignant Chain",
+        text = {
+            "The first time this",
+            "Joker enters a blind,",
+            "converts {C:attention}8{} cards",
+            "in hand to {C:attention}Toxic 8s{}",
+        }
+      },
       -- Mod Req tooltip for config menu
       modname_tooltip = {
         name = "Required Mod",
@@ -770,6 +837,9 @@ return {
       poke_stuff_cheeks_ex = "Stuff Cheeks!",
       -- From Hydrapple
       poke_fickle_beam_ex = "Fickle Beam!",
+      -- From Loyal Three, Pecharunt
+      poke_toxic_chain_ex = "Toxic Chain!",
+      poke_malignant_chain_ex = "Malignant Chain!",
 
 
       -- Config Descriptions
