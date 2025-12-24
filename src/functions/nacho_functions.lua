@@ -135,7 +135,8 @@ calc_boss_trigger = function(context)
     -- These boss blinds trigger only at the start
     -- The Wall, The Water, The Manacle, The Needle, Amber Acorn, Violet Vessel
     if context.blind.mult ~= 2 then return true end
-    if (boss_name == "The Water" or boss_name == "The Manacle" or boss_name == "Amber Acorn" or boss_name == "The Mirror") then
+    if (boss_name == "The Water" or boss_name == "The Manacle" or boss_name == "Amber Acorn"
+      or boss_name == "The Mirror" or boss_name == "bl_poke_white_executive") then
       return true
     end
   end
@@ -149,16 +150,20 @@ calc_boss_trigger = function(context)
         return true
       end
 
-      -- The House
+    -- The House
     elseif context.first_hand_drawn and boss_name == "The House" then
       G.GAME.blind.nametracker = nil
       return true
 
-      -- The Serpent
+    -- The Serpent
     elseif (context.press_play or context.pre_discard) and boss_name == "The Serpent" and #G.hand.highlighted > 3 then
       G.GAME.blind.serpentcheck = true
 
-      -- The Hook, The Tooth, Crimson Heart, Cerulean Bell, Chartreuse Chamber (cgoose)
+    -- Gray Godfather
+    elseif context.pre_discard and boss_name == "bl_poke_gray_godfather" then
+      return true
+
+    -- The Hook, The Tooth, The Star, Crimson Heart, Cerulean Bell, Gray Godfather, Iridescent Hacker
     elseif context.press_play then
       local jokdebuff = poke_find_card(function(v) return v.debuff end)
       local forcedselection = false
@@ -169,14 +174,14 @@ calc_boss_trigger = function(context)
         end
       end
       if (boss_name == "The Hook" and (#G.hand.cards - #G.hand.highlighted) > 0)
-        or boss_name == "The Tooth"
-        or ((boss_name == "Crimson Heart" or boss_name == "bl_poke_cgoose") and jokdebuff)
+        or boss_name == "The Tooth" or boss_name == "bl_poke_gray_godfather"
+        or ((boss_name == "Crimson Heart" or boss_name == "bl_poke_star" or boss_name == "bl_poke_iridescent_hacker") and jokdebuff)
         or (boss_name == "Cerulean Bell" and forcedselection) then
         G.GAME.blind.nametracker = nil
         return true
       end
 
-      -- The Serpent (cont.), The Wheel, The Mark, The Fish
+    -- The Serpent (cont.), The Wheel, The Mark, The Fish
     elseif context.hand_drawn then
       local facedown = false
       for _, v in pairs(context.hand_drawn) do
