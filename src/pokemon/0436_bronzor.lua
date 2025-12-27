@@ -1,6 +1,8 @@
 local score_metal_jokers = function(card, context)
+  -- Create a temporary steel card and set it's position to the relevant joker
   local temp_steel = SMODS.create_card({set = 'Enhanced', enhancement = 'm_steel'})
   temp_steel:hard_set_T(card.T.x, card.T.y, card.T.w, card.T.h)
+  -- Sets the joker's role major to the steel card so the scoring animations happen
   G.E_MANAGER:add_event(Event({
     func = function()
       card:set_role({major = temp_steel, role_type = 'Minor', xy_bond = 'Strong', r_bond = 'Strong', scale_bond = 'Strong', wh_bond = 'Strong'})
@@ -8,8 +10,10 @@ local score_metal_jokers = function(card, context)
     end
   }))
   temp_steel.juice_card = card
+  -- Temporarily make steel cards rankless + suitless so associated held triggers on jokers don't happen
   G.P_CENTERS['m_steel'].no_rank = true
   G.P_CENTERS['m_steel'].no_suit = true
+  -- Create fake context to trick Balatro into thinking we're calculating held steel cards
   local temp_context = {
     cardarea = G.hand,
     individual = true,
@@ -22,50 +26,19 @@ local score_metal_jokers = function(card, context)
     retrigger_joker = context.retrigger_joker,
     scoring_metal_for = card
   }
-  local reps = { 1 }
-  local j = 1
-  while j <= #reps do
-    if reps[j] ~= 1 then
-      local _, eff = next(reps[j])
-      while eff.retrigger_flag do
-        SMODS.calculate_effect(eff, temp_steel); j = j+1; _, eff = next(reps[j])
-      end
-      SMODS.calculate_effect(eff, temp_steel)
-    end
-
-    temp_context.main_scoring = true
-    local effects = { eval_card(temp_steel, temp_context) }
-    SMODS.calculate_quantum_enhancements(temp_steel, effects, temp_context)
-    temp_context.main_scoring = nil
-    temp_context.individual = true
-
-    if next(effects) then
-      SMODS.calculate_card_areas('jokers', temp_context, effects, { main_scoring = true })
-      SMODS.calculate_card_areas('individual', temp_context, effects, { main_scoring = true })
-    end
-
-    local flags = SMODS.trigger_effects(effects, temp_steel)
-
-    temp_context.individual = nil
-    if reps[j] == 1 and flags.calculated then
-      temp_context.repetition = true
-      temp_context.card_effects = effects
-      SMODS.calculate_repetitions(temp_steel, temp_context, reps)
-      temp_context.repetition = nil
-      temp_context.card_effects = nil
-    end
-    j = j + (flags.calculated and 1 or #reps)
-    temp_steel.lucky_trigger = nil
-  end
-
+  -- The scoring code I had before wound up being a 1-for-1 of SMODS.score_card
+  SMODS.score_card(temp_steel, temp_context)
+  -- Reset the no_rank and no_suit properties so steel cards score as normal
   G.P_CENTERS['m_steel'].no_rank = nil
   G.P_CENTERS['m_steel'].no_suit = nil
+  -- Reset the joker's major to itself so that it works normally after
   G.E_MANAGER:add_event(Event({
     func = function()
       card:set_role({major = card, role_type = 'Major'})
       return true
     end
   }))
+  -- Remove the temporary steel card to save memory / screen real-estate
   temp_steel:remove()
 end
 
