@@ -2,14 +2,15 @@ local score_metal_jokers = function(card, context)
   -- Create a temporary steel card and set it's position to the relevant joker
   local temp_steel = SMODS.create_card({set = 'Enhanced', enhancement = 'm_steel'})
   temp_steel:hard_set_T(card.T.x, card.T.y, card.T.w, card.T.h)
-  -- Sets the joker's role major to the steel card so the scoring animations happen
+  -- Sets the steel card's major to the joker for click + drag reasons
   G.E_MANAGER:add_event(Event({
     func = function()
-      card:set_role({major = temp_steel, role_type = 'Minor', xy_bond = 'Strong', r_bond = 'Strong', scale_bond = 'Strong', wh_bond = 'Strong'})
+      temp_steel:set_role({major = card, role_type = 'Glued'})
       return true
     end
   }))
-  temp_steel.juice_card = card
+  -- sets the scoring animation bit onto the target joker
+  temp_steel.juice_up = function(self, ...) card:juice_up(...) end
   -- Temporarily make steel cards rankless + suitless so associated held triggers on jokers don't happen
   G.P_CENTERS['m_steel'].no_rank = true
   G.P_CENTERS['m_steel'].no_suit = true
@@ -31,13 +32,6 @@ local score_metal_jokers = function(card, context)
   -- Reset the no_rank and no_suit properties so steel cards score as normal
   G.P_CENTERS['m_steel'].no_rank = nil
   G.P_CENTERS['m_steel'].no_suit = nil
-  -- Reset the joker's major to itself so that it works normally after
-  G.E_MANAGER:add_event(Event({
-    func = function()
-      card:set_role({major = card, role_type = 'Major'})
-      return true
-    end
-  }))
   -- Remove the temporary steel card to save memory / screen real-estate
   temp_steel:remove()
 end
