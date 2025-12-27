@@ -14,6 +14,7 @@ local bagon={
   ptype = "Dragon",
   gen = 3,
   pseudol = true,
+  nacho_pseudol = true,
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,

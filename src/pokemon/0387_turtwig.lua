@@ -11,6 +11,7 @@ local turtwig={
   stage = "Basic",
   ptype = "Grass",
   starter = true,
+  nacho_starter = true,
   perishable_compat = false,
   blueprint_compat = true,
   eternal_compat = true,

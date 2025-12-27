@@ -11,6 +11,7 @@ local chimchar={
   stage = "Basic",
   ptype = "Fire",
   starter = true,
+  nacho_starter = true,
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,

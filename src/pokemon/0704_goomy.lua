@@ -18,6 +18,7 @@ local goomy={
   ptype = "Dragon",
   gen = 6,
   pseudol = true,
+  nacho_pseudol = true,
   blueprint_compat = true,
   calculate = function(self, card, context)
     -- Check if Flush House played

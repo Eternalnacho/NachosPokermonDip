@@ -15,6 +15,7 @@ local frigibax = {
   ptype = "Dragon",
   gen = 9,
   pseudol = true,
+  nacho_pseudol = true,
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.scoring_hand then

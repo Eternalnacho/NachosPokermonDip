@@ -14,6 +14,8 @@ local function update_centers(config_key, enable)
   for _, center in pairs(G.P_CENTERS) do
     if center.nacho_config_key == config_key then
       center.no_collection = not enable
+      if center.nacho_pseudol then center.pseudol = enable end
+      if center.nacho_starter then center.starter = enable end
     end
   end
 end

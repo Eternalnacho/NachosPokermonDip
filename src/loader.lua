@@ -52,6 +52,8 @@ local function load_pokemon(item)
     poke_load_atlas(item)
     poke_load_sprites(item)
   end
+  if item.nacho_starter then item.starter = nacho_config[item.name] end
+  if item.nacho_pseudol then item.pseudol = nacho_config[item.name] end
   pokermon.Pokemon(item, custom_prefix, custom_atlas)
 end
 
