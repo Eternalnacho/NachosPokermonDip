@@ -1,7 +1,6 @@
 local score_metal_jokers = function(card, context)
   -- Create a temporary steel card and set it's position to the relevant joker
   local temp_steel = SMODS.create_card({set = 'Enhanced', enhancement = 'm_steel'})
-  temp_steel:hard_set_T(card.T.x, card.T.y, card.T.w, card.T.h)
   -- Sets the steel card's major to the joker for click + drag reasons
   G.E_MANAGER:add_event(Event({
     func = function()
