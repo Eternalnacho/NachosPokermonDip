@@ -8,7 +8,6 @@ end
 assert(SMODS.load_file("src/atlases.lua"))()
 
 PkmnDip = {}
-PkmnDip.item_families = {}
 
 -- Load functions
 local load_directory, item_loader = assert(SMODS.load_file("src/loader.lua"))()
