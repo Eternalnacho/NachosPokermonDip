@@ -154,7 +154,13 @@ local passimian={
       end
       info_queue[#info_queue + 1] = {set = 'Other', key = 'received_card', vars = {r_name}}
       localize{type = 'descriptions', set = 'Joker', key = r_center.key, name = r_center.name, vars = r_config.loc_vars_replacement, nodes = desc_nodes}
-      if r_center.generate_ui then r_center:generate_ui(info_queue, card, {}, specific_vars, full_UI_table) end
+      local new_queue = {}
+      if r_center.generate_ui then r_center:generate_ui(new_queue, card, {}, specific_vars, full_UI_table) end
+      -- Filter infoqueue for duplicate tooltips
+      for i = 1, #new_queue do
+        if new_queue[i].set == "Other" and new_queue[i].key and new_queue[i].key == 'energy' then
+        else info_queue[#info_queue+1] = new_queue[i] end
+      end
     else
       if not full_UI_table.name then
         full_UI_table.name = localize({ type = "name", set = _c.set, key = _c.key, nodes = full_UI_table.name })
