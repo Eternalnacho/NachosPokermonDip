@@ -152,6 +152,7 @@ local passimian={
       if r_center.key == 'j_nacho_hisuian_zorua' or r_center.key == 'j_poke_zorua' then
         r_config.loc_vars_replacement = {card.ability.extra.rounds}
       end
+      -- Finally getting around to generating descriptions and tooltips
       info_queue[#info_queue + 1] = {set = 'Other', key = 'received_card', vars = {r_name}}
       localize{type = 'descriptions', set = 'Joker', key = r_center.key, name = r_center.name, vars = r_config.loc_vars_replacement, nodes = desc_nodes}
       local new_queue = {}
