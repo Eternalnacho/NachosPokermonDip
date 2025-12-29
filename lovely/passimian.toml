@@ -97,17 +97,14 @@ if other.config.center.name == "passimian" then
     new_card:set_ability(other.config.center)
     new_card.config.center:receive_card(new_card, other.ability.received_card.key)
   end
-  goto continue
+else
+  for k, v in pairs(other.ability) do
+      if type(v) == 'table' then 
+          new_card.ability[k] = copy_table(v)
+      else
+          new_card.ability[k] = v
+      end
+  end
 end
-
-for k, v in pairs(other.ability) do
-    if type(v) == 'table' then 
-        new_card.ability[k] = copy_table(v)
-    else
-        new_card.ability[k] = v
-    end
-end
-
-::continue::
 '''
 match_indent = true
