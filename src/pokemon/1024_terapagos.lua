@@ -92,7 +92,9 @@ local terapagos_stellar={
   soul_pos = {x = 0, y = 0,
     draw = function(card, scale_mod, rotate_mod)
       local _c, _f = card.children.center, card.children.floating_sprite
+      -- this little for loop gives the floating sprite the right parameters to draw from itself
       for k, v in pairs(_c.VT) do _f.VT[k] = v end
+      -- first line draws the shadow, second draws the sprite
       _f:draw_shader('dissolve', 0, nil, nil, _f, scale_mod, rotate_mod, nil, 0.1 + 0.03 * math.sin(1.8 * G.TIMERS.REAL), nil, 0.6)
       _f:draw_shader('dissolve', nil, nil, nil, _f, scale_mod, rotate_mod, nil)
       if card.edition then
