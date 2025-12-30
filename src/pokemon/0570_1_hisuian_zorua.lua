@@ -130,11 +130,10 @@ local hisuian_zorua = {
   end,
   draw_illusion = function(self, card, other_joker)
     if other_joker and card.ability.blueprint_joker ~= other_joker.config.center_key then
-      card.children.center.atlas = SMODS.get_atlas(other_joker.children.center.atlas.key)
+      card.children.center.atlas = other_joker.children.center.atlas
       card.children.center:set_sprite_pos(other_joker.children.center.sprite_pos)
-      if other_joker.config.center.set_sprites then other_joker.config.center:set_sprites(card) end
       if other_joker.children.floating_sprite then
-        card.children.floating_sprite.atlas = SMODS.get_atlas(other_joker.children.floating_sprite.atlas.key)
+        card.children.floating_sprite.atlas = other_joker.children.floating_sprite.atlas
         card.children.floating_sprite:set_sprite_pos(other_joker.children.floating_sprite.sprite_pos)
         card.config.center.soul_pos.draw = other_joker.config.center.soul_pos.draw
       else
@@ -259,19 +258,18 @@ local hisuian_zoroark = {
     end
   end,
   draw_illusion = function(self, card, other_joker)
-    if card.ability.blueprint_joker ~= other_joker then
-      card.children.center.atlas = SMODS.get_atlas(other_joker.children.center.atlas.key)
+    if other_joker and card.ability.blueprint_joker ~= other_joker.config.center_key then
+      card.children.center.atlas = other_joker.children.center.atlas
       card.children.center:set_sprite_pos(other_joker.children.center.sprite_pos)
-      if other_joker.config.center.set_sprites then other_joker.config.center:set_sprites(card) end
       if other_joker.children.floating_sprite then
-        card.children.floating_sprite.atlas = SMODS.get_atlas(other_joker.children.floating_sprite.atlas.key)
+        card.children.floating_sprite.atlas = other_joker.children.floating_sprite.atlas
         card.children.floating_sprite:set_sprite_pos(other_joker.children.floating_sprite.sprite_pos)
         card.config.center.soul_pos.draw = other_joker.config.center.soul_pos.draw
       else
         card.children.floating_sprite.atlas = G.ASSET_ATLAS[self.atlas]
         card.children.floating_sprite:set_sprite_pos(self.soul_pos)
       end
-      card.ability.blueprint_joker = other_joker
+      card.ability.blueprint_joker = other_joker.config.center_key
     end
   end
 }
