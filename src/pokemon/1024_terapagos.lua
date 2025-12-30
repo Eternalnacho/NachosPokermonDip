@@ -171,10 +171,9 @@ local terapagos_stellar={
   end,
   set_sprites = function(self, card, front)
     if self.discovered or card.bypass_discovery_center then
-      card.children.center:reset()
       -- these 4 lines are what do it
       local soul_altas = 'nacho_'..(card.edition and card.edition.poke_shiny and 'shiny_' or '')..'terapagos_stellar_soul'
-      card.children.floating_sprite = SMODS.create_sprite(card.T.x , card.T.y, card.T.w * (108/71), card.T.h * (108/71), soul_altas, card.config.center.soul_pos)
+      card.children.floating_sprite = SMODS.create_sprite(card.T.x , card.T.y, G.ANIMATION_ATLAS[soul_altas].px, G.ANIMATION_ATLAS[soul_altas].py, soul_altas, card.config.center.soul_pos)
       card.children.floating_sprite.role.draw_major = card
       card.children.floating_sprite.states.hover.can = false
       card.children.floating_sprite.states.click.can = false
