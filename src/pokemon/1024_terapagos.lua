@@ -59,11 +59,7 @@ local terapagos_terastal={
           energy_increase(card, get_type(card))
           card.ability.extra.changedtype = card.ability.extra.ptype
         end
-        for i = 1, #G.jokers.cards do
-          if G.jokers.cards[i] ~= card then
-            apply_type_sticker(G.jokers.cards[i], card.ability.extra.ptype)
-          end
-        end
+        PkmnDip.utils.for_each(G.jokers.cards, function(joker) if joker ~= card then apply_type_sticker(joker, card.ability.extra.ptype) end end)
         if get_total_energy(card) >= 6 then
           poke_evolve(card, 'j_nacho_terapagos_stellar')
         end
@@ -79,9 +75,7 @@ local terapagos_terastal={
   add_to_deck = function(self, card, from_debuff)
     if not from_debuff then
       G.GAME.energy_plus = G.GAME.energy_plus and (G.GAME.energy_plus + 3) or 3
-      for i = 1, #G.jokers.cards do
-        apply_type_sticker(G.jokers.cards[i], get_type(card))
-      end
+      PkmnDip.utils.for_each(G.jokers.cards, function(joker) apply_type_sticker(joker, get_type(card)) end)
     end
   end,
   remove_from_deck = function(self, card, from_debuff)
@@ -98,21 +92,17 @@ local terapagos_stellar={
   soul_pos = {x = 0, y = 0,
     draw = function(card, scale_mod, rotate_mod)
       -- Honestly this is just a scaling function atp, it's really not terrible
-      card.children.center.VT.x = card.T.x + 0.05
-      card.children.center.VT.w = card.T.w * 71 / 108
-      card.children.center.VT.h = card.T.h * 95 / 145
-      card.children.floating_sprite:draw_shader('dissolve', nil, nil, nil, card.children.center, scale_mod, rotate_mod)
-      card.children.floating_sprite:draw_shader('dissolve', nil, nil, nil, card.children.center, scale_mod, rotate_mod)
+      local _c = card.children.center
+      _c.VT.x, _c.VT.w, _c.VT.h = card.T.x + 0.05, card.T.w * (71 / 108), card.T.h * (95 / 145)
+      card.children.floating_sprite:draw_shader('dissolve', nil, nil, nil, _c, scale_mod, rotate_mod)
       if card.edition then
         local edition = G.P_CENTERS[card.edition.key]
         if edition.apply_to_float then
           edition.apply_to_float = false
-          card.children.floating_sprite:draw_shader(edition.shader, nil, nil, nil, card.children.center, scale_mod, rotate_mod)
+          card.children.floating_sprite:draw_shader(edition.shader, nil, nil, nil, _c, scale_mod, rotate_mod)
         end
       end
-      card.children.center.VT.x = card.T.x
-      card.children.center.VT.w = card.T.w
-      card.children.center.VT.h = card.T.h
+      _c.VT.x, _c.VT.w, _c.VT.h = card.T.x, card.T.w, card.T.h
     end},
   config = {extra = {Xmult_mod = 0.1, Xmult = 1, energy_total = 0}},
   loc_vars = function(self, info_queue, card)
