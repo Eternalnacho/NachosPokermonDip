@@ -133,8 +133,8 @@ local hisuian_zorua = {
       card.children.center.atlas = other_joker.children.center.atlas
       card.children.center:set_sprite_pos(other_joker.children.center.sprite_pos)
       if other_joker.children.floating_sprite then
-        card.children.floating_sprite.atlas = other_joker.children.floating_sprite.atlas
-        card.children.floating_sprite:set_sprite_pos(other_joker.children.floating_sprite.sprite_pos)
+        local _f = other_joker.children.floating_sprite
+        card.children.floating_sprite = SMODS.create_sprite(card.T.x, card.T.y, _f.atlas.px, _f.atlas.py, _f.atlas, _f.sprite_pos)
         card.config.center.soul_pos.draw = other_joker.config.center.soul_pos.draw
       else
         card.children.floating_sprite.atlas = G.ASSET_ATLAS[self.atlas]
@@ -262,8 +262,8 @@ local hisuian_zoroark = {
       card.children.center.atlas = other_joker.children.center.atlas
       card.children.center:set_sprite_pos(other_joker.children.center.sprite_pos)
       if other_joker.children.floating_sprite then
-        card.children.floating_sprite.atlas = other_joker.children.floating_sprite.atlas
-        card.children.floating_sprite:set_sprite_pos(other_joker.children.floating_sprite.sprite_pos)
+        local _f = other_joker.children.floating_sprite
+        card.children.floating_sprite = SMODS.create_sprite(card.T.x, card.T.y, _f.atlas.px, _f.atlas.py, _f.atlas, _f.sprite_pos)
         card.config.center.soul_pos.draw = other_joker.config.center.soul_pos.draw
       else
         card.children.floating_sprite.atlas = G.ASSET_ATLAS[self.atlas]
