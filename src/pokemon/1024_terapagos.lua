@@ -94,6 +94,7 @@ local terapagos_stellar={
       -- Honestly this is just a scaling function atp, it's really not terrible
       local _c = card.children.center
       _c.VT.x, _c.VT.w, _c.VT.h = card.T.x + 0.05, card.T.w * (71 / 108), card.T.h * (95 / 145)
+      card.children.floating_sprite:draw_shader('dissolve', 0, nil, nil, _c, scale_mod, rotate_mod, nil, 0.1 + 0.03*math.sin(1.8*G.TIMERS.REAL), nil, 0.6)
       card.children.floating_sprite:draw_shader('dissolve', nil, nil, nil, _c, scale_mod, rotate_mod)
       if card.edition then
         local edition = G.P_CENTERS[card.edition.key]
