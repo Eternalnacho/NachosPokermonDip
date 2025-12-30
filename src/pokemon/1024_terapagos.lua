@@ -91,19 +91,17 @@ local terapagos_stellar={
   pos = {x = 0, y = 0},
   soul_pos = {x = 0, y = 0,
     draw = function(card, scale_mod, rotate_mod)
-      -- Honestly this is just a scaling function atp, it's really not terrible
-      local _c = card.children.center
-      _c.VT.x, _c.VT.w, _c.VT.h = card.T.x + 0.05, card.T.w * (71 / 108), card.T.h * (95 / 145)
-      card.children.floating_sprite:draw_shader('dissolve', 0, nil, nil, _c, scale_mod, rotate_mod, nil, 0.1 + 0.03 * math.sin(1.8 * G.TIMERS.REAL), nil, 0.6)
-      card.children.floating_sprite:draw_shader('dissolve', nil, nil, nil, _c, scale_mod, rotate_mod)
+      local _c, _f = card.children.center, card.children.floating_sprite
+      for k, v in pairs(_c.VT) do _f.VT[k] = v end
+      _f:draw_shader('dissolve', 0, nil, nil, _f, scale_mod, rotate_mod, nil, 0.1 + 0.03 * math.sin(1.8 * G.TIMERS.REAL), nil, 0.6)
+      _f:draw_shader('dissolve', nil, nil, nil, _f, scale_mod, rotate_mod, nil)
       if card.edition then
         local edition = G.P_CENTERS[card.edition.key]
         if edition.apply_to_float then
           edition.apply_to_float = false
-          card.children.floating_sprite:draw_shader(edition.shader, nil, nil, nil, _c, scale_mod, rotate_mod)
+          _f:draw_shader(edition.shader, nil, nil, nil, _f, scale_mod, rotate_mod)
         end
       end
-      _c.VT.x, _c.VT.w, _c.VT.h = card.T.x, card.T.w, card.T.h
     end},
   config = {extra = {Xmult_mod = 0.1, Xmult = 1, energy_total = 0}},
   loc_vars = function(self, info_queue, card)
@@ -161,10 +159,11 @@ local terapagos_stellar={
     G.GAME.energy_plus = G.GAME.energy_plus and (G.GAME.energy_plus - 5) or 0
   end,
   set_sprites = function(self, card, front)
-    if self.discovered or card.bypass_discovery_center then
-      -- these 4 lines are what do it
+    if self.discovered or card.bypass_discovery_center and card.children.floating_sprite then
+      card.children.floating_sprite:remove()
+      -- creates the animated sprite with its atlas (since they're separate)
       local soul_altas = 'nacho_'..(card.edition and card.edition.poke_shiny and 'shiny_' or '')..'terapagos_stellar_soul'
-      card.children.floating_sprite = SMODS.create_sprite(card.T.x , card.T.y, G.ANIMATION_ATLAS[soul_altas].px, G.ANIMATION_ATLAS[soul_altas].py, soul_altas, card.config.center.soul_pos)
+      card.children.floating_sprite = SMODS.create_sprite(card.T.x, card.T.y, card.T.w * (71 / 108), card.T.h * (95 / 145), soul_altas, card.config.center.soul_pos)
       card.children.floating_sprite.role.draw_major = card
       card.children.floating_sprite.states.hover.can = false
       card.children.floating_sprite.states.click.can = false
