@@ -61,66 +61,62 @@ end
 
 -- calculate most played hand
 calc_most_played_hand = function()
-  local _hand, _tally = nil, 0
-  for k, v in ipairs(G.handlist) do
-    if G.GAME.hands[v].visible and G.GAME.hands[v].played >= _tally then
-      _hand = v
+  local hands, _tally = {}, 0
+  for _, v in ipairs(G.handlist) do
+    if G.GAME.hands[v].visible and G.GAME.hands[v].played > _tally then
+      hands = {v}
       _tally = G.GAME.hands[v].played
+    elseif G.GAME.hands[v].visible and G.GAME.hands[v].played == _tally then
+      table.insert(hands, v)
     end
   end
-  return _hand
+  return #hands == 1 and hands[1] or pseudorandom_element(hands, 'handcalc')
 end
 
 -- Get most common rank(s) in a list of cards
 get_common_ranks = function(cards)
   if not cards then cards = G.playing_cards end
   local _ranks, _tally = {}, 0
-  for x, y in pairs(SMODS.Ranks) do
-    local count = 0
-    for k, v in pairs(cards) do
-      if v:get_id() == y.id and not SMODS.has_no_rank(v) then count = count + 1 end
-    end
+  for _, r in pairs(SMODS.Ranks) do
+    local count = #PkmnDip.utils.filter(cards, function(card) return card:get_id() == r.id and not SMODS.has_no_rank(card) end)
     if count > _tally then
-      if #_ranks > 0 then for i = 1, #_ranks do table.remove(_ranks) end end
-      table.insert(_ranks, y)
+      _ranks = {r}
       _tally = count
     elseif count == _tally then
-      table.insert(_ranks, y)
+      table.insert(_ranks, r)
     end
   end
-
   return _ranks
 end
 
 -- Create tooltip for common ranks (Oranguru)
 common_ranks_tooltip = function(self, info_queue)
-  local _ranks = {}
+  local ranks = {}
   if G.playing_cards and G.STAGE == G.STAGES.RUN then
-    _ranks = get_common_ranks(G.playing_cards)
+    local r = get_common_ranks(G.playing_cards)
     -- sort in descending order if multiple
-    if #_ranks > 1 then
-      table.sort(_ranks, function(a, b) return a.id > b.id end)
+    if #r > 1 then
+      table.sort(r, function(a, b) return a.id > b.id end)
     end
     -- get card key for each rank because it's a single character
-    for i = 1, #_ranks do
-      _ranks[i] = #_ranks > 3 and _ranks[i].card_key or _ranks[i].key
-      if _ranks[i] == 'T' then _ranks[i] = '10' end
+    for i = 1, #r do
+      ranks[i] = #r > 3 and r[i].card_key or r[i].key
+      if ranks[i] == 'T' then ranks[i] = '10' end
     end
-  end
+  -- return early if there's no cards to get common ranks from
+  else return end
   -- Organize into even lists (max 3)
   local rank_lists = {}
-  local rows = math.min(3, math.ceil(#_ranks / 4))
-  if rows == 1 then rank_lists[1] = table.concat(_ranks, ", ")
-  elseif rows > 1 then
+  local rows = math.min(3, math.ceil(#ranks / 4))
+  if rows == 1 then
+    rank_lists[1] = table.concat(ranks, ", ")
+  else
     for i = 1, rows do
-      rank_lists[i] = table.concat(_ranks, ", ", 1 + (i - 1) * math.ceil(#_ranks / rows), math.min(#_ranks, i * math.ceil(#_ranks / rows)))
+      rank_lists[i] = table.concat(ranks, ", ", 1 + (i - 1) * math.ceil(#ranks / rows), math.min(#ranks, i * math.ceil(#ranks / rows)))
     end
   end
-  -- Only show tooltip if there is at least one rank
-  if #rank_lists > 0 then
-    local key = "rank_lists_" .. #rank_lists     -- dynamic key
-    info_queue[#info_queue + 1] = { set = 'Other', key = key, vars = rank_lists }
-  end
+  local key = "rank_lists_" .. #rank_lists     -- dynamic key
+  info_queue[#info_queue + 1] = { set = 'Other', key = key, vars = rank_lists }
 end
 
 

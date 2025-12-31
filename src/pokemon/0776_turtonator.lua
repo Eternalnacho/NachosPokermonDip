@@ -8,7 +8,7 @@ local turtonator={
     return {vars = {card.ability.extra.Xmult_mod, active}}
   end,
   rarity = 2,
-  cost = 8,
+  cost = 7,
   stage = "Basic",
   ptype = "Dragon",
   perishable_compat = true,

@@ -59,11 +59,7 @@ local terapagos_terastal={
           energy_increase(card, get_type(card))
           card.ability.extra.changedtype = card.ability.extra.ptype
         end
-        for i = 1, #G.jokers.cards do
-          if G.jokers.cards[i] ~= card then
-            apply_type_sticker(G.jokers.cards[i], card.ability.extra.ptype)
-          end
-        end
+        PkmnDip.utils.for_each(G.jokers.cards, function(joker) if joker ~= card then apply_type_sticker(joker, card.ability.extra.ptype) end end)
         if get_total_energy(card) >= 6 then
           poke_evolve(card, 'j_nacho_terapagos_stellar')
         end
@@ -79,9 +75,7 @@ local terapagos_terastal={
   add_to_deck = function(self, card, from_debuff)
     if not from_debuff then
       G.GAME.energy_plus = G.GAME.energy_plus and (G.GAME.energy_plus + 3) or 3
-      for i = 1, #G.jokers.cards do
-        apply_type_sticker(G.jokers.cards[i], get_type(card))
-      end
+      PkmnDip.utils.for_each(G.jokers.cards, function(joker) apply_type_sticker(joker, get_type(card)) end)
     end
   end,
   remove_from_deck = function(self, card, from_debuff)
@@ -97,22 +91,19 @@ local terapagos_stellar={
   pos = {x = 0, y = 0},
   soul_pos = {x = 0, y = 0,
     draw = function(card, scale_mod, rotate_mod)
-      -- Honestly this is just a scaling function atp, it's really not terrible
-      card.children.center.VT.x = card.T.x + 0.05
-      card.children.center.VT.w = card.T.w * 71 / 108
-      card.children.center.VT.h = card.T.h * 95 / 145
-      card.children.floating_sprite:draw_shader('dissolve', nil, nil, nil, card.children.center, scale_mod, rotate_mod)
-      card.children.floating_sprite:draw_shader('dissolve', nil, nil, nil, card.children.center, scale_mod, rotate_mod)
+      local _c, _f = card.children.center, card.children.floating_sprite
+      -- this little for loop gives the floating sprite the right parameters to draw from itself
+      for k, v in pairs(_c.VT) do _f.VT[k] = v end
+      -- first line draws the shadow, second draws the sprite
+      _f:draw_shader('dissolve', 0, nil, nil, _f, scale_mod, rotate_mod, nil, 0.1 + 0.03 * math.sin(1.8 * G.TIMERS.REAL), nil, 0.6)
+      _f:draw_shader('dissolve', nil, nil, nil, _f, scale_mod, rotate_mod, nil)
       if card.edition then
         local edition = G.P_CENTERS[card.edition.key]
         if edition.apply_to_float then
           edition.apply_to_float = false
-          card.children.floating_sprite:draw_shader(edition.shader, nil, nil, nil, card.children.center, scale_mod, rotate_mod)
+          _f:draw_shader(edition.shader, nil, nil, nil, _f, scale_mod, rotate_mod)
         end
       end
-      card.children.center.VT.x = card.T.x
-      card.children.center.VT.w = card.T.w
-      card.children.center.VT.h = card.T.h
     end},
   config = {extra = {Xmult_mod = 0.1, Xmult = 1, energy_total = 0}},
   loc_vars = function(self, info_queue, card)
@@ -170,11 +161,11 @@ local terapagos_stellar={
     G.GAME.energy_plus = G.GAME.energy_plus and (G.GAME.energy_plus - 5) or 0
   end,
   set_sprites = function(self, card, front)
-    if self.discovered or card.bypass_discovery_center then
-      card.children.center:reset()
-      -- these 4 lines are what do it
+    if self.discovered or card.bypass_discovery_center and card.children.floating_sprite then
+      card.children.floating_sprite:remove()
+      -- creates the animated sprite with its atlas (since they're separate)
       local soul_altas = 'nacho_'..(card.edition and card.edition.poke_shiny and 'shiny_' or '')..'terapagos_stellar_soul'
-      card.children.floating_sprite = SMODS.create_sprite(card.T.x , card.T.y, card.T.w * (108/71), card.T.h * (108/71), soul_altas, card.config.center.soul_pos)
+      card.children.floating_sprite = SMODS.create_sprite(card.T.x, card.T.y, card.T.w * (71 / 108), card.T.h * (95 / 145), soul_altas, card.config.center.soul_pos)
       card.children.floating_sprite.role.draw_major = card
       card.children.floating_sprite.states.hover.can = false
       card.children.floating_sprite.states.click.can = false

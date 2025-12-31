@@ -15,19 +15,18 @@ poke_family_present = function(center)
       end
     end
   end
-  
+
   return ret
 end
 
 
 -- Booster Functionality for Oranguru (and maybe smth else...)
-SMODS.Booster:take_ownership_by_kind('Standard', {
+SMODS.Booster:take_ownership_by_kind('Standard',
+{
   create_card = function(self, card)
-      local _card
+      local _card, _rank, _suit
       local _edition = poll_edition('standard_edition'..G.GAME.round_resets.ante, 2, true)
       local _seal = SMODS.poll_seal({ mod = 10 })
-      local _rank
-      local _suit
 
       if next(SMODS.find_card('j_nacho_oranguru')) then
         local _ranks = get_common_ranks(G.playing_cards)
@@ -47,8 +46,6 @@ SMODS.Booster:take_ownership_by_kind('Standard', {
           soulable = true,
         }
       else
-        local _edition = poll_edition('standard_edition' .. G.GAME.round_resets.ante, 2, true)
-        local _seal = SMODS.poll_seal({ mod = 10 })
         _card = {
           set = (pseudorandom(pseudoseed('stdset'..G.GAME.round_resets.ante)) > 0.6) and "Enhanced" or "Base",
           edition = _edition,
@@ -68,6 +65,4 @@ SMODS.Booster:take_ownership_by_kind('Standard', {
           key = self.key:sub(1, -3), -- This uses the description key of the booster without the number at the end
       }
   end,
-},
-true
-)
+}, true)

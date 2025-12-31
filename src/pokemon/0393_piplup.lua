@@ -100,7 +100,7 @@ local empoleon={
   perishable_compat = true,
   blueprint_compat = true,
   eternal_compat = true,
-  calculate = function(self, card, context)    
+  calculate = function(self, card, context)
     if context.individual and not context.end_of_round and context.cardarea == G.hand then
       if not SMODS.has_no_rank(context.other_card) then
         card.ability.extra.chip_mod = context.other_card.base.nominal * 2
@@ -110,7 +110,6 @@ local empoleon={
         card = card,
       }
     end
-
     if context.joker_main then
       return {
         chips = card.ability.extra.chips,

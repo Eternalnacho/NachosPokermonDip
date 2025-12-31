@@ -174,8 +174,8 @@ return {
         text = {
           "{C:red}+#1#{} discard",
           "Gains Mult equal to the rank of",
-          "{C:attention}highest{} ranked card discarded,",
-          "resets at end of round",
+          "{C:attention}highest{} ranked card discarded",
+          "{C:inactive,s:0.8}(Resets at end of round)",
           "{C:inactive}(Currently {C:mult}+#2#{} {C:inactive}Mult)",
           "{C:inactive,s:0.8}(Evolves after scoring {C:red,s:0.8}+30{} {C:inactive,s:0.8}Mult in {C:attention,s:0.8}#3#{C:inactive,s:0.8} Rounds){}",
         }
