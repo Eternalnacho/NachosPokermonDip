@@ -155,6 +155,38 @@ local passimian={
 }
 
 local init = function()
+  remove = function(self, card, context, check_shiny, skip_joker_type_destroyed)
+    if not skip_joker_type_destroyed then
+      card.getting_sliced = true
+      local flags = SMODS.calculate_context({ joker_type_destroyed = true, card = card })
+      if flags.no_destroy then
+        card.getting_sliced = nil
+        return
+      end
+    end
+    if check_shiny and card.edition and card.edition.poke_shiny then
+      SMODS.change_booster_limit(-1)
+    end
+    play_sound('tarot1')
+    card.T.r = -0.2
+    card:juice_up(0.3, 0.4)
+    card.states.drag.is = true
+    card.children.center.pinch.x = true
+    G.E_MANAGER:add_event(Event({
+      trigger = 'after',
+      delay = 0.3,
+      blockable = false,
+      func = function()
+        G.jokers:remove_card(card)
+        card:remove()
+        card = nil
+        return true
+      end
+    }))
+    card.gone = true
+    return true
+  end
+  
   -- Card.save hook to save received card key
   local save_card = Card.save
   Card.save = function (self)
