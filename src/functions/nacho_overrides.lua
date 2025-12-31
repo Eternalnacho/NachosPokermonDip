@@ -1,25 +1,5 @@
 -- TAKING OWNERSHIP / OVERRIDES FOR MULTIPLE JOKERS
 
-
--- poke_family_present hook for modded starters / pseudos
-local poke_family_present_ref = poke_family_present
-poke_family_present = function(center)
-  if next(find_joker("Showman")) or next(find_joker("pokedex")) then return false end
-  local family_list = poke_get_family_list(center.name)
-  local prefix = center.poke_custom_prefix
-  local ret = poke_family_present_ref(center)
-
-  if prefix then for _, fam in pairs(family_list) do
-      if G.GAME.used_jokers["j_"..prefix.."_"..((type(fam) == "table" and fam.key) or fam)] then
-        ret = true
-      end
-    end
-  end
-
-  return ret
-end
-
-
 -- Booster Functionality for Oranguru (and maybe smth else...)
 SMODS.Booster:take_ownership_by_kind('Standard',
 {
