@@ -12,11 +12,11 @@ local passimian={
   calculate = function(self, card, context)
     if not card.ability.received_card then
       if context.selling_card and not context.selling_self and context.cardarea == G.jokers and not context.blueprint
-          and not PkmnDip.utils.contains(self.banlist, context.card.config.center.key) then
+          and context.card.config.center.key ~= 'j_nacho_passimian' then
         if context.card.area == G.jokers then self:receive_card(card, context.card.config.center.key, context) end
       end
       if context.joker_type_destroyed and context.cardarea == G.jokers and not context.blueprint
-          and not PkmnDip.utils.contains(self.banlist, context.card.config.center.key) then
+          and context.card.config.center.key ~= 'j_nacho_passimian' then
         self:receive_card(card, context.card.config.center.key, context)
       end
     elseif card.ability.received_card.calculate then
@@ -24,7 +24,6 @@ local passimian={
       return ret
     end
   end,
-  banlist = {'j_nacho_passimian'},
   receive_card = function(self, card, to_key, context)
     if to_key then
       local _r = G.P_CENTERS[to_key]
