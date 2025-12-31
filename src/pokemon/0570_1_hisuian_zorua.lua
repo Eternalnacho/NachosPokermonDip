@@ -113,6 +113,7 @@ local hisuian_zorua = {
   end,
   update = function(self, card, dt)
     if G.STAGE == G.STAGES.RUN and card.area == G.jokers then
+      if card.ability.extra.hidden_key then card.ability.extra.hidden_key = nil end
       local other_joker = G.jokers.cards[1]
       card.ability.blueprint_compat = ( other_joker and other_joker ~= card and not other_joker.debuff and other_joker.config.center.blueprint_compat and 'compatible') or 'incompatible'
       if card.ability.blueprint_compat == 'compatible' and not card.debuff and card.ability.extra.active and other_joker.children.center.atlas.px == 71 then
@@ -130,7 +131,7 @@ local hisuian_zorua = {
     end
   end,
   draw_illusion = function(self, card, other_joker)
-    if other_joker and card.ability.blueprint_joker ~= other_joker.config.center_key then
+    if other_joker and card.ability.blueprint_joker ~= other_joker then
       card.children.center.atlas = other_joker.children.center.atlas
       card.children.center:set_sprite_pos(other_joker.children.center.sprite_pos)
       if other_joker.children.floating_sprite then
@@ -144,7 +145,7 @@ local hisuian_zorua = {
         card.children.floating_sprite.atlas = G.ASSET_ATLAS[self.atlas]
         card.children.floating_sprite:set_sprite_pos(self.soul_pos)
       end
-      card.ability.blueprint_joker = other_joker.config.center_key
+      card.ability.blueprint_joker = other_joker
     end
   end
 }
@@ -164,7 +165,7 @@ local hisuian_zoroark = {
   blueprint_compat = true,
   calculate = function(self, card, context)
     local other_joker = G.jokers.cards[1]
-    if other_joker and other_joker ~= card and card.ability.extra.active then
+    if other_joker and other_joker ~= card then
       local ret = SMODS.blueprint_effect(card, other_joker, context)
       if ret then
         ret.colour = G.C.BLACK
@@ -246,15 +247,16 @@ local hisuian_zoroark = {
   end,
   update = function(self, card, dt)
     if G.STAGE == G.STAGES.RUN and card.area == G.jokers then
+      if card.ability.extra.hidden_key then card.ability.extra.hidden_key = nil end
       local other_joker = G.jokers.cards[1]
       card.ability.blueprint_compat = ( other_joker and other_joker ~= card and not other_joker.debuff and other_joker.config.center.blueprint_compat and 'compatible') or 'incompatible'
       if card.ability.blueprint_compat == 'compatible' and not card.debuff and other_joker.children.center.atlas.px == 71 then
         self:draw_illusion(card, other_joker)
       else
         card.children.floating_sprite:remove()
-        card.children.center.atlas = G.ASSET_ATLAS["poke_AtlasJokersBasicGen05"..(card.edition and card.edition.poke_shiny and "Shiny" or "")]
+        card.children.center.atlas = G.ASSET_ATLAS[self.atlas]
+        card.children.floating_sprite.atlas = G.ASSET_ATLAS[self.atlas]
         card.children.center:set_sprite_pos(self.pos)
-        card.children.floating_sprite.atlas = G.ASSET_ATLAS["poke_AtlasJokersBasicGen05"..(card.edition and card.edition.poke_shiny and "Shiny" or "")]
         card.children.floating_sprite:set_sprite_pos(self.soul_pos)
         card.ability.blueprint_joker = nil
       end
@@ -263,7 +265,7 @@ local hisuian_zoroark = {
     end
   end,
   draw_illusion = function(self, card, other_joker)
-    if other_joker and card.ability.blueprint_joker ~= other_joker.config.center_key then
+    if other_joker and card.ability.blueprint_joker ~= other_joker then
       card.children.center.atlas = other_joker.children.center.atlas
       card.children.center:set_sprite_pos(other_joker.children.center.sprite_pos)
       if other_joker.children.floating_sprite then
@@ -277,7 +279,7 @@ local hisuian_zoroark = {
         card.children.floating_sprite.atlas = G.ASSET_ATLAS[self.atlas]
         card.children.floating_sprite:set_sprite_pos(self.soul_pos)
       end
-      card.ability.blueprint_joker = other_joker.config.center_key
+      card.ability.blueprint_joker = other_joker
     end
   end
 }
