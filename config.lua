@@ -10,6 +10,7 @@ return {
   victini = true,
   audino = true,
   hisuian_zorua = true,
+  solosis = true,
   clauncher = true,
   dedenne = true,
   carbink = true,
@@ -26,6 +27,5 @@ return {
   pecharunt = true,
   hisuian_sneasel = (SMODS.Mods["ToxicStall"] or {}).can_load and true or false,
   customStakes = true,
-  gallery_width = 5,
   -- customItems = true,
 }

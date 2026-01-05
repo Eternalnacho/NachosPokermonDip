@@ -338,6 +338,35 @@ return {
           "of leftmost {C:attention}Joker{}",
         }
       },
+      j_nacho_solosis = {
+        name = "Solosis",
+        text = {
+          "Creates up to {C:attention}#1#{} temporary {C:attention}copy{}",
+          "of {C:attention}first{} scoring card of round,",
+          "then adds it to scoring hand",
+          "{C:inactive,s:0.8}(Changes played {C:attention,s:0.8}poker hand{C:inactive,s:0.8})",
+          "{C:inactive,s:0.8}(Evolves after copying {C:attention,s:0.8}#2#{C:inactive,s:0.8} cards)",
+        }
+      },
+      j_nacho_duosion = {
+        name = "Duosion",
+        text = {
+          "Creates up to {C:attention}#1#{} temporary {C:attention}copies{}",
+          "of {C:attention}first{} scoring card of round,",
+          "then adds them to scoring hand",
+          "{C:inactive,s:0.8}(Changes played {C:attention,s:0.8}poker hand{C:inactive,s:0.8})",
+          "{C:inactive,s:0.8}(Evolves after copying {C:attention,s:0.8}#2#{C:inactive,s:0.8} cards)",
+        }
+      },
+      j_nacho_reuniclus = {
+        name = "Reuniclus",
+        text = {
+          "Creates up to {C:attention}#1#{} temporary {C:attention}copies{}",
+          "of {C:attention}first{} scoring card in {C:attention}poker hand{},",
+          "then adds them to scoring hand",
+          "{C:inactive,s:0.8}(Changes played {C:attention,s:0.8}poker hand{C:inactive,s:0.8})",
+        }
+      },
       j_nacho_clauncher = {
         name = "Clauncher",
         text = {
