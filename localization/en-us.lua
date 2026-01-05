@@ -166,7 +166,7 @@ return {
           "Adds the rank of {C:attention}highest{} ranked",
           "card discarded this round to Mult",
           "{C:inactive}(Currently {C:mult}+#2#{} {C:inactive}Mult)",
-          "{C:inactive,s:0.8}(Evolves after scoring {C:red,s:0.8}+11{} {C:inactive,s:0.8}Mult in {C:attention,s:0.8}#3#{C:inactive,s:0.8} Rounds){}",
+          "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
         }
       },
       j_nacho_monferno = {
@@ -176,8 +176,8 @@ return {
           "Gains Mult equal to the rank of",
           "{C:attention}highest{} ranked card discarded",
           "{C:inactive,s:0.8}(Resets at end of round)",
+          "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
           "{C:inactive}(Currently {C:mult}+#2#{} {C:inactive}Mult)",
-          "{C:inactive,s:0.8}(Evolves after scoring {C:red,s:0.8}+30{} {C:inactive,s:0.8}Mult in {C:attention,s:0.8}#3#{C:inactive,s:0.8} Rounds){}",
         }
       },
       j_nacho_infernape = {
