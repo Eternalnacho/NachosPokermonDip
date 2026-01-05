@@ -46,13 +46,8 @@ local tartapple = {
     end
   end,
   in_pool = function(self)
-    return not (SMODS.find_card('c_nacho_sweetapple') or SMODS.find_card('c_nacho_syrupyapple'))
-      and ( next(find_joker("applin"))
-        or next(find_joker("flapple"))
-        or next(find_joker("appletun"))
-        or next(find_joker("dipplin"))
-        or next(find_joker("hydrapple"))
-      )
+    local applemons = poke_get_family_list('applin')
+    return poke_find_card(function(joker) return PkmnDip.utils.contains(applemons, joker.config.center.name) end)
   end
 }
 
@@ -103,13 +98,8 @@ local sweetapple = {
     end
   end,
   in_pool = function(self)
-    return not (SMODS.find_card('c_nacho_tartapple') or SMODS.find_card('c_nacho_syrupyapple'))
-      and ( next(find_joker("applin"))
-        or next(find_joker("flapple"))
-        or next(find_joker("appletun"))
-        or next(find_joker("dipplin"))
-        or next(find_joker("hydrapple"))
-      )
+    local applemons = poke_get_family_list('applin')
+    return poke_find_card(function(joker) return PkmnDip.utils.contains(applemons, joker.config.center.name) end)
   end
 }
 
@@ -162,13 +152,8 @@ local syrupyapple = {
     end
   end,
   in_pool = function(self)
-    return not (SMODS.find_card('c_nacho_tartapple') or SMODS.find_card('c_nacho_sweetapple'))
-      and ( next(find_joker("applin"))
-        or next(find_joker("flapple"))
-        or next(find_joker("appletun"))
-        or next(find_joker("dipplin"))
-        or next(find_joker("hydrapple"))
-      )
+    local applemons = poke_get_family_list('applin')
+    return poke_find_card(function(joker) return PkmnDip.utils.contains(applemons, joker.config.center.name) end)
   end
 }
 
