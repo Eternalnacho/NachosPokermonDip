@@ -122,10 +122,18 @@ local reuniclus = {
 }
 
 local function init()
-  local evaluate_play_intro_ref = evaluate_play_intro
-  evaluate_play_intro = function()
-    SMODS.calculate_context({mitosis = true})
-    return evaluate_play_intro_ref()
+  if (SMODS.Mods["Talisman"] or {}).can_load then
+    local evaluate_play_intro_ref = evaluate_play_intro
+    evaluate_play_intro = function()
+      SMODS.calculate_context({mitosis = true})
+      return evaluate_play_intro_ref()
+    end
+  else
+    local eval_play_ref = G.FUNCS.evaluate_play
+    G.FUNCS.evaluate_play = function(e)
+      SMODS.calculate_context({mitosis = true})
+      return eval_play_ref(e)
+    end
   end
 end
 
