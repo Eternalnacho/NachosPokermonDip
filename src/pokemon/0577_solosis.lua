@@ -122,7 +122,7 @@ local reuniclus = {
 }
 
 local function init()
-  if (SMODS.Mods["Talisman"] or {}).can_load then
+  if evaluate_play_intro then
     local evaluate_play_intro_ref = evaluate_play_intro
     evaluate_play_intro = function()
       SMODS.calculate_context({mitosis = true})
