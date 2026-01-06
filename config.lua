@@ -26,6 +26,7 @@ return {
   terapagos = true,
   pecharunt = true,
   hisuian_sneasel = (SMODS.Mods["ToxicStall"] or {}).can_load and true or false,
+  gallery_width = 5,
   customStakes = true,
   -- customItems = true,
 }
