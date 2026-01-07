@@ -467,9 +467,9 @@ return {
       j_nacho_passimian = {
         name = "Passimian",
         text = {
-          "Gains the {C:attention}abilities{}",
-          "of the next {C:attention}sold{}",
-          "or {C:attention}destroyed{} Joker",
+          "Gains the {C:attention}abilities{} of the",
+          "next {C:attention}sold{} or {C:attention}destroyed{}",
+          "Pokemon Joker",
           "{br:2}ERROR - CONTACT STEAK",
           "{C:attention}+1{} Joker slot if",
           "received Joker had a",

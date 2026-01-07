@@ -25,7 +25,7 @@ local passimian={
     end
   end,
   receive_card = function(self, card, to_key, context)
-    if to_key then
+    if to_key and G.P_CENTERS[to_key].stage then
       local _r = G.P_CENTERS[to_key]
       -- Keep relevant values stored
       local values_to_keep = {}
