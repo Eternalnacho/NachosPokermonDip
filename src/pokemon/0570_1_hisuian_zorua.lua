@@ -58,6 +58,7 @@ local hisuian_zorua = {
     end
     G.E_MANAGER:add_event(Event({
       func = function()
+        card.ability.blueprint_joker = nil
         if card.area ~= G.jokers and not poke_is_in_collection(card) and not G.SETTINGS.paused then
           card.ability.extra.hidden_key = card.ability.extra.hidden_key or get_random_poke_key('zorua', nil, 1)
           local _o = G.P_CENTERS[card.ability.extra.hidden_key]
@@ -71,7 +72,7 @@ local hisuian_zorua = {
       end }))
   end,
   generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
-    local _c = card and card.config.center or card
+    local _c = card.config and card.config.center or card
     local _o
     if card.ability and card.ability.extra then
       card.ability.extra.hidden_key = card.ability.extra.hidden_key or get_random_poke_key('zorua', nil, 1)
@@ -79,8 +80,8 @@ local hisuian_zorua = {
     end
     if card.area ~= G.jokers and not poke_is_in_collection(card) and _o then
       -- Create the illusion joker's text boxes
-      local temp_ability = card.ability -- temp_ability needed so we can use the illusion's config values during generate_ui
-      card.ability = _o.config
+      local temp_ability = copy_table(card.ability) -- temp_ability needed so we can use the illusion's config values during generate_ui
+      for k, v in pairs(_o.config) do card.ability[k] = v end
       _o:generate_ui(info_queue, card, desc_nodes, specific_vars, full_UI_table)
       card.ability = temp_ability
       -- Adds the "...?" to the end of the name
@@ -117,7 +118,7 @@ local hisuian_zorua = {
       local other_joker = G.jokers.cards[1]
       card.ability.blueprint_compat = ( other_joker and other_joker ~= card and not other_joker.debuff and other_joker.config.center.blueprint_compat and 'compatible') or 'incompatible'
       if card.ability.blueprint_compat == 'compatible' and not card.debuff and card.ability.extra.active and other_joker.children.center.atlas.px == 71 then
-        self:draw_illusion(card, other_joker)
+        if other_joker and card.ability.blueprint_joker ~= other_joker.config.center_key then self:draw_illusion(card, other_joker) end
       else
         card.children.floating_sprite:remove()
         card.children.center.atlas = G.ASSET_ATLAS["poke_AtlasJokersBasicGen05"..(card.edition and card.edition.poke_shiny and "Shiny" or "")]
@@ -131,22 +132,20 @@ local hisuian_zorua = {
     end
   end,
   draw_illusion = function(self, card, other_joker)
-    if other_joker and card.ability.blueprint_joker ~= other_joker then
-      card.children.center.atlas = other_joker.children.center.atlas
-      card.children.center:set_sprite_pos(other_joker.children.center.sprite_pos)
-      if other_joker.children.floating_sprite then
-        local _f = other_joker.children.floating_sprite
-        card.children.floating_sprite = SMODS.create_sprite(card.T.x, card.T.y, card.T.w * (71 / _f.atlas.px), card.T.h * (95 / _f.atlas.py), _f.atlas, _f.sprite_pos)
-        card.children.floating_sprite.role.draw_major = card
-        card.children.floating_sprite.states.hover.can = false
-        card.children.floating_sprite.states.click.can = false
-        card.config.center.soul_pos.draw = other_joker.config.center.soul_pos.draw
-      else
-        card.children.floating_sprite.atlas = G.ASSET_ATLAS[self.atlas]
-        card.children.floating_sprite:set_sprite_pos(self.soul_pos)
-      end
-      card.ability.blueprint_joker = other_joker
+    card.children.center.atlas = other_joker.children.center.atlas
+    card.children.center:set_sprite_pos(other_joker.children.center.sprite_pos)
+    if other_joker.children.floating_sprite then
+      local _f = other_joker.children.floating_sprite
+      card.children.floating_sprite = SMODS.create_sprite(card.T.x, card.T.y, card.T.w * (71 / _f.atlas.px), card.T.h * (95 / _f.atlas.py), _f.atlas, _f.sprite_pos)
+      card.children.floating_sprite.role.draw_major = card
+      card.children.floating_sprite.states.hover.can = false
+      card.children.floating_sprite.states.click.can = false
+      card.config.center.soul_pos.draw = other_joker.config.center.soul_pos.draw
+    else
+      card.children.floating_sprite.atlas = G.ASSET_ATLAS[self.atlas]
+      card.children.floating_sprite:set_sprite_pos(self.soul_pos)
     end
+    card.ability.blueprint_joker = other_joker.config.center_key
   end
 }
 
@@ -194,8 +193,9 @@ local hisuian_zoroark = {
     end
     G.E_MANAGER:add_event(Event({
       func = function()
+        card.ability.blueprint_joker = nil
         if card.area ~= G.jokers and not poke_is_in_collection(card) and not G.SETTINGS.paused then
-          card.ability.extra.hidden_key = card.ability.extra.hidden_key or get_random_poke_key('zoroark', nil, 'poke_safari', nil, nil, {j_poke_zoroark = true})
+          card.ability.extra.hidden_key = card.ability.extra.hidden_key or get_random_poke_key('zoroark', nil, 'poke_safari', nil, nil, {j_poke_zoroark = true, j_nacho_hisuian_zoroark = true})
           local _o = G.P_CENTERS[card.ability.extra.hidden_key]
           card.children.center.atlas = G.ASSET_ATLAS[_o.atlas]
           card.children.center:set_sprite_pos(_o.pos)
@@ -207,16 +207,16 @@ local hisuian_zoroark = {
       end }))
   end,
   generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
-    local _c = card and card.config.center or card
+    local _c = card.config and card.config.center or card
     local _o
     if card.ability and card.ability.extra then
-      card.ability.extra.hidden_key = card.ability.extra.hidden_key or get_random_poke_key('zoroark', nil, 'poke_safari', nil, nil, {j_poke_zoroark = true})
+      card.ability.extra.hidden_key = card.ability.extra.hidden_key or get_random_poke_key('zoroark', nil, 'poke_safari', nil, nil, {j_poke_zoroark = true, j_nacho_hisuian_zoroark = true})
       _o = G.P_CENTERS[card.ability.extra.hidden_key]
     end
     if card.area ~= G.jokers and not poke_is_in_collection(card) and _o then
       -- Create the illusion joker's text boxes
-      local temp_ability = card.ability -- temp_ability needed so we can use the illusion's config values during generate_ui
-      card.ability = _o.config
+      local temp_ability = copy_table(card.ability) -- temp_ability needed so we can use the illusion's config values during generate_ui
+      for k, v in pairs(_o.config) do card.ability[k] = v end
       _o:generate_ui(info_queue, card, desc_nodes, specific_vars, full_UI_table)
       card.ability = temp_ability
       -- Adds the "...?" to the end of the name
@@ -251,7 +251,7 @@ local hisuian_zoroark = {
       local other_joker = G.jokers.cards[1]
       card.ability.blueprint_compat = ( other_joker and other_joker ~= card and not other_joker.debuff and other_joker.config.center.blueprint_compat and 'compatible') or 'incompatible'
       if card.ability.blueprint_compat == 'compatible' and not card.debuff and other_joker.children.center.atlas.px == 71 then
-        self:draw_illusion(card, other_joker)
+        if other_joker and card.ability.blueprint_joker ~= other_joker.config.center_key then self:draw_illusion(card, other_joker) end
       else
         card.children.floating_sprite:remove()
         card.children.center.atlas = G.ASSET_ATLAS[self.atlas]
@@ -265,22 +265,20 @@ local hisuian_zoroark = {
     end
   end,
   draw_illusion = function(self, card, other_joker)
-    if other_joker and card.ability.blueprint_joker ~= other_joker then
-      card.children.center.atlas = other_joker.children.center.atlas
-      card.children.center:set_sprite_pos(other_joker.children.center.sprite_pos)
-      if other_joker.children.floating_sprite then
-        local _f = other_joker.children.floating_sprite
-        card.children.floating_sprite = SMODS.create_sprite(card.T.x, card.T.y, card.T.w * (71 / _f.atlas.px), card.T.h * (95 / _f.atlas.py), _f.atlas, _f.sprite_pos)
-        card.children.floating_sprite.role.draw_major = card
-        card.children.floating_sprite.states.hover.can = false
-        card.children.floating_sprite.states.click.can = false
-        card.config.center.soul_pos.draw = other_joker.config.center.soul_pos.draw
-      else
-        card.children.floating_sprite.atlas = G.ASSET_ATLAS[self.atlas]
-        card.children.floating_sprite:set_sprite_pos(self.soul_pos)
-      end
-      card.ability.blueprint_joker = other_joker
+    card.children.center.atlas = other_joker.children.center.atlas
+    card.children.center:set_sprite_pos(other_joker.children.center.sprite_pos)
+    if other_joker.children.floating_sprite then
+      local _f = other_joker.children.floating_sprite
+      card.children.floating_sprite = SMODS.create_sprite(card.T.x, card.T.y, card.T.w * (71 / _f.atlas.px), card.T.h * (95 / _f.atlas.py), _f.atlas, _f.sprite_pos)
+      card.children.floating_sprite.role.draw_major = card
+      card.children.floating_sprite.states.hover.can = false
+      card.children.floating_sprite.states.click.can = false
+      card.config.center.soul_pos.draw = other_joker.config.center.soul_pos.draw
+    else
+      card.children.floating_sprite.atlas = G.ASSET_ATLAS[self.atlas]
+      card.children.floating_sprite:set_sprite_pos(self.soul_pos)
     end
+    card.ability.blueprint_joker = other_joker.config.center_key
   end
 }
 
