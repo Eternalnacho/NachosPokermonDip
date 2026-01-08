@@ -235,15 +235,11 @@ local mega_gallade={
 local init = function()
   -- Ralts take ownership event thing
   G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.0, func = function()
-    if PkmnDip.find_family('ralts') then
+    if next(poke_get_family_list('ralts')) then
       SMODS.Joker:take_ownership('maelmc_ralts', { aux_poke = true, no_collection = true, custom_pool_func = true, in_pool = function() return false end }, true)
       SMODS.Joker:take_ownership('maelmc_kirlia', { aux_poke = true, no_collection = true, custom_pool_func = true, in_pool = function() return false end }, true)
       SMODS.Joker:take_ownership('maelmc_gardevoir', { aux_poke = true, no_collection = true, custom_pool_func = true, in_pool = function() return false end }, true)
       SMODS.Joker:take_ownership('maelmc_mega_gardevoir', { aux_poke = true, no_collection = true, custom_pool_func = true, in_pool = function() return false end }, true)
-      PkmnDip.append_to_family('ralts', 'gallade', true)
-      PkmnDip.append_to_family('ralts', 'mega_gallade', true)
-    else
-      pokermon.add_family({ 'ralts', 'kirlia', 'gardevoir', 'mega_gardevoir', 'gallade', 'mega_gallade' })
     end
     return true end
   }))
@@ -286,6 +282,5 @@ end
 return {
   config_key = "ralts",
   init = init,
-  no_family = true,
   list = { ralts, kirlia, gardevoir, mega_gardevoir, gallade, mega_gallade }
 }
