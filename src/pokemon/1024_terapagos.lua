@@ -179,25 +179,32 @@ local terapagos_stellar={
 }
 
 local init = function()
-  is_type_ref = is_type
+  local type_sticker_ref = type_sticker_applied
+  type_sticker_applied = function(card, ...)
+    if not card then return end
+    if card.ability['stellar_sticker'] then return "Stellar" end
+    type_sticker_ref(card, ...)
+  end
+
+  local is_type_ref = is_type
   is_type = function(card, target_type)
     if card.ability and card.ability.stellar_sticker then return true end
     return is_type_ref(card, target_type)
   end
 
-  energy_matches_ref = energy_matches
+  local energy_matches_ref = energy_matches
   energy_matches = function(card, etype, include_colorless)
     if card.ability and card.ability.stellar_sticker then return true
     else return energy_matches_ref(card, etype, include_colorless) end
   end
 
-  matching_energy_ref = matching_energy
+  local matching_energy_ref = matching_energy
   matching_energy = function(card, allow_bird)
     if card.ability and card.ability.stellar_sticker then return "c_poke_colorless_energy"
     else return matching_energy_ref(card, allow_bird) end
   end
 
-  find_pokemon_type_ref = find_pokemon_type
+  local find_pokemon_type_ref = find_pokemon_type
   find_pokemon_type = function(target_type, exclude_card)
     local ret = find_pokemon_type_ref(target_type, exclude_card)
     if type(ret) == "table" and G.jokers then

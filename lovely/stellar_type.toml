@@ -21,22 +21,6 @@ end
 '''
 match_indent = true
 
-# # Adding Stellar type to the list of Stickers
-
-[[patches]]
-[patches.pattern]
-target = '=[SMODS Pokermon "functions/pokefunctions.lua"]'
-pattern = '''
-elseif card.ability.earth_sticker then
-    return "Earth"
-'''
-position = "after"
-payload = '''
-elseif card.ability.stellar_sticker then
-  return "Stellar"
-'''
-match_indent = true
-
 [[patches]]
 [patches.pattern]
 target = '=[SMODS Pokermon "localization/en-us.lua"]'
