@@ -68,7 +68,7 @@ function DipTile:render()
       ref_table = self.ref_table,
       ref_value = self.ref_value,
       condition = self.condition,
-      detailed_tooltip = self.mod_tVal and {set = 'Other', key = 'modname_tooltip', vars = {self.mod_tVal}} or nil,
+      detailed_tooltip = self.mod_tVal and {set = 'Other', key = 'modname_tooltip', vars = {self.mod_tVal}},
       hover = true,
     },
     nodes = {

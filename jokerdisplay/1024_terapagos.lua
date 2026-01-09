@@ -34,6 +34,6 @@ jd_def["j_nacho_terapagos_stellar"] = {
         card.joker_display_values.localized_text = "Stellar"
     end,
     mod_function = function(card, mod_joker)
-        return { x_mult = (is_type(card, "Stellar") and (1 + mod_joker.ability.extra.Xmult_mod * get_total_energy(card)) ^ JokerDisplay.calculate_joker_triggers(mod_joker) or nil) }
+        return { x_mult = (is_type(card, "Stellar") and (1 + mod_joker.ability.extra.Xmult_mod * get_total_energy(card)) ^ JokerDisplay.calculate_joker_triggers(mod_joker)) }
     end
 }

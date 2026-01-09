@@ -63,7 +63,7 @@ local perrserker = {
     if context.repetition and context.cardarea == G.hand and (next(context.card_effects[1]) or #context.card_effects > 1) 
     and SMODS.has_enhancement(context.other_card, "m_steel") then
       return {
-        message = not context.retrigger_joker and localize('k_again_ex') or nil,
+        message = not context.retrigger_joker and localize('k_again_ex'),
         repetitions = card.ability.extra.retriggers,
         card = card
       }
