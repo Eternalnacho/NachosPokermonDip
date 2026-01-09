@@ -180,26 +180,6 @@ function SMODS.current_mod.extra_tabs()
                   ref_value = "customStakes",
                   callback = G.FUNCS.nacho_force_restart
               }),
-              {
-                n = G.UIT.R,
-                config = {
-                    align = "bm",
-                    padding = 0.05,
-                    colour = G.C.CLEAR,
-                },
-                nodes =
-                {{
-                  n = G.UIT.T,
-                  config = {
-                    align = 'tm',
-                    text = "No Restart Required:",
-                    shadow = true,
-                    scale = 0.75 * 0.7,
-                    colour = HEX("ED533A")
-                  }
-                }},
-              },
-              create_slider({label = 'Joker Gallery Width', w = 4, h = 0.3, ref_table = nacho_config, ref_value = 'gallery_width', min = 5, max = 11})
             }
           }
         }
@@ -209,19 +189,3 @@ function SMODS.current_mod.extra_tabs()
 		-- insert more tables with the same structure here
 	}
 end
-
-
-
--- {
---     create_toggle({
---         label = localize("custom_jokers"),
---         ref_table = nacho_config,
---         ref_value = "customJokers",
---     }),
---     create_toggle({
---         label = "Allow Custom Stakes?",
---         ref_table = nacho_config,
---         ref_value = "customStakes",
---     }),
---     
---   }
