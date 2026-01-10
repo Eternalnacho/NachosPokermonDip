@@ -64,14 +64,12 @@ return {
       j_nacho_altaria = {
         name = "Altaria",
         text = {
-          "Earn {C:money}$#1#{} for each",
-          "{C:attention}Unenhanced 9{} and {C:money}$#2#{}",
-          "for each {C:attention}Enhanced 9{}",
-          "in your {C:attention}full deck{}",
-          "at end of round",
-          "{C:inactive}(Currently {C:money}$#3#{}{C:inactive})",
+          "Earn {C:money}$#1#{} for each {C:attention}unenhanced 9{}",
+          "and {C:money}$#2#{} for each {C:attention}enhanced 9{}",
+          "in your {C:attention}full deck{} at end of round",
           "{br:2}ERROR - CONTACT STEAK",
           "{C:attention}9s can't{} be debuffed",
+          "{C:inactive}(Currently {C:money}$#3#{}{C:inactive})",
         }
       },
       j_nacho_mega_altaria = {
@@ -165,8 +163,8 @@ return {
           "{C:red}+#1#{} discard",
           "Adds the rank of {C:attention}highest{} ranked",
           "card discarded this round to Mult",
-          "{C:inactive}(Currently {C:mult}+#2#{} {C:inactive}Mult)",
           "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
+          "{C:inactive}(Currently {C:mult}+#2#{} {C:inactive}Mult)",
         }
       },
       j_nacho_monferno = {
