@@ -183,7 +183,7 @@ local init = function()
   type_sticker_applied = function(card, ...)
     if not card then return end
     if card.ability['stellar_sticker'] then return "Stellar" end
-    type_sticker_ref(card, ...)
+    return type_sticker_ref(card, ...)
   end
 
   local is_type_ref = is_type
