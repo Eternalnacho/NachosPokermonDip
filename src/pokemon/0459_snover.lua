@@ -20,6 +20,7 @@ local snover = {
   enhancement_gate = 'm_glass',
   stage = "Basic",
   ptype = "Grass",
+  gen = 4,
   blueprint_compat = true,
   calculate = function(self, card, context)
     local a = card.ability.extra
@@ -70,6 +71,7 @@ local abomasnow = {
   enhancement_gate = 'm_glass',
   stage = "One",
   ptype = "Grass",
+  gen = 4,
   blueprint_compat = true,
   calculate = function(self, card, context)
     -- Check if glass card breaks, then convert an unenhanced card in deck to glass
