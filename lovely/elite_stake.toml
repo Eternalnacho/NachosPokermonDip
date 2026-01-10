@@ -1,7 +1,7 @@
 [manifest]
 version = "1.0.0"
 dump_lua = true
-priority = 21
+priority = 1
 
 
 # Elite Stake Showdown Call
@@ -27,17 +27,17 @@ match_indent = true
 target = "functions/common_events.lua"
 pattern = '''
 elseif not v.boss.showdown and (v.boss.min <= math.max(1, G.GAME.round_resets.ante) and ((math.max(1, G.GAME.round_resets.ante))%G.GAME.win_ante ~= 0 or G.GAME.round_resets.ante < 2)) then
-    eligible_bosses[k] = res and true
+    eligible_bosses[k] = res and true or nil
 '''
 position = "at"
 payload = '''
 elseif not v.boss.showdown and not G.GAME.modifiers.elite4 and (v.boss.min <= math.max(1, G.GAME.round_resets.ante) and ((math.max(1, G.GAME.round_resets.ante))%G.GAME.win_ante ~= 0 or G.GAME.round_resets.ante < 2)) then
-    eligible_bosses[k] = res and true
+    eligible_bosses[k] = res and true or nil
 elseif not v.boss.showdown and G.GAME.modifiers.elite4 and (v.boss.min <= math.max(1, G.GAME.round_resets.ante) and
             ((math.max(1, G.GAME.round_resets.ante))%G.GAME.win_ante ~= 0 and
             (math.max(1, G.GAME.round_resets.ante))%G.GAME.win_ante ~= G.GAME.win_ante - 1 and
             (math.max(1, G.GAME.round_resets.ante))%G.GAME.win_ante ~= G.GAME.win_ante - 2 and
             (math.max(1, G.GAME.round_resets.ante))%G.GAME.win_ante ~= G.GAME.win_ante - 3 or G.GAME.round_resets.ante < 2)) then
-    eligible_bosses[k] = res and true
+    eligible_bosses[k] = res and true or nil
 '''
 match_indent = true
