@@ -5,6 +5,7 @@ return {
   turtwig = true,
   chimchar = true,
   piplup = true,
+  shieldon = true,
   bronzor = true,
   snover = true,
   victini = true,
