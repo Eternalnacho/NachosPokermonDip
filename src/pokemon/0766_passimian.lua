@@ -66,6 +66,7 @@ local passimian={
         end
       end
       -- Keep the fighting type, and re-check blueprint compatibility
+      card.ability.name = "passimian"
       card.ability.extra.ptype = "Fighting"
       card.config.center.blueprint_compat = _r.blueprint_compat
       -- Calls the add_to_deck function of the received card if it exists
