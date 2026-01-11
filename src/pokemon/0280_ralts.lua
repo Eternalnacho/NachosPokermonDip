@@ -235,7 +235,7 @@ local mega_gallade={
 local init = function()
   -- Ralts take ownership event thing
   G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.0, func = function()
-    if next(poke_get_family_list('ralts')) then
+    if G.P_CENTERS['j_maelmc_ralts'] then
       SMODS.Joker:take_ownership('maelmc_ralts', { aux_poke = true, no_collection = true, custom_pool_func = true, in_pool = function() return false end }, true)
       SMODS.Joker:take_ownership('maelmc_kirlia', { aux_poke = true, no_collection = true, custom_pool_func = true, in_pool = function() return false end }, true)
       SMODS.Joker:take_ownership('maelmc_gardevoir', { aux_poke = true, no_collection = true, custom_pool_func = true, in_pool = function() return false end }, true)
