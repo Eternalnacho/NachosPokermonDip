@@ -59,7 +59,6 @@ end
 
 local function load_pokemon_family(file)
   local names = PkmnDip.utils.map_list(file.list, function(a) return a.name end)
-  pokermon.dex_order_groups[#pokermon.dex_order_groups+1] = names
   if file.family and #file.family > 1 then
     pokermon.add_family(file.family)
   elseif #names > 1 then
