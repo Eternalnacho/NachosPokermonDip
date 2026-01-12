@@ -25,16 +25,14 @@ local shieldon = {
       end
     end
 
-    if context.before then 
-      if a.ancient_count > 1 then
-        context.scoring_hand[1]:set_ability('m_steel', nil, true)
-        G.E_MANAGER:add_event(Event({ func = function() context.scoring_hand[1]:juice_up(); return true end }))
-      end
+    if context.before and a.ancient_count > 1 then
+      context.scoring_hand[1]:set_ability('m_steel', nil, true)
+      G.E_MANAGER:add_event(Event({ func = function() context.scoring_hand[1]:juice_up(); return true end }))
+    end
 
-      if a.ancient_count > 2 then
-        a.third_times = a.third_times + 1
-        local _card = SMODS.add_card({set = 'Item', area = G.consumeables, key = 'c_poke_metalcoat'})
-        card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.C.FILTER})
+    if context.individual and not context.end_of_round and context.cardarea == G.hand and a.ancient_count > 2 then
+      if SMODS.has_enhancement(context.other_card, 'm_steel') then 
+        return { h_chips = a.chips * a.ancient_count, card = context.other_card }
       end
     end
     
@@ -74,8 +72,8 @@ local bastiodon = {
     end
 
     if context.before and a.ancient_count > 1 then
-      local _card = SMODS.add_card({set = 'Item', area = G.consumeables, key = 'c_poke_metalcoat'})
-      card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.C.FILTER})
+      context.scoring_hand[1]:set_ability('m_steel', nil, true)
+      G.E_MANAGER:add_event(Event({ func = function() context.scoring_hand[1]:juice_up(); return true end }))
     end
 
     if context.individual and not context.end_of_round and context.cardarea == G.hand and a.ancient_count > 2 then

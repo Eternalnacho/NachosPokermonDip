@@ -220,7 +220,7 @@ return {
           "{C:attention}Ancient #1#s{}",
           "{X:attention,C:white}1+{} : Scoring {C:attention}#1#s{} give {C:chips}+#2#{} Chips for each played {C:attention}#1#{}",
           "{X:attention,C:white}2+{} : {C:attention}First{} scoring card in {C:attention}poker hand{} becomes {C:attention}Steel{}",
-          "{X:attention,C:white}3+{} : Creates a {C:item}Metal Coat{}",
+          "{X:attention,C:white}3+{} : {C:attention}Held Steel{} cards give {C:chips}+#2#{} Chips for each played {C:attention}#1#{}",
           "{C:inactive,s:0.8}(Trigger {X:attention,C:white,s:0.8}3+{C:inactive,s:0.8} ability {C:attention,s:0.8}#3#{C:inactive,s:0.8} times to evolve)"
         } 
       },
@@ -229,7 +229,7 @@ return {
         text = {
           "{C:attention}Ancient #1#s{}",
           "{X:attention,C:white}1+{} : Scoring {C:attention}#1#s{} give {C:chips}+#2#{} Chips for each played {C:attention}#1#{}",
-          "{X:attention,C:white}2+{} : Creates a {C:item}Metal Coat{}",
+          "{X:attention,C:white}2+{} : {C:attention}First{} scoring card in {C:attention}poker hand{} becomes {C:attention}Steel{}",
           "{X:attention,C:white}3+{} : {C:attention}Held Steel{} cards give {C:chips}+#2#{} Chips for each played {C:attention}#1#{}",
           "{X:attention,C:white}4+{} : {C:attention}Held ranks{} below {C:attention}#1#{} become {C:attention}Steel{}",
         } 
@@ -414,7 +414,8 @@ return {
       j_nacho_carbink = {
         name = "Carbink",
         text = {
-          "Cards with no {C:attention}rank{} are also",
+          "{C:hazard}+#1#{} hazard layer",
+          "{C:attention}Hazard{} Cards are also",
           "considered {C:attention}Gold{} cards",
         }
       },
