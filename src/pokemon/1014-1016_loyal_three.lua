@@ -130,10 +130,10 @@ local fezandipiti = {
   calculate = function(self, card, context)
     -- Lucky + Toxic Quantum Enhancements
     if context.check_enhancement and not context.blueprint then
-      if SMODS.has_enhancement(context.other_card, 'm_lucky') then
+      if context.other_card.config.center.key == 'm_lucky' then
         return { m_stall_toxic = true }
       end
-      if SMODS.has_enhancement(context.other_card, 'm_stall_toxic') then
+      if context.other_card.config.center.key == 'm_stall_toxic' then
         return { m_lucky = true }
       end
     end
