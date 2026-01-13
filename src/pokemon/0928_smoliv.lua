@@ -16,7 +16,7 @@ local smoliv = {
     if context.end_of_round and context.main_eval then
       local grass_target = pseudorandom_element(find_pokemon_type('Grass'), 'smoliv')
       if grass_target.set_cost then 
-        grass_target.ability.extra_value = (v.ability.extra_value or 0) + card.ability.extra.money
+        grass_target.ability.extra_value = (grass_target.ability.extra_value or 0) + card.ability.extra.money
         grass_target:set_cost()
       end
     end
@@ -51,7 +51,7 @@ local dolliv = {
       else
         local grass_target = pseudorandom_element(find_pokemon_type('Grass'), 'dolliv')
         if grass_target.set_cost then 
-          grass_target.ability.extra_value = (v.ability.extra_value or 0) + card.ability.extra.money
+          grass_target.ability.extra_value = (grass_target.ability.extra_value or 0) + card.ability.extra.money
           grass_target:set_cost()
         end
       end
