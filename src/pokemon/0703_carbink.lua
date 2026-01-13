@@ -9,8 +9,8 @@ local carbink = {
     info_queue[#info_queue+1] = G.P_CENTERS.m_gold
     return {vars = { card.ability.extra.hazard_level }}
   end,
-  rarity = 1,
-  cost = 5,
+  rarity = 3,
+  cost = 7,
   stage = "Basic",
   ptype = "Fairy",
   blueprint_compat = false,
