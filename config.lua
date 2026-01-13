@@ -22,6 +22,7 @@ return {
   skwovet = true,
   applin = true,
   galarian_meowth = true,
+  smoliv = true,
   frigibax = true,
   loyal_three = true,
   terapagos = true,

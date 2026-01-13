@@ -576,6 +576,40 @@ return {
           "{C:attention}Toxic{} cards gain {X:mult,C:white}X#1#{} Mult",
         }
       },
+      j_nacho_smoliv = {
+        name = "Smoliv",
+        text = {
+          "Adds {C:money}$#1#{} of sell value",
+          "to a random {X:grass,C:white}Grass{} Joker",
+          "at end of round",
+          "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
+        }
+      },
+      j_nacho_dolliv = {
+        name = "Dolliv",
+        text = {
+          "Adds {C:money}$#1#{} of sell value",
+          "to a random {X:grass,C:white}Grass{} Joker",
+          "at end of round",
+          "{br:2.5}ERROR - CONTACT STEAK",
+          "{C:green}#2# in #3#{} chance for",
+          "each {X:grass,C:white}Grass{} Joker instead",
+          "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#4#{C:inactive,s:0.8} rounds)",
+        }
+      },
+      j_nacho_arboliva = {
+        name = "Arboliva",
+        text = {
+          "Adds {C:money}$#1#{} of sell value",
+          "to each {X:grass,C:white}Grass{} Joker",
+          "at end of round",
+          "{br:2.5}ERROR - CONTACT STEAK",
+          "{X:mult,C:white}X#2#{} Mult for every {C:money}${}",
+          "of sell value from",
+          "{X:grass,C:white}Grass{} Jokers",
+          "{C:inactive}(Currently {X:mult,C:white}X#3#{})"
+        }
+      },
       j_nacho_frigibax = {
         name = "Frigibax",
         text = {
@@ -910,10 +944,11 @@ return {
       terapagos_line = "Terapagos line?",
 
       -- Settings
-      nacho_pokemon1 = "Pokemon 1/4",
-      nacho_pokemon2 = "Pokemon 2/4",
-      nacho_pokemon3 = "Pokemon 3/4",
-      nacho_pokemon4 = "Pokemon 4/4",
+      nacho_pokemon1 = "Pokemon 1/5",
+      nacho_pokemon2 = "Pokemon 2/5",
+      nacho_pokemon3 = "Pokemon 3/5",
+      nacho_pokemon4 = "Pokemon 4/5",
+      nacho_pokemon5 = "Pokemon 5/5",
       nacho_crossMod = "Cross-Mod Pokemon",
     },
     v_text = {
