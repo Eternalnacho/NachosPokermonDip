@@ -19,6 +19,7 @@ local smoliv = {
         grass_target.ability.extra_value = (grass_target.ability.extra_value or 0) + card.ability.extra.money
         grass_target:set_cost()
       end
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_val_up'), colour = G.C.MONEY})
     end
     return level_evo(self, card, context, 'j_nacho_dolliv')
   end,
@@ -57,6 +58,7 @@ local dolliv = {
           grass_target:set_cost()
         end
       end
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_val_up'), colour = G.C.MONEY})
       local total_sell_value = 0
       PkmnDip.utils.for_each(find_pokemon_type('Grass'), function(v) total_sell_value = total_sell_value + v.sell_cost end)
       a.total_sell_value = total_sell_value
@@ -96,6 +98,7 @@ local arboliva = {
           v:set_cost()
         end
       end
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_val_up'), colour = G.C.MONEY})
     end
   end,
 }
