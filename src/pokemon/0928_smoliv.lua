@@ -70,7 +70,7 @@ local dolliv = {
 -- Arboliva 930
 local arboliva = {
   name = "arboliva",
-  config = { extra = { money = 1, Xmult = 1, Xmult_mod = 0.01 } },
+  config = { extra = { money = 2, Xmult = 1, Xmult_mod = 0.01 } },
   loc_vars = function(self, info_queue, card)
     local a = card.ability.extra or self.config.center
     local total_sell_value = 0
