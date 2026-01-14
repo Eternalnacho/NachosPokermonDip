@@ -592,9 +592,11 @@ return {
           "to a random {X:grass,C:white}Grass{} Joker",
           "at end of round",
           "{br:2.5}ERROR - CONTACT STEAK",
-          "{C:green}#2# in #3#{} chance for",
+          "{C:green}#3# in #4#{} chance to add",
+          "{C:money}$#2#{} of sell value to",
           "each {X:grass,C:white}Grass{} Joker instead",
-          "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#4#{C:inactive,s:0.8} rounds)",
+          "{C:inactive,s:0.8}(Evolves at {C:money,s:0.8}$#5#{C:inactive,s:0.8}/$#6# total",
+          "{C:inactive,s:0.8}sell value of {X:grass,C:white,s:0.8}Grass{C:inactive,s:0.8} Jokers)",
         }
       },
       j_nacho_arboliva = {
@@ -604,8 +606,8 @@ return {
           "to each {X:grass,C:white}Grass{} Joker",
           "at end of round",
           "{br:2.5}ERROR - CONTACT STEAK",
-          "{X:mult,C:white}X#2#{} Mult for every {C:money}${}",
-          "of sell value from",
+          "{X:mult,C:white}X#2#{} Mult for every",
+          "{C:money}${} of sell value from",
           "{X:grass,C:white}Grass{} Jokers",
           "{C:inactive}(Currently {X:mult,C:white}X#3#{})"
         }
