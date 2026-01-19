@@ -31,6 +31,7 @@ local shieldon = {
     end
 
     if context.individual and not context.end_of_round and context.cardarea == G.hand and a.ancient_count > 2 then
+      a.third_times = a.third_times + 1
       if SMODS.has_enhancement(context.other_card, 'm_steel') then 
         return { h_chips = a.chips * a.ancient_count, card = context.other_card }
       end
