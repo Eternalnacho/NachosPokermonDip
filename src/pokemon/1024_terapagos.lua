@@ -187,9 +187,9 @@ local init = function()
   end
 
   local is_type_ref = is_type
-  is_type = function(card, target_type)
+  is_type = function(card, target_type, ...)
     if card.ability and card.ability.stellar_sticker then return true end
-    return is_type_ref(card, target_type)
+    return is_type_ref(card, target_type, ...)
   end
 
   local energy_matches_ref = energy_matches
@@ -199,17 +199,19 @@ local init = function()
   end
 
   local matching_energy_ref = matching_energy
-  matching_energy = function(card, allow_bird)
+  matching_energy = function(card, allow_bird, ...)
     if card.ability and card.ability.stellar_sticker then return "c_poke_colorless_energy"
-    else return matching_energy_ref(card, allow_bird) end
+    else return matching_energy_ref(card, allow_bird, ...) end
   end
 
   local find_pokemon_type_ref = find_pokemon_type
-  find_pokemon_type = function(target_type, exclude_card)
-    local ret = find_pokemon_type_ref(target_type, exclude_card)
+  find_pokemon_type = function(target_type, exclude_card, exclude_name, ...)
+    local ret = find_pokemon_type_ref(target_type, exclude_card, exclude_name, ...)
     if type(ret) == "table" and G.jokers then
       for k, v in pairs(G.jokers.cards) do
-        if v.ability.stellar_sticker and v ~= exclude_card and not PkmnDip.utils.contains(ret, v) then table.insert(ret, v) end
+        if v.ability.stellar_sticker and v ~= exclude_card and not v.name ~= exclude_name and not PkmnDip.utils.contains(ret, v) then
+          table.insert(ret, v)
+        end
       end
     end
     return ret
