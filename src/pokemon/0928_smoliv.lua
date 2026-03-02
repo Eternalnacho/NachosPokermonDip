@@ -15,7 +15,7 @@ local smoliv = {
   calculate = function(self, card, context)
     if context.end_of_round and context.main_eval then
       local grass_target = pseudorandom_element(find_pokemon_type('Grass'), 'smoliv')
-      if grass_target.set_cost then
+      if grass_target and grass_target.set_cost then
         grass_target.ability.extra_value = (grass_target.ability.extra_value or 0) + card.ability.extra.money
         grass_target:set_cost()
       end
@@ -46,14 +46,14 @@ local dolliv = {
     if context.end_of_round and context.main_eval then
       if SMODS.pseudorandom_probability(card, 'greedent', a.num, a.den, 'dolliv') then
         for _, v in pairs(find_pokemon_type('Grass')) do
-          if v.set_cost then 
+          if v.set_cost then
             v.ability.extra_value = (v.ability.extra_value or 0) + a.money1
             v:set_cost()
           end
         end
       else
         local grass_target = pseudorandom_element(find_pokemon_type('Grass'), 'dolliv')
-        if grass_target.set_cost then 
+        if grass_target and grass_target.set_cost then
           grass_target.ability.extra_value = (grass_target.ability.extra_value or 0) + a.money
           grass_target:set_cost()
         end
