@@ -21,38 +21,32 @@ local goomy={
   nacho_pseudol = true,
   blueprint_compat = true,
   calculate = function(self, card, context)
+    local a = card.ability.extra
+    if context.press_play then
+      a.scoring_flush = get_flush(G.hand.highlighted)[1]
+      a.matching_suit = a.scoring_flush[1].config.card.suit
+    end
     -- Check if Flush House played
     if context.before and context.main_eval then
       if context.scoring_name == 'Flush' then
-        card.ability.extra.flushes = card.ability.extra.flushes + 1
-        return
+        a.flushes = a.flushes + 1
       elseif context.scoring_name == 'Flush House' then
-        card.ability.extra.flush_houses = card.ability.extra.flush_houses + 1
-        return
+        a.flush_houses = a.flush_houses + 1
       end
     end
     -- Main scoring bit
     if context.individual and (context.cardarea == G.hand or context.cardarea == G.play) and not context.end_of_round then
-      if next(context.poker_hands['Flush']) then
+      if next(context.poker_hands['Flush']) and a.scoring_flush then
         -- Get cards specifically in Flush
-        local scoring_flush = get_flush(context.scoring_hand)[1]
-        local wildcount = 0
-        local matching_suit = nil
-        -- Count # of wilds and determine Flush suit
-        if scoring_flush then
-          for i = 1, #scoring_flush do
-            if SMODS.has_enhancement(scoring_flush[i], 'm_wild') then wildcount = wildcount + 1
-            else matching_suit = scoring_flush[i].config.card.suit end
-          end
-          -- Give cards in hand with matching suit permamult
-          if wildcount == #scoring_flush or context.other_card:is_suit(matching_suit) then
-            context.other_card.ability.perma_mult = (context.other_card.ability.perma_mult or 0) + card.ability.extra.mult_mod
-            return {
-              extra = {message = localize('k_upgrade_ex'), colour = G.C.MULT},
-              colour = G.C.MULT,
-              card = card
-            }
-          end
+        local wildcount = #PkmnDip.utils.filter(a.scoring_flush, function(v) return SMODS.has_enhancement(v, 'm_wild') end)
+        -- Give cards in hand with matching suit permamult
+        if wildcount == #a.scoring_flush or context.other_card:is_suit(a.matching_suit) then
+          context.other_card.ability.perma_mult = (context.other_card.ability.perma_mult or 0) + a.mult_mod
+          return {
+            extra = {message = localize('k_upgrade_ex'), colour = G.C.MULT},
+            colour = G.C.MULT,
+            card = card
+          }
         end
       end
     end
@@ -82,32 +76,29 @@ local sliggoo={
   gen = 6,
   blueprint_compat = true,
   calculate = function(self, card, context)
+    local a = card.ability.extra
+    if context.press_play then
+      a.scoring_flush = get_flush(G.hand.highlighted)[1]
+      a.matching_suit = a.scoring_flush[1].config.card.suit
+    end
     -- Count # of Flushes played
     if context.before and context.main_eval and context.scoring_name == 'Flush' then
-      card.ability.extra.flushes = card.ability.extra.flushes + 1
-      return
+      a.flushes = a.flushes + 1
     end
+    -- Main effect
     if context.individual and (context.cardarea == G.hand or context.cardarea == G.play) and not context.end_of_round then
-      if context.scoring_name == 'Flush' then
-        -- Get the scoring cards that make up the Flush only
-        local scoring_flush = get_flush(context.scoring_hand)[1]
-        local wildcount = 0
-        local matching_suit = nil
-        local unique_ranks = {}
+      if context.scoring_name == 'Flush' and a.scoring_flush then
+        local wildcount = #PkmnDip.utils.filter(a.scoring_flush, function(v) return SMODS.has_enhancement(v, 'm_wild') end)
         -- Count the unique ranks in scoring hand
+        local unique_ranks = {}
         for i = 1, #context.scoring_hand do
           if not PkmnDip.utils.contains(unique_ranks, context.scoring_hand[i]:get_id()) then
             unique_ranks[#unique_ranks+1] = context.scoring_hand[i]:get_id()
           end
         end
-        -- Count the # of wild cards and determine Flush suit
-        for i = 1, #scoring_flush do
-          if SMODS.has_enhancement(scoring_flush[i], 'm_wild') then wildcount = wildcount + 1
-          else matching_suit = scoring_flush[i].config.card.suit end
-        end
         -- Increment permamult if card matches Flush suit
-        if wildcount == #scoring_flush or context.other_card:is_suit(matching_suit) then
-          context.other_card.ability.perma_mult = (context.other_card.ability.perma_mult or 0) + card.ability.extra.mult_mod * #unique_ranks
+        if wildcount == #a.scoring_flush or context.other_card:is_suit(a.matching_suit) then
+          context.other_card.ability.perma_mult = (context.other_card.ability.perma_mult or 0) + a.mult_mod * #unique_ranks
           return {
             extra = {message = localize('k_upgrade_ex'), colour = G.C.MULT},
             colour = G.C.MULT,
@@ -135,27 +126,24 @@ local goodra={
   gen = 6,
   blueprint_compat = true,
   calculate = function(self, card, context)
+    local a = card.ability.extra
+    if context.press_play then
+      a.scoring_flush = get_flush(G.hand.highlighted)[1]
+      a.matching_suit = a.scoring_flush[1].config.card.suit
+    end
     if context.individual and (context.cardarea == G.hand or G.play) and not context.end_of_round then
-      if context.scoring_name == 'Flush' then
-        -- Get the scoring cards that make up the Flush only
-        local scoring_flush = get_flush(context.scoring_hand)[1]
-        local wildcount = 0
-        local matching_suit = nil
-        local unique_ranks = {}
+      if context.scoring_name == 'Flush' and a.scoring_flush then
+        local wildcount = #PkmnDip.utils.filter(a.scoring_flush, function(v) return SMODS.has_enhancement(v, 'm_wild') end)
         -- Count the unique ranks in scoring hand
+        local unique_ranks = {}
         for i = 1, #context.scoring_hand do
           if not PkmnDip.utils.contains(unique_ranks, context.scoring_hand[i]:get_id()) then
             unique_ranks[#unique_ranks+1] = context.scoring_hand[i]:get_id()
           end
         end
-        -- Count the # of wild cards and determine Flush suit
-        for i = 1, #scoring_flush do
-          if SMODS.has_enhancement(scoring_flush[i], 'm_wild') then wildcount = wildcount + 1
-          else matching_suit = scoring_flush[i].config.card.suit end
-        end
         -- Increment permamult if card matches Flush suit
-        if wildcount == #scoring_flush or context.other_card:is_suit(matching_suit) then
-          context.other_card.ability.perma_x_mult = (context.other_card.ability.perma_x_mult or 0) + card.ability.extra.Xmult_multi * #unique_ranks
+        if wildcount == #a.scoring_flush or context.other_card:is_suit(a.matching_suit) then
+          context.other_card.ability.perma_x_mult = (context.other_card.ability.perma_x_mult or 0) + a.Xmult_multi * #unique_ranks
           return {
             extra = {message = localize('k_upgrade_ex'), colour = G.C.MULT},
             colour = G.C.MULT,
