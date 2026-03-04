@@ -59,10 +59,10 @@ local dolliv = {
         end
       end
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_val_up'), colour = G.C.MONEY})
-      local total_sell_value = 0
-      PkmnDip.utils.for_each(find_pokemon_type('Grass'), function(v) total_sell_value = total_sell_value + v.sell_cost end)
-      a.total_sell_value = total_sell_value
     end
+    local total_sell_value = 0
+    PkmnDip.utils.for_each(find_pokemon_type('Grass'), function(v) total_sell_value = total_sell_value + v.sell_cost end)
+    a.total_sell_value = total_sell_value
     return scaling_evo(self, card, context, "j_nacho_arboliva", a.total_sell_value, self.config.evo_rqmt)
   end,
 }
