@@ -20,15 +20,9 @@ local turtwig={
     if context.end_of_round and context.cardarea == G.jokers then
       card.ability.extra.counter = card.ability.extra.counter + 1
       G.GAME.interest_cap = G.GAME.interest_cap + card.ability.extra.interest
-      local evolved = level_evo(self, card, context, "j_nacho_grotle")
-      if evolved then
-        return evolved
-      end
-      return {
-          message = localize("poke_leech_seed_ex"),
-          card = card,
-        }
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_leech_seed_ex')})
     end
+    return level_evo(self, card, context, "j_nacho_grotle")
   end,
   add_to_deck = function(self, card, from_debuff)
     G.hand:change_size(card.ability.extra.h_size)
@@ -68,15 +62,9 @@ local grotle={
     if context.end_of_round and context.cardarea == G.jokers then
       card.ability.extra.counter = card.ability.extra.counter + 2
       G.GAME.interest_cap = G.GAME.interest_cap + card.ability.extra.interest * 2
-      local evolved = level_evo(self, card, context, "j_nacho_torterra")
-      if evolved then
-        return evolved
-      end
-      return {
-          message = localize("poke_leech_seed_ex"),
-          card = card,
-        }
+      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_leech_seed_ex')})
     end
+    return level_evo(self, card, context, "j_nacho_torterra")
   end,
   add_to_deck = function(self, card, from_debuff)
     G.hand:change_size(card.ability.extra.h_size)
