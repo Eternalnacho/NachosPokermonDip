@@ -65,14 +65,6 @@ pages[#pages].tiles[#pages[#pages].tiles+1] =
   { list = { 'j_nacho_pecharunt' }, label = function() return localize { type = "name_text", set = "Joker", key = "j_nacho_pecharunt" } end,
     config_key = "pecharunt", condition = (SMODS.Mods["ToxicStall"] or {}).can_load or false, mod_tVal = "The Toxic Stall" }
 
--- Legacy content page (which is really just bagon lmao)
-pages[#pages+1] = { title = function() return "Legacy Content" end, tiles = {} }
-
-pages[#pages].tiles[#pages[#pages].tiles+1] =
-  { list = { 'j_nacho_bagon', 'j_nacho_shelgon', 'j_nacho_salamence', 'j_nacho_mega_salamence' },
-    label = function() return localize { type = "name_text", set = "Joker", key = "j_nacho_bagon" } end,
-    config_key = "bagon", condition = pokermon_config.pokemon_legacy, mod_tVal = "Pokermon (Legacy Content)" }
-
 return {
   pages = pages
 }
