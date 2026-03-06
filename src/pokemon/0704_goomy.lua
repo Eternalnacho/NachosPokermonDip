@@ -24,7 +24,7 @@ local goomy={
     local a = card.ability.extra
     if context.press_play then
       a.scoring_flush = get_flush(G.hand.highlighted)[1]
-      a.matching_suit = a.scoring_flush[1].config.card.suit
+      a.matching_suit = a.scoring_flush and a.scoring_flush[1].config.card.suit
     end
     -- Check if Flush House played
     if context.before and context.main_eval then
@@ -79,7 +79,7 @@ local sliggoo={
     local a = card.ability.extra
     if context.press_play then
       a.scoring_flush = get_flush(G.hand.highlighted)[1]
-      a.matching_suit = a.scoring_flush[1].config.card.suit
+      a.matching_suit = a.scoring_flush and a.scoring_flush[1].config.card.suit
     end
     -- Count # of Flushes played
     if context.before and context.main_eval and context.scoring_name == 'Flush' then
@@ -129,7 +129,7 @@ local goodra={
     local a = card.ability.extra
     if context.press_play then
       a.scoring_flush = get_flush(G.hand.highlighted)[1]
-      a.matching_suit = a.scoring_flush[1].config.card.suit
+      a.matching_suit = a.scoring_flush and a.scoring_flush[1].config.card.suit
     end
     if context.individual and (context.cardarea == G.hand or G.play) and not context.end_of_round then
       if context.scoring_name == 'Flush' and a.scoring_flush then
