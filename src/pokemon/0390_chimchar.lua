@@ -31,10 +31,12 @@ local chimchar={
       return { mult = extra.mult }
     end
 
-    if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
+    if context.end_of_round and context.main_eval and not context.blueprint then
       extra.mult = 0
-      return level_evo(self, card, context, "j_nacho_monferno") or { message = localize('k_reset'), colour = G.C.RED }
+      card_eval_status_text( card, 'extra', nil, nil, nil, { message = localize('k_reset'), colour = G.C.RED } )
     end
+
+    return level_evo(self, card, context, "j_nacho_monferno")
   end,
   add_to_deck = function(self, card, from_debuff)
     G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
@@ -77,8 +79,10 @@ local monferno={
 
     if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
       extra.mult = 0
-      return level_evo(self, card, context, "j_nacho_infernape") or { message = localize('k_reset'), colour = G.C.RED }
+      card_eval_status_text( card, 'extra', nil, nil, nil, { message = localize('k_reset'), colour = G.C.RED } )
     end
+
+    return level_evo(self, card, context, "j_nacho_infernape")
   end,
   add_to_deck = function(self, card, from_debuff)
     G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
@@ -125,7 +129,7 @@ local infernape = {
       }
     end
 
-    if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
+    if context.end_of_round and context.main_eval and not context.blueprint then
       card.ability.extra.Xmult = 1.0
       return { message = localize('k_reset'), colour = G.C.RED }
     end
