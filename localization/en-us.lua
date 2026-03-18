@@ -17,40 +17,6 @@ return {
           "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Dawn Stone{C:inactive,s:0.8})",
         }
       },
-      j_nacho_ralts = {
-        name = "Ralts",
-        text = {
-          "{C:red}+#1#{} Mult per {C:attention}hand level",
-          "above 1 {C:inactive}(Currently {C:red}+#2#{C:inactive} Mult)",
-          "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
-        }
-      },
-      j_nacho_kirlia = {
-        name = "Kirlia",
-        text = {
-          "{C:red}+#1#{} Mult per {C:attention}hand level",
-          "above 1 {C:inactive}(Currently {C:red}+#2#{C:inactive} Mult)",
-          "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Dawn Stone{C:inactive,s:0.8})",
-          "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
-        }
-      },
-      j_nacho_gardevoir = {
-        name = "Gardevoir",
-        text = {
-          "{X:red,C:white}X#1#{} Mult per {C:attention}hand level",
-          "above 1 {C:inactive}(Currently {X:red,C:white}X#2#{C:inactive} Mult)",
-        }
-      },
-      j_nacho_mega_gardevoir = {
-        name = "Mega Gardevoir",
-        text = {
-          "{X:red,C:white}X#1#{} Mult per {C:attention}hand level",
-          "above 1 {C:inactive}(Currently {X:red,C:white}X#2#{C:inactive} Mult)",
-          "{br:2}ERROR - CONTACT STEAK",
-          "Creates a {C:dark_edition}Negative{} {C:spectral}Black Hole{}",
-          "after using {C:attention}#3#{} unique {C:planet}Planet{} cards",
-        }
-      },
       j_nacho_swablu = {
         name = "Swablu",
         text = {
@@ -235,30 +201,6 @@ return {
         text = {
           "Earn {C:money}$#1#{} when a",
           "{C:attention}Glass{} card breaks",
-        }
-      },
-      j_nacho_gallade = {
-        name = "Gallade",
-        text = {
-          "{C:planet}Planet{} cards only raise the level",
-          "of your most played {C:attention}poker hand{}",
-          "{br:2}ERROR - CONTACT STEAK",
-          "{X:red,C:white}X#1#{} Mult for each time",
-          "{C:attention}poker hand{} has been played this run",
-        }
-      },
-      j_nacho_mega_gallade = {
-        name = "Mega Gallade",
-        text = {
-          "Played cards will always",
-          "score if {C:attention}poker hand{}",
-          "is your most played hand",
-          "{br:2}ERROR - CONTACT STEAK",
-          "{X:red,C:white}X#1#{} Mult for each time",
-          "{C:attention}poker hand{} has been",
-          "played this run",
-          "{br:2}ERROR - CONTACT STEAK",
-          "This Joker can't be debuffed",
         }
       },
       j_nacho_victini = {
