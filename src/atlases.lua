@@ -1,9 +1,12 @@
-SMODS.Atlas({
-    key = "modicon",
-    path = "icon.png",
-    px = 31,
-    py = 31
-})
+local release = require "SMODS.release"
+if release ~= "1.0.0~BETA-1531zeebee-STEAMODDED" then
+  SMODS.Atlas({
+      key = "modicon",
+      path = "icon.png",
+      px = 31,
+      py = 31
+  })
+end
 
 SMODS.Atlas({
     key = "stakes",
