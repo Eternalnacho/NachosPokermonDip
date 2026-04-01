@@ -44,7 +44,7 @@ local prinplup={
   config = {extra = {hands = 1, chips = 50, rounds = 4}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    return {vars = {card.ability.extra.hands, card.ability.extra.chips, card.ability.extra.chip_mod, card.ability.extra.rounds}}
+    return {vars = {card.ability.extra.hands, card.ability.extra.chips, card.ability.extra.rounds}}
   end,
   rarity = "poke_safari",
   cost = 8,
