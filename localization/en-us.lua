@@ -127,7 +127,7 @@ return {
           "{C:blue}+#1#{} hand, {C:chips}+#2#{} Chips",
           "Each card {C:attention}held in hand{}",
           "gives Chips equal to its rank",
-          "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#4#{C:inactive,s:0.8} rounds)",
+          "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
         }
       },
       j_nacho_empoleon = {

@@ -41,7 +41,7 @@ local piplup={
 -- Prinplup 394
 local prinplup={
   name = "prinplup",
-  config = {extra = {hands = 1, chips = 30, chip_mod = 0, rounds = 4}},
+  config = {extra = {hands = 1, chips = 50, rounds = 4}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.hands, card.ability.extra.chips, card.ability.extra.chip_mod, card.ability.extra.rounds}}
@@ -55,9 +55,8 @@ local prinplup={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.individual and not context.end_of_round and context.cardarea == G.hand and not SMODS.has_no_rank(context.other_card) then
-      card.ability.extra.chip_mod = context.other_card.base.nominal
       return {
-        h_chips = card.ability.extra.chip_mod,
+        h_chips = context.other_card.base.nominal,
         card = card,
       }
     end
@@ -86,10 +85,10 @@ local prinplup={
 -- Empoleon 395
 local empoleon={
   name = "empoleon",
-  config = {extra = {hands = 1, chips = 50, chip_mod = 0}},
+  config = {extra = {hands = 1, chips = 80}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
-    return {vars = {card.ability.extra.hands, card.ability.extra.chips, card.ability.extra.chip_mod, card.ability.extra.rounds}}
+    return {vars = {card.ability.extra.hands, card.ability.extra.chips}}
   end,
   rarity = "poke_safari",
   cost = 10,
@@ -100,9 +99,8 @@ local empoleon={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.individual and not context.end_of_round and context.cardarea == G.hand and not SMODS.has_no_rank(context.other_card) then
-      card.ability.extra.chip_mod = context.other_card.base.nominal * 2
       return {
-        h_chips = card.ability.extra.chip_mod,
+        h_chips = context.other_card.base.nominal * 2,
         card = card,
       }
     end
