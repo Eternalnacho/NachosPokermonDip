@@ -17,36 +17,6 @@ return {
           "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Dawn Stone{C:inactive,s:0.8})",
         }
       },
-      j_nacho_swablu = {
-        name = "Swablu",
-        text = {
-          "Earn {C:money}$#1#{} for each",
-          "{C:attention}9{} in your {C:attention}full deck{}",
-          "at end of round",
-          "{C:inactive}(Currently {C:money}$#2#{}{C:inactive})",
-          "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#3#{C:inactive,s:0.8} rounds)",
-        }
-      },
-      j_nacho_altaria = {
-        name = "Altaria",
-        text = {
-          "Earn {C:money}$#1#{} for each {C:attention}unenhanced 9{}",
-          "and {C:money}$#2#{} for each {C:attention}enhanced 9{}",
-          "in your {C:attention}full deck{} at end of round",
-          "{br:2}ERROR - CONTACT STEAK",
-          "{C:attention}9s can't{} be debuffed",
-          "{C:inactive}(Currently {C:money}$#3#{}{C:inactive})",
-        }
-      },
-      j_nacho_mega_altaria = {
-        name = "Mega Altaria",
-        text = {
-          "Adds {C:dark_edition}Foil{}, {C:dark_edition}Holographic{},",
-          "or {C:dark_edition}Polychrome{} to each",
-          "played {C:attention}9{} without",
-          "an {C:attention}edition{}",
-        }
-      },
       j_nacho_turtwig = {
         name = "Turtwig",
         text = {
