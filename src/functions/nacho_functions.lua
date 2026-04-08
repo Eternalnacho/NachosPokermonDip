@@ -119,84 +119,15 @@ common_ranks_tooltip = function(self, info_queue)
   info_queue[#info_queue + 1] = { set = 'Other', key = key, vars = rank_lists }
 end
 
-
--- Calculate Boss Triggers (for Turtonator mostly but who knows)
-calc_boss_trigger = function(context)
-  if context.blind and context.blind.boss and not G.GAME.blind.nametracker then
-    G.GAME.blind.nametracker = context.blind.name
-  end
-
-  if context.setting_blind and context.blind and context.blind.boss and not G.GAME.blind.disabled then
-    local boss_name = context.blind.name
-    -- These boss blinds trigger only at the start
-    -- The Wall, The Water, The Manacle, The Needle, Amber Acorn, Violet Vessel
-    if context.blind.mult ~= 2 then return true end
-    if (boss_name == "The Water" or boss_name == "The Manacle" or boss_name == "Amber Acorn"
-      or boss_name == "The Mirror" or boss_name == "bl_poke_white_executive") then
-      return true
+get_lowest_hand_level = function()
+  local lowest_level
+  for _, v in pairs(G.GAME.hands) do
+    local hand_level = (SMODS.Mods["Talisman"] or {}).can_load and (to_number(v.level)) or (v.level)
+    if lowest_level then
+      lowest_level = hand_level < lowest_level and hand_level or lowest_level
+    else
+      lowest_level = hand_level
     end
   end
-
-  if G.GAME.blind.nametracker then
-    local boss_name = G.GAME.blind.nametracker
-    -- The Window, The Head, The Club, The Goad, The Plant, The Pillar, The Flint, The Eye, The Mouth, The Psychic, The Arm, The Ox, Verdant Leaf
-    if context.debuffed_hand or context.joker_main then
-      if G.GAME.blind.triggered then
-        G.GAME.blind.nametracker = nil
-        return true
-      end
-
-    -- The House
-    elseif context.first_hand_drawn and boss_name == "The House" then
-      G.GAME.blind.nametracker = nil
-      return true
-
-    -- The Serpent
-    elseif (context.press_play or context.pre_discard) and boss_name == "The Serpent" and #G.hand.highlighted > 3 then
-      G.GAME.blind.serpentcheck = true
-
-    -- Gray Godfather
-    elseif context.pre_discard and boss_name == "bl_poke_gray_godfather" then
-      return true
-
-    -- The Hook, The Tooth, The Star, Crimson Heart, Cerulean Bell, Gray Godfather, Iridescent Hacker
-    elseif context.press_play then
-      local jokdebuff = poke_find_card(function(v) return v.debuff end)
-      local forcedselection = false
-      for k, v in pairs(G.hand.highlighted) do
-        if v.ability.forced_selection or v.ability.pokermon_forced_selection then
-          v.ability.pokermon_forced_selection = nil
-          forcedselection = true
-        end
-      end
-      if (boss_name == "The Hook" and (#G.hand.cards - #G.hand.highlighted) > 0)
-        or boss_name == "The Tooth" or boss_name == "bl_poke_gray_godfather"
-        or ((boss_name == "Crimson Heart" or boss_name == "bl_poke_star" or boss_name == "bl_poke_iridescent_hacker") and jokdebuff)
-        or (boss_name == "Cerulean Bell" and forcedselection) then
-        G.GAME.blind.nametracker = nil
-        return true
-      end
-
-    -- The Serpent (cont.), The Wheel, The Mark, The Fish
-    elseif context.hand_drawn then
-      local facedown = false
-      for _, v in pairs(context.hand_drawn) do
-        if v.facing == 'back' then
-          facedown = true
-        end
-      end
-      if (boss_name == "The Serpent" and G.GAME.blind.serpentcheck)
-        or ((boss_name == "The Wheel" or boss_name == "The Mark" or boss_name == "The Fish") and facedown) then
-        -- first set the flag when hand is played or discarded, then
-        -- only apply boss_trigger when the hand is drawn
-        if G.GAME.blind.serpentcheck then G.GAME.blind.serpentcheck = nil end
-        G.GAME.blind.nametracker = nil
-        return true
-      end
-
-    -- End of round, AKA cleaning up the mess
-    elseif context.end_of_round then
-      G.GAME.blind.nametracker = nil
-    end
-  end
+  return lowest_level
 end

@@ -45,7 +45,7 @@ local pages = {
   {
     title = function() return localize("nacho_pokemon5") end,
     tiles = {
-      { list = { 'j_poke_mega_altaria' }, label = function() return "Other Megas" end, config_key = "other_megas" },
+      { list = { 'j_poke_mega_gardevoir', 'j_poke_mega_gallade', 'j_poke_mega_altaria' }, label = function() return "Other Megas" end, config_key = "other_megas" },
     }
   },
 }
