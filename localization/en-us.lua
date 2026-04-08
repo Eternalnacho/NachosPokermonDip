@@ -601,7 +601,7 @@ return {
           "the same type as Terapagos",
           "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)",
           "{C:inactive,s:0.8}(Transforms after using a {C:item,s:0.8}Tera Orb{}",
-          "{C:inactive,s:0.8}on Terapagos {C:inactive,s:0.8}if it has >= 6 Energy)",
+          "{C:inactive,s:0.8}on Terapagos {C:inactive,s:0.8}if it has 6+ Energy)",
         }
       },
       j_nacho_terapagos_stellar = {
