@@ -27,7 +27,7 @@ local function create_tile_grid(args)
       ref_table = nacho_config,
       ref_value = tile.config_key,
       condition = tile.condition,
-      mod_tVal = tile.mod_tVal
+      mod_tVal = tile.mod_tVal,
     }
   end) or {}
   

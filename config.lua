@@ -29,5 +29,6 @@ return {
   pecharunt = true,
   hisuian_sneasel = (SMODS.Mods["ToxicStall"] or {}).can_load and true or false,
   customStakes = true,
+  other_megas = true,
   -- customItems = true,
 }

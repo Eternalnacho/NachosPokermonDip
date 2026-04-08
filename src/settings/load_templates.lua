@@ -1,8 +1,8 @@
 -- This is just the Load Pokemon file but tweaked a bit
-
 local poke_templates = {}
 
 local function load_template(item)
+  local custom_prefix = item.nacho_inject_prefix or "nacho"
   local custom_atlas = item.atlas and string.find(item.atlas, "nacho")
 
   if not item.atlas then
@@ -12,7 +12,7 @@ local function load_template(item)
 
   item.atlas = (custom_atlas and "" or "poke_") .. item.atlas
   item.set = 'Joker'
-  item.key = 'j_nacho_' .. item.name
+  item.key = 'j_' .. custom_prefix .. '_' .. item.name
   item.ability = item.config
 
   poke_templates[item.key] = item
@@ -38,5 +38,6 @@ local function load_pokemon_folder(folder)
 end
 
 load_pokemon_folder("src/pokemon/")
+load_pokemon_folder("src/pokemon/megas/")
 
 return poke_templates

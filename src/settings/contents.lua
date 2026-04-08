@@ -42,6 +42,12 @@ local pages = {
       { list = { 'j_nacho_terapagos', 'j_nacho_terapagos_terastal', 'j_nacho_terapagos_stellar' }, label = function() return localize { type = "name_text", set = "Joker", key = "j_nacho_terapagos" } end, config_key = "terapagos" },
     }
   },
+  {
+    title = function() return localize("nacho_pokemon5") end,
+    tiles = {
+      { list = { 'j_poke_mega_altaria' }, label = function() return "Other Megas" end, config_key = "other_megas" },
+    }
+  },
 }
 
 -- Adding in the Cross-Mod joker pages

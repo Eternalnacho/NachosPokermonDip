@@ -79,7 +79,7 @@ local function init()
 end
 
 return {
-  config_key = "swablu",
+  can_load = nacho_config.other_megas,
   init = init,
   list = { mega_altaria }
 }
