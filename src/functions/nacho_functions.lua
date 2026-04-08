@@ -3,7 +3,7 @@
 SMODS.current_mod.set_debuff = function(card)
   -- prevent debuffs
   if card.ability.name == "mega_gallade" then return 'prevent_debuff' end
-  if card:get_id() == 9 and next(find_joker("altaria")) then return 'prevent_debuff' end
+  if card:get_id() == 9 and next(find_joker("mega_altaria")) then return 'prevent_debuff' end
 
   return false
 end
