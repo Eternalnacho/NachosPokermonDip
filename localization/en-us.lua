@@ -44,7 +44,7 @@ return {
         name = "Torterra",
         text = {
           "{C:attention}+1{} hand size for every",
-          "{C:money}$15{} you have {C:inactive}(Max of 4)",
+          "{C:money}$15{} you have {C:inactive}(Max of 3)",
           "{br:2}ERROR - CONTACT STEAK",
           "Raises the cap on interest",
           "earned each round by {C:money}$3{}",

@@ -41,6 +41,27 @@ function PkmnDip.utils.id(a)
   return a
 end
 
+-- Stealing this one from Emma holy moly that's useful
+function PkmnDip.defer(func)
+  G.E_MANAGER:add_event(Event({
+    func = function()
+      func()
+      return true
+    end
+  }))
+end
+
+-- Talisman shorthand
+to_number = to_number or function(x) return x end
+
+-- (Thank you TMJ, I also wonder why these functions dont exist.)
+function math.clamp(num, min, max)
+    max = max or math.huge
+    min = min or -math.huge
+    assert(min <= max)
+    return math.min(math.max(num, min), max)
+end
+
 -- metafunctions
 function PkmnDip.utils.hook_before_function(table, funcname, hook)
   if not table[funcname] then
