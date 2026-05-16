@@ -50,6 +50,7 @@ local okidogi = {
       card.ability.extra.toxic_chain = true
     end
   end,
+  attributes = {"enhancements", "modify_card", "destroy_card"}
 }
 
 -- Munkidori 1015
@@ -107,6 +108,7 @@ local munkidori = {
   remove_from_deck = function(self, card, from_debuff)
     G.GAME.scry_amount = math.max(0, (G.GAME.scry_amount or 0) - card.ability.extra.scry - card.ability.extra.scry_added)
   end,
+  attributes = {"enhancements", "modify_card", "foresight"},
 }
 
 -- Fezandipiti 1016
@@ -157,7 +159,8 @@ local fezandipiti = {
     if not from_debuff then
       card.ability.extra.toxic_chain = true
     end
-  end
+  end,
+  attributes = {"enhancements", "modify_card"},
 }
 
 return {

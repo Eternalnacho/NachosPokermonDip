@@ -39,7 +39,8 @@ local pecharunt = {
     if not from_debuff then
       card.ability.extra.malignant = true
     end
-  end
+  end,
+  attributes = {"enhancements", "modify_card", "passive"}
 }
 
 return {

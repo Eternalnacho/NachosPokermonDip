@@ -1,4 +1,4 @@
-function copy_card_to_play(joker, card)
+local function copy_card_to_play(joker, card)
   for _ = 1, joker.ability.extra.dip_card_dupes do
     if #G.play.cards < 5 then
       local copy = copy_card(card)
@@ -8,12 +8,7 @@ function copy_card_to_play(joker, card)
       G.play:emplace(copy)
       copy.states.visible = nil
       copy:start_materialize()
-      G.E_MANAGER:add_event(Event({
-        func = function()
-          G.play:add_to_highlighted(copy)
-          return true
-        end
-      }))
+      PkmnDip.defer(function() G.play:add_to_highlighted(copy) end)
       table.insert(joker.ability.extra.copied_cards, copy.unique_val)
       if joker.ability.extra.copies_req then joker.ability.extra.copies_req = joker.ability.extra.copies_req + 1 end
       playing_card_joker_effects(copy)
@@ -55,6 +50,7 @@ local solosis = {
     end
     return scaling_evo(self, card, context, "j_nacho_duosion", card.ability.extra.copies_req, self.config.evo_rqmt)
   end,
+  attributes = {"generation", "hands", "condition_evo"},
 }
 
 -- Duosion 578
@@ -90,6 +86,7 @@ local duosion = {
     end
     return scaling_evo(self, card, context, "j_nacho_reuniclus", card.ability.extra.copies_req, self.config.evo_rqmt)
   end,
+  attributes = {"generation", "hands", "condition_evo"},
 }
 
 local reuniclus = {
@@ -119,6 +116,7 @@ local reuniclus = {
       end
     end
   end,
+  attributes = {"generation"},
 }
 
 local function init()

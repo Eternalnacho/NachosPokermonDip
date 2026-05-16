@@ -20,7 +20,7 @@ local applin = {
   evo_list = {tartapple = 'j_nacho_flapple', sweetapple = "j_nacho_appletun", syrupyapple = 'j_nacho_dipplin'},
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.end_of_round and not context.individual and not context.repetition and not context.game_over then
+    if context.end_of_round and context.main_eval then
       local target = pseudorandom_element(G.deck.cards, pseudoseed('applin'))
       if target then
         SMODS.destroy_cards(target, nil, true)
@@ -35,6 +35,7 @@ local applin = {
   remove_from_deck = function(self, card, from_debuff)
     G.hand:change_size(-card.ability.extra.h_size)
   end,
+  attributes = {"passive", "hand_size", "destroy_card", "condition_evo"}
 }
 
 -- Flapple 841
@@ -57,20 +58,30 @@ local flapple = {
     -- Replace all destroyed cards with Wild copies and count Wild cards destroyed
     if context.remove_playing_cards and not context.blueprint then
       -- increment Xmult
-      a.Xmult = a.Xmult + a.Xmult_mod * #context.removed
-      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize{type='variable',key='a_xmult',vars={a.Xmult}}, colour = G.C.FILTER})
+      SMODS.scale_card(card, {
+        ref_value = 'Xmult',
+        scalar_value = 'Xmult_mod',
+        operation = function(ref_table, ref_value, initial, change)
+          ref_table[ref_value] = initial + change * #context.removed
+        end,
+        message_key = 'a_xmult',
+        message_colour = G.C.XMULT
+      })
     end
-
-    if context.joker_main or context.debuffed_hand then
-      if not context.blueprint and not context.retrigger_joker then a.Xmult = math.max(a.Xmult - 0.1, 1) end
-    end
-
     if context.joker_main then
-      return {
-        xmult = a.Xmult
-      }
+      return { xmult = a.Xmult }
+    end
+    if context.after and not context.blueprint and not context.retrigger_joker then
+      SMODS.scale_card(card, {
+        ref_value = 'Xmult',
+        operation = function(ref_table, ref_value, initial, change)
+          ref_table[ref_value] = math.max(initial - 0.1, 1)
+        end,
+        no_message = true
+      })
     end
   end,
+  attributes = {"passive", "hand_size", "destroy_card", "condition_evo"}
 }
 
 -- Appletun 842
@@ -119,6 +130,7 @@ local appletun = {
   remove_from_deck = function(self, card, from_debuff)
     G.hand:change_size(-card.ability.extra.h_size)
   end,
+  attributes = {"passive", "hand_size", "economy", "full_deck"}
 }
 
 -- Dipplin 1011
@@ -146,32 +158,26 @@ local dipplin = {
         local copies = SMODS.has_enhancement(removed, 'm_wild') and 2 or 1
         for _ = 1, copies do
           -- copy destroyed card and convert to wild
-          G.E_MANAGER:add_event(Event({
-            trigger = 'after',
-            delay = 0.1,
-            func = function()
-              local copy = copy_card(removed, nil, nil, G.playing_card)
-              copy:add_to_deck()
-              G.deck.config.card_limit = G.deck.config.card_limit + 1
-              table.insert(G.playing_cards, copy)
-              G.deck:emplace(copy)
-              copy.states.visible = nil
-              copy:start_materialize()
-              poke_convert_cards_to(copy, {mod_conv = 'm_wild'}, true, true)
-              playing_card_joker_effects({copy})
-              return true
-            end
-          }))
+          PkmnDip.defer(function()
+            local copy = copy_card(removed)
+            copy:add_to_deck()
+            G.deck.config.card_limit = G.deck.config.card_limit + 1
+            table.insert(G.playing_cards, copy)
+            G.deck:emplace(copy)
+            copy.states.visible = nil
+            copy:start_materialize()
+            poke_convert_cards_to(copy, {mod_conv = 'm_wild'}, true, true)
+            playing_card_joker_effects({copy})
+          end, 0.1)
           -- "copied" status text
           card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_copied_ex'), colour = G.C.FILTER})
         end
       end
-      return {
-        playing_cards_created = {true}
-      }
+      return { playing_cards_created = {true} }
     end
     return deck_enhance_evo(self, card, context, "j_nacho_hydrapple", "Wild", .25)
   end,
+  attributes = {"enhancements", "generation", "condition_evo", "modify_card"}
 }
 
 -- Hydrapple 1019
@@ -198,43 +204,38 @@ local hydrapple = {
     if context.remove_playing_cards then
       for _, removed in pairs(context.removed) do
         -- copy destroyed card and convert to wild
-        G.E_MANAGER:add_event(Event({
-          trigger = 'after',
-          delay = 0.1,
-          func = function()
-            local copy = copy_card(removed, nil, nil, G.playing_card)
-            copy:add_to_deck()
-            G.deck.config.card_limit = G.deck.config.card_limit + 1
-            table.insert(G.playing_cards, copy)
-            G.deck:emplace(copy)
-            copy.states.visible = nil
-            copy:start_materialize()
-            poke_convert_cards_to(copy, {mod_conv = 'm_wild'}, true, true)
-            playing_card_joker_effects({copy})
-            return true
-          end
-        }))
+        PkmnDip.defer(function()
+          local copy = copy_card(removed)
+          copy:add_to_deck()
+          G.deck.config.card_limit = G.deck.config.card_limit + 1
+          table.insert(G.playing_cards, copy)
+          G.deck:emplace(copy)
+          copy.states.visible = nil
+          copy:start_materialize()
+          poke_convert_cards_to(copy, {mod_conv = 'm_wild'}, true, true)
+          playing_card_joker_effects({copy})
+        end, 0.1)
 
         -- increment Xmult
-        a.Xmult = a.Xmult + a.Xmult_mod * (SMODS.has_enhancement(removed, 'm_wild') and 2 or 1)
-
+        SMODS.scale_card(card, {
+          ref_value = 'Xmult',
+          scalar_value = 'Xmult_mod',
+          operation = function(ref_table, ref_value, initial, change)
+            ref_table[ref_value] = initial + change * (SMODS.has_enhancement(removed, 'm_wild') and 2 or 1)
+          end,
+          message_key = 'a_xmult',
+          message_colour = G.C.XMULT
+        })
         -- "copied" status text
         card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_copied_ex'), colour = G.C.FILTER})
       end
-      if not context.blueprint then
-        delay(0.3)
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize{type='variable',key='a_xmult',vars={a.Xmult}}, colour = G.C.FILTER})
-      end
-      return {
-        playing_cards_created = {true}
-      }
+      return { playing_cards_created = {true} }
     end
     if context.joker_main then
-      return {
-        xmult = a.Xmult
-      }
+      return { xmult = a.Xmult }
     end
   end,
+  attributes = {"enhancements", "generation", "xmult", "modify_card"}
 }
 
 return {

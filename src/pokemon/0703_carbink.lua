@@ -7,7 +7,7 @@ local carbink = {
     info_queue[#info_queue+1] = {set = 'Other', key = 'hazard_level', vars = poke_get_hazard_level_vars()}
     info_queue[#info_queue+1] = G.P_CENTERS.m_hazard
     info_queue[#info_queue+1] = G.P_CENTERS.m_gold
-    return {vars = { card.ability.extra.hazard_level }}
+    return { vars = { card.ability.extra.hazard_level } }
   end,
   rarity = 3,
   cost = 7,
@@ -17,7 +17,7 @@ local carbink = {
   enhancement_gate = 'm_poke_hazard',
   calculate = function(self, card, context)
     if context.check_enhancement and context.other_card.config.center.key == 'm_poke_hazard' then
-      return {m_gold = true}
+      return { m_gold = true }
     end
   end,
   add_to_deck = function(self, card, from_debuff)
@@ -25,7 +25,8 @@ local carbink = {
   end,
   remove_from_deck = function(self, card, from_debuff)
     poke_change_hazard_level(-card.ability.extra.hazard_level)
-  end
+  end,
+  attributes = {"hazards", "passive", "modify_card", "enhancements"}
 }
 
 return {

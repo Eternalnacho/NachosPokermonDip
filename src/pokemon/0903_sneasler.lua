@@ -41,6 +41,7 @@ local hisuian_sneasel={
 
     return item_evo(self, card, context, "j_nacho_sneasler")
   end,
+  attributes = {"enhancements", "modify_card", "item_evo"}
 }
 
 -- Sneasler 903
@@ -95,6 +96,7 @@ local sneasler={
     -- Undo the check for the conversion trigger
     if context.joker_main then card.ability.extra.triggered = false end
 	end,
+  attributes = {"enhancements", "modify_card"}
 }
 
 return {

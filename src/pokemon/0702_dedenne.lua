@@ -16,23 +16,17 @@ local dedenne = {
   ptype = "Lightning",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.dedenne_trig then
-      if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-        if SMODS.pseudorandom_probability(card, 'dedenne', card.ability.extra.num, card.ability.extra.den, 'dedenne') then
-          G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
-          G.E_MANAGER:add_event(Event({
-            trigger = 'before',
-            delay = 0.0,
-            func = (function()
-              local _card = SMODS.add_card({set = 'Item', area = G.consumeables, key = generate_pickup_item_key('dedenne')})
-              card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.ARGS.LOC_COLOURS.item})
-              G.GAME.consumeable_buffer = 0
-              return true
-          end)}))
-        end
-      end
+    if context.dedenne_trig and (#G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit)
+        and SMODS.pseudorandom_probability(card, 'dedenne', card.ability.extra.num, card.ability.extra.den, 'dedenne') then
+      G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+      PkmnDip.defer(function()
+        local _card = SMODS.add_card({set = 'Item', area = G.consumeables, key = generate_pickup_item_key('dedenne')})
+        card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.ARGS.LOC_COLOURS.item})
+        G.GAME.consumeable_buffer = 0
+      end)
     end
   end,
+  attributes = {"enhancements", "chance", "item", "generation"}
 }
 
 return {

@@ -1,7 +1,7 @@
 -- Turtwig 387
 local turtwig={
   name = "turtwig",
-  config = {extra = {h_size = 1, interest = 0, addition = 1, rounds = 4}},
+  config = {extra = {h_size = 1, interest = 0, rounds = 4}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.h_size, card.ability.extra.rounds, G.GAME.interest_cap / 5}}
@@ -31,12 +31,13 @@ local turtwig={
     G.hand:change_size(-card.ability.extra.h_size)
     G.GAME.interest_cap = G.GAME.interest_cap - card.ability.extra.interest * 5
   end,
+  attributes = {"starter", "hand_size", "passive", "economy", "round_evo"},
 }
 
 -- Grotle 388
 local grotle={
   name = "grotle",
-  config = {extra = {h_size = 1, interest = 0, addition = 2, rounds = 5}},
+  config = {extra = {h_size = 1, interest = 0, rounds = 5}},
   loc_vars = function(self, info_queue, card)
     type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.h_size, card.ability.extra.rounds, G.GAME.interest_cap / 5}}
@@ -75,6 +76,7 @@ local grotle={
     G.hand:change_size(-card.ability.extra.h_size)
     G.GAME.interest_cap = G.GAME.interest_cap - card.ability.extra.interest * 5
   end,
+  attributes = {"starter", "hand_size", "passive", "economy", "round_evo"},
 }
 
 -- Torterra 389
@@ -119,6 +121,7 @@ local torterra={
     G.hand:change_size(-card.ability.extra.h_size)
     G.GAME.interest_cap = G.GAME.interest_cap - card.ability.extra.interest * 5
   end,
+  attributes = {"starter", "hand_size", "passive", "economy"},
 }
 
 local init = function()

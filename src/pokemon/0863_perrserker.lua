@@ -37,6 +37,7 @@ local galarian_meowth={
     end
     return scaling_evo(self, card, context, "j_nacho_perrserker", card.ability.extra.triggered, self.config.evo_rqmt)
   end,
+  attributes = {"enhancements", "retrigger", "condition_evo"}
 }
 
 -- Perrserker 863
@@ -69,6 +70,7 @@ local perrserker = {
       }
     end
   end,
+  attributes = {"enhancements", "retrigger", "modify_card", "energy"}
 }
 
 local init = function()

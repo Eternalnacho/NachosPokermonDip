@@ -19,7 +19,7 @@ local terapagos={
         poke_evolve(card, 'j_nacho_terapagos_terastal')
       end
     end
-    if context.end_of_round and not context.individual and context.main_eval then
+    if context.end_of_round and context.main_eval then
       local _card = SMODS.add_card({set = "Item", area = G.consumeables, edition = 'e_negative', key = "c_poke_teraorb"})
       card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.ARGS.LOC_COLOURS.item})
     end
@@ -30,6 +30,7 @@ local terapagos={
       card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.ARGS.LOC_COLOURS.item})
     end
   end,
+  attributes = {"item", "generation", "condition_evo"}
 }
 
 -- Terapagos-Terastal 1024-1
@@ -81,6 +82,7 @@ local terapagos_terastal={
   remove_from_deck = function(self, card, from_debuff)
     G.GAME.energy_plus = G.GAME.energy_plus and (G.GAME.energy_plus - 3) or 0
   end,
+  attributes = {"energy_limit", "item", "passive", "types", "joker", "xmult", "condition_evo"}
 }
 
 
@@ -176,6 +178,7 @@ local terapagos_stellar={
       apply_type_sticker(card, "Stellar")
     end
   end,
+  attributes = {"energy_limit", "item", "passive", "types", "joker", "xmult"}
 }
 
 local init = function()

@@ -46,6 +46,7 @@ local turtonator={
       }
     end
   end,
+  attributes = {"xmult"}
 }
 
 return {

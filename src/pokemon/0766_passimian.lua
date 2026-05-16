@@ -152,6 +152,7 @@ local passimian={
       localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes}
     end
   end,
+  attributes = {"joker", "joker_slot", "copying"}
 }
 
 local init = function()
