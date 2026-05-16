@@ -42,8 +42,10 @@ function PkmnDip.utils.id(a)
 end
 
 -- Stealing this one from Emma holy moly that's useful
-function PkmnDip.defer(func)
+function PkmnDip.defer(func, delay)
   G.E_MANAGER:add_event(Event({
+    trigger = delay and 'after',
+    delay = delay,
     func = function()
       func()
       return true
