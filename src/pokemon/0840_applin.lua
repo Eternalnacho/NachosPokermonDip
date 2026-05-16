@@ -104,11 +104,9 @@ local appletun = {
     if context.setting_blind or context.pre_discard then
       local old_h_size = a.h_size
       local ranks = {}
-      for i = 2, 14 do
-        for _, v in pairs(G.deck.cards) do
-          if v:get_id() == i and not PkmnDip.utils.contains(ranks, i) then ranks[#ranks+1] = i end
-        end
-      end
+      PkmnDip.utils.for_each(G.deck.cards, function(v)
+        if not PkmnDip.utils.contains(ranks, v:get_id()) then ranks[#ranks+1] = v:get_id() end
+      end)
       a.h_size = #ranks < 13 and 2 or 1
       G.hand:change_size(a.h_size - old_h_size)
     end
@@ -119,11 +117,9 @@ local appletun = {
   end,
   add_to_deck = function(self, card, from_debuff)
     local ranks = {}
-    for i = 2, 14 do
-      for _, v in pairs(G.deck.cards) do
-        if v:get_id() == i and not PkmnDip.utils.contains(ranks, i) then ranks[#ranks+1] = i end
-      end
-    end
+    PkmnDip.utils.for_each(G.deck.cards, function(v)
+      if not PkmnDip.utils.contains(ranks, v:get_id()) then ranks[#ranks+1] = v:get_id() end
+    end)
     card.ability.extra.h_size = #ranks < 13 and 2 or 1
     G.hand:change_size(card.ability.extra.h_size)
   end,
@@ -158,17 +154,7 @@ local dipplin = {
         local copies = SMODS.has_enhancement(removed, 'm_wild') and 2 or 1
         for _ = 1, copies do
           -- copy destroyed card and convert to wild
-          PkmnDip.defer(function()
-            local copy = copy_card(removed)
-            copy:add_to_deck()
-            G.deck.config.card_limit = G.deck.config.card_limit + 1
-            table.insert(G.playing_cards, copy)
-            G.deck:emplace(copy)
-            copy.states.visible = nil
-            copy:start_materialize()
-            poke_convert_cards_to(copy, {mod_conv = 'm_wild'}, true, true)
-            playing_card_joker_effects({copy})
-          end, 0.1)
+          copy_playing_card(removed, {mod_conv = 'm_wild'})
           -- "copied" status text
           card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_copied_ex'), colour = G.C.FILTER})
         end
@@ -204,18 +190,7 @@ local hydrapple = {
     if context.remove_playing_cards then
       for _, removed in pairs(context.removed) do
         -- copy destroyed card and convert to wild
-        PkmnDip.defer(function()
-          local copy = copy_card(removed)
-          copy:add_to_deck()
-          G.deck.config.card_limit = G.deck.config.card_limit + 1
-          table.insert(G.playing_cards, copy)
-          G.deck:emplace(copy)
-          copy.states.visible = nil
-          copy:start_materialize()
-          poke_convert_cards_to(copy, {mod_conv = 'm_wild'}, true, true)
-          playing_card_joker_effects({copy})
-        end, 0.1)
-
+        copy_playing_card(removed, {mod_conv = 'm_wild'})
         -- increment Xmult
         SMODS.scale_card(card, {
           ref_value = 'Xmult',

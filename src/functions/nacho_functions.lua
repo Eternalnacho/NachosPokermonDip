@@ -8,7 +8,6 @@ SMODS.current_mod.set_debuff = function(card)
   return false
 end
 
-
 -- Deck Rank Evo conditions
 deck_rank_evo = function(self, card, context, forced_key, rank, percentage, flat)
   if can_evolve(self, card, context, forced_key) then
@@ -57,6 +56,23 @@ poke_total_mult = poke_total_mult or function(card)
     total_mult = total_mult + (card.edition.mult or 0)
   end
   return total_mult
+end
+
+copy_playing_card = function(card, modify, to_hand)
+  PkmnDip.defer(function()
+    local copy = copy_card(card, nil, nil, G.playing_card)
+    table.insert(G.playing_cards, copy)
+    copy:add_to_deck()
+    G.deck:emplace(copy)
+    
+    if modify then
+      poke_convert_cards_to(copy, modify, true, true)
+    end
+    if to_hand then
+      draw_card(G.deck, G.hand, nil, nil, nil, copy)
+    end
+    playing_card_joker_effects({copy})
+  end)
 end
 
 -- calculate most played hand
