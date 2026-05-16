@@ -46,6 +46,7 @@ local chimchar={
     G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.d_size
     ease_discard(-card.ability.extra.d_size)
   end,
+  attributes = {"starter", "discard", "passive", "rank", "mult", "round_evo"},
 }
 
 -- Monferno 391
@@ -92,6 +93,7 @@ local monferno={
     G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.d_size
     ease_discard(-card.ability.extra.d_size)
   end,
+  attributes = {"starter", "discard", "passive", "rank", "mult", "round_evo"},
 }
 
 -- Infernape 392
@@ -142,6 +144,7 @@ local infernape = {
     G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.d_size
     ease_discard(-card.ability.extra.d_size)
   end,
+  attributes = {"starter", "discard", "passive", "ace", "face", "mult", "xmult"},
 }
 
 return {

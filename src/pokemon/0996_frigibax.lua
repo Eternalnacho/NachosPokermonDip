@@ -41,6 +41,7 @@ local frigibax = {
     end
     return edition_evo(self, card, context, "j_nacho_arctibax", 'foil', nil, card.ability.evo_rqmt)
   end,
+  attributes = {"hand_type", "editions", "full_deck", "condition_evo"}
 }
 
 -- Arctibax 997
@@ -88,6 +89,7 @@ local arctibax = {
     end
     return edition_evo(self, card, context, "j_nacho_baxcalibur", 'foil', nil, card.ability.evo_rqmt)
   end,
+  attributes = {"hand_type", "editions", "full_deck", "condition_evo"}
 }
 
 -- Baxcalibur 998
@@ -128,6 +130,7 @@ local baxcalibur = {
       end
     end
   end,
+  attributes = {"hand_type", "editions", "full_deck", "xmult"}
 }
 
 return {

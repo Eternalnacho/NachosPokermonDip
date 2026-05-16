@@ -2,12 +2,9 @@ local score_metal_jokers = function(card, context)
   -- Create a temporary steel card and set it's position to the relevant joker
   local temp_steel = SMODS.create_card({set = 'Enhanced', enhancement = 'm_steel'})
   -- Sets the steel card's major to the joker for click + drag reasons
-  G.E_MANAGER:add_event(Event({
-    func = function()
-      temp_steel:set_role({major = card, role_type = 'Glued'})
-      return true
-    end
-  }))
+  PkmnDip.defer(function()
+    temp_steel:set_role({major = card, role_type = 'Glued'})
+  end)
   -- sets the scoring animation bit onto the target joker
   temp_steel.juice_up = function(self, ...) card:juice_up(...) end
   -- Temporarily make steel cards rankless + suitless so associated held triggers on jokers don't happen
@@ -60,6 +57,7 @@ local bronzor = {
     end
     return scaling_evo(self, card, context, "j_nacho_bronzong", card.ability.extra.triggered, self.config.evo_rqmt)
   end,
+  attributes = {"enhancements", "trigger_evo"},
 }
 
 -- Bronzong 437
@@ -86,6 +84,7 @@ local bronzong = {
       end
     end
   end,
+  attributes = {"enhancements", "joker", "types"},
 }
 
 return {

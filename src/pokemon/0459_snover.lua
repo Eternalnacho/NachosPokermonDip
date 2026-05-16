@@ -52,6 +52,7 @@ local snover = {
     end
     return deck_enhance_evo(self, card, context, "j_nacho_abomasnow", "Glass", .125)
   end,
+  attributes = {"enhancements", "economy", "modify_card", "condition_evo"},
 }
 
 -- Abomasnow 460
@@ -98,7 +99,8 @@ local abomasnow = {
       }
     end
   end,
-  megas = {"mega_abomasnow"}
+  megas = {"mega_abomasnow"},
+  attributes = {"enhancements", "editions", "economy", "modify_card"},
 }
 
 -- Mega Abomasnow 460-1
@@ -133,6 +135,7 @@ local mega_abomasnow={
       end
     end
   end,
+  attributes = {"enhancements", "economy"},
 }
 
 return {

@@ -19,13 +19,13 @@ load_directory("src/functions")
 load_directory("src/pokemon", item_loader.load_pokemon, { post_load = item_loader.load_pokemon_family })
 
 -- Load consumables
-load_directory("src/consumables", function(a) SMODS.Consumable(a) end)
+load_directory("src/consumables", SMODS.Consumable)
 
 --Load stakes
-load_directory("src/stakes", function(a) SMODS.Stake(a) end)
+load_directory("src/stakes", SMODS.Stake)
 
 --Load stickers
-load_directory("src/stickers", function(a) SMODS.Sticker(a) end)
+load_directory("src/stickers", SMODS.Sticker)
 
 --Load config files
 assert(SMODS.load_file("src/settings.lua"))()

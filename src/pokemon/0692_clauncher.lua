@@ -25,8 +25,8 @@ local clauncher = {
   custom_pool_func = true,
   calculate = function(self, card, context)
     -- Retriggers all the unique editions
-    if context.repetition and (context.cardarea == G.play or context.cardarea == G.hand) and context.other_card.edition and
-        (next(context.card_effects[1]) or #context.card_effects > 1) then
+    if context.repetition and (context.cardarea == G.play or context.cardarea == G.hand) and
+        (next(context.card_effects[1]) or #context.card_effects > 1) and context.other_card.edition then
       if not PkmnDip.utils.contains(card.ability.extra.editions, context.other_card.edition.key) then
         if not context.blueprint then
           card.ability.extra.editions[#card.ability.extra.editions+1] = context.other_card.edition.key
@@ -53,13 +53,9 @@ local clauncher = {
     return level_evo(self, card, context, "j_nacho_clawitzer")
   end,
   in_pool = function(self, args)
-    if G.playing_cards then
-      for _, v in pairs(G.playing_cards) do
-        if v.edition and (v.edition.foil or v.edition.holographic or v.edition.polychrome) then return true end
-      end
-    end
-    return false
+    return G.playing_cards and #PkmnDip.utils.filter(G.playing_cards, function(pcard) return pcard.edition end) > 0
   end,
+  attributes = {"editions", "retrigger", "round_evo"}
 }
 
 -- Clawitzer 693
@@ -98,13 +94,9 @@ local clawitzer = {
     end
   end,
   in_pool = function(self, args)
-    if G.playing_cards then
-      for k, v in pairs(G.playing_cards) do
-        if v.edition and (v.edition.foil or v.edition.holographic or v.edition.polychrome) then return pokemon_in_pool(self) end
-      end
-    end
-    return false
+    return G.playing_cards and #PkmnDip.utils.filter(G.playing_cards, function(pcard) return pcard.edition end) > 0
   end,
+  attributes = {"editions", "retrigger"}
 }
 
 return {

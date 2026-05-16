@@ -52,7 +52,8 @@ local goomy={
     end
     return scaling_evo(self, card, context, "j_nacho_hisuian_sliggoo", card.ability.extra.flush_houses, self.config.evo_rqmt2)
         or scaling_evo(self, card, context, "j_nacho_sliggoo", card.ability.extra.flushes, self.config.evo_rqmt1)
-  end
+  end,
+  attributes = {"hand_type", "mult", "modify_card", "perma_bonus", "trigger_evo"},
 }
 
 -- Sliggoo 705
@@ -109,6 +110,7 @@ local sliggoo={
     end
     return scaling_evo(self, card, context, "j_nacho_goodra", card.ability.extra.flushes, self.config.evo_rqmt)
   end,
+  attributes = {"hand_type", "mult", "modify_card", "perma_bonus", "trigger_evo"},
 }
 
 -- Goodra 706
@@ -153,6 +155,7 @@ local goodra={
       end
     end
   end,
+  attributes = {"hand_type", "xmult", "modify_card", "perma_bonus"},
 }
 
 -- Hisuian Sliggoo 705-1
@@ -198,6 +201,7 @@ local hisuian_sliggoo={
     end
     return scaling_evo(self, card, context, "j_nacho_hisuian_goodra", card.ability.extra.flush_houses, self.config.evo_rqmt)
   end,
+  attributes = {"hand_type", "generation", "item", "trigger_evo"},
 }
 
 -- Hisuian Goodra 706-1
@@ -242,6 +246,7 @@ local hisuian_goodra={
       end
     end
   end,
+  attributes = {"hand_type", "enhancements", "generation", "item", "xmult"},
 }
 
 return {

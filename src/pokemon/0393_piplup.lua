@@ -36,6 +36,7 @@ local piplup={
       ease_hands_played(-to_decrease)
     end
   end,
+  attributes = {"starter", "hands", "passive", "chips", "round_evo"},
 }
 
 -- Prinplup 394
@@ -80,6 +81,7 @@ local prinplup={
       ease_hands_played(-to_decrease)
     end
   end,
+  attributes = {"starter", "hands", "passive", "chips", "rank", "round_evo"},
 }
 
 -- Empoleon 395
@@ -123,6 +125,7 @@ local empoleon={
       ease_hands_played(-to_decrease)
     end
   end,
+  attributes = {"starter", "hands", "passive", "chips", "rank"},
 }
 
 return {

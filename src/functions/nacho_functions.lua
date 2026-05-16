@@ -131,3 +131,11 @@ get_lowest_hand_level = function()
   end
   return lowest_level
 end
+
+function Card:poke_get_prefix()
+  return self.config.center.poke_custom_prefix or 'poke'
+end
+
+create_full_poke_key = function(card, name)
+  return 'j_'..card:poke_get_prefix().."_"..(name or card.config.center.name)
+end

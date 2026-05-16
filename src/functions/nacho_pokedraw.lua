@@ -19,7 +19,7 @@ SMODS.DrawStep({
         new_atlas = (card.edition and card.edition.poke_shiny) and "poke_AtlasJokersBasicNatdexShiny" or "poke_AtlasJokersBasicNatdex"
       end
 
-      card.children.center.atlas = G.ASSET_ATLAS[new_atlas]
+      card.children.center.atlas = SMODS.get_atlas(new_atlas)
       card.children.center:set_sprite_pos(center.pos)
 
       card.children.center:draw_shader('nacho_hisuian_zorua', nil, card.ARGS.send_to_shader)

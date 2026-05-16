@@ -23,6 +23,7 @@ local smoliv = {
     end
     return level_evo(self, card, context, 'j_nacho_dolliv')
   end,
+  attributes = {"types", "joker", "sell_value", "round_evo"}
 }
 
 -- Dolliv 929
@@ -65,6 +66,7 @@ local dolliv = {
     a.total_sell_value = total_sell_value
     return scaling_evo(self, card, context, "j_nacho_arboliva", a.total_sell_value, self.config.evo_rqmt)
   end,
+  attributes = {"types", "joker", "sell_value", "condition_evo"}
 }
 
 -- Arboliva 930
@@ -93,7 +95,7 @@ local arboliva = {
     end
     if context.end_of_round and context.main_eval then
       for _, v in pairs(find_pokemon_type('Grass')) do
-        if v.set_cost then 
+        if v.set_cost then
           v.ability.extra_value = (v.ability.extra_value or 0) + a.money
           v:set_cost()
         end
@@ -101,6 +103,7 @@ local arboliva = {
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_val_up'), colour = G.C.MONEY})
     end
   end,
+  attributes = {"types", "joker", "sell_value", "xmult"}
 }
 
 return {
