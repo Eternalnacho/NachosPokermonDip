@@ -13,6 +13,7 @@ local carbink = {
   cost = 7,
   stage = "Basic",
   ptype = "Fairy",
+  gen = 6,
   blueprint_compat = false,
   enhancement_gate = 'm_poke_hazard',
   calculate = function(self, card, context)
