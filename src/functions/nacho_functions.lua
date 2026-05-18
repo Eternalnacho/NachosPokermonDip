@@ -8,6 +8,20 @@ SMODS.current_mod.set_debuff = function(card)
   return false
 end
 
+function DynaText:replace_text(str)
+  self.config.string = {str}
+  self.strings = {}
+  self:update_text(true)
+end
+
+function dip_change_joker_name(UI_table, new_name)
+  if next(UI_table.name[1].nodes) then
+    local name_nodes = UI_table.name[1].nodes
+    local textDyna = name_nodes[#name_nodes].nodes[1].config.object
+    textDyna:replace_text(new_name)
+  end
+end
+
 -- Deck Rank Evo conditions
 deck_rank_evo = function(self, card, context, forced_key, rank, percentage, flat)
   if can_evolve(self, card, context, forced_key) then

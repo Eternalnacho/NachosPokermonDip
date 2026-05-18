@@ -38,24 +38,9 @@ local function illusion_uibox(other_center, info_queue, card, desc_nodes, specif
   if next(full_UI_table.name[1].nodes) then
     local UIname_nodes = full_UI_table.name[1].nodes
     local textDyna = UIname_nodes[#UIname_nodes].nodes[1].config.object
-    textDyna.string = textDyna.string .. localize("poke_illusion")
-    textDyna.config.string = {textDyna.string}
-    textDyna.strings = {}
-    textDyna:update_text(true)
+    textDyna:replace_text(textDyna.string .. localize("poke_illusion"))
   end
 end
-
--- Blueprint Compat UI Element in Zorua line's text boxes
-local function blueprint_compat_node(card)
-  return {
-    { n = G.UIT.C, config = {align = "bm", minh = 0.4}, nodes = {
-      { n = G.UIT.C, config = {ref_table = card, align = "m", colour = G.C.JOKER_GREY, r = 0.05, padding = 0.06, func = 'blueprint_compat'}, nodes = {
-        { n = G.UIT.T, config = {ref_table = card.ability, ref_value = 'blueprint_compat_ui', colour = G.C.UI.TEXT_LIGHT, scale = 0.32*0.8} },
-      }}
-    }}
-  }
-end
-
 
 
 -- ACTUAL JOKERS
@@ -78,8 +63,7 @@ local hisuian_zorua = {
 		return {vars = {a.rounds, colours = {not a.active and G.C.UI.TEXT_INACTIVE}}}
   end,
   calculate = function(self, card, context)
-    local a = card.ability.extra
-    local other_joker = G.jokers.cards[1]
+    local a, other_joker = card.ability.extra, G.jokers.cards[1]
     if other_joker and other_joker ~= card and a.active then
       local ret = SMODS.blueprint_effect(card, other_joker, context)
       if ret then
@@ -90,12 +74,12 @@ local hisuian_zorua = {
     if context.after and G.jokers.cards[1] ~= card and a.active then
       PkmnDip.defer(function()
         a.active = false
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_reveal_ex')})
+        SMODS.calculate_effect({message = localize('poke_reveal_ex')}, card)
       end, 0.2)
     end
     if context.end_of_round and context.main_eval then
       a.active = true
-      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset')})
+      SMODS.calculate_effect({message = localize('k_reset')}, card)
     end
     return level_evo(self, card, context, "j_nacho_hisuian_zoroark")
   end,
@@ -128,15 +112,10 @@ local hisuian_zorua = {
       illusion_uibox(_o, info_queue, card, desc_nodes, specific_vars, full_UI_table)
     -- Regular UIBox
     else
-      if not full_UI_table.name then
-        full_UI_table.name = localize({ type = "name", set = _c.set, key = _c.key, nodes = full_UI_table.name })
-      end
-      card.ability.blueprint_compat_ui = card.ability.blueprint_compat_ui or ''
-      card.ability.blueprint_compat_check = nil
-      local main_end = (card.area and card.area == G.jokers) and blueprint_compat_node(card)
-      local rounds, active = 5, nil
-      if _o then rounds = _a.rounds; active = _a.active end
-      localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = {rounds, colours = {not active and G.C.UI.TEXT_INACTIVE}}}
+      full_UI_table.name = localize({ type = "name", set = _c.set, key = _c.key, nodes = full_UI_table.name })
+      localize{ type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes,
+        vars = { rounds = _o and _a.rounds or 5, colours = { not (_a and _a.active) and G.C.UI.TEXT_INACTIVE } } }
+      local main_end = (card.area and card.area == G.jokers) and poke_blueprint_compat_ui(G.jokers.cards[1] ~= card and G.jokers.cards[1])
       desc_nodes[#desc_nodes+1] = main_end
     end
   end,
@@ -176,9 +155,8 @@ local hisuian_zoroark = {
   gen = 5,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    local other_joker = G.jokers.cards[1]
-    if other_joker and other_joker ~= card then
-      local ret = SMODS.blueprint_effect(card, other_joker, context)
+    if G.jokers.cards[1] and G.jokers.cards[1] ~= card then
+      local ret = SMODS.blueprint_effect(card, G.jokers.cards[1], context)
       if ret then
         ret.colour = G.C.BLACK
         return ret
@@ -215,13 +193,9 @@ local hisuian_zoroark = {
       illusion_uibox(_o, info_queue, card, desc_nodes, specific_vars, full_UI_table)
     -- Regular UI Box
     else
-      if not full_UI_table.name then
-        full_UI_table.name = localize({ type = "name", set = _c.set, key = _c.key, nodes = full_UI_table.name })
-      end
-      card.ability.blueprint_compat_ui = card.ability.blueprint_compat_ui or ''
-      card.ability.blueprint_compat_check = nil
-      local main_end = (card.area and card.area == G.jokers) and blueprint_compat_node(card)
-      localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = {}}
+      full_UI_table.name = localize({ type = "name", set = _c.set, key = _c.key, nodes = full_UI_table.name })
+      localize{ type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = {} }
+      local main_end = (card.area and card.area == G.jokers) and poke_blueprint_compat_ui(G.jokers.cards[1] ~= card and G.jokers.cards[1])
       desc_nodes[#desc_nodes+1] = main_end
     end
   end,
