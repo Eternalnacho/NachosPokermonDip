@@ -14,6 +14,19 @@ function DynaText:replace_text(str)
   self:update_text(true)
 end
 
+poke_is_in_collection = function(card)
+  if not card.area and G.OVERLAY_MENU then return true end
+  if card.area and card.area.config.collection then return true end
+  if G.your_collection then
+    for k, v in pairs(G.your_collection) do
+      if card.area == v then
+        return true
+      end
+    end
+  end
+  return false
+end
+
 -- Deck Rank Evo conditions
 deck_rank_evo = function(self, card, context, forced_key, rank, percentage, flat)
   if can_evolve(self, card, context, forced_key) then
