@@ -77,7 +77,7 @@ local passimian={
     if card and card.ability and card.ability.received_card then
       local r_center = card.ability.received_card
       -- Info_queue for received card
-      local v = {}; if r_center.loc_vars then v = r_center:loc_vars({}, card) end
+      local v = {}; if r_center.loc_vars then v = r_center:loc_vars({}, card) or {} end
       local r_name = localize({type = "name_text", set = v.set or r_center.set, key = v.key or r_center.key})
       if r_name:match("#%d+#") and v.vars then
         r_name = r_name:gsub("#(%d+)#", "%1")
