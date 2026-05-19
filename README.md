@@ -90,9 +90,3 @@ This is an add-on mod for Pokermon - an add-on mod for Balatro.
 | ------ | ------ | ------ |
 | Toxic Chain | The first time a joker with Toxic Chain enters a Blind, convert 4 held cards to Toxic | The Toxic Stall |
 | Malignant Chain | The first time a joker with Malignant Chain enters a Blind, convert 8 held cards to Toxic 8s | The Toxic Stall |
-
-## Stakes
-
-| Stake | Effect |
-| ------ | ------ |
-| Elite Stake | +2 Ante win requirement, last four Antes are Showdown Boss Blinds |
