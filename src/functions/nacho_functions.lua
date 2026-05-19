@@ -14,14 +14,6 @@ function DynaText:replace_text(str)
   self:update_text(true)
 end
 
-function dip_change_joker_name(UI_table, new_name)
-  if next(UI_table.name[1].nodes) then
-    local name_nodes = UI_table.name[1].nodes
-    local textDyna = name_nodes[#name_nodes].nodes[1].config.object
-    textDyna:replace_text(new_name)
-  end
-end
-
 -- Deck Rank Evo conditions
 deck_rank_evo = function(self, card, context, forced_key, rank, percentage, flat)
   if can_evolve(self, card, context, forced_key) then
@@ -147,6 +139,35 @@ common_ranks_tooltip = function(self, info_queue)
   end
   local key = "rank_lists_" .. #rank_lists     -- dynamic key
   info_queue[#info_queue + 1] = { set = 'Other', key = key, vars = rank_lists }
+end
+
+dip_keep_values = function(card)
+  local names_to_keep = {"targets", "rank", "id", "cards_scored", "cards_drawn", "energy_count", "c_energy_count", "e_limit_up", "form"}
+  if type_sticker_applied(card) then
+    table.insert(names_to_keep, "ptype")
+  end
+  local values_to_keep = copy_scaled_values(card)
+  if type(card.ability.extra) == "table" then
+    for _, k in pairs(names_to_keep) do
+      values_to_keep[k] = card.ability.extra[k]
+    end
+  end
+  if card.config.center.poke_custom_values_to_keep then
+    for _, v in pairs(card.config.center.poke_custom_values_to_keep) do
+      values_to_keep[v] = card.ability.extra[v]
+    end
+  end
+  return values_to_keep
+end
+
+dip_get_kept_values = function(card, kept_vals)
+  for k, v in pairs(kept_vals) do
+    card.ability[k] = type(v) == 'table' and copy_table(v) or v
+    if type(card.ability.extra) == "table" and (card.ability.extra[k] or k == "energy_count" or k == "c_energy_count" or k == "e_limit_up")
+        and (type(card.ability.extra[k]) ~= "number" or (type(v) == "number" and v > card.ability.extra[k])) then
+      card.ability.extra[k] = v
+    end
+  end
 end
 
 get_lowest_hand_level = function()
