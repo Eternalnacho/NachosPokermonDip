@@ -76,7 +76,7 @@ local hisuian_zorua = {
         SMODS.calculate_effect({message = localize('poke_reveal_ex')}, card)
       end, 0.2)
     end
-    if context.end_of_round and context.game_over == false and context.main_eval and a.active then
+    if context.end_of_round and context.game_over == false and context.main_eval then
       a.active = true
       SMODS.calculate_effect({message = localize('k_reset')}, card)
     end
