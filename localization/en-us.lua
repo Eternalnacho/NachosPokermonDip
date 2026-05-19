@@ -12,7 +12,7 @@ return {
         name = "{s:0.6}Hisuian{}Sneasel",
         text = {
           "If played hand is a",
-          "single {C:attention}enchanced{} card,",
+          "single {C:attention}enhanced{} card,",
           "it becomes {C:attention}Toxic{}",
           "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Dawn Stone{C:inactive,s:0.8})",
         }
@@ -440,7 +440,7 @@ return {
         name = "Sneasler",
         text = {
           "If played hand is a single",
-          "{C:attention}enchanced{} card, it and",
+          "{C:attention}enhanced{} card, it and",
           "up to two {C:attention}enhanced held{}",
           "cards become {C:attention}Toxic{} and",
           "{C:attention}Toxic{} cards gain {X:mult,C:white}X#1#{} Mult",
