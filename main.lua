@@ -22,7 +22,7 @@ load_directory("src/pokemon", item_loader.load_pokemon, { post_load = item_loade
 load_directory("src/consumables", SMODS.Consumable)
 
 --Load stakes
--- load_directory("src/stakes", SMODS.Stake)
+load_directory("src/stakes", SMODS.Stake)
 
 --Load stickers
 load_directory("src/stickers", SMODS.Sticker)

@@ -20,7 +20,8 @@ local elite = { -- Elite Stake
     shiny = true
 }
 
-
-list = {}
-if nacho_config.customStakes then list[#list+1] = elite end
-return {name = "Stakes", list = list}
+return {
+  can_load = false,
+  config_key = 'customStakes',
+  list = {elite}
+}
