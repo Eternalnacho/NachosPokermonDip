@@ -57,11 +57,10 @@ local passimian={
       if _r.add_to_deck then _r:add_to_deck(card) end
       -- play the funny noises
       local edition = context and context.card and context.card.edition and not context.card.edition.negative and context.card.edition or card.edition
-      local args = {message = localize('poke_receiver_ex')}
+      local args = { message = localize('poke_receiver_ex'), colour = edition and G.C.DARK_EDITION }
       if edition then
         sound = G.P_CENTERS[edition.key].sound; sound.pitch = edition.type == 'poke_shiny' and 1 or 2
         for k, v in pairs(sound) do args[k] = v end
-        args.colour = G.C.DARK_EDITION
         card.ability.extra.received_edition = true
         G.jokers.config.card_limit = G.jokers.config.card_limit + 1
       end
