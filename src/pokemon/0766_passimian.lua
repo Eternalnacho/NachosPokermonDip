@@ -8,16 +8,15 @@ local passimian={
   stage = "Basic",
   ptype = "Fighting",
   perishable_compat = false,
-  blueprint_compat = false,
-  eternal_compat = true,
+  blueprint_compat = true,
   calculate = function(self, card, context)
     if not card.ability.received_card then
-      if context.selling_card and not context.selling_self and context.card.area == G.jokers and context.card.config.center.key ~= 'j_nacho_passimian' then
+      if context.selling_card and not context.selling_self and context.card.area == G.jokers and context.card.config.center.key ~= 'j_nacho_passimian' and not context.blueprint then
         self:receive_card(card, context.card.config.center.key, context)
-      elseif context.joker_type_destroyed and context.card.area == G.jokers and context.card.config.center.key ~= 'j_nacho_passimian' then
+      elseif context.joker_type_destroyed and context.card.area == G.jokers and context.card.config.center.key ~= 'j_nacho_passimian' and not context.blueprint then
         self:receive_card(card, context.card.config.center.key, context)
       end
-    elseif card.ability.received_card.calculate then
+    elseif card.ability.received_card.calculate and (card.ability.received_card.blueprint_compat or not context.blueprint) then
       return card.ability.received_card:calculate(card, context)
     end
   end,
@@ -46,13 +45,10 @@ local passimian={
         card.ability[k] = type(v) == 'table' and copy_table(v) or v
       end
       card.ability.received_card = _r
-      -- Re-add kept values
+      -- Re-add kept values and handle energy, type
       if next(values_to_keep) then dip_get_kept_values(card, values_to_keep) end
       if card.ability.extra.energy_count or card.ability.extra.c_energy_count then energize(card, nil, true, true) end
-      -- Keep the fighting type, and re-check blueprint compatibility
-      card.ability.name = "passimian"
       card.ability.extra.ptype = "Fighting"
-      card.ability.blueprint_compat = _r.blueprint_compat
       -- Calls the add_to_deck function of the received card if it exists
       if _r.add_to_deck then _r:add_to_deck(card) end
       -- play the funny noises
