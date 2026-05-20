@@ -4,7 +4,7 @@ local mega_altaria = {
   nacho_inject_prefix = "poke",
   pos = { x = 2, y = 6 },
   soul_pos = { x = 3, y = 6 },
-  config = { extra = {chips = 0, money_mod = 2} },
+  config = { extra = {chips = 0, chips_mod = 0, money_mod = 2} },
   loc_txt = {
     name = "Mega Altaria",
     text = {
