@@ -5,12 +5,13 @@ local hisuian_zorua = {
   soul_pos = { x = 99, y = 99 },
   config = {extra = {hidden_key = nil, rounds = 5, active = true}},
   loc_vars = function(self, info_queue, card)
+    local a = card.ability.extra or card.config.center.config.extra
     local main_end
     if card.area and card.area == G.jokers then
       local other_joker = G.jokers.cards[#G.jokers.cards]
       main_end = poke_blueprint_compat_ui(card ~= other_joker and other_joker)
     end
-    return {vars = {card.ability.extra.rounds, colours = {not card.ability.extra.active and G.C.UI.TEXT_INACTIVE}}, main_end = main_end}
+    return {vars = {a.rounds, colours = {not a.active and G.C.UI.TEXT_INACTIVE}}, main_end = main_end}
   end,
   designer = "ESN64",
   rarity = 3,
