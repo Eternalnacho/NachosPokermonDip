@@ -4,7 +4,7 @@ local chimchar={
   config = { extra = { d_size = 1, mult = 0, rounds = 4 } },
   loc_vars = function(self, info_queue, card)
     local extra = card.ability.extra
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     return { vars = { extra.d_size, extra.mult, extra.rounds } }
   end,
   rarity = 2,
@@ -36,7 +36,7 @@ local chimchar={
       SMODS.calculate_effect({message = localize('k_reset')}, card)
     end
 
-    return level_evo(self, card, context, "j_nacho_monferno")
+    return pokermon.level_evo(self, card, context, "j_nacho_monferno")
   end,
   add_to_deck = function(self, card, from_debuff)
     G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
@@ -55,7 +55,7 @@ local monferno={
   config = { extra = { d_size = 1, mult = 0, rounds = 4 } },
   loc_vars = function(self, info_queue, card)
     local extra = card.ability.extra
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     return { vars = { extra.d_size, extra.mult, extra.rounds } }
   end,
   rarity = "poke_safari",
@@ -83,7 +83,7 @@ local monferno={
       SMODS.calculate_effect({message = localize('k_reset')}, card)
     end
 
-    return level_evo(self, card, context, "j_nacho_infernape")
+    return pokermon.level_evo(self, card, context, "j_nacho_infernape")
   end,
   add_to_deck = function(self, card, from_debuff)
     G.GAME.round_resets.discards = G.GAME.round_resets.discards + card.ability.extra.d_size
@@ -102,7 +102,7 @@ local infernape = {
   config = { extra = { d_size = 1, mult = 30, Xmult = 1, Xmult1 = 1, Xmult_mod = 0.3 } },
   loc_vars = function(self, info_queue, card)
     local extra = card.ability.extra
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {extra.d_size, extra.mult, extra.Xmult_mod, extra.Xmult}}
   end,
   rarity = "poke_safari",

@@ -3,7 +3,7 @@ local shieldon = {
   config = { extra = { rank = "6", chips = 12, third_times = 0 }, evo_rqmt = 5 },
   loc_vars = function(self, info_queue, card)
     local a = card.ability.extra or self.config.extra
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = {set = 'Other', key = 'ancient', vars = {localize(a.rank, 'ranks')}}
     return { vars = { localize(a.rank, 'ranks'), a.chips, math.max(self.config.evo_rqmt - a.third_times, 0) }}
   end,
@@ -16,7 +16,7 @@ local shieldon = {
   calculate = function(self, card, context)
     local a = card.ability.extra
     if context.before and not context.blueprint then
-      get_ancient_amount(context.scoring_hand, 6, card)
+      pokermon.get_ancient_amount(context.scoring_hand, 6, card)
     end
     -- 1: Scoring 6s give +12 chips for each played 6
     if context.individual and not context.end_of_round and context.cardarea == G.play and a.ancient_count > 0 then
@@ -42,9 +42,9 @@ local shieldon = {
       if a.ancient_count > 2 then a.third_times = a.third_times + 1 end
       a.ancient_count = 0
     end
-    return scaling_evo(self, card, context, "j_nacho_bastiodon", card.ability.extra.third_times, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_nacho_bastiodon", card.ability.extra.third_times, self.config.evo_rqmt)
   end,
-  generate_ui = fossil_generate_ui,
+  generate_ui = pokermon.fossil_generate_ui,
   attributes = {"ancient", "rank", "six", "enhancements", "chips", "trigger_evo"},
 }
 
@@ -53,7 +53,7 @@ local bastiodon = {
   config = { extra = { rank = "6", chips = 24 } },
   loc_vars = function(self, info_queue, card)
     local a = card.ability.extra or self.config.extra
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = {set = 'Other', key = 'ancient', vars = {localize(a.rank, 'ranks')}}
     return {vars = {localize(a.rank, 'ranks'), a.chips }}
   end,
@@ -66,7 +66,7 @@ local bastiodon = {
   calculate = function(self, card, context)
     local a = card.ability.extra
     if context.before and not context.blueprint then
-      get_ancient_amount(context.scoring_hand, 6, card)
+      pokermon.get_ancient_amount(context.scoring_hand, 6, card)
     end
     -- 1: Scoring 6s give +24 chips for each played 6
     if context.individual and not context.end_of_round and context.cardarea == G.play and a.ancient_count > 0 then
@@ -101,7 +101,7 @@ local bastiodon = {
       card.ability.extra.ancient_count = 0
     end
   end,
-  generate_ui = fossil_generate_ui,
+  generate_ui = pokermon.fossil_generate_ui,
   attributes = {"ancient", "rank", "six", "enhancements", "chips"},
 }
 

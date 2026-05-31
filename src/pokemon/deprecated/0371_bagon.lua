@@ -3,7 +3,7 @@ local bagon={
   name = "bagon",
   config = {extra = {mult = 0}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     local high_count = G.playing_cards and G.STAGE == G.STAGES.RUN and #PkmnDip.utils.filter(G.playing_cards, function(v) return v.base.nominal >= 9 end) or 0
     local deck_data = G.playing_cards and G.STAGE == G.STAGES.RUN and ' ['..tostring(high_count)..'/'..tostring(math.ceil(#G.playing_cards * 9 / 16))..']' or ''
     return {vars = {deck_data}}
@@ -96,7 +96,7 @@ local shelgon={
   name = "shelgon",
   config = {extra = {mult = 0}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     local high_count = G.playing_cards and G.STAGE == G.STAGES.RUN and #PkmnDip.utils.filter(G.playing_cards, function(v) return v.base.nominal >= 9 end) or 0
     local deck_data = G.playing_cards and G.STAGE == G.STAGES.RUN and ' ['..tostring(high_count)..'/'..tostring(math.ceil(#G.playing_cards * 3 / 4))..']' or ''
     return {vars = {deck_data}}
@@ -187,7 +187,7 @@ local salamence={
   name = "salamence",
   config = {extra = {Xmult = 0.1}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.Xmult}}
   end,
   loc_txt = {
@@ -230,7 +230,7 @@ local mega_salamence={
   name = "mega_salamence",
   config = {extra = {Xmult = 1.5, retriggers = 1}},
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = {center.ability.extra.Xmult}}
   end,
   loc_txt = {

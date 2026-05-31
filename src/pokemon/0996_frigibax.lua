@@ -3,7 +3,7 @@ local frigibax = {
   name = "frigibax",
   config = { extra = {}, evo_rqmt = 9 },
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     local foil_count = G.playing_cards and G.STAGE == G.STAGES.RUN and #PkmnDip.utils.filter(G.playing_cards, function(card) return (card.edition and card.edition.foil) end) or 0
     local deck_data = G.playing_cards and G.STAGE == G.STAGES.RUN and '['..tostring(foil_count)..'/'..card.ability.evo_rqmt..'] ' or card.ability.evo_rqmt..' '
     return { vars = { deck_data } }
@@ -49,7 +49,7 @@ local arctibax = {
   name = "arctibax",
   config = { extra = { }, evo_rqmt = 18 },
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     local foil_count = G.playing_cards and G.STAGE == G.STAGES.RUN and #PkmnDip.utils.filter(G.playing_cards, function(card) return (card.edition and card.edition.foil) end) or 0
     local deck_data = G.playing_cards and G.STAGE == G.STAGES.RUN and '['..tostring(foil_count)..'/'..card.ability.evo_rqmt..'] ' or card.ability.evo_rqmt..' '
     return { vars = { deck_data } }
@@ -97,7 +97,7 @@ local baxcalibur = {
   name = "baxcalibur",
   config = { extra = { Xmult_multi = 0.03 } },
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     local foil_count = G.playing_cards and #PkmnDip.utils.filter(G.playing_cards, function(v) return v.edition and v.edition.foil end) or 0
     return { vars = { card.ability.extra.Xmult_multi, 1 + card.ability.extra.Xmult_multi * foil_count } }
   end,

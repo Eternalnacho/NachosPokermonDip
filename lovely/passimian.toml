@@ -9,7 +9,7 @@ priority = 21
 target = '=[SMODS Pokermon "functions/pokefunctions.lua"]'
 pattern = '''
 if immediate then
-    poke_backend_evolve(card, to_key, energize_amount)
+    pokermon.backend_evolve(card, to_key, energize_amount)
   else
 '''
 position = "before"

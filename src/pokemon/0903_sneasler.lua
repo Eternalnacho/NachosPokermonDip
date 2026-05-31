@@ -3,7 +3,7 @@ local hisuian_sneasel={
   name = "hisuian_sneasel",
   config = {extra = {Xmult_mod = 0.1}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = G.P_CENTERS.m_stall_toxic
     return {vars = {}}
   end,
@@ -24,7 +24,7 @@ local hisuian_sneasel={
       card.ability.extra.triggered = true
 
       -- Change to toxic and do the fancy flippy thing
-      poke_convert_cards_to(context.full_hand[1], {mod_conv = 'm_stall_toxic'}, true, true)
+      pokermon.convert_cards(context.full_hand[1], {mod_conv = 'm_stall_toxic'}, true, true)
       context.full_hand[1]:juice_up()
 
       -- I dunno if I need to specify this or not but it seems to work so eh
@@ -39,7 +39,7 @@ local hisuian_sneasel={
     -- Undo the check for the conversion trigger
     if context.joker_main then card.ability.extra.triggered = nil end
 
-    return item_evo(self, card, context, "j_nacho_sneasler")
+    return pokermon.item_evo(self, card, context, "j_nacho_sneasler")
   end,
   attributes = {"enhancements", "modify_card", "item_evo"}
 }
@@ -49,7 +49,7 @@ local sneasler={
   name = "sneasler",
   config = {extra = {Xmult_mod = 0.1}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = G.P_CENTERS.m_stall_toxic
     return {vars = {card.ability.extra.Xmult_mod}}
   end,
@@ -69,7 +69,7 @@ local sneasler={
       card.ability.extra.triggered = true
 
       -- Change to toxic and do the fancy flippy thing
-      poke_convert_cards_to(context.full_hand[1], {mod_conv = 'm_stall_toxic'}, true, true)
+      pokermon.convert_cards(context.full_hand[1], {mod_conv = 'm_stall_toxic'}, true, true)
       context.full_hand[1]:juice_up()
 
       -- I dunno if I need to specify this or not but it seems to work so eh
@@ -85,7 +85,7 @@ local sneasler={
       pseudoshuffle(cards_held, pseudoseed('blacksludge'))
       local limit = math.min(#cards_held, 2)
       for i = 1, limit do
-        poke_convert_cards_to(cards_held[i], {mod_conv = 'm_stall_toxic'}, true, true)
+        pokermon.convert_cards(cards_held[i], {mod_conv = 'm_stall_toxic'}, true, true)
         cards_held[i]:juice_up()
         toxic_scaling()
         SMODS.calculate_effect({x_mult = G.GAME.current_round.toxic.toxicXMult}, cards_held[i])

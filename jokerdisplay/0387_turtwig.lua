@@ -4,7 +4,7 @@ local jd_def = JokerDisplay.Definitions
 jd_def["j_nacho_turtwig"] = {
     text = {
       { text = "+" },
-      { ref_table = "card.ability.extra", ref_value = "counter" },
+      { ref_table = "card.ability.extra", ref_value = "interest" },
     },
     text_config = { colour = G.C.GOLD },
 }
@@ -13,7 +13,7 @@ jd_def["j_nacho_turtwig"] = {
 jd_def["j_nacho_grotle"] = {
     text = {
       { text = "+" },
-      { ref_table = "card.ability.extra", ref_value = "counter" },
+      { ref_table = "card.ability.extra", ref_value = "interest" },
     },
     text_config = { colour = G.C.GOLD },
 }
@@ -22,7 +22,7 @@ jd_def["j_nacho_grotle"] = {
 jd_def["j_nacho_torterra"] = {
     text = {
       { text = "+" },
-      { ref_table = "card.ability.extra", ref_value = "counter" },
+      { ref_table = "card.ability.extra", ref_value = "interest" },
     },
     text_config = { colour = G.C.GOLD },
 }

@@ -3,7 +3,7 @@ local galarian_meowth={
   name = "galarian_meowth",
   config = {extra = { retriggers = 1, triggered = 0 }, evo_rqmt = 20},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = G.P_CENTERS.m_steel
 		return {vars = {card.ability.extra.retriggers, math.max(card.ability.evo_rqmt - card.ability.extra.triggered, 0)}}
   end,
@@ -35,7 +35,7 @@ local galarian_meowth={
         card = card
       }
     end
-    return scaling_evo(self, card, context, "j_nacho_perrserker", card.ability.extra.triggered, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_nacho_perrserker", card.ability.extra.triggered, self.config.evo_rqmt)
   end,
   attributes = {"enhancements", "retrigger", "condition_evo"}
 }
@@ -45,11 +45,11 @@ local perrserker = {
   name = "perrserker",
   config = { extra = { Xmult_multi = 1.5, retriggers = 1 } },
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = G.P_CENTERS.m_steel
     local total_xmult = 1.5
     local total_energy = 0
-    PkmnDip.utils.for_each(SMODS.find_card('j_nacho_perrserker'), function(v) total_energy = total_energy + get_total_energy(v) end)
+    PkmnDip.utils.for_each(SMODS.find_card('j_nacho_perrserker'), function(v) total_energy = total_energy + pokermon.energy.get_total_energy(v) end)
     total_xmult = total_xmult + total_xmult * .05 * total_energy
     return { vars = { total_xmult } }
   end,
@@ -79,7 +79,7 @@ local init = function()
     local data = self.ability.h_x_mult
     if next(SMODS.find_card('j_nacho_perrserker')) and SMODS.has_enhancement(self, 'm_steel') then
       local total_energy = 0
-      PkmnDip.utils.for_each(SMODS.find_card('j_nacho_perrserker'), function(v) total_energy = total_energy + get_total_energy(v) end)
+      PkmnDip.utils.for_each(SMODS.find_card('j_nacho_perrserker'), function(v) total_energy = total_energy + pokermon.energy.get_total_energy(v) end)
       self.ability.h_x_mult = (data + self.ability.h_x_mult * .05 * total_energy) or 1
     end
     local ret = get_h_x_mult_ref(self)

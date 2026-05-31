@@ -3,7 +3,7 @@ local ralts={
   name = "ralts",
   config = {extra = {mult_mod = 1, rounds = 4}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     local mult = 0
     for _, v in pairs(G.GAME.hands) do
       mult = mult + math.max((v.level - 1) * card.ability.extra.mult_mod, 0)
@@ -39,7 +39,7 @@ local ralts={
         card = card
       }
     end
-    return level_evo(self, card, context, "j_nacho_kirlia")
+    return pokermon.level_evo(self, card, context, "j_nacho_kirlia")
   end,
 }
 
@@ -48,7 +48,7 @@ local kirlia={
   name = "kirlia",
   config = {extra = {mult_mod = 2, rounds = 5}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     local mult = 0
     for _, v in pairs(G.GAME.hands) do
       mult = mult + math.max((v.level - 1) * card.ability.extra.mult_mod, 0)
@@ -86,7 +86,7 @@ local kirlia={
         card = card
       }
     end
-    return item_evo(self, card, context, "j_nacho_gallade") or level_evo(self, card, context, "j_nacho_gardevoir")
+    return pokermon.item_evo(self, card, context, "j_nacho_gallade") or pokermon.level_evo(self, card, context, "j_nacho_gardevoir")
   end,
 }
 
@@ -95,7 +95,7 @@ local gardevoir={
   name = "gardevoir",
   config = {extra = {Xmult_mod = 0.1, Xmult = 1.0}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     local xmult = card.ability.extra.Xmult
     for _, v in pairs(G.GAME.hands) do
       xmult = xmult + math.max((v.level - 1) * card.ability.extra.Xmult_mod, 0)
@@ -141,7 +141,7 @@ local mega_gardevoir={
   name = "mega_gardevoir",
   config = {extra = {Xmult_mod = 0.1, Xmult = 1.0, planets = {}}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     local xmult = card.ability.extra.Xmult
     for _, v in pairs(G.GAME.hands) do
       xmult = xmult + math.max((v.level - 1) * card.ability.extra.Xmult_mod, 0)
@@ -200,7 +200,7 @@ local gallade={
   name = "gallade",
   config = {extra = {Xmult_mod = 0.1}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.Xmult_mod}}
   end,
   loc_txt = {
@@ -241,7 +241,7 @@ local mega_gallade={
   name = "mega_gallade",
   config = {extra = {Xmult_mod = 0.25}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.Xmult_mod}}
   end,
   loc_txt = {

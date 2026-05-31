@@ -5,12 +5,13 @@ local hisuian_zorua = {
   soul_pos = { x = 99, y = 99 },
   config = {extra = {hidden_key = nil, rounds = 5, active = true}},
   loc_vars = function(self, info_queue, card)
+    local a = card.ability.extra or card.config.center.config.extra
     local main_end
     if card.area and card.area == G.jokers then
       local other_joker = G.jokers.cards[#G.jokers.cards]
-      main_end = poke_blueprint_compat_ui(card ~= other_joker and other_joker)
+      main_end = pokermon.ui.blueprint_compat(card ~= other_joker and other_joker)
     end
-    return {vars = {card.ability.extra.rounds, colours = {not card.ability.extra.active and G.C.UI.TEXT_INACTIVE}}, main_end = main_end}
+    return {vars = {a.rounds, colours = {not a.active and G.C.UI.TEXT_INACTIVE}}, main_end = main_end}
   end,
   designer = "ESN64",
   rarity = 3,
@@ -23,7 +24,7 @@ local hisuian_zorua = {
   get_illusion = function(self, card)
     if card.ability and card.ability.extra
         and card.area ~= G.jokers
-        and not poke_is_in_collection(card) then
+        and not pokermon.is_in_collection(card) then
       return G.P_CENTERS[card.ability.extra.hidden_key]
     end
   end,
@@ -46,10 +47,10 @@ local hisuian_zorua = {
       a.active = true
       return { message = localize('k_reset') }
     end
-    return level_evo(self, card, context, "j_nacho_hisuian_zoroark")
+    return pokermon.level_evo(self, card, context, "j_nacho_hisuian_zoroark")
   end,
   set_card_type_badge = function(self, card, badges)
-    poke_set_card_type_badge(card, badges, self:get_illusion(card))
+    pokermon.ui.set_card_type_badge(card, badges, self:get_illusion(card))
   end,
   set_sprites = function(self, card, front)
     local center = self:get_illusion(card)
@@ -58,10 +59,10 @@ local hisuian_zorua = {
     end
   end,
   set_ability = function(self, card, initial, delay_sprites)
-    if card.area ~= G.jokers and not poke_is_in_collection(card) then
+    if card.area ~= G.jokers and not pokermon.is_in_collection(card) then
       -- Initialize the Illusion
-      if not type_sticker_applied(card) then apply_type_sticker(card, "Colorless") end
-      card.ability.extra.hidden_key = card.ability.extra.hidden_key or get_random_poke_key_options {
+      if not pokermon.type_sticker_applied(card) then pokermon.apply_type_sticker(card, "Colorless") end
+      card.ability.extra.hidden_key = card.ability.extra.hidden_key or pokermon.get_random_poke_key_options {
         key_append = 'zorua_h',
         rarity = 'Common',
         exclude_types = 'Colorless',
@@ -72,7 +73,7 @@ local hisuian_zorua = {
   generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
     local center = self:get_illusion(card)
     if center then
-      return poke_generate_illusion_ui(center, info_queue, card, desc_nodes, specific_vars, full_UI_table)
+      return pokermon.ui.generate_illusion(center, info_queue, card, desc_nodes, specific_vars, full_UI_table)
     end
     return SMODS.Center.generate_ui(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
   end,
@@ -83,9 +84,9 @@ local hisuian_zorua = {
           and other_joker and other_joker ~= card
           -- and other_joker.children.center.atlas.px == 71 -- Disables Unown Swarm drawing, because I just couldn't be bothered today.
           and other_joker.config.center.blueprint_compat then
-        poke_copy_joker_sprites(card, other_joker)
+        pokermon.copy_joker_sprites(card, other_joker)
       else
-        poke_reset_sprite(card)
+        pokermon.reset_sprite(card)
       end
     end
   end,
@@ -102,7 +103,7 @@ local hisuian_zoroark = {
     local main_end
     if card.area and card.area == G.jokers then
       local other_joker = G.jokers.cards[1]
-      main_end = poke_blueprint_compat_ui(card ~= other_joker and other_joker)
+      main_end = pokermon.ui.blueprint_compat(card ~= other_joker and other_joker)
     end
     return {main_end = main_end}
   end,
@@ -116,7 +117,7 @@ local hisuian_zoroark = {
   get_illusion = function(self, card)
     if card.ability and card.ability.extra
         and card.area ~= G.jokers
-        and not poke_is_in_collection(card) then
+        and not pokermon.is_in_collection(card) then
       return G.P_CENTERS[card.ability.extra.hidden_key]
     end
   end,
@@ -136,11 +137,11 @@ local hisuian_zoroark = {
     end
   end,
   set_ability = function(self, card, initial, delay_sprites)
-    if card.area ~= G.jokers and not poke_is_in_collection(card) then
+    if card.area ~= G.jokers and not pokermon.is_in_collection(card) then
       -- Initialize the Illusion
-      if not type_sticker_applied(card) then apply_type_sticker(card, "Colorless") end
+      if not pokermon.type_sticker_applied(card) then pokermon.apply_type_sticker(card, "Colorless") end
       if not card.ability.extra.hidden_key then
-        card.ability.extra.hidden_key = get_random_poke_key_options {
+        card.ability.extra.hidden_key = pokermon.get_random_poke_key_options {
           key_append = 'zoroark_h',
           rarity = 'poke_safari',
           exclude_types = 'Colorless',
@@ -151,12 +152,12 @@ local hisuian_zoroark = {
   end,
   add_to_deck = function(self, card, from_debuff)
     card.ability.extra.hidden_key = nil
-    poke_reset_sprite(card)
+    pokermon.reset_sprite(card)
   end,
   generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
     local center = self:get_illusion(card)
     if center then
-      return poke_generate_illusion_ui(center, info_queue, card, desc_nodes, specific_vars, full_UI_table)
+      return pokermon.ui.generate_illusion(center, info_queue, card, desc_nodes, specific_vars, full_UI_table)
     end
     return SMODS.Center.generate_ui(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
   end,
@@ -167,9 +168,9 @@ local hisuian_zoroark = {
           and other_joker and other_joker ~= card
           -- and other_joker.children.center.atlas.px == 71 -- Disables Unown Swarm drawing, because I just couldn't be bothered today.
           and other_joker.config.center.blueprint_compat then
-        poke_copy_joker_sprites(card, other_joker)
+        pokermon.copy_joker_sprites(card, other_joker)
       else
-        poke_reset_sprite(card)
+        pokermon.reset_sprite(card)
       end
     end
   end,

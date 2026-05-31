@@ -3,7 +3,7 @@ local terapagos={
   name = "terapagos",
   config = {extra = {}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
     return {vars = {}}
   end,
@@ -15,18 +15,18 @@ local terapagos={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.using_consumeable and context.consumeable and context.consumeable.ability then
-      if context.consumeable.ability.name == 'teraorb' and card == poke_find_leftmost_or_highlighted() then
-        poke_evolve(card, 'j_nacho_terapagos_terastal')
+      if context.consumeable.ability.name == 'teraorb' and card == pokermon.find_leftmost_or_highlighted() then
+        pokermon.evolve(card, 'j_nacho_terapagos_terastal')
       end
     end
     if context.end_of_round and context.main_eval then
-      local _card = SMODS.add_card({set = "Item", area = G.consumeables, edition = 'e_negative', key = "c_poke_teraorb"})
+      local _card = SMODS.add_card({set = "poke_Item", area = G.consumeables, edition = 'e_negative', key = "c_poke_teraorb"})
       card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.ARGS.LOC_COLOURS.item})
     end
   end,
   add_to_deck = function(self, card, from_debuff)
     if not from_debuff then
-      local _card = SMODS.add_card({set = "Item", area = G.consumeables, edition = 'e_negative', key = "c_poke_teraorb"})
+      local _card = SMODS.add_card({set = "poke_Item", area = G.consumeables, edition = 'e_negative', key = "c_poke_teraorb"})
       card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.ARGS.LOC_COLOURS.item})
     end
   end,
@@ -38,8 +38,8 @@ local terapagos_terastal={
   name = "terapagos_terastal",
   config = {extra = {Xmult_mod = 0.4, changedtype = "Colorless"}},
   loc_vars = function(self, info_queue, card)
-    local count = not poke_is_in_collection(card) and (#find_pokemon_type(card.ability.extra.ptype) - 1) or 0
-    type_tooltip(self, info_queue, card)
+    local count = not pokermon.is_in_collection(card) and (#pokermon.find_pokemon_type(card.ability.extra.ptype) - 1) or 0
+    pokermon.type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
     return {vars = {card.ability.extra.Xmult_mod, math.max(1, 1 + card.ability.extra.Xmult_mod * count)}}
   end,
@@ -55,19 +55,19 @@ local terapagos_terastal={
   end,
   calculate = function(self, card, context)
     if context.using_consumeable and context.consumeable and context.consumeable.ability then
-      if context.consumeable.ability.name == 'teraorb' and card == poke_find_leftmost_or_highlighted() then
+      if context.consumeable.ability.name == 'teraorb' and card == pokermon.find_leftmost_or_highlighted() then
         if not (context.consumeable.ability.extra.change_to_type == card.ability.extra.changedtype) then
-          energy_increase(card, get_type(card))
+          pokermon.energy.increase(card, get_type(card))
           card.ability.extra.changedtype = card.ability.extra.ptype
         end
-        PkmnDip.utils.for_each(G.jokers.cards, function(joker) if joker ~= card then apply_type_sticker(joker, card.ability.extra.ptype) end end)
-        if get_total_energy(card) >= 6 then
-          poke_evolve(card, 'j_nacho_terapagos_stellar')
+        PkmnDip.utils.for_each(G.jokers.cards, function(joker) if joker ~= card then pokermon.apply_type_sticker(joker, card.ability.extra.ptype) end end)
+        if pokermon.energy.get_total_energy(card) >= 6 then
+          pokermon.evolve(card, 'j_nacho_terapagos_stellar')
         end
       end
     end
     if context.joker_main then
-      local count = #find_pokemon_type(card.ability.extra.ptype) - 1
+      local count = #pokermon.find_pokemon_type(card.ability.extra.ptype) - 1
       return{
         xmult = 1 + card.ability.extra.Xmult_mod * count
       }
@@ -76,7 +76,7 @@ local terapagos_terastal={
   add_to_deck = function(self, card, from_debuff)
     if not from_debuff then
       G.GAME.energy_plus = G.GAME.energy_plus and (G.GAME.energy_plus + 3) or 3
-      PkmnDip.utils.for_each(G.jokers.cards, function(joker) apply_type_sticker(joker, get_type(card)) end)
+      PkmnDip.utils.for_each(G.jokers.cards, function(joker) pokermon.apply_type_sticker(joker, get_type(card)) end)
     end
   end,
   remove_from_deck = function(self, card, from_debuff)
@@ -109,7 +109,7 @@ local terapagos_stellar={
     end},
   config = {extra = {Xmult_mod = 0.1, Xmult = 1, energy_total = 0}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
     info_queue[#info_queue+1] = {set = 'Other', key = 'stellar_type'}
     return {vars = {card.ability.extra.Xmult_mod, card.ability.extra.Xmult}}
@@ -126,16 +126,16 @@ local terapagos_stellar={
   end,
   calculate = function(self, card, context)
     if context.using_consumeable and context.consumeable and context.consumeable.ability then
-      if context.consumeable.ability.name == 'teraorb' and card == poke_find_leftmost_or_highlighted() then
+      if context.consumeable.ability.name == 'teraorb' and card == pokermon.find_leftmost_or_highlighted() then
         PkmnDip.utils.for_each(G.jokers.cards,
           function(joker)
-            energy_increase(joker, get_type(joker))
-            apply_type_sticker(joker, "Stellar")
+            pokermon.energy.increase(joker, get_type(joker))
+            pokermon.apply_type_sticker(joker, "Stellar")
           end)
       end
     end
-    if context.other_joker and is_type(context.other_joker, "Stellar") then
-      local xmult = 1 + card.ability.extra.Xmult_mod * get_total_energy(context.other_joker)
+    if context.other_joker and pokermon.is_type(context.other_joker, "Stellar") then
+      local xmult = 1 + card.ability.extra.Xmult_mod * pokermon.energy.get_total_energy(context.other_joker)
       G.E_MANAGER:add_event(Event({
         func = function()
             context.other_joker:juice_up(0.5, 0.5)
@@ -152,11 +152,11 @@ local terapagos_stellar={
   add_to_deck = function(self, card, from_debuff)
     G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.0, func = function()
         self:set_sprites(card)
-        apply_type_sticker(card, "Stellar")
+        pokermon.apply_type_sticker(card, "Stellar")
       return true end }))
     G.GAME.energy_plus = G.GAME.energy_plus and (G.GAME.energy_plus + 5) or 5
     if not from_debuff then
-      PkmnDip.utils.for_each(G.jokers.cards, function(joker) apply_type_sticker(joker, "Stellar") end)
+      PkmnDip.utils.for_each(G.jokers.cards, function(joker) pokermon.apply_type_sticker(joker, "Stellar") end)
     end
   end,
   remove_from_deck = function(self, card, from_debuff)
@@ -174,41 +174,41 @@ local terapagos_stellar={
     end
   end,
   update = function(self, card, dt)
-    if poke_is_in_collection(card) and not type_sticker_applied(card) then
-      apply_type_sticker(card, "Stellar")
+    if pokermon.is_in_collection(card) and not pokermon.type_sticker_applied(card) then
+      pokermon.apply_type_sticker(card, "Stellar")
     end
   end,
   attributes = {"energy_limit", "item", "passive", "types", "joker", "xmult"}
 }
 
 local init = function()
-  local type_sticker_ref = type_sticker_applied
-  type_sticker_applied = function(card, ...)
+  local type_sticker_ref = pokermon.type_sticker_applied
+  pokermon.type_sticker_applied = function(card, ...)
     if not card then return end
     if card.ability['stellar_sticker'] then return "Stellar" end
     return type_sticker_ref(card, ...)
   end
 
-  local is_type_ref = is_type
-  is_type = function(card, target_type, ...)
+  local is_type_ref = pokermon.is_type
+  pokermon.is_type = function(card, target_type, ...)
     if card.ability and card.ability.stellar_sticker then return true end
     return is_type_ref(card, target_type, ...)
   end
 
-  local energy_matches_ref = energy_matches
-  energy_matches = function(card, etype, include_colorless)
+  local energy_matches_ref = pokermon.energy.energy_matches
+  pokermon.energy.energy_matches = function(card, etype, include_colorless)
     if card.ability and card.ability.stellar_sticker then return true
     else return energy_matches_ref(card, etype, include_colorless) end
   end
 
-  local matching_energy_ref = matching_energy
-  matching_energy = function(card, allow_bird, ...)
+  local get_matching_energy_ref = pokermon.energy.get_matching_energy
+  pokermon.energy.get_matching_energy = function(card, allow_bird, ...)
     if card.ability and card.ability.stellar_sticker then return "c_poke_colorless_energy"
-    else return matching_energy_ref(card, allow_bird, ...) end
+    else return get_matching_energy_ref(card, allow_bird, ...) end
   end
 
-  local find_pokemon_type_ref = find_pokemon_type
-  find_pokemon_type = function(target_type, exclude_card, exclude_name, ...)
+  local find_pokemon_type_ref = pokermon.find_pokemon_type
+  pokermon.find_pokemon_type = function(target_type, exclude_card, exclude_name, ...)
     local ret = find_pokemon_type_ref(target_type, exclude_card, exclude_name, ...)
     if type(ret) == "table" and G.jokers then
       for k, v in pairs(G.jokers.cards) do

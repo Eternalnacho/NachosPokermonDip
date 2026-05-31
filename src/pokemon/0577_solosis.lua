@@ -18,7 +18,7 @@ local solosis = {
   name = "solosis",
   config = { extra = { dip_card_dupes = 1, copied_cards = {}, copies_req = 0 }, evo_rqmt = 4 },
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     return { vars = { card.ability.extra.dip_card_dupes, math.max(0, self.config.evo_rqmt - card.ability.extra.copies_req) } }
   end,
   rarity = 3,
@@ -45,7 +45,7 @@ local solosis = {
         if v == context.destroy_card.unique_val then return {remove = true} end
       end
     end
-    return scaling_evo(self, card, context, "j_nacho_duosion", card.ability.extra.copies_req, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_nacho_duosion", card.ability.extra.copies_req, self.config.evo_rqmt)
   end,
   attributes = {"generation", "hands", "condition_evo"},
 }
@@ -55,7 +55,7 @@ local duosion = {
   name = "duosion",
   config = { extra = { dip_card_dupes = 2, copied_cards = {}, copies_req = 0 }, evo_rqmt = 8 },
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     return { vars = { card.ability.extra.dip_card_dupes, math.max(0, self.config.evo_rqmt - card.ability.extra.copies_req) } }
   end,
   rarity = "poke_safari",
@@ -81,7 +81,7 @@ local duosion = {
         if v == context.destroy_card.unique_val then return {remove = true} end
       end
     end
-    return scaling_evo(self, card, context, "j_nacho_reuniclus", card.ability.extra.copies_req, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_nacho_reuniclus", card.ability.extra.copies_req, self.config.evo_rqmt)
   end,
   attributes = {"generation", "hands", "condition_evo"},
 }
@@ -90,7 +90,7 @@ local reuniclus = {
   name = "reuniclus",
   config = { extra = { dip_card_dupes = 2, copied_cards = {} } },
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     return { vars = { card.ability.extra.dip_card_dupes } }
   end,
   rarity = "poke_safari",

@@ -12,7 +12,7 @@ jd_def["j_nacho_terapagos_terastal"] = {
     },
     calc_function = function(card)
         local count = G.jokers and #PkmnDip.utils.filter(G.jokers.cards,
-          function(v) return v.config.center.rarity and is_type(v, card.ability.extra.ptype) and v ~= card end) or 0
+          function(v) return v.config.center.rarity and pokermon.is_type(v, card.ability.extra.ptype) and v ~= card end) or 0
         card.joker_display_values.count = count
         card.joker_display_values.Xmult = 1 + count * card.ability.extra.Xmult_mod
         card.joker_display_values.localized_text = card.ability.extra.ptype
@@ -29,11 +29,11 @@ jd_def["j_nacho_terapagos_stellar"] = {
         { text = ")" },
     },
     calc_function = function(card)
-        local count = G.jokers and #PkmnDip.utils.filter(G.jokers.cards, function(v) return v.config.center.rarity and is_type(v, "Stellar") end) or 0
+        local count = G.jokers and #PkmnDip.utils.filter(G.jokers.cards, function(v) return v.config.center.rarity and pokermon.is_type(v, "Stellar") end) or 0
         card.joker_display_values.count = count
         card.joker_display_values.localized_text = "Stellar"
     end,
     mod_function = function(card, mod_joker)
-        return { x_mult = (is_type(card, "Stellar") and (1 + mod_joker.ability.extra.Xmult_mod * get_total_energy(card)) ^ JokerDisplay.calculate_joker_triggers(mod_joker)) }
+        return { x_mult = (pokermon.is_type(card, "Stellar") and (1 + mod_joker.ability.extra.Xmult_mod * pokermon.energy.get_total_energy(card)) ^ JokerDisplay.calculate_joker_triggers(mod_joker)) }
     end
 }

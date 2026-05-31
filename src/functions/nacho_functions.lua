@@ -16,18 +16,18 @@ end
 
 -- Deck Rank Evo conditions
 deck_rank_evo = function(self, card, context, forced_key, rank, percentage, flat)
-  if can_evolve(self, card, context, forced_key) then
+  if pokermon.can_evolve(self, card, context, forced_key) then
     local count = 0
     for k, v in pairs(G.playing_cards) do
       if v.base.nominal >= rank then count = count + 1 end
     end
     if percentage and (count/#G.playing_cards >= percentage) then
       return {
-        message = poke_evolve(card, forced_key)
+        message = pokermon.evolve(card, forced_key)
       }
     elseif flat and (count >= flat) then
       return {
-        message = poke_evolve(card, forced_key)
+        message = pokermon.evolve(card, forced_key)
       }
     end
   end
@@ -35,24 +35,24 @@ end
 
 -- Edition Evo conditions
 edition_evo = function(self, card, context, forced_key, edition, percentage, flat)
-  if can_evolve(self, card, context, forced_key) then
+  if pokermon.can_evolve(self, card, context, forced_key) then
     local count = 0
     for k, v in pairs(G.playing_cards) do
       if v.edition and v.edition[edition] then count = count + 1 end
     end
     if percentage and (count/#G.playing_cards >= percentage) then
       return {
-        message = poke_evolve(card, forced_key)
+        message = pokermon.evolve(card, forced_key)
       }
     elseif flat and (count >= flat) then
       return {
-        message = poke_evolve(card, forced_key)
+        message = pokermon.evolve(card, forced_key)
       }
     end
   end
 end
 
--- Get card's total mult (parallels poke_total_chips)
+-- Get card's total mult (parallels pokermon.total_chips)
 poke_total_mult = poke_total_mult or function(card)
   local total_mult = (card.ability.perma_mult or 0)
   if card.config.center ~= G.P_CENTERS.m_lucky then
@@ -72,7 +72,7 @@ copy_playing_card = function(card, modify, to_hand)
     G.deck:emplace(copy)
     
     if modify then
-      poke_convert_cards_to(copy, modify, true, true)
+      pokermon.convert_cards(copy, modify, true, true)
     end
     if to_hand then
       draw_card(G.deck, G.hand, nil, nil, nil, copy)
@@ -143,10 +143,10 @@ end
 
 dip_keep_values = function(card)
   local names_to_keep = {"targets", "rank", "id", "cards_scored", "cards_drawn", "energy_count", "c_energy_count", "e_limit_up", "form"}
-  if type_sticker_applied(card) then
+  if pokermon.type_sticker_applied(card) then
     table.insert(names_to_keep, "ptype")
   end
-  local values_to_keep = copy_scaled_values(card)
+  local values_to_keep = pokermon.copy_scaled_values(card)
   if type(card.ability.extra) == "table" then
     for _, k in pairs(names_to_keep) do
       values_to_keep[k] = card.ability.extra[k]

@@ -3,7 +3,7 @@ local audino = {
   name = "audino",
   config = {extra = {Xmult = 1, Xmult_mod = 0.25}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.Xmult, card.ability.extra.Xmult_mod}}
   end,
   designer = "T.F. Wright",
@@ -35,7 +35,7 @@ local mega_audino = {
   name = "mega_audino",
   config = {extra = {Xmult = 1, Xmult_mod = 0.25, num = 1, den = 5}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = {set = 'Other', key = 'incubator'}
     local num, den = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.den, 'mega_audino')
     return {vars = {card.ability.extra.Xmult, num, den}}
@@ -53,10 +53,10 @@ local mega_audino = {
     end
 
     if context.end_of_round and context.beat_boss and context.game_over == false and not context.blueprint then
-      local adjacent_jokers = poke_get_adjacent_jokers(card)
+      local adjacent_jokers = pokermon.get_adjacent_jokers(card)
       local incompatible = { "Other", "Baby", "Legendary" }
       local breedable = #PkmnDip.utils.filter(adjacent_jokers, function(adj_joker)
-        local lowest_key = create_full_poke_key(adj_joker, get_lowest_evo(adj_joker))
+        local lowest_key = create_full_poke_key(adj_joker, pokermon.get_lowest_evo(adj_joker))
         return adj_joker.config.center.stage
            and not PkmnDip.utils.contains(incompatible, adj_joker.config.center.stage)
            and G.P_CENTERS[lowest_key].stage ~= "Legendary"
@@ -68,7 +68,7 @@ local mega_audino = {
             G.GAME.joker_buffer = 0
             play_sound('timpani')
             local parent = pseudorandom_element(adjacent_jokers, pseudoseed("daycare"))
-            local lowest = get_lowest_evo(parent)
+            local lowest = pokermon.get_lowest_evo(parent)
             if lowest and type(lowest) == "string" then
               local edition = SMODS.pseudorandom_probability(card, 'mega_audino', a.num, a.den, 'mega_audino') and 'e_poke_shiny'
                   or poll_edition('audino', nil, true, true, {

@@ -17,7 +17,7 @@ local mega_altaria = {
     }
   },
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     if pokermon_config.detailed_tooltips then
       if not center.edition or (center.edition and not center.edition.polychrome) then
         info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
@@ -44,7 +44,7 @@ local mega_altaria = {
           return true end }))
 
           -- and earn $2
-          local earned = ease_poke_dollars(card, "mega_altaria", card.ability.extra.money_mod)
+          local earned = pokermon.ease_poke_dollars(card, "mega_altaria", card.ability.extra.money_mod)
           G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + earned
           G.E_MANAGER:add_event(Event({
               func = function()
@@ -67,7 +67,7 @@ local mega_altaria = {
 
 local function init()
   SMODS.Joker:take_ownership('poke_altaria', { megas = { 'mega_altaria' } }, true)
-  poke_add_to_family("altaria", "mega_altaria")
+  pokermon.add_to_family("altaria", "mega_altaria")
 end
 
 return {

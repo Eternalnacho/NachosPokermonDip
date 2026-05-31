@@ -3,8 +3,8 @@ local carbink = {
   name = "carbink",
   config = {extra = { hazard_level = 1 }},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'hazard_level', vars = poke_get_hazard_level_vars()}
+    pokermon.type_tooltip(self, info_queue, card)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'hazard_level', vars = pokermon.get_hazard_level_vars()}
     info_queue[#info_queue+1] = G.P_CENTERS.m_hazard
     info_queue[#info_queue+1] = G.P_CENTERS.m_gold
     return { vars = { card.ability.extra.hazard_level } }
@@ -22,10 +22,10 @@ local carbink = {
     end
   end,
   add_to_deck = function(self, card, from_debuff)
-    poke_change_hazard_level(card.ability.extra.hazard_level)
+    pokermon.change_hazard_level(card.ability.extra.hazard_level)
   end,
   remove_from_deck = function(self, card, from_debuff)
-    poke_change_hazard_level(-card.ability.extra.hazard_level)
+    pokermon.change_hazard_level(-card.ability.extra.hazard_level)
   end,
   attributes = {"hazards", "passive", "modify_card", "enhancements"}
 }

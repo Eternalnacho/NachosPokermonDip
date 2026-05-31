@@ -3,7 +3,7 @@ local applin = {
   name = "applin",
   config = { extra = {h_size = 1} },
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {set = 'Other', key = 'apple_evolutions'}
     end
@@ -27,7 +27,7 @@ local applin = {
         card:juice_up()
       end
     end
-    return item_evo(self, card, context)
+    return pokermon.item_evo(self, card, context)
   end,
   add_to_deck = function(self, card, from_debuff)
     G.hand:change_size(card.ability.extra.h_size)
@@ -43,7 +43,7 @@ local flapple = {
   name = "flapple",
   config = { extra = { Xmult = 1, Xmult_mod = 0.3 } },
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     return { vars = { card.ability.extra.Xmult_mod, 0.1, card.ability.extra.Xmult } }
   end,
   designer = "Kek",
@@ -89,7 +89,7 @@ local appletun = {
   name = "appletun",
   config = { extra = { h_size = 1, money = 3 } },
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     return { vars = { card.ability.extra.money } }
   end,
   designer = "Kek",
@@ -112,7 +112,7 @@ local appletun = {
     end
     if context.remove_playing_cards then
       local total_removed = #context.removed
-      ease_poke_dollars(card, "appletun", a.money * total_removed)
+      pokermon.ease_poke_dollars(card, "appletun", a.money * total_removed)
     end
   end,
   add_to_deck = function(self, card, from_debuff)
@@ -134,7 +134,7 @@ local dipplin = {
   name = "dipplin",
   config = { extra = { } },
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.m_wild
     end
@@ -161,7 +161,7 @@ local dipplin = {
       end
       return { playing_cards_created = {true} }
     end
-    return deck_enhance_evo(self, card, context, "j_nacho_hydrapple", "Wild", .25)
+    return pokermon.deck_enhance_evo(self, card, context, "j_nacho_hydrapple", "Wild", .25)
   end,
   attributes = {"enhancements", "generation", "condition_evo", "modify_card"}
 }
@@ -171,7 +171,7 @@ local hydrapple = {
   name = "hydrapple",
   config = { extra = { Xmult = 1, Xmult_mod = 0.2 } },
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.m_wild
     end

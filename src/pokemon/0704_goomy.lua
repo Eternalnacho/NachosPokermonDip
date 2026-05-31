@@ -3,7 +3,7 @@ local goomy={
   name = "goomy",
   config = {extra = {mult_mod = 1, flushes = 0, flush_houses = 0}, evo_rqmt1 = 6, evo_rqmt2 = 1},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     return {
       vars = {
         card.ability.extra.mult_mod,
@@ -50,8 +50,8 @@ local goomy={
         end
       end
     end
-    return scaling_evo(self, card, context, "j_nacho_hisuian_sliggoo", card.ability.extra.flush_houses, self.config.evo_rqmt2)
-        or scaling_evo(self, card, context, "j_nacho_sliggoo", card.ability.extra.flushes, self.config.evo_rqmt1)
+    return pokermon.scaling_evo(self, card, context, "j_nacho_hisuian_sliggoo", card.ability.extra.flush_houses, self.config.evo_rqmt2)
+        or pokermon.scaling_evo(self, card, context, "j_nacho_sliggoo", card.ability.extra.flushes, self.config.evo_rqmt1)
   end,
   attributes = {"hand_type", "mult", "modify_card", "perma_bonus", "trigger_evo"},
 }
@@ -61,7 +61,7 @@ local sliggoo={
   name = "sliggoo",
   config = {extra = {mult_mod = 1, flushes = 0}, evo_rqmt = 8},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     return {
       vars = {
         card.ability.extra.mult_mod,
@@ -108,7 +108,7 @@ local sliggoo={
         end
       end
     end
-    return scaling_evo(self, card, context, "j_nacho_goodra", card.ability.extra.flushes, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_nacho_goodra", card.ability.extra.flushes, self.config.evo_rqmt)
   end,
   attributes = {"hand_type", "mult", "modify_card", "perma_bonus", "trigger_evo"},
 }
@@ -118,7 +118,7 @@ local goodra={
   name = "goodra",
   config = {extra = {Xmult_multi = 0.02}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.Xmult_multi}}
   end,
   rarity = "poke_safari",
@@ -163,7 +163,7 @@ local hisuian_sliggoo={
   name = "hisuian_sliggoo",
   config = {extra = {flush_houses = 0}, evo_rqmt = 6},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {math.max(0, self.config.evo_rqmt - card.ability.extra.flush_houses),
       self.config.evo_rqmt - card.ability.extra.flush_houses == 1 and "Flush House" or "Flush Houses"}}
   end,
@@ -188,18 +188,18 @@ local hisuian_sliggoo={
       local second_rank = part_minor.base.nominal
       -- Create metal coat
       if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-        local _card = SMODS.add_card({set = 'Item', area = G.consumeables, key = 'c_poke_metalcoat'})
+        local _card = SMODS.add_card({set = 'poke_Item', area = G.consumeables, key = 'c_poke_metalcoat'})
         card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.C.FILTER})
       end
       -- Create second metal coat if the difference in scoring ranks is > 6
       if math.abs(second_rank - first_rank) > 6 then
         if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-          local _card = SMODS.add_card({set = 'Item', area = G.consumeables, key = 'c_poke_metalcoat'})
+          local _card = SMODS.add_card({set = 'poke_Item', area = G.consumeables, key = 'c_poke_metalcoat'})
           card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.C.FILTER})
         end
       end
     end
-    return scaling_evo(self, card, context, "j_nacho_hisuian_goodra", card.ability.extra.flush_houses, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_nacho_hisuian_goodra", card.ability.extra.flush_houses, self.config.evo_rqmt)
   end,
   attributes = {"hand_type", "generation", "item", "trigger_evo"},
 }
@@ -209,7 +209,7 @@ local hisuian_goodra={
   name = "hisuian_goodra",
   config = {extra = {Xmult = 1}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {}}
   end,
   rarity = "poke_safari",
@@ -223,7 +223,7 @@ local hisuian_goodra={
     if context.before and context.main_eval and context.scoring_name == 'Flush House' then
       -- Create metal coat
       if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-        local _card = SMODS.add_card({set = 'Item', area = G.consumeables, key = 'c_poke_metalcoat'})
+        local _card = SMODS.add_card({set = 'poke_Item', area = G.consumeables, key = 'c_poke_metalcoat'})
         card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.C.FILTER})
       end
     end

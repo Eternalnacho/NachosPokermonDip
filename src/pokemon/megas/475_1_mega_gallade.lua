@@ -17,7 +17,7 @@ local mega_gallade = {
     }
   },
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     return {vars = { center.ability.extra.e_limit, center.ability.extra.Xmult }}
   end,
   rarity = "poke_mega",
@@ -29,7 +29,7 @@ local mega_gallade = {
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.using_consumeable and context.consumeable.ability.set == 'Item' then
+    if context.using_consumeable and context.consumeable.ability.set == 'poke_Item' then
       local target = pseudorandom_element(G.jokers.cards, 'mega_gallade')
       target.ability.extra.e_limit_up = target.ability.extra.e_limit_up and target.ability.extra.e_limit_up + 1 or 1
     end
@@ -38,7 +38,7 @@ local mega_gallade = {
 
 local function init()
   SMODS.Joker:take_ownership('poke_gallade', { megas = { 'mega_gallade' } }, true)
-  poke_add_to_family("gallade", "mega_gallade")
+  pokermon.add_to_family("gallade", "mega_gallade")
 end
 
 return {

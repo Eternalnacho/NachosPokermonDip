@@ -3,7 +3,7 @@ local pecharunt = {
   name = "pecharunt",
   config = { extra = { Xmult_mod = 0.02 } },
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = G.P_CENTERS.m_stall_toxic
     info_queue[#info_queue+1] = {set = 'Other', key = 'malignant_chain'}
     return { vars = { card.ability.extra.Xmult_mod } }
@@ -22,7 +22,7 @@ local pecharunt = {
       pseudoshuffle(area, pseudoseed('blacksludge'))
       local limit = math.min(#area, 8)
       for i = 1, limit do
-        poke_convert_cards_to(area[i], {mod_conv = 'm_stall_toxic'}, true, true)
+        pokermon.convert_cards(area[i], {mod_conv = 'm_stall_toxic'}, true, true)
         assert(SMODS.modify_rank(area[i], 8 - area[i]:get_id()))
       end
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_malignant_chain_ex'), colour = G.C.PURPLE})

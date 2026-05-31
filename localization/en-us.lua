@@ -628,7 +628,7 @@ return {
         }
       },
     },
-    Item = {
+    poke_Item = {
       c_nacho_tartapple = {
         name = "Tart Apple",
         text = {

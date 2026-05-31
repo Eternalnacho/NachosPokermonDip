@@ -4,7 +4,7 @@ SMODS.DrawStep({
   key = 'hisuian_zorua_shadow',
   order = 69,
   func = function(card, layer)
-    if card.debuff or poke_is_in_collection(card) or not card.ability then return end
+    if card.debuff or pokermon.is_in_collection(card) or card.is_display_card or not card.ability then return end
     if not ((card.config.center.key == 'j_nacho_hisuian_zorua' and card.ability.extra.active) or card.config.center.key == 'j_nacho_hisuian_zoroark') then return end
     if card.area and card.area == G.jokers then
       local other_joker = G.jokers.cards[1]

@@ -3,7 +3,7 @@ local piplup={
   name = "piplup",
   config = {extra = {hands = 1, chips = 80, chip_loss = 20, rounds = 4}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.hands, card.ability.extra.chips, card.ability.extra.chip_loss, card.ability.extra.rounds}}
   end,
   rarity = 2,
@@ -21,7 +21,7 @@ local piplup={
         chips = math.max(card.ability.extra.chips - card.ability.extra.chip_loss * (#context.scoring_hand), 0)
       }
     end
-    return level_evo(self, card, context, "j_nacho_prinplup")
+    return pokermon.level_evo(self, card, context, "j_nacho_prinplup")
   end,
   add_to_deck = function(self, card, from_debuff)
     G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
@@ -44,7 +44,7 @@ local prinplup={
   name = "prinplup",
   config = {extra = {hands = 1, chips = 50, rounds = 4}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.hands, card.ability.extra.chips, card.ability.extra.rounds}}
   end,
   rarity = "poke_safari",
@@ -66,7 +66,7 @@ local prinplup={
         chips = card.ability.extra.chips,
       }
     end
-    return level_evo(self, card, context, "j_nacho_empoleon")
+    return pokermon.level_evo(self, card, context, "j_nacho_empoleon")
   end,
   add_to_deck = function(self, card, from_debuff)
     G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
@@ -89,7 +89,7 @@ local empoleon={
   name = "empoleon",
   config = {extra = {hands = 1, chips = 80}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.hands, card.ability.extra.chips}}
   end,
   rarity = "poke_safari",
