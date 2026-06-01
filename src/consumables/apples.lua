@@ -120,12 +120,8 @@ local syrupyapple = {
   unlocked = true,
   discovered = true,
   can_use = function(self, card)
-    if G.jokers.highlighted and #G.jokers.highlighted == 1 and pokermon.is_evo_item_for(self, G.jokers.highlighted[1]) then
-      return true
-    end
-    if G.hand.highlighted and #G.hand.highlighted == 1 then
-      return true
-    end
+    if G.jokers.highlighted and #G.jokers.highlighted == 1 and pokermon.is_evo_item_for(self, G.jokers.highlighted[1]) then return true end
+    if G.hand.highlighted and #G.hand.highlighted == 1 then return true end
     return false
   end,
   use = function(self, card, area, copier)
@@ -143,8 +139,10 @@ local syrupyapple = {
 
       -- destroy a random non-wild card remaining
       local viable_targets = PkmnDip.utils.filter(cards_held, function(v) return not SMODS.has_enhancement(v, 'm_wild') end)
-      pseudoshuffle(viable_targets, pseudoseed('syrup'))
-      pokermon.remove_card(viable_targets[1], card)
+      if #viable_targets > 0 then
+        pseudoshuffle(viable_targets, pseudoseed('syrup'))
+        pokermon.remove_card(viable_targets[1], card)
+      end
       
       pokermon.evo_item_use_total(self, card, area, copier)
     else
