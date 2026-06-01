@@ -139,7 +139,7 @@ local syrupyapple = {
 
       -- destroy a random non-wild card remaining
       local viable_targets = PkmnDip.utils.filter(cards_held, function(v) return not SMODS.has_enhancement(v, 'm_wild') end)
-      if #viable_targets > 0 then
+      if next(viable_targets) then
         pseudoshuffle(viable_targets, pseudoseed('syrup'))
         pokermon.remove_card(viable_targets[1], card)
       end
