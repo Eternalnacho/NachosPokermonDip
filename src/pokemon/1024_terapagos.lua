@@ -191,7 +191,7 @@ local init = function()
 
   local is_type_ref = is_type
   is_type = function(card, target_type, ...)
-    if card.ability and card.ability.stellar_sticker then return true end
+    if card and card.ability and card.ability.stellar_sticker then return true end
     return is_type_ref(card, target_type, ...)
   end
 
