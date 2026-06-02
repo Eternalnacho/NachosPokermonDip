@@ -8,7 +8,7 @@ local hisuian_zorua = {
     local a = card.ability.extra or card.config.center.config.extra
     local main_end
     if card.area and card.area == G.jokers then
-      local other_joker = G.jokers.cards[#G.jokers.cards]
+      local other_joker = G.jokers.cards[1]
       main_end = poke_blueprint_compat_ui(card ~= other_joker and other_joker)
     end
     return {vars = {a.rounds, colours = {not a.active and G.C.UI.TEXT_INACTIVE}}, main_end = main_end}
