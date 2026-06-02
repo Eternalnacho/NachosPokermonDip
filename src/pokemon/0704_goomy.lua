@@ -188,13 +188,13 @@ local hisuian_sliggoo={
       local second_rank = part_minor.base.nominal
       -- Create metal coat
       if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-        local _card = SMODS.add_card({set = 'poke_Item', area = G.consumeables, key = 'c_poke_metalcoat'})
+        local _card = SMODS.add_card({set = 'poke_item', area = G.consumeables, key = 'c_poke_metalcoat'})
         card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.C.FILTER})
       end
       -- Create second metal coat if the difference in scoring ranks is > 6
       if math.abs(second_rank - first_rank) > 6 then
         if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-          local _card = SMODS.add_card({set = 'poke_Item', area = G.consumeables, key = 'c_poke_metalcoat'})
+          local _card = SMODS.add_card({set = 'poke_item', area = G.consumeables, key = 'c_poke_metalcoat'})
           card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.C.FILTER})
         end
       end
@@ -223,7 +223,7 @@ local hisuian_goodra={
     if context.before and context.main_eval and context.scoring_name == 'Flush House' then
       -- Create metal coat
       if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-        local _card = SMODS.add_card({set = 'poke_Item', area = G.consumeables, key = 'c_poke_metalcoat'})
+        local _card = SMODS.add_card({set = 'poke_item', area = G.consumeables, key = 'c_poke_metalcoat'})
         card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.C.FILTER})
       end
     end

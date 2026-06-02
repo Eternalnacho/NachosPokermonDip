@@ -29,7 +29,7 @@ local mega_gallade = {
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.using_consumeable and context.consumeable.ability.set == 'poke_Item' then
+    if context.using_consumeable and context.consumeable.ability.set == 'poke_item' then
       local target = pseudorandom_element(G.jokers.cards, 'mega_gallade')
       target.ability.extra.e_limit_up = target.ability.extra.e_limit_up and target.ability.extra.e_limit_up + 1 or 1
     end

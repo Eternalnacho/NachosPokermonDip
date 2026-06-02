@@ -2,7 +2,7 @@
 local tartapple = {
   name = "tartapple",
   key = "tartapple",
-  set = "poke_Item",
+  set = "poke_item",
   config = {max_highlighted = 2, min_highlighted = 2, mult_mod = 1},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
@@ -55,7 +55,7 @@ local tartapple = {
 local sweetapple = {
   name = "sweetapple",
   key = "sweetapple",
-  set = "poke_Item",
+  set = "poke_item",
   config = {max_highlighted = 2, min_highlighted = 2, money = 2},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}
@@ -107,7 +107,7 @@ local sweetapple = {
 local syrupyapple = {
   name = "syrupyapple",
   key = "syrupyapple",
-  set = "poke_Item",
+  set = "poke_item",
   config = {max_highlighted = 1, converted = 2},
   loc_vars = function(self, info_queue, center)
     info_queue[#info_queue+1] = {set = 'Other', key = 'eitem'}

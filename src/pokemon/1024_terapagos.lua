@@ -20,13 +20,13 @@ local terapagos={
       end
     end
     if context.end_of_round and context.main_eval then
-      local _card = SMODS.add_card({set = "poke_Item", area = G.consumeables, edition = 'e_negative', key = "c_poke_teraorb"})
+      local _card = SMODS.add_card({set = "poke_item", area = G.consumeables, edition = 'e_negative', key = "c_poke_teraorb"})
       card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.ARGS.LOC_COLOURS.item})
     end
   end,
   add_to_deck = function(self, card, from_debuff)
     if not from_debuff then
-      local _card = SMODS.add_card({set = "poke_Item", area = G.consumeables, edition = 'e_negative', key = "c_poke_teraorb"})
+      local _card = SMODS.add_card({set = "poke_item", area = G.consumeables, edition = 'e_negative', key = "c_poke_teraorb"})
       card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.ARGS.LOC_COLOURS.item})
     end
   end,
@@ -197,7 +197,7 @@ local init = function()
 
   local energy_matches_ref = pokermon.energy.energy_matches
   pokermon.energy.energy_matches = function(card, etype, include_colorless)
-    if card.ability and card.ability.stellar_sticker then return true
+    if card and card.ability and card.ability.stellar_sticker then return true
     else return energy_matches_ref(card, etype, include_colorless) end
   end
 
