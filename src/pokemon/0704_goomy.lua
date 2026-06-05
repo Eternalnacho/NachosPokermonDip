@@ -176,27 +176,19 @@ local hisuian_sliggoo={
   calculate = function(self, card, context)
     -- Count # of Flush Houses played
     if context.before and context.main_eval and context.scoring_name == 'Flush House' then
+      -- Create a Metal Coat
+      pokermon.create_held_item('c_poke_metalcoat')
       card.ability.extra.flush_houses = card.ability.extra.flush_houses + 1
-      return
-    end
-    -- Main function
-    if context.joker_main and context.scoring_name == 'Flush House' then
-      -- get the different ranks of the Full House
+
+      -- Get the two ranks of the Flush House
       local part_major = get_X_same(3, context.scoring_hand, true)[1][1]
       local part_minor = get_X_same(2, PkmnDip.utils.filter(context.scoring_hand, function(v) return v:get_id() ~= part_major:get_id() end), true)[1][1]
       local first_rank = part_major.base.nominal
       local second_rank = part_minor.base.nominal
-      -- Create metal coat
-      if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-        local _card = SMODS.add_card({set = 'poke_item', area = G.consumeables, key = 'c_poke_metalcoat'})
-        card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.C.FILTER})
-      end
-      -- Create second metal coat if the difference in scoring ranks is > 6
+
+      -- Create a second Metal Coat if rank diff > 6
       if math.abs(second_rank - first_rank) > 6 then
-        if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-          local _card = SMODS.add_card({set = 'poke_item', area = G.consumeables, key = 'c_poke_metalcoat'})
-          card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.C.FILTER})
-        end
+        pokermon.create_held_item('c_poke_metalcoat')
       end
     end
     return pokermon.scaling_evo(self, card, context, "j_nacho_hisuian_goodra", card.ability.extra.flush_houses, self.config.evo_rqmt)
@@ -219,31 +211,31 @@ local hisuian_goodra={
   gen = 6,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    -- Create a Metal Coat if Flush House played
-    if context.before and context.main_eval and context.scoring_name == 'Flush House' then
-      -- Create metal coat
-      if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-        local _card = SMODS.add_card({set = 'poke_item', area = G.consumeables, key = 'c_poke_metalcoat'})
-        card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.C.FILTER})
-      end
-    end
-    if context.individual and context.cardarea == G.hand and not context.end_of_round then
-      if context.scoring_name == 'Flush House' then
-        -- get the different ranks of the Full House
+    local extra = card.ability.extra
+    if context.scoring_name == 'Flush House' then
+      if context.before and context.main_eval then
+        -- Create a Metal Coat
+        pokermon.create_held_item('c_poke_metalcoat')
+
+        -- Get the two ranks of the Flush House
         local part_major = get_X_same(3, context.scoring_hand, true)[1][1]
         local part_minor = get_X_same(2, PkmnDip.utils.filter(context.scoring_hand, function(v) return v:get_id() ~= part_major:get_id() end), true)[1][1]
-        local first_rank = part_major.base.nominal
-        local second_rank = part_minor.base.nominal
-        -- Set Xmult_mod
-        card.ability.extra.Xmult = math.abs(second_rank - first_rank) / 3
+        extra.first_rank = part_major.base.nominal
+        extra.second_rank = part_minor.base.nominal
+      end
+
+      if context.individual and context.cardarea == G.hand and not context.end_of_round then
+        -- Set Xmult
+        extra.Xmult = math.abs(extra.second_rank - extra.first_rank) / 3
         -- Score Steel cards in hand
-        if SMODS.has_enhancement(context.other_card, 'm_steel') and card.ability.extra.Xmult > 1 then
-          return{
-            xmult = card.ability.extra.Xmult,
-            card = card,
-          }
+        if extra.Xmult > 1 and SMODS.has_enhancement(context.other_card, 'm_steel') then
+          return { xmult = extra.Xmult }
         end
       end
+    end
+    if context.after then
+      extra.first_rank = nil
+      extra.second_rank = nil
     end
   end,
   attributes = {"hand_type", "enhancements", "generation", "item", "xmult"},
