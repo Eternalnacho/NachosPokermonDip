@@ -36,9 +36,9 @@ local passimian={
       -- Keep relevant values stored
       local values_to_keep = {}
       if card.ability.received_card then
-        values_to_keep = dip_keep_values(card)
+        values_to_keep = PkmnDip.keep_values(card)
       elseif context and context.card and context.card.ability then
-        values_to_keep = dip_keep_values(context.card)
+        values_to_keep = PkmnDip.keep_values(context.card)
       end
       -- Set ability to received card's
       for k, v in pairs(_r.config) do
@@ -46,7 +46,7 @@ local passimian={
       end
       card.ability.received_card = _r
       -- Re-add kept values and handle energy, type
-      if next(values_to_keep) then dip_get_kept_values(card, values_to_keep) end
+      if next(values_to_keep) then PkmnDip.get_kept_values(card, values_to_keep) end
       if card.ability.extra.energy_count or card.ability.extra.c_energy_count then pokermon.energy.energize(card, nil, true, true) end
       card.ability.extra.ptype = "Fighting"
       -- Calls the add_to_deck function of the received card if it exists

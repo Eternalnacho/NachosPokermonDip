@@ -9,7 +9,7 @@ SMODS.Booster:take_ownership_by_kind('Standard',
       local _seal = SMODS.poll_seal({ mod = 10 })
 
       if next(SMODS.find_card('j_nacho_oranguru')) then
-        local _ranks = get_common_ranks(G.playing_cards)
+        local _ranks = PkmnDip.get_common_ranks(G.playing_cards)
         _rank = pseudorandom_element(_ranks, pseudoseed("staranks"..G.GAME.round_resets.ante)).card_key
       end
 

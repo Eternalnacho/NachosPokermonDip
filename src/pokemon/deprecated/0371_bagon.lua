@@ -87,7 +87,7 @@ local bagon={
         card = context.other_card or card
       }
     end
-    return deck_rank_evo(self, card, context, "j_nacho_shelgon", 9, .57)
+    return pokermon.deck_rank_evo(self, card, context, "j_nacho_shelgon", 9, .57)
   end
 }
 
@@ -178,7 +178,7 @@ local shelgon={
         card = context.other_card or card
       }
     end
-    return deck_rank_evo(self, card, context, "j_nacho_salamence", 9, .75)
+    return pokermon.deck_rank_evo(self, card, context, "j_nacho_salamence", 9, .75)
   end
 }
 
