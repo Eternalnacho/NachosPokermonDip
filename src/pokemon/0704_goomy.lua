@@ -175,7 +175,7 @@ local hisuian_sliggoo={
   blueprint_compat = true,
   calculate = function(self, card, context)
     -- Count # of Flush Houses played
-    if context.before and context.main_eval and context.scoring_name == 'Flush House' then
+    if context.joker_main and context.scoring_name == 'Flush House' then
       -- Create a Metal Coat
       pokermon.create_held_item('c_poke_metalcoat')
       card.ability.extra.flush_houses = card.ability.extra.flush_houses + 1

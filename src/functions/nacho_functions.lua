@@ -18,8 +18,8 @@ function pokermon.create_held_item(args)
       ['Tarot'] = 'k_plus_tarot',
       ['Planet'] = 'k_plus_planet',
       ['Spectral'] = 'k_plus_spectral',
-      ['poke_item'] = 'poke_plus_pokeitem',
-      ['poke_energy'] = 'poke_plus_pokeitem',
+      ['Item'] = 'poke_plus_item',
+      ['Energy'] = 'poke_plus_energy',
     }
     SMODS.calculate_effect({
       message = localize(loc_keys[set]),
