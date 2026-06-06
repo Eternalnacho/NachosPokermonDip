@@ -18,7 +18,7 @@ function pokermon.create_held_item(args)
       ['Tarot'] = 'k_plus_tarot',
       ['Planet'] = 'k_plus_planet',
       ['Spectral'] = 'k_plus_spectral',
-      ['Item'] = 'poke_plus_item',
+      ['Item'] = 'poke_plus_pokeitem',
       ['Energy'] = 'poke_plus_energy',
     }
     SMODS.calculate_effect({
