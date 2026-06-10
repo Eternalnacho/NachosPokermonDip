@@ -86,12 +86,12 @@ local munkidori = {
     -- Add to foresight based on Toxic Xmult
     if context.after then
       a.scry_plus = math.floor((G.GAME.current_round.toxic.toxicXMult - 1) / a.threshold) - a.scry_added
-      G.GAME.scry_amount = (G.GAME.scry_amount or 0) + a.scry_plus
+      G.GAME.poke_scry_amount = (G.GAME.poke_scry_amount or 0) + a.scry_plus
       a.scry_added = a.scry_added + a.scry_plus
     end
     -- Reset foresight
     if context.end_of_round and not context.individual and not context.repetition and not context.blueprint then
-      G.GAME.scry_amount = math.max(a.scry, (G.GAME.scry_amount or 0) - a.scry_added)
+      G.GAME.poke_scry_amount = math.max(a.scry, (G.GAME.poke_scry_amount or 0) - a.scry_added)
       a.scry_added = 0
       return {
         message = localize('k_reset'),
@@ -103,10 +103,10 @@ local munkidori = {
     if not from_debuff then
       card.ability.extra.toxic_chain = true
     end
-    G.GAME.scry_amount = (G.GAME.scry_amount or 0) + card.ability.extra.scry
+    G.GAME.poke_scry_amount = (G.GAME.poke_scry_amount or 0) + card.ability.extra.scry
   end,
   remove_from_deck = function(self, card, from_debuff)
-    G.GAME.scry_amount = math.max(0, (G.GAME.scry_amount or 0) - card.ability.extra.scry - card.ability.extra.scry_added)
+    G.GAME.poke_scry_amount = math.max(0, (G.GAME.poke_scry_amount or 0) - card.ability.extra.scry - card.ability.extra.scry_added)
   end,
   attributes = {"enhancements", "modify_card", "foresight"},
 }

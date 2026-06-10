@@ -75,12 +75,12 @@ local terapagos_terastal={
   end,
   add_to_deck = function(self, card, from_debuff)
     if not from_debuff then
-      G.GAME.energy_plus = G.GAME.energy_plus and (G.GAME.energy_plus + 3) or 3
-      PkmnDip.utils.for_each(G.jokers.cards, function(joker) pokermon.apply_type_sticker(joker, get_type(card)) end)
+      G.GAME.poke_energy_plus = G.GAME.poke_energy_plus and (G.GAME.poke_energy_plus + 3) or 3
+      PkmnDip.utils.for_each(G.jokers.cards, function(joker) pokermon.apply_type_sticker(joker, pokermon.get_type(card)) end)
     end
   end,
   remove_from_deck = function(self, card, from_debuff)
-    G.GAME.energy_plus = G.GAME.energy_plus and (G.GAME.energy_plus - 3) or 0
+    G.GAME.poke_energy_plus = G.GAME.poke_energy_plus and (G.GAME.poke_energy_plus - 3) or 0
   end,
   attributes = {"energy_limit", "item", "passive", "types", "joker", "xmult", "condition_evo"}
 }
@@ -154,13 +154,13 @@ local terapagos_stellar={
         self:set_sprites(card)
         pokermon.apply_type_sticker(card, "Stellar")
       return true end }))
-    G.GAME.energy_plus = G.GAME.energy_plus and (G.GAME.energy_plus + 5) or 5
+    G.GAME.poke_energy_plus = G.GAME.poke_energy_plus and (G.GAME.poke_energy_plus + 5) or 5
     if not from_debuff then
       PkmnDip.utils.for_each(G.jokers.cards, function(joker) pokermon.apply_type_sticker(joker, "Stellar") end)
     end
   end,
   remove_from_deck = function(self, card, from_debuff)
-    G.GAME.energy_plus = G.GAME.energy_plus and (G.GAME.energy_plus - 5) or 0
+    G.GAME.poke_energy_plus = G.GAME.poke_energy_plus and (G.GAME.poke_energy_plus - 5) or 0
   end,
   set_sprites = function(self, card, front)
     if self.discovered or card.bypass_discovery_center and card.children.floating_sprite then
