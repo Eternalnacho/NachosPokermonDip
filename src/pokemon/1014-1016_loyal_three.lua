@@ -78,7 +78,7 @@ local munkidori = {
       toxic_chain(card)
     end
     -- Foreseen Toxic cards trigger
-    if context.individual and not context.end_of_round and context.cardarea == G.scry_view and not context.other_card.debuff
+    if context.individual and not context.end_of_round and context.cardarea == G.poke_scry_view and not context.other_card.debuff
         and SMODS.has_enhancement(context.other_card, 'm_stall_toxic') then
       toxic_scaling()
       SMODS.calculate_effect({x_mult = G.GAME.current_round.toxic.toxicXMult}, context.other_card)
