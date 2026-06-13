@@ -33,6 +33,9 @@ local mega_gallade = {
       local target = pseudorandom_element(G.jokers.cards, 'mega_gallade')
       target.ability.extra.e_limit_up = target.ability.extra.e_limit_up and target.ability.extra.e_limit_up + 1 or 1
     end
+    if context.joker_main then
+      return { xmult = card.ability.extra.Xmult }
+    end
   end,
 }
 
