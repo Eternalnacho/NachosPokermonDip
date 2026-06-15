@@ -3,7 +3,7 @@ local skwovet={
   name = "skwovet",
   config = {extra = {mult = 0, mult_mod = 1, rounds = 5, in_blind = false}, evo_rqmt = 12},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.mult, card.ability.extra.mult_mod}}
   end,
   rarity = 1,
@@ -36,7 +36,7 @@ local skwovet={
     if context.end_of_round and not context.game_over == true and context.main_eval and not context.blueprint then
       card.ability.extra.in_blind = false
     end
-    return scaling_evo(self, card, context, "j_nacho_greedent", card.ability.extra.mult, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_nacho_greedent", card.ability.extra.mult, self.config.evo_rqmt)
   end,
   attributes = {"mult", "scaling", "condition_evo"}
 }
@@ -46,7 +46,7 @@ local greedent={
   name = "greedent",
   config = {extra = {mult = 0, mult_mod = 1, num = 1, den = 8, in_blind = false}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     local num, den = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.den, 'greedent')
     return {vars = {card.ability.extra.mult, card.ability.extra.mult_mod, num, den}}
   end,
@@ -76,7 +76,7 @@ local greedent={
       -- 1 in 8 chance for Leftovers
       if SMODS.pseudorandom_probability(card, 'greedent', card.ability.extra.num, card.ability.extra.den, 'greedent') and not card.debuff and
           context.consumeable.config.center.key ~= 'c_poke_leftovers' then
-        SMODS.add_card({set = 'Item', area = G.consumeables, edition = 'e_negative', key = 'c_poke_leftovers'})
+        SMODS.add_card({set = 'poke_item', area = G.consumeables, edition = 'e_negative', key = 'c_poke_leftovers'})
         card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_stuff_cheeks_ex'), colour = G.C.FILTER})
       end
     end

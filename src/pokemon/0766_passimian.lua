@@ -36,9 +36,9 @@ local passimian={
       -- Keep relevant values stored
       local values_to_keep = {}
       if card.ability.received_card then
-        values_to_keep = dip_keep_values(card)
+        values_to_keep = PkmnDip.keep_values(card)
       elseif context and context.card and context.card.ability then
-        values_to_keep = dip_keep_values(context.card)
+        values_to_keep = PkmnDip.keep_values(context.card)
       end
       -- Set ability to received card's
       for k, v in pairs(_r.config) do
@@ -46,8 +46,8 @@ local passimian={
       end
       card.ability.received_card = _r
       -- Re-add kept values and handle energy, type
-      if next(values_to_keep) then dip_get_kept_values(card, values_to_keep) end
-      if card.ability.extra.energy_count or card.ability.extra.c_energy_count then energize(card, nil, true, true) end
+      if next(values_to_keep) then PkmnDip.get_kept_values(card, values_to_keep) end
+      if card.ability.extra.energy_count or card.ability.extra.c_energy_count then pokermon.energy.energize(card, nil, true, true) end
       card.ability.extra.ptype = "Fighting"
       -- Calls the add_to_deck function of the received card if it exists
       if _r.add_to_deck then _r:add_to_deck(card) end
@@ -84,7 +84,7 @@ local passimian={
       -- Use generic generate_ui func with received center
       return SMODS.Center.generate_ui(r_center, info_queue, card, desc_nodes, specific_vars, full_UI_table)
     else
-      type_tooltip(self, info_queue, card)
+      pokermon.type_tooltip(self, info_queue, card)
       localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes}
     end
   end,
@@ -109,9 +109,9 @@ local init = function()
   end
 
   -- find_card hooks
-  local find_card = SMODS.find_card
+  local smods_fc = SMODS.find_card
   function SMODS.find_card(key, count_debuffed)
-    local results = find_card(key, count_debuffed)
+    local results = smods_fc(key, count_debuffed)
     if not G.jokers or not G.jokers.cards then return {} end
     for _, area in ipairs(SMODS.get_card_areas('jokers')) do
       if area.cards then
@@ -127,23 +127,23 @@ local init = function()
     return results
   end
 
-  local poke_find_card_ref = poke_find_card
-  function poke_find_card(key_or_function, use_highlighted)
-    return poke_find_card_ref(function(joker)
+  local poke_fc = pokermon.find_card
+  function pokermon.find_card(key_or_function, use_highlighted)
+    return poke_fc(function(joker)
         return joker.ability.received_card and (joker.ability.received_card == key_or_function
         or joker.ability.received_card.key == key_or_function) end, use_highlighted)
-      or poke_find_card_ref(key_or_function, use_highlighted)
+      or poke_fc(key_or_function, use_highlighted)
   end
 
-  local poke_csp_ref = poke_can_set_sprite
-  poke_can_set_sprite = function(card)
+  local poke_csp_ref = pokermon.can_set_sprite
+  pokermon.can_set_sprite = function(card)
     if card.config.center_key == 'j_nacho_passimian' then return false end
     return poke_csp_ref(card)
   end
 
-  -- energize hook
-  local energize_ref = energize
-  energize = function(card, etype, evolving, silent, amount, center)
+  -- pokermon.energy.energize hook
+  local energize_ref = pokermon.energy.energize
+  pokermon.energy.energize = function(card, etype, evolving, silent, amount, center)
     if card.config.center.key == 'j_nacho_passimian' and card.ability.received_card then
       center = card.ability.received_card
     end

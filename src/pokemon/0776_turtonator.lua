@@ -3,7 +3,7 @@ local turtonator={
   name = "turtonator",
   config = {extra = {Xmult_mod = 1.3, trapped = false}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     local active = card.ability.extra.trapped and "Active!" or "Inactive"
     return {vars = {card.ability.extra.Xmult_mod, active}}
   end,

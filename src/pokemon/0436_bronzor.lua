@@ -37,7 +37,7 @@ local bronzor = {
   name = "bronzor",
   config = {extra = { triggered = 0 }, evo_rqmt = 20},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = G.P_CENTERS.m_steel
 		return {vars = {math.max(card.ability.evo_rqmt - card.ability.extra.triggered, 0)}}
   end,
@@ -55,7 +55,7 @@ local bronzor = {
     if context.individual and context.cardarea == G.hand and context.scoring_metal_for == card then
       card.ability.extra.triggered = card.ability.extra.triggered + 1
     end
-    return scaling_evo(self, card, context, "j_nacho_bronzong", card.ability.extra.triggered, self.config.evo_rqmt)
+    return pokermon.scaling_evo(self, card, context, "j_nacho_bronzong", card.ability.extra.triggered, self.config.evo_rqmt)
   end,
   attributes = {"enhancements", "trigger_evo"},
 }
@@ -65,7 +65,7 @@ local bronzong = {
   name = "bronzong",
   config = { extra = {} },
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = G.P_CENTERS.m_steel
 		return {vars = {}}
   end,
@@ -78,8 +78,8 @@ local bronzong = {
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.other_joker then
-      local adjacent = poke_get_adjacent_jokers(card)
-      if context.other_joker == card or (PkmnDip.utils.contains(adjacent, context.other_joker) and is_type(context.other_joker, "Metal")) then
+      local adjacent = pokermon.get_adjacent_jokers(card)
+      if context.other_joker == card or (PkmnDip.utils.contains(adjacent, context.other_joker) and pokermon.is_type(context.other_joker, "Metal")) then
         score_metal_jokers(context.other_joker, context)
       end
     end

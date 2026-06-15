@@ -3,7 +3,7 @@ local function toxic_chain(card)
   pseudoshuffle(area, pseudoseed('blacksludge'))
   local limit = math.min(#area, 4)
   for i = 1, limit do
-    poke_convert_cards_to(area[i], {mod_conv = 'm_stall_toxic'}, true, true)
+    pokermon.convert_cards(area[i], {mod_conv = 'm_stall_toxic'}, true, true)
   end
   card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_toxic_chain_ex'), colour = G.C.PURPLE})
   card.ability.extra.toxic_chain = nil
@@ -14,7 +14,7 @@ local okidogi = {
   name = "okidogi",
   config = { extra = { threshold = 0.4 } },
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = G.P_CENTERS.m_stall_toxic
     info_queue[#info_queue+1] = {set = 'Other', key = 'toxic_chain'}
     return { vars = { card.ability.extra.threshold } }
@@ -58,7 +58,7 @@ local munkidori = {
   name = "munkidori",
   config = { extra = { scry = 4, scry_plus = 1, scry_added = 0, threshold = 0.25 } },
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = G.P_CENTERS.m_stall_toxic
     info_queue[#info_queue + 1] = {set = 'Other', key = 'scry_cards'}
     info_queue[#info_queue+1] = {set = 'Other', key = 'toxic_chain'}
@@ -78,7 +78,7 @@ local munkidori = {
       toxic_chain(card)
     end
     -- Foreseen Toxic cards trigger
-    if context.individual and not context.end_of_round and context.cardarea == G.scry_view and not context.other_card.debuff
+    if context.individual and not context.end_of_round and context.cardarea == G.poke_scry_view and not context.other_card.debuff
         and SMODS.has_enhancement(context.other_card, 'm_stall_toxic') then
       toxic_scaling()
       SMODS.calculate_effect({x_mult = G.GAME.current_round.toxic.toxicXMult}, context.other_card)
@@ -86,12 +86,12 @@ local munkidori = {
     -- Add to foresight based on Toxic Xmult
     if context.after then
       a.scry_plus = math.floor((G.GAME.current_round.toxic.toxicXMult - 1) / a.threshold) - a.scry_added
-      G.GAME.scry_amount = (G.GAME.scry_amount or 0) + a.scry_plus
+      G.GAME.poke_scry_amount = (G.GAME.poke_scry_amount or 0) + a.scry_plus
       a.scry_added = a.scry_added + a.scry_plus
     end
     -- Reset foresight
     if context.end_of_round and not context.individual and not context.repetition and not context.blueprint then
-      G.GAME.scry_amount = math.max(a.scry, (G.GAME.scry_amount or 0) - a.scry_added)
+      G.GAME.poke_scry_amount = math.max(a.scry, (G.GAME.poke_scry_amount or 0) - a.scry_added)
       a.scry_added = 0
       return {
         message = localize('k_reset'),
@@ -103,10 +103,10 @@ local munkidori = {
     if not from_debuff then
       card.ability.extra.toxic_chain = true
     end
-    G.GAME.scry_amount = (G.GAME.scry_amount or 0) + card.ability.extra.scry
+    G.GAME.poke_scry_amount = (G.GAME.poke_scry_amount or 0) + card.ability.extra.scry
   end,
   remove_from_deck = function(self, card, from_debuff)
-    G.GAME.scry_amount = math.max(0, (G.GAME.scry_amount or 0) - card.ability.extra.scry - card.ability.extra.scry_added)
+    G.GAME.poke_scry_amount = math.max(0, (G.GAME.poke_scry_amount or 0) - card.ability.extra.scry - card.ability.extra.scry_added)
   end,
   attributes = {"enhancements", "modify_card", "foresight"},
 }
@@ -116,7 +116,7 @@ local fezandipiti = {
   name = "fezandipiti",
   config = { extra = {} },
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = G.P_CENTERS.m_stall_toxic
     info_queue[#info_queue+1] = G.P_CENTERS.m_lucky
     info_queue[#info_queue+1] = {set = 'Other', key = 'toxic_chain'}

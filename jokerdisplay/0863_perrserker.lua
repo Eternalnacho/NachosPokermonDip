@@ -21,7 +21,7 @@ jd_def["j_nacho_perrserker"] = {
     local total_xmult = 1.5
     if G.jokers then
       local total_energy = 0
-      PkmnDip.utils.for_each(SMODS.find_card('j_nacho_perrserker'), function(v) total_energy = total_energy + get_total_energy(v) end)
+      PkmnDip.utils.for_each(SMODS.find_card('j_nacho_perrserker'), function(v) total_energy = total_energy + pokermon.energy.get_total_energy(v) end)
       total_xmult = total_xmult + total_xmult * .05 * total_energy
     end
     card.joker_display_values.x_mult = total_xmult

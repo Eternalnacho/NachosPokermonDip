@@ -3,7 +3,7 @@ local ralts={
   name = "ralts",
   config = {extra = {mult_mod = 1, rounds = 4}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     local mult = 0
     for _, v in pairs(G.GAME.hands) do
       mult = mult + math.max((v.level - 1) * card.ability.extra.mult_mod, 0)
@@ -39,7 +39,7 @@ local ralts={
         card = card
       }
     end
-    return level_evo(self, card, context, "j_nacho_kirlia")
+    return pokermon.level_evo(self, card, context, "j_nacho_kirlia")
   end,
 }
 
@@ -48,7 +48,7 @@ local kirlia={
   name = "kirlia",
   config = {extra = {mult_mod = 2, rounds = 5}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     local mult = 0
     for _, v in pairs(G.GAME.hands) do
       mult = mult + math.max((v.level - 1) * card.ability.extra.mult_mod, 0)
@@ -86,7 +86,7 @@ local kirlia={
         card = card
       }
     end
-    return item_evo(self, card, context, "j_nacho_gallade") or level_evo(self, card, context, "j_nacho_gardevoir")
+    return pokermon.item_evo(self, card, context, "j_nacho_gallade") or pokermon.level_evo(self, card, context, "j_nacho_gardevoir")
   end,
 }
 
@@ -95,7 +95,7 @@ local gardevoir={
   name = "gardevoir",
   config = {extra = {Xmult_mod = 0.1, Xmult = 1.0}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     local xmult = card.ability.extra.Xmult
     for _, v in pairs(G.GAME.hands) do
       xmult = xmult + math.max((v.level - 1) * card.ability.extra.Xmult_mod, 0)
@@ -141,7 +141,7 @@ local mega_gardevoir={
   name = "mega_gardevoir",
   config = {extra = {Xmult_mod = 0.1, Xmult = 1.0, planets = {}}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     local xmult = card.ability.extra.Xmult
     for _, v in pairs(G.GAME.hands) do
       xmult = xmult + math.max((v.level - 1) * card.ability.extra.Xmult_mod, 0)
@@ -200,7 +200,7 @@ local gallade={
   name = "gallade",
   config = {extra = {Xmult_mod = 0.1}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.Xmult_mod}}
   end,
   loc_txt = {
@@ -241,7 +241,7 @@ local mega_gallade={
   name = "mega_gallade",
   config = {extra = {Xmult_mod = 0.25}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.Xmult_mod}}
   end,
   loc_txt = {
@@ -270,11 +270,11 @@ local mega_gallade={
     -- Prevent most played hand from being debuffed
     if context.debuff_card and context.cardarea == G.hand then
       local text, _, _ = G.FUNCS.get_poker_hand_info(context.cardarea.highlighted)
-      if text ~= calc_most_played_hand() and not PkmnDip.utils.contains(context.cardarea.highlighted, context.debuff_card) then
+      if text ~= PkmnDip.calc_most_played_hand() and not PkmnDip.utils.contains(context.cardarea.highlighted, context.debuff_card) then
         return { debuff = true }
       end
     end
-    if context.debuff_hand and context.scoring_name == calc_most_played_hand() then
+    if context.debuff_hand and context.scoring_name == PkmnDip.calc_most_played_hand() then
       return { prevent_debuff = true }
     end
     -- Main Scoring
@@ -308,7 +308,7 @@ local init = function()
     local _hand
     if next(SMODS.find_card('j_nacho_gallade')) and card and card.ability and card.ability.set == 'Planet' then
       local next_gallade = SMODS.find_card('j_nacho_gallade')[1]
-      _hand = calc_most_played_hand()
+      _hand = PkmnDip.calc_most_played_hand()
       card_eval_status_text(next_gallade, 'extra', nil, nil, nil, {message = localize('poke_psycho_cut_ex'), colour = G.C.SECONDARY_SET.Planet, sound = 'slice1', pitch = 0.96+math.random()*0.08})
       delay(0.4)
       update_hand_text({sound = 'button', volume = 0.7, pitch = 0.8, delay = 0.3}, {handname=localize(_hand, 'poker_hands'),chips = G.GAME.hands[_hand].chips, mult = G.GAME.hands[_hand].mult, level=G.GAME.hands[_hand].level})
@@ -327,7 +327,7 @@ local init = function()
       for _, card in ipairs(self.cards) do
         SMODS.recalc_debuff(card)
       end
-      if text == calc_most_played_hand() then
+      if text == PkmnDip.calc_most_played_hand() then
         for _, card in ipairs(self.highlighted) do
           card:set_debuff(false)
         end

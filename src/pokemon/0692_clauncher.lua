@@ -3,7 +3,7 @@ local clauncher = {
   name = "clauncher",
   config = {extra = {retriggers = 1, editions = {}, rounds = 4}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     if pokermon_config.detailed_tooltips then
       if not card.edition or (card.edition and not card.edition.polychrome) then
         info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
@@ -50,7 +50,7 @@ local clauncher = {
         card.ability.extra.editions = {}
       end
     end
-    return level_evo(self, card, context, "j_nacho_clawitzer")
+    return pokermon.level_evo(self, card, context, "j_nacho_clawitzer")
   end,
   in_pool = function(self, args)
     return G.playing_cards and #PkmnDip.utils.filter(G.playing_cards, function(pcard) return pcard.edition end) > 0
@@ -63,7 +63,7 @@ local clawitzer = {
   name = "clawitzer",
   config = {extra = {retriggers = 1}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     if pokermon_config.detailed_tooltips then
       if not card.edition or (card.edition and not card.edition.polychrome) then
         info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome

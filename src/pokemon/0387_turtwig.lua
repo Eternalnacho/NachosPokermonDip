@@ -3,7 +3,7 @@ local turtwig={
   name = "turtwig",
   config = {extra = {h_size = 1, interest = 0, rounds = 4}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.h_size, card.ability.extra.rounds, G.GAME.interest_cap / 5}}
   end,
   rarity = 2,
@@ -22,7 +22,7 @@ local turtwig={
       G.GAME.interest_cap = G.GAME.interest_cap + 5
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_leech_seed_ex')})
     end
-    return level_evo(self, card, context, "j_nacho_grotle")
+    return pokermon.level_evo(self, card, context, "j_nacho_grotle")
   end,
   add_to_deck = function(self, card, from_debuff)
     G.hand:change_size(card.ability.extra.h_size)
@@ -39,7 +39,7 @@ local grotle={
   name = "grotle",
   config = {extra = {h_size = 1, interest = 0, rounds = 5}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.h_size, card.ability.extra.rounds, G.GAME.interest_cap / 5}}
   end,
   designer = "ESN64",
@@ -64,7 +64,7 @@ local grotle={
       G.GAME.interest_cap = G.GAME.interest_cap + 10
       card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_leech_seed_ex')})
     end
-    return level_evo(self, card, context, "j_nacho_torterra")
+    return pokermon.level_evo(self, card, context, "j_nacho_torterra")
   end,
   add_to_deck = function(self, card, from_debuff)
     G.hand:change_size(card.ability.extra.h_size)
@@ -84,7 +84,7 @@ local torterra={
   name = "torterra",
   config = {extra = {h_size = 0, interest = 0, addition = 3}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.h_size, card.ability.extra.mult, G.GAME.interest_cap / 5}}
   end,
   designer = "ESN64",

@@ -3,7 +3,7 @@ local swablu={
   name = "swablu",
   config = {extra = {money = 1, rounds = 4}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     local nine_tally = G.playing_cards and #PkmnDip.utils.filter(G.playing_cards, function(v) return v:get_id() == 9 end) or 0
     return {vars = {card.ability.extra.money, card.ability.extra.money * nine_tally, card.ability.extra.rounds}}
   end,
@@ -27,11 +27,11 @@ local swablu={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    return level_evo(self, card, context, "j_nacho_altaria")
+    return pokermon.level_evo(self, card, context, "j_nacho_altaria")
   end,
   calc_dollar_bonus = function(self, card)
     local nine_tally = G.playing_cards and #PkmnDip.utils.filter(G.playing_cards, function(v) return v:get_id() == 9 end) or 0
-    return ease_poke_dollars(card, "swablu", card.ability.extra.money * nine_tally, true)
+    return pokermon.ease_poke_dollars(card, "swablu", card.ability.extra.money * nine_tally, true)
 	end
 }
 
@@ -40,7 +40,7 @@ local altaria={
   name = "altaria",
   config = {extra = {money = 1}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     local nine_tally = 0
     if G.playing_cards then
       local nines = PkmnDip.utils.filter(G.playing_cards, function(v) return v:get_id() == 9 end); nine_tally = #nines
@@ -72,7 +72,7 @@ local altaria={
     local nine_tally = 0
     local nines = PkmnDip.utils.filter(G.playing_cards, function(v) return v:get_id() == 9 end); nine_tally = #nines
     PkmnDip.utils.for_each(nines, function(v) if v.config.center ~= G.P_CENTERS.c_base then nine_tally = nine_tally + 1 end end)
-    return ease_poke_dollars(card, "altaria", card.ability.extra.money * nine_tally, true)
+    return pokermon.ease_poke_dollars(card, "altaria", card.ability.extra.money * nine_tally, true)
 	end,
   megas = {"mega_altaria"},
 }
@@ -82,7 +82,7 @@ local mega_altaria={
   name = "mega_altaria",
   config = {extra = {}},
   loc_vars = function(self, info_queue, card)
-    type_tooltip(self, info_queue, card)
+    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {}}
   end,
   loc_txt = {

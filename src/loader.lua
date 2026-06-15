@@ -49,8 +49,8 @@ local function load_pokemon(item)
   local custom_prefix = item.nacho_inject_prefix or "nacho"
   local custom_atlas = item.atlas and string.find(item.atlas, "nacho")
   if not item.atlas then
-    poke_load_atlas(item)
-    poke_load_sprites(item)
+    pokermon.sprites.load_atlas(item)
+    pokermon.sprites.load_sprites(item)
   end
   if item.nacho_starter then item.starter = nacho_config[item.name] end
   if item.nacho_pseudol then item.pseudol = nacho_config[item.name] end

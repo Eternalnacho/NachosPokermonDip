@@ -17,7 +17,7 @@ local mega_gardevoir = {
     }
   },
   loc_vars = function(self, info_queue, center)
-    type_tooltip(self, info_queue, center)
+    pokermon.type_tooltip(self, info_queue, center)
     local a = center.ability.extra
     local xmult = a.Xmult
     for _, v in pairs(G.GAME.hands) do
@@ -25,7 +25,7 @@ local mega_gardevoir = {
     end
     -- Count energized jokers
     if G.jokers and G.jokers.cards then
-      xmult = xmult + a.Xmult_mod * #PkmnDip.utils.filter(G.jokers.cards, function(joker) return get_total_energy(joker) > 0 end)
+      xmult = xmult + a.Xmult_mod * #PkmnDip.utils.filter(G.jokers.cards, function(joker) return pokermon.energy.get_total_energy(joker) > 0 end)
     end
     return {vars = { a.e_limit, a.Xmult_mod, xmult }}
   end,
@@ -47,7 +47,7 @@ local mega_gardevoir = {
         xmult = xmult + math.max(hand_level * a.Xmult_mod, 0)
       end
       -- Count energized jokers
-      xmult = xmult + a.Xmult_mod * #PkmnDip.utils.filter(G.jokers.cards, function(joker) return get_total_energy(joker) > 0 end)
+      xmult = xmult + a.Xmult_mod * #PkmnDip.utils.filter(G.jokers.cards, function(joker) return pokermon.energy.get_total_energy(joker) > 0 end)
 
       if xmult > 1 then
         return { xmult = xmult }
@@ -58,7 +58,7 @@ local mega_gardevoir = {
 
 local function init()
   SMODS.Joker:take_ownership('poke_gardevoir', { megas = { 'mega_gardevoir' } }, true)
-  poke_add_to_family("gardevoir", "mega_gardevoir")
+  pokermon.add_to_family("gardevoir", "mega_gardevoir")
 end
 
 return {

@@ -60,11 +60,11 @@ match_indent = true
 [patches.pattern]
 target = '=[SMODS Pokermon "functions/pokefunctions.lua"]'
 pattern = '''
-if can_evolve(self, card, context, forced_key) and card.ability[type_req.."_sticker"] then
+if pokermon.can_evolve(self, card, context, forced_key) and card.ability[type_req.."_sticker"] then
 '''
 position = "at"
 payload = '''
-if can_evolve(self, card, context, forced_key) and (card.ability["stellar_sticker"] or card.ability[type_req.."_sticker"]) then
+if pokermon.can_evolve(self, card, context, forced_key) and (card.ability["stellar_sticker"] or card.ability[type_req.."_sticker"]) then
 '''
 match_indent = true
 
@@ -72,11 +72,11 @@ match_indent = true
 [patches.pattern]
 target = '=[SMODS Pokermon "functions/pokefunctions.lua"]'
 pattern = '''
-elseif can_evolve(self, card, context, forced_key, true) and card.ability[type_req.."_sticker"] then
+elseif pokermon.can_evolve(self, card, context, forced_key, true) and card.ability[type_req.."_sticker"] then
 '''
 position = "at"
 payload = '''
-elseif can_evolve(self, card, context, forced_key, true) and (card.ability["stellar_sticker"] or card.ability[type_req.."_sticker"]) then
+elseif pokermon.can_evolve(self, card, context, forced_key, true) and (card.ability["stellar_sticker"] or card.ability[type_req.."_sticker"]) then
 '''
 match_indent = true
 
