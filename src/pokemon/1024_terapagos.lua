@@ -136,24 +136,15 @@ local terapagos_stellar={
     end
     if context.other_joker and pokermon.is_type(context.other_joker, "Stellar") then
       local xmult = 1 + card.ability.extra.Xmult_mod * pokermon.energy.get_total_energy(context.other_joker)
-      G.E_MANAGER:add_event(Event({
-        func = function()
-            context.other_joker:juice_up(0.5, 0.5)
-            return true
-        end
-      }))
-      return{
-        message = localize{type = 'variable', key = 'a_xmult', vars = {xmult}},
-        colour = G.C.XMULT,
-        Xmult_mod = xmult
-      }
+      PkmnDip.defer(function() context.other_joker:juice_up(0.5, 0.5) end)
+      return{ Xmult = xmult }
     end
   end,
   add_to_deck = function(self, card, from_debuff)
-    G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.0, func = function()
-        self:set_sprites(card)
-        pokermon.apply_type_sticker(card, "Stellar")
-      return true end }))
+    PkmnDip.defer(function()
+      self:set_sprites(card)
+      pokermon.apply_type_sticker(card, "Stellar")
+    end)
     G.GAME.poke_energy_plus = G.GAME.poke_energy_plus and (G.GAME.poke_energy_plus + 5) or 5
     if not from_debuff then
       PkmnDip.utils.for_each(G.jokers.cards, function(joker) pokermon.apply_type_sticker(joker, "Stellar") end)
@@ -182,43 +173,21 @@ local terapagos_stellar={
 }
 
 local init = function()
-  local type_sticker_ref = pokermon.type_sticker_applied
-  pokermon.type_sticker_applied = function(card, ...)
-    if not card then return end
-    if card.ability['stellar_sticker'] then return "Stellar" end
-    return type_sticker_ref(card, ...)
-  end
+  PkmnDip.utils.hook_before_function(pokermon, 'type_sticker_applied', function(card, ...)
+    if card and card.ability and card.ability['stellar_sticker'] then return "Stellar" end
+  end)
 
-  local is_type_ref = pokermon.is_type
-  pokermon.is_type = function(card, target_type, ...)
-    if card and card.ability and card.ability.stellar_sticker then return true end
-    return is_type_ref(card, target_type, ...)
-  end
+  PkmnDip.utils.hook_before_function(pokermon, 'is_type', function(card, ...)
+    if card and card.ability and card.ability['stellar_sticker'] then return true end
+  end)
 
-  local energy_matches_ref = pokermon.energy.energy_matches
-  pokermon.energy.energy_matches = function(card, etype, include_colorless)
-    if card and card.ability and card.ability.stellar_sticker then return true
-    else return energy_matches_ref(card, etype, include_colorless) end
-  end
+  PkmnDip.utils.hook_before_function(pokermon.energy, 'energy_matches', function(card, ...)
+    if card and card.ability and card.ability['stellar_sticker'] then return true end
+  end)
 
-  local get_matching_energy_ref = pokermon.energy.get_matching_energy
-  pokermon.energy.get_matching_energy = function(card, allow_bird, ...)
-    if card.ability and card.ability.stellar_sticker then return "c_poke_colorless_energy"
-    else return get_matching_energy_ref(card, allow_bird, ...) end
-  end
-
-  local find_pokemon_type_ref = pokermon.find_pokemon_type
-  pokermon.find_pokemon_type = function(target_type, exclude_card, exclude_name, ...)
-    local ret = find_pokemon_type_ref(target_type, exclude_card, exclude_name, ...)
-    if type(ret) == "table" and G.jokers then
-      for k, v in pairs(G.jokers.cards) do
-        if v.ability.stellar_sticker and v ~= exclude_card and not v.name ~= exclude_name and not PkmnDip.utils.contains(ret, v) then
-          table.insert(ret, v)
-        end
-      end
-    end
-    return ret
-  end
+  PkmnDip.utils.hook_before_function(pokermon.energy, 'get_matching_energy', function(card, ...)
+    if card and card.ability and card.ability['stellar_sticker'] then return "c_poke_colorless_energy" end
+  end)
 end
 
 return {

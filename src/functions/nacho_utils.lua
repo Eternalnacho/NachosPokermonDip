@@ -96,3 +96,14 @@ function PkmnDip.utils.hook_after_function(table, funcname, hook, always_run)
     end
   end
 end
+
+function PkmnDip.utils.hook_around_function(table, funcname, hook)
+  if not table[funcname] then
+    table[funcname] = function(...)
+      return hook(function() end, ...)
+    end
+  else
+    local orig = table[funcname]
+    table[funcname] = function(...) return hook(orig, ...) end
+  end
+end

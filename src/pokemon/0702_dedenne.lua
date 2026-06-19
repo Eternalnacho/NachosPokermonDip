@@ -21,7 +21,7 @@ local dedenne = {
       G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
       PkmnDip.defer(function()
         local _card = SMODS.add_card({set = 'poke_item', area = G.consumeables, key = pokermon.generate_pickup_item_key('dedenne')})
-        card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.ARGS.LOC_COLOURS.item})
+        SMODS.calculate_effect({message = localize('poke_plus_pokeitem'), colour = G.ARGS.LOC_COLOURS.item}, _card)
         G.GAME.consumeable_buffer = 0
       end)
     end
