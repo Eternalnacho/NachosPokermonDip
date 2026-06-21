@@ -54,16 +54,14 @@ local terapagos_terastal={
     return false
   end,
   calculate = function(self, card, context)
-    if context.using_consumeable and context.consumeable and context.consumeable.ability then
-      if context.consumeable.ability.name == 'teraorb' and card == pokermon.find_leftmost_or_highlighted() then
-        if not (context.consumeable.ability.extra.change_to_type == card.ability.extra.changedtype) then
-          pokermon.energy.increase(card, get_type(card))
-          card.ability.extra.changedtype = card.ability.extra.ptype
-        end
-        PkmnDip.utils.for_each(G.jokers.cards, function(joker) if joker ~= card then pokermon.apply_type_sticker(joker, card.ability.extra.ptype) end end)
-        if pokermon.energy.get_total_energy(card) >= 6 then
-          pokermon.evolve(card, 'j_nacho_terapagos_stellar')
-        end
+    if context.using_consumeable and context.consumeable.ability.name == 'teraorb' and card == pokermon.find_leftmost_or_highlighted() then
+      if not (context.consumeable.ability.extra.change_to_type == card.ability.extra.changedtype) then
+        pokermon.energy.increase(card, get_type(card))
+        card.ability.extra.changedtype = card.ability.extra.ptype
+      end
+      PkmnDip.utils.for_each(G.jokers.cards, function(joker) if joker ~= card then pokermon.apply_type_sticker(joker, card.ability.extra.ptype) end end)
+      if pokermon.energy.get_total_energy(card) >= 6 then
+        pokermon.evolve(card, 'j_nacho_terapagos_stellar')
       end
     end
     if context.joker_main then
@@ -125,14 +123,12 @@ local terapagos_stellar={
     return false
   end,
   calculate = function(self, card, context)
-    if context.using_consumeable and context.consumeable and context.consumeable.ability then
-      if context.consumeable.ability.name == 'teraorb' and card == pokermon.find_leftmost_or_highlighted() then
-        PkmnDip.utils.for_each(G.jokers.cards,
-          function(joker)
-            pokermon.energy.increase(joker, get_type(joker))
-            pokermon.apply_type_sticker(joker, "Stellar")
-          end)
-      end
+    if context.using_consumeable and context.consumeable.ability.name == 'teraorb' and card == pokermon.find_leftmost_or_highlighted() then
+      PkmnDip.utils.for_each(G.jokers.cards,
+        function(joker)
+          pokermon.energy.increase(joker, get_type(joker))
+          pokermon.apply_type_sticker(joker, "Stellar")
+        end)
     end
     if context.other_joker and pokermon.is_type(context.other_joker, "Stellar") then
       local xmult = 1 + card.ability.extra.Xmult_mod * pokermon.energy.get_total_energy(context.other_joker)
