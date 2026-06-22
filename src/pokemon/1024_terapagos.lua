@@ -55,10 +55,7 @@ local terapagos_terastal={
   end,
   calculate = function(self, card, context)
     if context.using_consumeable and context.consumeable.ability.name == 'teraorb' and card == pokermon.find_leftmost_or_highlighted() then
-      if not (context.consumeable.ability.extra.change_to_type == card.ability.extra.changedtype) then
-        pokermon.energy.increase(card, get_type(card))
-        card.ability.extra.changedtype = card.ability.extra.ptype
-      end
+      pokermon.energy.increase(card, get_type(card))
       PkmnDip.utils.for_each(G.jokers.cards, function(joker) if joker ~= card then pokermon.apply_type_sticker(joker, card.ability.extra.ptype) end end)
       if pokermon.energy.get_total_energy(card) >= 6 then
         pokermon.evolve(card, 'j_nacho_terapagos_stellar')
@@ -132,8 +129,7 @@ local terapagos_stellar={
     end
     if context.other_joker and pokermon.is_type(context.other_joker, "Stellar") then
       local xmult = 1 + card.ability.extra.Xmult_mod * pokermon.energy.get_total_energy(context.other_joker)
-      PkmnDip.defer(function() context.other_joker:juice_up(0.5, 0.5) end)
-      return{ Xmult = xmult }
+      if xmult > 1 then return { Xmult = xmult, card = context.other_joker } end
     end
   end,
   add_to_deck = function(self, card, from_debuff)
@@ -183,6 +179,19 @@ local init = function()
 
   PkmnDip.utils.hook_before_function(pokermon.energy, 'get_matching_energy', function(card, ...)
     if card and card.ability and card.ability['stellar_sticker'] then return "c_poke_colorless_energy" end
+  end)
+
+  PkmnDip.utils.hook_around_function(pokermon, 'find_pokemon_type', function(orig, target_type, exclude_card, exclude_name, ...)
+    local ret = orig()
+    if type(ret) == "table" and G.jokers then
+      pokermon.table_append(ret, PkmnDip.utils.filter(G.jokers.cards, function(joker)
+        return joker.ability['stellar_sticker'] 
+           and joker ~= exclude_card
+           and not joker.name ~= exclude_name
+           and not PkmnDip.utils.contains(ret, joker)
+      end))
+    end
+    return ret
   end)
 end
 
