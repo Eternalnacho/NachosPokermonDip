@@ -18,6 +18,7 @@ local shieldon = {
     if context.before and not context.blueprint then
       pokermon.get_ancient_amount(context.scoring_hand, 6, card)
     end
+
     -- 1: Scoring 6s give +12 chips for each played 6
     if context.individual and not context.end_of_round and context.cardarea == G.play and a.ancient_count > 0 then
       if context.other_card:get_id() == 6 then
@@ -68,6 +69,7 @@ local bastiodon = {
     if context.before and not context.blueprint then
       pokermon.get_ancient_amount(context.scoring_hand, 6, card)
     end
+
     -- 1: Scoring 6s give +24 chips for each played 6
     if context.individual and not context.end_of_round and context.cardarea == G.play and a.ancient_count > 0 then
       if context.other_card:get_id() == 6 then 

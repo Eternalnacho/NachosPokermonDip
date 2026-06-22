@@ -25,29 +25,26 @@ local clauncher = {
   custom_pool_func = true,
   calculate = function(self, card, context)
     -- Retriggers all the unique editions
-    if context.repetition and (context.cardarea == G.play or context.cardarea == G.hand) and
-        (next(context.card_effects[1]) or #context.card_effects > 1) and context.other_card.edition then
-      if not PkmnDip.utils.contains(card.ability.extra.editions, context.other_card.edition.key) then
-        if not context.blueprint then
-          card.ability.extra.editions[#card.ability.extra.editions+1] = context.other_card.edition.key
-        end
-        return {
-          message = localize('k_again_ex'),
-          repetitions = card.ability.extra.retriggers,
-          card = card
-        }
-      end
+    if context.repetition and (context.cardarea == G.play or context.cardarea == G.hand)
+        and (next(context.card_effects[1]) or #context.card_effects > 1) and context.other_card.edition
+        and not card.ability.extra.scored_editions[context.other_card.edition.key] then
+      card.ability.extra.scored_editions[context.other_card.edition.key] = true
+      return {
+        message = localize('k_again_ex'),
+        repetitions = card.ability.extra.retriggers,
+        card = card
+      }
     end
     -- Resets the table of scored editions between played cards and held cards
     if context.repetition and context.cardarea == G.play and not context.blueprint then
       if context.other_card == G.play.cards[#G.play.cards] then
-        card.ability.extra.editions = {}
+        card.ability.extra.scored_editions = {}
       end
     end
     -- Resets the table of scored editions after a hand is scored and before the first hand is calculated
     if (context.joker_main or context.setting_blind) and not context.blueprint then
-      if card.ability.extra.editions ~= {} then
-        card.ability.extra.editions = {}
+      if card.ability.extra.scored_editions ~= {} then
+        card.ability.extra.scored_editions = {}
       end
     end
     return pokermon.level_evo(self, card, context, "j_nacho_clawitzer")

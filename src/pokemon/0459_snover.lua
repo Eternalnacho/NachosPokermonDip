@@ -32,7 +32,7 @@ local snover = {
         local viable_targets = PkmnDip.utils.filter(G.deck.cards, function(v) return v.config.center == G.P_CENTERS.c_base end)
         local target = pseudorandom_element(viable_targets, pseudoseed('snover'))
         pokermon.convert_cards(target, {mod_conv = 'm_glass'}, true, true)
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_ice_shard_ex')})
+        SMODS.calculate_effect({ message = localize('poke_ice_shard_ex') }, card)
         a.triggered = true
       end
     end
@@ -84,7 +84,7 @@ local abomasnow = {
           local target = pseudorandom_element(viable_targets, pseudoseed('abomasnow'))
           if target then
             pokermon.convert_cards(target, {mod_conv = 'm_glass', edition = "e_foil"}, true, true)
-            card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_ice_shard_ex')})
+            SMODS.calculate_effect({ message = localize('poke_ice_shard_ex') }, card)
           end
         end
       end

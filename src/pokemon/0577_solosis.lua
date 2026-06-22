@@ -1,10 +1,7 @@
 local function copy_card_to_play(joker, card)
   for _ = 1, joker.ability.extra.dip_card_dupes do
     if #G.play.cards < 5 then
-      local copy = copy_card(card)
-      table.insert(G.playing_cards, copy)
-      copy:add_to_deck()
-      G.play:emplace(copy)
+      local copy = SMODS.copy_card(card, {area = G.play})
       PkmnDip.defer(function() G.play:add_to_highlighted(copy) end)
       table.insert(joker.ability.extra.copied_cards, copy.unique_val)
       if joker.ability.extra.copies_req then joker.ability.extra.copies_req = joker.ability.extra.copies_req + 1 end
