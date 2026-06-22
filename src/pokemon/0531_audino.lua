@@ -14,7 +14,7 @@ local audino = {
   gen = 5,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.poke_evolved then
+    if context.poke_evolved and not context.blueprint then
       SMODS.scale_card(card, {
         ref_value = 'Xmult',
         scalar_value = 'Xmult_mod',
@@ -24,6 +24,9 @@ local audino = {
     end
     if context.joker_main then
       return {xmult = card.ability.extra.Xmult}
+    end
+    if context.evolution and not context.audino_retrigger and not context.blueprint then
+      SMODS.calculate_context({ evolution = true, audino_retrigger = true })
     end
   end,
   megas = {"mega_audino"},
@@ -63,7 +66,7 @@ local mega_audino = {
         end)
       if breedable >= 2 then
         G.GAME.joker_buffer = G.GAME.joker_buffer + 1
-        if (#G.jokers.cards <= G.jokers.config.card_limit) then
+        if (#G.jokers.cards < G.jokers.config.card_limit) then
           PkmnDip.defer(function()
             G.GAME.joker_buffer = 0
             play_sound('timpani')
