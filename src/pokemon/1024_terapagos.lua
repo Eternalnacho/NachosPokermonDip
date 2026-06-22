@@ -14,20 +14,16 @@ local terapagos={
   gen = 9,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.using_consumeable and context.consumeable and context.consumeable.ability then
-      if context.consumeable.ability.name == 'teraorb' and card == pokermon.find_leftmost_or_highlighted() then
-        pokermon.evolve(card, 'j_nacho_terapagos_terastal')
-      end
+    if context.using_consumeable and context.consumeable.ability.name == 'teraorb' and card == pokermon.find_leftmost_or_highlighted() then
+      pokermon.evolve(card, 'j_nacho_terapagos_terastal')
     end
     if context.end_of_round and context.main_eval then
-      local _card = SMODS.add_card({set = "poke_item", area = G.consumeables, edition = 'e_negative', key = "c_poke_teraorb"})
-      card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.ARGS.LOC_COLOURS.item})
+      pokermon.create_held_item({ key = 'c_poke_teraorb', edition = 'e_negative' })
     end
   end,
   add_to_deck = function(self, card, from_debuff)
     if not from_debuff then
-      local _card = SMODS.add_card({set = "poke_item", area = G.consumeables, edition = 'e_negative', key = "c_poke_teraorb"})
-      card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('poke_plus_pokeitem'), colour = G.ARGS.LOC_COLOURS.item})
+      pokermon.create_held_item({ key = 'c_poke_teraorb', edition = 'e_negative' })
     end
   end,
   attributes = {"item", "generation", "condition_evo"}
@@ -55,8 +51,8 @@ local terapagos_terastal={
   end,
   calculate = function(self, card, context)
     if context.using_consumeable and context.consumeable.ability.name == 'teraorb' and card == pokermon.find_leftmost_or_highlighted() then
-      pokermon.energy.increase(card, get_type(card))
-      PkmnDip.utils.for_each(G.jokers.cards, function(joker) if joker ~= card then pokermon.apply_type_sticker(joker, card.ability.extra.ptype) end end)
+      pokermon.energy.increase(card, pokermon.get_type(card))
+      PkmnDip.utils.for_each(G.jokers.cards, function(joker) pokermon.apply_type_sticker(joker, card.ability.extra.ptype) end)
       if pokermon.energy.get_total_energy(card) >= 6 then
         pokermon.evolve(card, 'j_nacho_terapagos_stellar')
       end
@@ -123,7 +119,7 @@ local terapagos_stellar={
     if context.using_consumeable and context.consumeable.ability.name == 'teraorb' and card == pokermon.find_leftmost_or_highlighted() then
       PkmnDip.utils.for_each(G.jokers.cards,
         function(joker)
-          pokermon.energy.increase(joker, get_type(joker))
+          pokermon.energy.increase(joker, pokermon.get_type(joker))
           pokermon.apply_type_sticker(joker, "Stellar")
         end)
     end
@@ -165,21 +161,17 @@ local terapagos_stellar={
 }
 
 local init = function()
-  PkmnDip.utils.hook_before_function(pokermon, 'type_sticker_applied', function(card, ...)
-    if card and card.ability and card.ability['stellar_sticker'] then return "Stellar" end
-  end)
-
-  PkmnDip.utils.hook_before_function(pokermon, 'is_type', function(card, ...)
-    if card and card.ability and card.ability['stellar_sticker'] then return true end
-  end)
-
-  PkmnDip.utils.hook_before_function(pokermon.energy, 'energy_matches', function(card, ...)
-    if card and card.ability and card.ability['stellar_sticker'] then return true end
-  end)
-
-  PkmnDip.utils.hook_before_function(pokermon.energy, 'get_matching_energy', function(card, ...)
-    if card and card.ability and card.ability['stellar_sticker'] then return "c_poke_colorless_energy" end
-  end)
+  for _, func in ipairs{
+    -- [1] = ref_table, [2] = ref_value (func), [3] = return value
+    {pokermon, 'type_sticker_applied', "Stellar"},
+    {pokermon, 'is_type', true},
+    {pokermon.energy, 'energy_matches', true},
+    {pokermon.energy, 'get_matching_energy', 'c_poke_colorless_energy'}
+  } do 
+    PkmnDip.utils.hook_before_function(func[1], func[2], function(card, ...)
+      if card and card.ability and card.ability['stellar_sticker'] then return func[3] end
+    end)
+  end
 
   PkmnDip.utils.hook_around_function(pokermon, 'find_pokemon_type', function(orig, target_type, exclude_card, exclude_name, ...)
     local ret = orig()
@@ -187,7 +179,7 @@ local init = function()
       pokermon.table_append(ret, PkmnDip.utils.filter(G.jokers.cards, function(joker)
         return joker.ability['stellar_sticker'] 
            and joker ~= exclude_card
-           and not joker.name ~= exclude_name
+           and joker.ability.name ~= exclude_name
            and not PkmnDip.utils.contains(ret, joker)
       end))
     end
