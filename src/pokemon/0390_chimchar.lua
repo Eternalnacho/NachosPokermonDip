@@ -13,9 +13,7 @@ local chimchar={
   ptype = "Fire",
   starter = true,
   nacho_starter = true,
-  perishable_compat = true,
   blueprint_compat = true,
-  eternal_compat = true,
   calculate = function(self, card, context)
     local extra = card.ability.extra
 
@@ -62,9 +60,7 @@ local monferno={
   cost = 8,
   stage = "One",
   ptype = "Fire",
-  perishable_compat = true,
   blueprint_compat = true,
-  eternal_compat = true,
   calculate = function(self, card, context)
     local extra = card.ability.extra
 
@@ -109,9 +105,7 @@ local infernape = {
   cost = 10,
   stage = "Two",
   ptype = "Fire",
-  perishable_compat = true,
   blueprint_compat = true,
-  eternal_compat = true,
   calculate = function(self, card, context)
     -- Discarding Face cards or Aces scales Infernape
     if context.discard and not context.blueprint and not context.other_card.debuff then

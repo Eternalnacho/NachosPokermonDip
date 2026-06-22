@@ -12,9 +12,7 @@ local piplup={
   ptype = "Water",
   starter = true,
   nacho_starter = true,
-  perishable_compat = true,
   blueprint_compat = true,
-  eternal_compat = true,
   calculate = function(self, card, context)
     if context.joker_main then
       return {

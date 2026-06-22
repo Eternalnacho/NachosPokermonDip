@@ -13,14 +13,12 @@ local turtwig={
   starter = true,
   nacho_starter = true,
   perishable_compat = false,
-  blueprint_compat = false,
-  eternal_compat = true,
   poke_custom_values_to_keep = { "interest" },
   calculate = function(self, card, context)
     if context.end_of_round and context.cardarea == G.jokers then
       card.ability.extra.interest = card.ability.extra.interest + 1
       G.GAME.interest_cap = G.GAME.interest_cap + 5
-      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_leech_seed_ex')})
+      SMODS.calculate_effect({ message = localize('poke_leech_seed_ex') }, card)
     end
     return pokermon.level_evo(self, card, context, "j_nacho_grotle")
   end,
@@ -62,7 +60,7 @@ local grotle={
     if context.end_of_round and context.cardarea == G.jokers then
       card.ability.extra.interest = card.ability.extra.interest + 2
       G.GAME.interest_cap = G.GAME.interest_cap + 10
-      card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_leech_seed_ex')})
+      SMODS.calculate_effect({ message = localize('poke_leech_seed_ex') }, card)
     end
     return pokermon.level_evo(self, card, context, "j_nacho_torterra")
   end,
@@ -106,9 +104,9 @@ local torterra={
       card.ability.extra.interest = card.ability.extra.interest + 3
       G.GAME.interest_cap = G.GAME.interest_cap + 15
       return {
-          message = localize("poke_leech_seed_ex"),
-          card = card,
-        }
+        message = localize("poke_leech_seed_ex"),
+        card = card,
+      }
     end
   end,
   add_to_deck = function(self, card, from_debuff)

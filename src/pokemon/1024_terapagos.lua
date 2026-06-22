@@ -161,6 +161,7 @@ local terapagos_stellar={
 }
 
 local init = function()
+  -- Hooking Pokermon Type-related functions for the stellar type
   for _, func in ipairs{
     -- [1] = ref_table, [2] = ref_value (func), [3] = return value
     {pokermon, 'type_sticker_applied', "Stellar"},
