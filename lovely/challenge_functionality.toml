@@ -3,7 +3,6 @@ version = "1.0.0"
 dump_lua = true
 priority = 1
 
-
 # Sinnoh Adventure Shop Function
 [[patches]]
 [patches.pattern]
@@ -17,14 +16,10 @@ else
 position = "before"
 payload = '''
 elseif G.GAME.modifiers.sinnoh_adv and SMODS.calculate_context({starting_shop = true}) then
-  local turtwig = SMODS.create_card({key = 'j_nacho_turtwig', area = G.shop_jokers})
-  G.shop_jokers:emplace(turtwig)
-  create_shop_card_ui(turtwig)
-  local chimchar = SMODS.create_card({key = 'j_nacho_chimchar', area = G.shop_jokers})
-  G.shop_jokers:emplace(chimchar)
-  create_shop_card_ui(chimchar)
-  local piplup = SMODS.create_card({key = 'j_nacho_piplup', area = G.shop_jokers})
-  G.shop_jokers:emplace(piplup)
-  create_shop_card_ui(piplup)
+  for _, starter in ipairs { 'turtwig', 'chimchar', 'piplup' } do
+    local shop_card = SMODS.create_card({key = 'j_nacho_'..starter, area = G.shop_jokers})
+    G.shop_jokers:emplace(shop_card)
+    create_shop_card_ui(shop_card)
+  end
 '''
 match_indent = true
