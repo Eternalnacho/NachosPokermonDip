@@ -175,14 +175,16 @@ local init = function()
   end
 
   PkmnDip.utils.hook_around_function(pokermon, 'find_pokemon_type', function(orig, target_type, exclude_card, exclude_name, ...)
-    local ret = orig()
+    local ret = orig(target_type, exclude_card, exclude_name, ...)
     if type(ret) == "table" and G.jokers then
-      pokermon.table_append(ret, PkmnDip.utils.filter(G.jokers.cards, function(joker)
-        return joker.ability['stellar_sticker'] 
-           and joker ~= exclude_card
-           and joker.ability.name ~= exclude_name
-           and not PkmnDip.utils.contains(ret, joker)
-      end))
+      PkmnDip.utils.for_each(G.jokers.cards, function(joker)
+        if joker.ability['stellar_sticker'] 
+            and joker ~= exclude_card
+            and joker.ability.name ~= exclude_name
+            and not PkmnDip.utils.contains(ret, joker) then   
+          table.insert(ret, joker)
+        end
+      end)
     end
     return ret
   end)
