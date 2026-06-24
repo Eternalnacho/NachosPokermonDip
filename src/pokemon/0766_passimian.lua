@@ -99,56 +99,68 @@ local passimian={
 
 local init = function()
   -- Card.save hook to save received card key
-  local save_card = Card.save
-  Card.save = function (self)
-    local saved_table = save_card(self)
+  PkmnDip.utils.hook_around_function(Card, 'save', function(orig, self) 
+    local saved_table = orig(self)
     if self.config.center_key == 'j_nacho_passimian' and self.area == G.jokers and self.ability.received_card then
       saved_table.received_key = self.ability.received_card.key
     end
     return saved_table
-  end
+  end)
 
   -- find_card hooks
-  local smods_fc = SMODS.find_card
-  function SMODS.find_card(key, count_debuffed)
-    local results = smods_fc(key, count_debuffed)
-    if not G.jokers or not G.jokers.cards then return {} end
-    for _, area in ipairs(SMODS.get_card_areas('jokers')) do
-      if area.cards then
-        for _, v in pairs(area.cards) do
-          if v and type(v) == 'table' and v.ability
-              and v.ability.received_card and v.ability.received_card.key == key
-              and (count_debuffed or not v.debuff) then
-            table.insert(results, v)
-          end
+  PkmnDip.utils.hook_around_function(SMODS, 'find_card', function(orig, key, count_debuffed, ...)
+    local results = orig(key, count_debuffed)
+    if G.jokers and type(results) == "table" then
+      PkmnDip.utils.for_each(SMODS.get_card_areas('jokers'), function(area) 
+        if area.cards then
+          pokermon.table_append(results, PkmnDip.utils.filter(area.cards, function(card)
+            return type(card) == "table" and card.ability
+               and card.ability.received_card
+               and card.ability.received_card.key == key
+               and (count_debuffed or not card.debuff)
+          end))
         end
-      end
+      end)
     end
     return results
-  end
+  end)
 
-  local poke_fc = pokermon.find_card
-  function pokermon.find_card(key_or_function, use_highlighted)
-    return poke_fc(function(joker)
-        return joker.ability.received_card and (joker.ability.received_card == key_or_function
-        or joker.ability.received_card.key == key_or_function) end, use_highlighted)
-      or poke_fc(key_or_function, use_highlighted)
-  end
+  PkmnDip.utils.hook_around_function(pokermon, 'find_card', function(orig, key_or_function, use_highlighted, ...)
+    local ret = orig(function(joker) 
+      return joker.ability.received_card and (joker.ability.received_card == key_or_function
+          or joker.ability.received_card.key == key_or_function)
+    end, use_highlighted, ...)
+    return ret or orig(key_or_function, use_highlighted, ...)
+  end)
 
-  local poke_csp_ref = pokermon.can_set_sprite
-  pokermon.can_set_sprite = function(card)
+  PkmnDip.utils.hook_before_function(pokermon, 'can_set_sprite', function(card, ...)
     if card.config.center_key == 'j_nacho_passimian' then return false end
-    return poke_csp_ref(card)
-  end
+  end)
 
+  -- pokermon.evolve and pokermon.backend_evolve hooks for passimian's received card
+  PkmnDip.utils.hook_around_function(pokermon, 'evolve', function(orig, card, to_key, immediate, evolve_message, transformation, energize_amount) 
+    if card.config.center.key == 'j_nacho_passimian' and not transformation then
+      card.ability.extra.pass_evolving = true
+      immediate = true
+    end
+    return orig(card, to_key, immediate, evolve_message, transformation, energize_amount)
+  end)
+
+  PkmnDip.utils.hook_before_function(pokermon, 'backend_evolve', function(card, to_key, energize_amount) 
+    if card.config.center.key == 'j_nacho_passimian' and card.ability.extra.pass_evolving then
+      card.ability.extra.pass_evolving = nil
+      card.config.center:receive_card(card, to_key)
+      return true
+    end
+  end)
+  
   -- pokermon.energy.energize hook
-  local energize_ref = pokermon.energy.energize
-  pokermon.energy.energize = function(card, etype, evolving, silent, amount, center)
+  PkmnDip.utils.hook_around_function(pokermon.energy, 'energize', function(orig, card, etype, evolving, silent, amount, center, ...) 
     if card.config.center.key == 'j_nacho_passimian' and card.ability.received_card then
       center = card.ability.received_card
     end
-    energize_ref(card, etype, evolving, silent, amount, center)
-  end
+    return orig(card, etype, evolving, silent, amount, center, ...)
+  end)
 end
 
 return {

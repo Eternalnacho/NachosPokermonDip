@@ -3,42 +3,6 @@ version = "1.0.0"
 dump_lua = true
 priority = 21
 
-# Passimian Evo Logic
-[[patches]]
-[patches.pattern]
-target = '=[SMODS Pokermon "functions/pokefunctions.lua"]'
-pattern = '''
-if immediate then
-    pokermon.backend_evolve(card, to_key, energize_amount)
-  else
-'''
-position = "before"
-payload = '''
-if card.config.center.key == 'j_nacho_passimian' then
-  if not transformation then 
-    card.ability.extra.evolving = true
-    immediate = true
-  end
-end
-'''
-match_indent = true
-
-[[patches]]
-[patches.pattern]
-target = '=[SMODS Pokermon "functions/pokefunctions.lua"]'
-pattern = '''local custom_values_to_keep = {}'''
-position = "before"
-payload = '''
--- Passimian passed abilities don't "Evolve" per se
-if card.config.center.key == 'j_nacho_passimian' and card.ability.extra.evolving then
-  card.ability.extra.evolving = nil
-  card.config.center:receive_card(card, to_key)
-  return
-end
-
-'''
-match_indent = true
-
 
 # Passimian Copy Card fix
 [[patches]]
