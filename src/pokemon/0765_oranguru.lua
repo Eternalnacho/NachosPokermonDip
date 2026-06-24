@@ -11,9 +11,6 @@ local oranguru={
   cost = 8,
   stage = "Basic",
   ptype = "Colorless",
-  perishable_compat = true,
-  blueprint_compat = false,
-  eternal_compat = true,
   calculate = function(self, card, context)
     local a = card.ability.extra
     if context.open_booster and context.booster.name:find('Standard') then

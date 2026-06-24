@@ -13,7 +13,6 @@ local skwovet={
   gen = 8,
   perishable_compat = false,
   blueprint_compat = true,
-  eternal_compat = true,
   calculate = function(self, card, context)
     -- Consumable Used and in Blind
     if context.using_consumeable and G.GAME.blind.in_blind and not context.blueprint then
@@ -48,7 +47,6 @@ local greedent={
   gen = 8,
   perishable_compat = false,
   blueprint_compat = true,
-  eternal_compat = true,
   calculate = function(self, card, context)
     -- Consumable used
     if context.using_consumeable and G.GAME.blind.in_blind then
@@ -63,7 +61,7 @@ local greedent={
       if SMODS.pseudorandom_probability(card, 'greedent', card.ability.extra.num, card.ability.extra.den, 'greedent') and not card.debuff and
           context.consumeable.config.center.key ~= 'c_poke_leftovers' then
         SMODS.add_card({set = 'poke_item', area = G.consumeables, edition = 'e_negative', key = 'c_poke_leftovers'})
-        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('poke_stuff_cheeks_ex'), colour = G.C.FILTER})
+        SMODS.calculate_effect({ message = localize('poke_stuff_cheeks_ex'), colour = G.C.SECONDARY_SET['poke_item'] }, card)
       end
     end
     -- Main Scoring

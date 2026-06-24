@@ -23,9 +23,7 @@ local solosis = {
   stage = "Basic",
   ptype = "Psychic",
   gen = 5,
-  perishable_compat = true,
   blueprint_compat = true,
-  eternal_compat = true,
   calculate = function(self, card, context)
     -- First hand of round jiggle a la DNA
     if context.first_hand_drawn and not context.blueprint then
@@ -60,9 +58,7 @@ local duosion = {
   stage = "One",
   ptype = "Psychic",
   gen = 5,
-  perishable_compat = true,
   blueprint_compat = true,
-  eternal_compat = true,
   calculate = function(self, card, context)
     if context.first_hand_drawn and not context.blueprint then
       local eval = function() return G.GAME.current_round.hands_played == 0 and not G.RESET_JIGGLES end
@@ -95,9 +91,7 @@ local reuniclus = {
   stage = "Two",
   ptype = "Psychic",
   gen = 5,
-  perishable_compat = true,
   blueprint_compat = true,
-  eternal_compat = true,
   calculate = function(self, card, context)
     -- I made a custom context for this effect
     if context.mitosis then
