@@ -8,10 +8,10 @@ local mega_gardevoir = {
   loc_txt = {
     name = "Mega Gardevoir",
     text = {
-      "{C:pink}+#1#{} Energy Limit",
+      "{C:poke_pink}+#1#{} Energy Limit",
       "{br:2.5}ERROR - CONTACT STEAK",
       "{X:mult,C:white}X#2#{} Mult for each",
-      "{C:pink}Energized{} Joker and each",
+      "{C:poke_pink}Energized{} Joker and each",
       "{C:attention}hand level{} above 1",
       "{C:inactive}(Currently {X:mult,C:white}X#3#{C:inactive} Mult)"
     }

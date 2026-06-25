@@ -8,12 +8,12 @@ local mega_gallade = {
   loc_txt = {
     name = "Mega Gallade",
     text = {
-      "{C:pink}+#1#{} Energy Limit, {X:mult,C:white}X#2#{} Mult",
+      "{C:poke_pink}+#1#{} Energy Limit, {X:mult,C:white}X#2#{} Mult",
       "This Joker {C:attention}can't{} be debuffed",
       "{br:2.5}ERROR - CONTACT STEAK",
       "Raises the Energy Limit",
-      "of a random Joker by {C:pink}1{}",
-      "when an {C:item}Item{} is used",
+      "of a random Joker by {C:poke_pink}1{}",
+      "when an {C:poke_item}Item{} is used",
     }
   },
   loc_vars = function(self, info_queue, center)
