@@ -35,7 +35,8 @@ for i = 1, #stellar_colours do
 end
 
 SMODS.Gradient{
-   key = 'sgbadge',
+   key = 'stellar',
+   prefix_config = {key = false},
    colours = {G.C.RED, G.C.FILTER, HEX('f5db43'), HEX('54e456'), HEX('39cde4'), HEX('515fea'), HEX('a951ea'), HEX('e640b8')},
    cycle = 5,
 }

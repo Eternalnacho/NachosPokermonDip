@@ -174,6 +174,16 @@ local init = function()
     end)
   end
 
+  PkmnDip.utils.hook_around_function(pokermon, 'apply_type_sticker', function(orig, card, sticker_type, ...)
+    return next(SMODS.find_card('j_nacho_terapagos_stellar')) and orig(card, "stellar", ...)
+        or orig(card, sticker_type, ...)
+  end)
+
+  PkmnDip.utils.hook_around_function(pokermon, 'type_evo', function(orig, self, card, context, forced_key, type_req, ...)
+    return orig(self, card, context, forced_key, 'stellar', ...)
+        or orig(self, card, context, forced_key, type_req, ...)
+  end)
+
   PkmnDip.utils.hook_around_function(pokermon, 'find_pokemon_type', function(orig, target_type, exclude_card, exclude_name, ...)
     local ret = orig(target_type, exclude_card, exclude_name, ...)
     if type(ret) == "table" and G.jokers then

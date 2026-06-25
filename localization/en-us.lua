@@ -796,6 +796,9 @@ return {
       poke_malignant_chain_ex = "Malignant Chain!",
 
 
+      -- Stellar Badge
+      poke_stellar_badge = "Stellar",
+      
       -- Config Descriptions
       ralts_line = "Ralts line?",
       swablu_line = "Swablu line?",
