@@ -139,7 +139,7 @@ return {
       j_nacho_bronzong = {
         name = "Bronzong",
         text = {
-          "This Joker and adjacent {X:Metal,C:white}Metal{}",
+          "This Joker and adjacent {X:poke_Metal,C:white}Metal{}",
           "Jokers score as {C:attention}held Steel{} cards",
         }
       },
@@ -277,14 +277,14 @@ return {
         text = {
           "{C:attention}Gold{} cards {C:attention}held in hand{}",
           "have a {C:green}#1# in #2#{} chance to",
-          "create a {C:attention}Pickup {C:item}Item{}",
+          "create a {C:attention}Pickup {C:poke_item}Item{}",
           "when triggered",
         }
       },
       j_nacho_carbink = {
         name = "Carbink",
         text = {
-          "{C:hazard}+#1#{} hazard layer",
+          "{C:poke_hazard}+#1#{} hazard layer",
           "{C:attention}Hazard{} Cards are also",
           "considered {C:attention}Gold{} cards",
         }
@@ -313,9 +313,9 @@ return {
         name = "{s:0.6}Hisuian{}Sliggoo",
         text = {
           "If played hand is a {C:attention}Flush House{},",
-          "creates a {C:item}Metal Coat{}",
+          "creates a {C:poke_item}Metal Coat{}",
           "{br:2.5}ERROR - CONTACT STEAK",
-          "Creates another {C:item}Metal Coat{} if",
+          "Creates another {C:poke_item}Metal Coat{} if",
           "the difference in scoring {C:attention}ranks{} is",
           "greater than {C:attention}6{}",
           "{C:inactive,s:0.8}(Evolves after playing {C:attention,s:0.8}#1# {C:inactive,s:0.8}#2#)",
@@ -334,7 +334,7 @@ return {
         name = "{s:0.6}Hisuian{}Goodra",
         text = {
           "If played hand is a {C:attention}Flush House{},",
-          "creates a {C:item}Metal Coat{}",
+          "creates a {C:poke_item}Metal Coat{}",
           "{br:2.5}ERROR - CONTACT STEAK",
           "If played hand is a {C:attention}Flush House{},",
           "{C:attention}Steel{} cards {C:attention}held in hand{}",
@@ -389,7 +389,7 @@ return {
         text = {
           "Gains {C:mult}+#2#{} Mult and",
           "has a {C:green}#3# in #4#{} chance to",
-          "create a {C:dark_edition}Negative{} {C:item}Leftovers{}",
+          "create a {C:dark_edition}Negative{} {C:poke_item}Leftovers{}",
           "when a consumable is used",
           "during a blind",
           "{C:inactive,s:0.8}(Leftovers excluded)",
@@ -432,7 +432,7 @@ return {
         text = {
           "Retrigger each {C:attention}held Steel{} card",
           "{br:2}ERROR - CONTACT STEAK",
-          "{C:pink}Energy{} on this Joker applies to",
+          "{C:poke_pink}Energy{} on this Joker applies to",
           "{C:attention}held Steel{} cards",
         }
       },
@@ -450,7 +450,7 @@ return {
         name = "Smoliv",
         text = {
           "Adds {C:money}$#1#{} of sell value",
-          "to a random {X:grass,C:white}Grass{} Joker",
+          "to a random {X:poke_grass,C:white}Grass{} Joker",
           "at end of round",
           "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
         }
@@ -459,26 +459,26 @@ return {
         name = "Dolliv",
         text = {
           "Adds {C:money}$#1#{} of sell value",
-          "to a random {X:grass,C:white}Grass{} Joker",
+          "to a random {X:poke_grass,C:white}Grass{} Joker",
           "at end of round",
           "{br:2.5}ERROR - CONTACT STEAK",
           "{C:green}#3# in #4#{} chance to add",
           "{C:money}$#2#{} of sell value to",
-          "each {X:grass,C:white}Grass{} Joker instead",
+          "each {X:poke_grass,C:white}Grass{} Joker instead",
           "{C:inactive,s:0.8}(Evolves at {C:money,s:0.8}$#5#{C:inactive,s:0.8}/$#6# total",
-          "{C:inactive,s:0.8}sell value of {X:grass,C:white,s:0.8}Grass{C:inactive,s:0.8} Jokers)",
+          "{C:inactive,s:0.8}sell value of {X:poke_grass,C:white,s:0.8}Grass{C:inactive,s:0.8} Jokers)",
         }
       },
       j_nacho_arboliva = {
         name = "Arboliva",
         text = {
           "Adds {C:money}$#1#{} of sell value",
-          "to each {X:grass,C:white}Grass{} Joker",
+          "to each {X:poke_grass,C:white}Grass{} Joker",
           "at end of round",
           "{br:2.5}ERROR - CONTACT STEAK",
           "{X:mult,C:white}X#2#{} Mult for every",
           "{C:money}${} of sell value from",
-          "{X:grass,C:white}Grass{} Jokers",
+          "{X:poke_grass,C:white}Grass{} Jokers",
           "{C:inactive}(Currently {X:mult,C:white}X#3#{})"
         }
       },
@@ -581,37 +581,37 @@ return {
       j_nacho_terapagos = {
         name = "Terapagos",
         text = {
-          "{C:attention}Holding{} {C:dark_edition}Negative{} {C:item}Tera Orb{}",
-          "Creates a {C:dark_edition}Negative{} {C:item}Tera Orb{}",
+          "{C:attention}Holding{} {C:dark_edition}Negative{} {C:poke_item}Tera Orb{}",
+          "Creates a {C:dark_edition}Negative{} {C:poke_item}Tera Orb{}",
           "at end of round",
-          "{C:pink}Energizes{} all Jokers upon",
+          "{C:poke_pink}Energizes{} all Jokers upon",
           "transforming",
           "{C:inactive,s:0.8}(Transforms after using a",
-          "{C:item,s:0.8}Tera Orb{C:inactive,s:0.8} on Terapagos)",
+          "{C:poke_item,s:0.8}Tera Orb{C:inactive,s:0.8} on Terapagos)",
         }
       },
       j_nacho_terapagos_terastal = {
         name = "Terapagos-Terastal",
         text = {
-          "{C:pink}+3{} Energy Limit",
-          "Using a {C:item}Tera Orb{} on Terapagos",
-          "applies a {C:item}Tera Orb{} to each Joker",
+          "{C:poke_pink}+3{} Energy Limit",
+          "Using a {C:poke_item}Tera Orb{} on Terapagos",
+          "applies a {C:poke_item}Tera Orb{} to each Joker",
           "{br:2.5}ERROR - CONTACT STEAK",
           "{X:mult,C:white}X#1#{} Mult for each Joker with",
           "the same type as Terapagos",
           "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)",
-          "{C:inactive,s:0.8}(Transforms after using a {C:item,s:0.8}Tera Orb{}",
+          "{C:inactive,s:0.8}(Transforms after using a {C:poke_item,s:0.8}Tera Orb{}",
           "{C:inactive,s:0.8}on Terapagos {C:inactive,s:0.8}if it has 6+ Energy)",
         }
       },
       j_nacho_terapagos_stellar = {
         name = "Terapagos-Stellar",
         text = {
-          "{C:pink}+5{} Energy Limit",
+          "{C:poke_pink}+5{} Energy Limit",
           "Each Joker with a Type Sticker",
           "becomes {C:nacho_sg1}S{C:nacho_sg2}t{C:nacho_sg3}e{C:nacho_sg4}l{C:nacho_sg5}l{C:nacho_sg6}a{C:nacho_sg7}r{} Type",
-          "Using a {C:item}Tera Orb{} on Terapagos",
-          "applies a {C:item}Tera Orb{} to each Joker",
+          "Using a {C:poke_item}Tera Orb{} on Terapagos",
+          "applies a {C:poke_item}Tera Orb{} to each Joker",
           "{br:2.5}ERROR - CONTACT STEAK",
           "Each {C:nacho_sg1}S{C:nacho_sg2}t{C:nacho_sg3}e{C:nacho_sg4}l{C:nacho_sg5}l{C:nacho_sg6}a{C:nacho_sg7}r{} Joker gives {X:mult,C:white}X#1#{} Mult",
           "for each Energy applied to it",
@@ -731,9 +731,9 @@ return {
       apple_evolutions = {
         name = "Evolutions",
         text = {
-            "{C:attention}Tart Apple{} - {X:grass,C:white}Flapple{}",
-            "{C:attention}Sweet Apple{} - {X:fire,C:white}Appletun{}",
-            "{C:attention}Syrupy Apple{} - {X:dragon,C:white}Dipplin{}",
+            "{C:attention}Tart Apple{} - {X:poke_grass,C:white}Flapple{}",
+            "{C:attention}Sweet Apple{} - {X:poke_fire,C:white}Appletun{}",
+            "{C:attention}Syrupy Apple{} - {X:poke_dragon,C:white}Dipplin{}",
         }
       },
       -- Toxic Chain tooltip for Loyal Three
