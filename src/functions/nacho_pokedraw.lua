@@ -36,7 +36,8 @@ end
 
 SMODS.Gradient{
    key = 'stellar',
-   prefix_config = {key = false},
    colours = {G.C.RED, G.C.FILTER, HEX('f5db43'), HEX('54e456'), HEX('39cde4'), HEX('515fea'), HEX('a951ea'), HEX('e640b8')},
    cycle = 5,
 }
+
+pokermon.colours['stellar'] = SMODS.Gradients['nacho_stellar']
