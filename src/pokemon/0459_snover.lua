@@ -3,7 +3,6 @@ local snover = {
   name = "snover",
   config = {extra = {money_mod = 2, triggered = false}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.m_glass
     end
@@ -60,7 +59,6 @@ local abomasnow = {
   name = "abomasnow",
   config = {extra = {money_mod = 3}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.m_glass
     end
@@ -108,7 +106,6 @@ local mega_abomasnow={
   name = "mega_abomasnow",
   config = {extra = {money_mod = 20}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.m_glass
     end

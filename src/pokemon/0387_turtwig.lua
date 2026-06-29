@@ -3,7 +3,6 @@ local turtwig={
   name = "turtwig",
   config = {extra = {h_size = 1, interest = 0, rounds = 4}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.h_size, card.ability.extra.rounds, G.GAME.interest_cap / 5}}
   end,
   rarity = 2,
@@ -37,7 +36,6 @@ local grotle={
   name = "grotle",
   config = {extra = {h_size = 1, interest = 0, rounds = 5}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.h_size, card.ability.extra.rounds, G.GAME.interest_cap / 5}}
   end,
   designer = "ESN64",
@@ -82,7 +80,6 @@ local torterra={
   name = "torterra",
   config = {extra = {h_size = 0, interest = 0, addition = 3}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.h_size, card.ability.extra.mult, G.GAME.interest_cap / 5}}
   end,
   designer = "ESN64",

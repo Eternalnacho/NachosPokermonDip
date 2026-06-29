@@ -14,7 +14,6 @@ local okidogi = {
   name = "okidogi",
   config = { extra = { threshold = 0.4 } },
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = G.P_CENTERS.m_stall_toxic
     info_queue[#info_queue+1] = {set = 'Other', key = 'toxic_chain'}
     return { vars = { card.ability.extra.threshold } }
@@ -58,7 +57,6 @@ local munkidori = {
   name = "munkidori",
   config = { extra = { scry = 4, scry_plus = 1, scry_added = 0, threshold = 0.25 } },
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = G.P_CENTERS.m_stall_toxic
     info_queue[#info_queue + 1] = {set = 'Other', key = 'scry_cards'}
     info_queue[#info_queue+1] = {set = 'Other', key = 'toxic_chain'}
@@ -116,7 +114,6 @@ local fezandipiti = {
   name = "fezandipiti",
   config = { extra = {} },
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = G.P_CENTERS.m_stall_toxic
     info_queue[#info_queue+1] = G.P_CENTERS.m_lucky
     info_queue[#info_queue+1] = {set = 'Other', key = 'toxic_chain'}

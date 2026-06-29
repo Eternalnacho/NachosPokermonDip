@@ -3,7 +3,6 @@ local shieldon = {
   config = { extra = { rank = "6", chips = 12, third_times = 0 }, evo_rqmt = 5 },
   loc_vars = function(self, info_queue, card)
     local a = card.ability.extra or self.config.extra
-    pokermon.type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = {set = 'Other', key = 'ancient', vars = {localize(a.rank, 'ranks')}}
     return { vars = { localize(a.rank, 'ranks'), a.chips, math.max(self.config.evo_rqmt - a.third_times, 0) }}
   end,
@@ -54,7 +53,6 @@ local bastiodon = {
   config = { extra = { rank = "6", chips = 24 } },
   loc_vars = function(self, info_queue, card)
     local a = card.ability.extra or self.config.extra
-    pokermon.type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = {set = 'Other', key = 'ancient', vars = {localize(a.rank, 'ranks')}}
     return {vars = {localize(a.rank, 'ranks'), a.chips }}
   end,

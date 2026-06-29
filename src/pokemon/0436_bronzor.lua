@@ -37,7 +37,6 @@ local bronzor = {
   name = "bronzor",
   config = {extra = { triggered = 0 }, evo_rqmt = 20},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = G.P_CENTERS.m_steel
 		return {vars = {math.max(card.ability.evo_rqmt - card.ability.extra.triggered, 0)}}
   end,
@@ -65,7 +64,6 @@ local bronzong = {
   name = "bronzong",
   config = { extra = {} },
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = G.P_CENTERS.m_steel
 		return {vars = {}}
   end,

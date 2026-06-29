@@ -3,7 +3,6 @@ local terapagos={
   name = "terapagos",
   config = {extra = {}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
     return {vars = {}}
   end,
@@ -35,7 +34,6 @@ local terapagos_terastal={
   config = {extra = {Xmult_mod = 0.4, changedtype = "Colorless"}},
   loc_vars = function(self, info_queue, card)
     local count = not pokermon.is_in_collection(card) and (#pokermon.find_pokemon_type(card.ability.extra.ptype) - 1) or 0
-    pokermon.type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
     return {vars = {card.ability.extra.Xmult_mod, math.max(1, 1 + card.ability.extra.Xmult_mod * count)}}
   end,
@@ -100,7 +98,6 @@ local terapagos_stellar={
     end},
   config = {extra = {Xmult_mod = 0.1, Xmult = 1, energy_total = 0}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
     info_queue[#info_queue+1] = {set = 'Other', key = 'stellar_type'}
     return {vars = {card.ability.extra.Xmult_mod, card.ability.extra.Xmult}}

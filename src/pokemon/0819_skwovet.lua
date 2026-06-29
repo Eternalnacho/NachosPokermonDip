@@ -3,7 +3,6 @@ local skwovet={
   name = "skwovet",
   config = { extra = { mult = 0, mult_mod = 1, rounds = 5, in_blind = false }, evo_rqmt = 12 },
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     return { vars = { card.ability.extra.mult, card.ability.extra.mult_mod } }
   end,
   rarity = 1,
@@ -36,7 +35,6 @@ local greedent={
   name = "greedent",
   config = { extra = { mult = 0, mult_mod = 1, num = 1, den = 8 } },
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     local num, den = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.den, 'greedent')
     return { vars = { card.ability.extra.mult, card.ability.extra.mult_mod, num, den } }
   end,

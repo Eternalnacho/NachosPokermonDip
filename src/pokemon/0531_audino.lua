@@ -3,7 +3,6 @@ local audino = {
   name = "audino",
   config = {extra = {Xmult = 1, Xmult_mod = 0.25}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.Xmult, card.ability.extra.Xmult_mod}}
   end,
   designer = "T.F. Wright",
@@ -38,7 +37,6 @@ local mega_audino = {
   name = "mega_audino",
   config = {extra = {Xmult = 1, Xmult_mod = 0.25, num = 1, den = 5}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = {set = 'Other', key = 'incubator'}
     local num, den = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.den, 'mega_audino')
     return {vars = {card.ability.extra.Xmult, num, den}}

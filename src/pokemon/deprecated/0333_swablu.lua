@@ -3,7 +3,6 @@ local swablu={
   name = "swablu",
   config = {extra = {money = 1, rounds = 4}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     local nine_tally = G.playing_cards and #PkmnDip.utils.filter(G.playing_cards, function(v) return v:get_id() == 9 end) or 0
     return {vars = {card.ability.extra.money, card.ability.extra.money * nine_tally, card.ability.extra.rounds}}
   end,
@@ -40,7 +39,6 @@ local altaria={
   name = "altaria",
   config = {extra = {money = 1}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     local nine_tally = 0
     if G.playing_cards then
       local nines = PkmnDip.utils.filter(G.playing_cards, function(v) return v:get_id() == 9 end); nine_tally = #nines
@@ -82,7 +80,6 @@ local mega_altaria={
   name = "mega_altaria",
   config = {extra = {}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {}}
   end,
   loc_txt = {

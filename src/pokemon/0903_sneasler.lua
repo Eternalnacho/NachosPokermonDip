@@ -3,7 +3,6 @@ local hisuian_sneasel={
   name = "hisuian_sneasel",
   config = {extra = {Xmult_mod = 0.1}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = G.P_CENTERS.m_stall_toxic
     return {vars = {}}
   end,
@@ -49,7 +48,6 @@ local sneasler={
   name = "sneasler",
   config = {extra = {Xmult_mod = 0.1}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = G.P_CENTERS.m_stall_toxic
     return {vars = {card.ability.extra.Xmult_mod}}
   end,

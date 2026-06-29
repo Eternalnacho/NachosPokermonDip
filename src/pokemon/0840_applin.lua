@@ -3,7 +3,6 @@ local applin = {
   name = "applin",
   config = { extra = {h_size = 1} },
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = {set = 'Other', key = 'apple_evolutions'}
     end
@@ -43,7 +42,6 @@ local flapple = {
   name = "flapple",
   config = { extra = { Xmult = 1, Xmult_mod = 0.3 } },
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     return { vars = { card.ability.extra.Xmult_mod, 0.1, card.ability.extra.Xmult } }
   end,
   designer = "Kek",
@@ -89,7 +87,6 @@ local appletun = {
   name = "appletun",
   config = { extra = { h_size = 1, money = 3 } },
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     return { vars = { card.ability.extra.money } }
   end,
   designer = "Kek",
@@ -134,7 +131,6 @@ local dipplin = {
   name = "dipplin",
   config = { extra = { } },
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.m_wild
     end
@@ -171,7 +167,6 @@ local hydrapple = {
   name = "hydrapple",
   config = { extra = { Xmult = 1, Xmult_mod = 0.2 } },
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.m_wild
     end

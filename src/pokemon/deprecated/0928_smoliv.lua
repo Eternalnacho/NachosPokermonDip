@@ -3,7 +3,6 @@ local smoliv = {
   name = "smoliv",
   config = { extra = { money = 2, rounds = 4 } },
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     return { vars = { card.ability.extra.money, card.ability.extra.rounds } }
   end,
   rarity = 1,
@@ -32,7 +31,6 @@ local dolliv = {
   config = { extra = { money = 2, money1 = 1, num = 1, den = 3, total_sell_value = 0 }, evo_rqmt = 25 },
   loc_vars = function(self, info_queue, card)
     local a = card.ability.extra or self.config.extra
-    pokermon.type_tooltip(self, info_queue, card)
     local num, den = SMODS.get_probability_vars(card, a.num, a.den, 'dolliv')
     return { vars = { a.money, a.money1, num, den, a.total_sell_value, self.config.evo_rqmt } }
   end,
@@ -77,7 +75,6 @@ local arboliva = {
     local a = card.ability.extra or self.config.center
     local total_sell_value = 0
     PkmnDip.utils.for_each(pokermon.find_pokemon_type('Grass'), function(v) total_sell_value = total_sell_value + v.sell_cost end)
-    pokermon.type_tooltip(self, info_queue, card)
     return { vars = { a.money, a.Xmult_mod, a.Xmult + a.Xmult_mod * total_sell_value, card.ability.extra.rounds } }
   end,
   rarity = "poke_safari",

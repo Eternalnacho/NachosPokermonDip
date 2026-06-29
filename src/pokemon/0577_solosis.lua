@@ -15,7 +15,6 @@ local solosis = {
   name = "solosis",
   config = { extra = { dip_card_dupes = 1, copied_cards = {}, copies_req = 0 }, evo_rqmt = 4 },
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     return { vars = { card.ability.extra.dip_card_dupes, math.max(0, self.config.evo_rqmt - card.ability.extra.copies_req) } }
   end,
   rarity = 3,
@@ -50,7 +49,6 @@ local duosion = {
   name = "duosion",
   config = { extra = { dip_card_dupes = 2, copied_cards = {}, copies_req = 0 }, evo_rqmt = 8 },
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     return { vars = { card.ability.extra.dip_card_dupes, math.max(0, self.config.evo_rqmt - card.ability.extra.copies_req) } }
   end,
   rarity = "poke_safari",
@@ -83,7 +81,6 @@ local reuniclus = {
   name = "reuniclus",
   config = { extra = { dip_card_dupes = 2, copied_cards = {} } },
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     return { vars = { card.ability.extra.dip_card_dupes } }
   end,
   rarity = "poke_safari",

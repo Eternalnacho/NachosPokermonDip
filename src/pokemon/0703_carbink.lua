@@ -3,7 +3,6 @@ local carbink = {
   name = "carbink",
   config = {extra = { hazard_level = 1 }},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = {set = 'Other', key = 'hazard_level', vars = pokermon.get_hazard_level_vars()}
     info_queue[#info_queue+1] = G.P_CENTERS.m_hazard
     info_queue[#info_queue+1] = G.P_CENTERS.m_gold

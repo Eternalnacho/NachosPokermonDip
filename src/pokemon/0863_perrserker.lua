@@ -3,7 +3,6 @@ local galarian_meowth={
   name = "galarian_meowth",
   config = {extra = { retriggers = 1, triggered = 0 }, evo_rqmt = 20},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = G.P_CENTERS.m_steel
 		return {vars = {card.ability.extra.retriggers, math.max(card.ability.evo_rqmt - card.ability.extra.triggered, 0)}}
   end,
@@ -45,7 +44,6 @@ local perrserker = {
   name = "perrserker",
   config = { extra = { Xmult_multi = 1.5, retriggers = 1 } },
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = G.P_CENTERS.m_steel
     local total_xmult = 1.5
     local total_energy = 0

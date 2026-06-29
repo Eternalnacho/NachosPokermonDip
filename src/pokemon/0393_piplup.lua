@@ -3,7 +3,6 @@ local piplup={
   name = "piplup",
   config = {extra = {hands = 1, chips = 80, chip_loss = 20, rounds = 4}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.hands, card.ability.extra.chips, card.ability.extra.chip_loss, card.ability.extra.rounds}}
   end,
   rarity = 2,
@@ -42,7 +41,6 @@ local prinplup={
   name = "prinplup",
   config = {extra = {hands = 1, chips = 50, rounds = 4}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.hands, card.ability.extra.chips, card.ability.extra.rounds}}
   end,
   rarity = "poke_safari",
@@ -87,7 +85,6 @@ local empoleon={
   name = "empoleon",
   config = {extra = {hands = 1, chips = 80}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.hands, card.ability.extra.chips}}
   end,
   rarity = "poke_safari",

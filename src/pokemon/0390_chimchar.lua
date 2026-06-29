@@ -4,7 +4,6 @@ local chimchar={
   config = { extra = { d_size = 1, mult = 0, rounds = 4 } },
   loc_vars = function(self, info_queue, card)
     local extra = card.ability.extra
-    pokermon.type_tooltip(self, info_queue, card)
     return { vars = { extra.d_size, extra.mult, extra.rounds } }
   end,
   rarity = 2,
@@ -53,7 +52,6 @@ local monferno={
   config = { extra = { d_size = 1, mult = 0, rounds = 4 } },
   loc_vars = function(self, info_queue, card)
     local extra = card.ability.extra
-    pokermon.type_tooltip(self, info_queue, card)
     return { vars = { extra.d_size, extra.mult, extra.rounds } }
   end,
   rarity = "poke_safari",
@@ -98,7 +96,6 @@ local infernape = {
   config = { extra = { d_size = 1, mult = 30, Xmult = 1, Xmult1 = 1, Xmult_mod = 0.3 } },
   loc_vars = function(self, info_queue, card)
     local extra = card.ability.extra
-    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {extra.d_size, extra.mult, extra.Xmult_mod, extra.Xmult}}
   end,
   rarity = "poke_safari",

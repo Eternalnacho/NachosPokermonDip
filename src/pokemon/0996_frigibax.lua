@@ -3,7 +3,6 @@ local frigibax = {
   name = "frigibax",
   config = { extra = {}, evo_rqmt = 9 },
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     local foil_count = G.playing_cards and G.STAGE == G.STAGES.RUN and #PkmnDip.utils.filter(G.playing_cards, function(card) return (card.edition and card.edition.foil) end) or 0
     local deck_data = G.playing_cards and G.STAGE == G.STAGES.RUN and '['..tostring(foil_count)..'/'..card.ability.evo_rqmt..'] ' or card.ability.evo_rqmt..' '
     return { vars = { deck_data } }
@@ -19,21 +18,16 @@ local frigibax = {
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.scoring_hand then
-      local has_mult = 0
-      for _, v in pairs(context.scoring_hand) do
-        if pokermon.total_mult(v) > 0 then has_mult = has_mult + 1 end
-      end
+      local card_count = #PkmnDip.utils.filter(context.scoring_hand, function(pcard) return pokermon.total_mult(pcard) > 0 end)
       if context.before and context.cardarea == G.jokers then
         -- Five of a Kind gives held cards foil
         if context.scoring_name == "Five of a Kind" then
-          for _, v in pairs(G.hand.cards) do
-            v:set_edition({foil = true}, true, true)
-          end
+          for _, v in pairs(G.hand.cards) do v:set_edition({foil = true}, true, true) end
           play_sound('foil2', 0.5, 0.4)
         end
         -- Scoring mult cards give *a* card in deck foil
-        if has_mult > 0 then
-          local viable_targets = PkmnDip.utils.filter(G.deck.cards, function(card) return not (card.edition and card.edition.foil) end)
+        if card_count > 0 then
+          local viable_targets = PkmnDip.utils.filter(G.deck.cards, function(pcard) return not (pcard.edition and pcard.edition.foil) end)
           local target = pseudorandom_element(viable_targets, pseudoseed('frigibax'))
           if target then target:set_edition({foil = true}, true) end
         end
@@ -49,7 +43,6 @@ local arctibax = {
   name = "arctibax",
   config = { extra = { }, evo_rqmt = 18 },
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     local foil_count = G.playing_cards and G.STAGE == G.STAGES.RUN and #PkmnDip.utils.filter(G.playing_cards, function(card) return (card.edition and card.edition.foil) end) or 0
     local deck_data = G.playing_cards and G.STAGE == G.STAGES.RUN and '['..tostring(foil_count)..'/'..card.ability.evo_rqmt..'] ' or card.ability.evo_rqmt..' '
     return { vars = { deck_data } }
@@ -97,7 +90,6 @@ local baxcalibur = {
   name = "baxcalibur",
   config = { extra = { Xmult_multi = 0.03 } },
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     local foil_count = G.playing_cards and #PkmnDip.utils.filter(G.playing_cards, function(v) return v.edition and v.edition.foil end) or 0
     return { vars = { card.ability.extra.Xmult_multi, 1 + card.ability.extra.Xmult_multi * foil_count } }
   end,

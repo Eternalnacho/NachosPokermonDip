@@ -3,7 +3,6 @@ local pecharunt = {
   name = "pecharunt",
   config = { extra = { Xmult_mod = 0.02 } },
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     info_queue[#info_queue+1] = G.P_CENTERS.m_stall_toxic
     info_queue[#info_queue+1] = {set = 'Other', key = 'malignant_chain'}
     return { vars = { card.ability.extra.Xmult_mod } }

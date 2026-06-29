@@ -3,7 +3,6 @@ local goomy={
   name = "goomy",
   config = {extra = {mult_mod = 1, flushes = 0, flush_houses = 0}, evo_rqmt1 = 6, evo_rqmt2 = 1},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     return {
       vars = {
         card.ability.extra.mult_mod,
@@ -61,7 +60,6 @@ local sliggoo={
   name = "sliggoo",
   config = {extra = {mult_mod = 1, flushes = 0}, evo_rqmt = 8},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     return {
       vars = {
         card.ability.extra.mult_mod,
@@ -118,7 +116,6 @@ local goodra={
   name = "goodra",
   config = {extra = {Xmult_multi = 0.02}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {card.ability.extra.Xmult_multi}}
   end,
   rarity = "poke_safari",
@@ -163,7 +160,6 @@ local hisuian_sliggoo={
   name = "hisuian_sliggoo",
   config = {extra = {flush_houses = 0}, evo_rqmt = 6},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {math.max(0, self.config.evo_rqmt - card.ability.extra.flush_houses),
       self.config.evo_rqmt - card.ability.extra.flush_houses == 1 and "Flush House" or "Flush Houses"}}
   end,
@@ -201,7 +197,6 @@ local hisuian_goodra={
   name = "hisuian_goodra",
   config = {extra = {Xmult = 1}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     return {vars = {}}
   end,
   rarity = "poke_safari",

@@ -3,7 +3,6 @@ local oranguru={
   name = "oranguru",
   config = {extra = {booster_choice_mod = 1}},
   loc_vars = function(self, info_queue, card)
-    pokermon.type_tooltip(self, info_queue, card)
     PkmnDip.common_ranks_tooltip(self, info_queue)
     return {vars = {}}
   end,
