@@ -1,15 +1,12 @@
 local score_metal_jokers = function(card, context)
   -- Create a temporary steel card and set it's position to the relevant joker
   local temp_steel = SMODS.create_card({set = 'Enhanced', enhancement = 'm_steel'})
-  -- Sets the steel card's major to the joker for click + drag reasons
-  PkmnDip.defer(function()
-    temp_steel:set_role({major = card, role_type = 'Glued'})
-  end)
-  -- sets the scoring animation bit onto the target joker
+  -- Call set_base with no args to remove rank + suit
+  temp_steel:set_base()
+  -- Set the steel card's major to the joker for click + drag reasons
+  PkmnDip.defer(function() temp_steel:set_role({major = card, role_type = 'Glued'}) end)
+  -- Set the scoring animation bit onto the target joker
   temp_steel.juice_up = function(self, ...) card:juice_up(...) end
-  -- Temporarily make steel cards rankless + suitless so associated held triggers on jokers don't happen
-  G.P_CENTERS['m_steel'].no_rank = true
-  G.P_CENTERS['m_steel'].no_suit = true
   -- Create fake context to trick Balatro into thinking we're calculating held steel cards
   local temp_context = {
     cardarea = G.hand,
@@ -25,9 +22,6 @@ local score_metal_jokers = function(card, context)
   }
   -- The scoring code I had before wound up being a 1-for-1 of SMODS.score_card
   SMODS.score_card(temp_steel, temp_context)
-  -- Reset the no_rank and no_suit properties so steel cards score as normal
-  G.P_CENTERS['m_steel'].no_rank = nil
-  G.P_CENTERS['m_steel'].no_suit = nil
   -- Remove the temporary steel card to save memory / screen real-estate
   temp_steel:remove()
 end
