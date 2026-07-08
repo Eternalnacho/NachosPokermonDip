@@ -24,10 +24,8 @@ local mega_gallade = {
   cost = 12,
   gen = 3,
   stage = "Mega",
-  ptype = "Psychic",
-  perishable_compat = true,
+  ptype = "Fighting",
   blueprint_compat = true,
-  eternal_compat = true,
   calculate = function(self, card, context)
     if context.using_consumeable and context.consumeable.ability.set == 'poke_item' then
       local target = pseudorandom_element(G.jokers.cards, 'mega_gallade')

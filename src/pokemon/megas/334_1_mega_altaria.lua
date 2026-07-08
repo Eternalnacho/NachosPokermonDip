@@ -29,39 +29,26 @@ local mega_altaria = {
   cost = 12,
   gen = 3,
   stage = "Mega",
-  ptype = "Dragon",
-  perishable_compat = true,
-  blueprint_compat = false,
-  eternal_compat = true,
+  ptype = "Fairy",
+  blueprint_compat = true,
+  perishable_compat = false,
   calculate = function(self, card, context)
-    -- Convert every third 9 drawn to polychrome
-    if context.hand_drawn and SMODS.drawn_cards and not context.blueprint then
+    -- Drawing 9s converts them to polychrome and earns $2
+    if context.hand_drawn and SMODS.drawn_cards then
       PkmnDip.utils.for_each(SMODS.drawn_cards, function(pcard)
         if pcard:get_id() == 9 then
           -- Make drawn 9s polychrome
-          G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
-            pcard:set_edition('e_polychrome', true)
-          return true end }))
-
-          -- and earn $2
+          PkmnDip.defer(function() pcard:set_edition('e_polychrome', true) end, 0.4)
+          -- Earn $2 per drawn 9
           local earned = pokermon.ease_poke_dollars(card, "mega_altaria", card.ability.extra.money_mod)
           G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + earned
-          G.E_MANAGER:add_event(Event({
-              func = function()
-                  G.GAME.dollar_buffer = 0
-                  return true
-              end
-          }))
+          PkmnDip.defer(function() G.GAME.dollar_buffer = 0 end)
         end
       end)
     end
 
     -- Chips in main scoring
-    if context.joker_main then
-      return {
-        chips = card.ability.extra.chips
-      }
-    end
+    if context.joker_main then return { chips = card.ability.extra.chips } end
   end,
 }
 

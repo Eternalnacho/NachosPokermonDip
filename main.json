@@ -9,13 +9,13 @@
 	"badge_colour": "E9B800",
 	"badge_text_colour": "FFFFFF",
   "display_name": "Pokermon Dip",
-	"version": "1.7.5-2",
+	"version": "1.7.5-3",
   "icon_path": "icon.png",
   "icon_width": 31,
 	"dependencies": [
 			"Steamodded (>=1.0.0~BETA-1620a)",
       "Lovely (>=0.7)",
-      "Pokermon (>=3.8.1-0626a)"
+      "Pokermon (>=3.8.1-0705a)"
 	],
   "conflicts": [],
 	"provides": [],

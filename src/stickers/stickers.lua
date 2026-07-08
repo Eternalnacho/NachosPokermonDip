@@ -1,10 +1,13 @@
 local stellar_sticker = {
   key = "stellar_sticker",
   hide_badge = true,
-  prefix_config = {key = false},
+  prefix_config = {
+    key = { mod = false },
+ 		atlas = false,
+  },
   rate = 0.0,
-  atlas = "stickers",
-  pos = { x = 0, y = 0 },
+  atlas = "poke_AtlasStickersBasic",
+  pos = { x = 7, y = 1 },
 }
 
 return
