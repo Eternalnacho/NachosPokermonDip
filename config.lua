@@ -27,8 +27,9 @@ return {
   loyal_three = true,
   terapagos = true,
   pecharunt = true,
-  hisuian_sneasel = (SMODS.Mods["ToxicStall"] or {}).can_load and true or false,
-  customStakes = true,
+  hisuian_sneasel = true,
+  mega_altaria = true,
+  mega_gardevoir = true,
+  mega_gallade = true,
   other_megas = true,
-  -- customItems = true,
 }

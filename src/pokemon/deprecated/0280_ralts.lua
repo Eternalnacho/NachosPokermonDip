@@ -335,6 +335,5 @@ return {
   can_load = false,
   config_key = "ralts",
   init = init,
-  misc_config = true,
   list = { ralts, kirlia, gardevoir, mega_gardevoir, gallade, mega_gallade }
 }

@@ -99,7 +99,6 @@ local sneasler={
 
 return {
   config_key = "hisuian_sneasel",
-  can_load = (SMODS.Mods["ToxicStall"] or {}).can_load or false,
-  misc_config = true,
+  misc_config = "ToxicStall",
   list = {hisuian_sneasel, sneasler}
 }

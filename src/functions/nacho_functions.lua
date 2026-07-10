@@ -184,3 +184,11 @@ end
 PkmnDip.create_full_poke_key = function(card, name)
   return 'j_'..card:poke_get_prefix().."_"..(name or card.config.center.name)
 end
+
+PkmnDip.attach_mega = function(center, target)
+  SMODS.Joker:take_ownership(target, {
+    megas = nacho_config[center.name] and { center.name } or nil,
+    discovered = true,
+  }, true)
+  pokermon.add_to_family(target:sub(6, -1), center.name)
+end

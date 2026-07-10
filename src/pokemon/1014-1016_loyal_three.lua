@@ -162,8 +162,7 @@ local fezandipiti = {
 
 return {
   config_key = "loyal_three",
-  can_load = (SMODS.Mods["ToxicStall"] or {}).can_load or false,
   no_family = true,
-  misc_config = true,
+  misc_config = "ToxicStall",
   list = { okidogi, munkidori, fezandipiti }
 }

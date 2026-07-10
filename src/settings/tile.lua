@@ -27,6 +27,7 @@ local function update_centers(config_key, enable)
       center.no_collection = not enable
       if center.nacho_pseudol then center.pseudol = enable end
       if center.nacho_starter then center.starter = enable end
+      if center.attach_mega then center:attach_mega() end
     end
   end
 end
@@ -37,6 +38,7 @@ function G.FUNCS.toggle_nacho_settings_tile(e)
   local enabled = e.config.ref_table[e.config.ref_value]
 
   update_centers(e.config.ref_value, enabled)
+  if e.config.callback then e.config.callback(enabled) end
 
   e.config.colour = enabled and backdrop_colour_enabled or backdrop_colour_disabled
   e.config.outline_colour = enabled and outline_colour_enabled or outline_colour_disabled
@@ -56,8 +58,8 @@ function DipTile:init(args)
   self.label = args.label or ''
   self.ref_value = args.ref_value
   self.ref_table = args.ref_table
-  self.condition = args.condition
-  self.mod_tVal = args.mod_tVal
+  self.callback = args.callback
+  self.mod_req = args.mod_req
   self.display_cards = args.display_cards or {}
   self.cardarea = CardArea(0, 0, G.CARD_W * (2 - 1 / #self.display_cards), G.CARD_H,
     { card_limit = #self.display_cards, type = 'title' })
@@ -71,10 +73,16 @@ function DipTile:init(args)
     card.sticker_run = 'NONE'
     self.cardarea:emplace(card)
   end
+
+  local mod = args.mod_req and SMODS.Mods[self.mod_req]
+  if mod then
+    self.condition = mod.can_load and not mod.disabled
+  end
 end
 
 function DipTile:render()
   local enabled = self.ref_table[self.ref_value]
+  local mod = self.mod_req and SMODS.Mods[self.mod_req]
   if self.condition == false then enabled = false end
 
   return {
@@ -90,7 +98,8 @@ function DipTile:render()
       ref_table = self.ref_table,
       ref_value = self.ref_value,
       condition = self.condition,
-      detailed_tooltip = self.mod_tVal and {set = 'Other', key = 'modname_tooltip', vars = {self.mod_tVal}},
+      callback = self.callback,
+      detailed_tooltip = mod and {set = 'Other', key = 'modname_tooltip', vars = { mod.name }},
       hover = true,
     },
     nodes = {

@@ -35,16 +35,19 @@ local mega_gallade = {
       return { xmult = card.ability.extra.Xmult }
     end
   end,
+  attach_mega = function(self) PkmnDip.attach_mega(self, 'poke_gallade') end
 }
 
 local function init()
-  SMODS.Joker:take_ownership('poke_gallade', { megas = { 'mega_gallade' } }, true)
-  pokermon.add_to_family("gallade", "mega_gallade")
+  if nacho_config.mega_gallade then
+    SMODS.Joker:take_ownership('poke_gallade', { megas = { 'mega_gallade' } }, true)
+    pokermon.add_to_family("gallade", "mega_gallade")
+  end
 end
 
 return {
-  can_load = nacho_config.other_megas,
+  config_key = "mega_gallade",
   init = init,
-  misc_config = true,
+  misc_config = "megas",
   list = { mega_gallade }
 }

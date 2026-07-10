@@ -41,6 +41,12 @@ function PkmnDip.utils.id(a)
   return a
 end
 
+function PkmnDip.utils.append(t1, t2)
+  for _, v in ipairs(t2) do
+    table.insert(t1, v)
+  end
+end
+
 -- Stealing this one from Emma holy moly that's useful
 function PkmnDip.defer(func, delay)
   G.E_MANAGER:add_event(Event({

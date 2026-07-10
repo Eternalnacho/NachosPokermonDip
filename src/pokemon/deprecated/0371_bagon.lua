@@ -268,6 +268,5 @@ local mega_salamence={
 return {
   can_load = false,
   config_key = "bagon",
-  misc_config = true,
   list = { bagon, shelgon, salamence, mega_salamence }
 }

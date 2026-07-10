@@ -27,10 +27,12 @@ local function load_directory(path, load_item, options)
     elseif file_type ~= "symlink" then
       local file = assert(SMODS.load_file(path .. '/' .. file_path))()
 
-      if type(file) == 'table' and file.can_load ~= false then
-        if options.pre_load then options.pre_load(file) end
-        load_file(file, load_item)
-        if options.post_load then options.post_load(file) end
+      if type(file) == 'table' then
+        if file.can_load ~= false then
+          if options.pre_load then options.pre_load(file) end
+          load_file(file, load_item)
+          if options.post_load then options.post_load(file) end
+        end
       end
     end
   end
@@ -77,15 +79,19 @@ local function load_pokemon_family(file)
 end
 
 local function prep_config(file)
-  if file.list and not file.misc_config then
+  if file.list then
     local list = PkmnDip.utils.map_list(file.list, function(item)
       local custom_prefix = item.nacho_inject_prefix or "nacho"
       return 'j_' .. custom_prefix .. '_' .. (item.key or item.name)
     end)
-    PkmnDip.list[#PkmnDip.list+1] = {
+    if file.misc_config then 
+      PkmnDip.config_list[file.misc_config] = PkmnDip.config_list[file.misc_config] or {}
+    end
+    table.insert(PkmnDip.config_list[(file.misc_config or "main")], {
       list = list,
-      config_key = file.config_key
-    }
+      config_key = file.config_key,
+      mod_req = file.misc_config ~= 'megas' and file.misc_config
+    })
   end
 end
 

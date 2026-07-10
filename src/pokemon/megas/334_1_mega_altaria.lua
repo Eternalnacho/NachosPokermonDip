@@ -46,20 +46,22 @@ local mega_altaria = {
         end
       end)
     end
-
     -- Chips in main scoring
     if context.joker_main then return { chips = card.ability.extra.chips } end
   end,
+  attach_mega = function(self) PkmnDip.attach_mega(self, 'poke_altaria') end
 }
 
 local function init()
-  SMODS.Joker:take_ownership('poke_altaria', { megas = { 'mega_altaria' } }, true)
-  pokermon.add_to_family("altaria", "mega_altaria")
+  if nacho_config.mega_altaria then
+    SMODS.Joker:take_ownership('poke_altaria', { megas = { 'mega_altaria' } }, true)
+    pokermon.add_to_family("altaria", "mega_altaria")
+  end
 end
 
 return {
-  can_load = nacho_config.other_megas,
+  config_key = "mega_altaria",
   init = init,
-  misc_config = true,
+  misc_config = "megas",
   list = { mega_altaria }
 }

@@ -115,6 +115,5 @@ local mega_altaria={
 return {
   can_load = false,
   config_key = "swablu",
-  misc_config = true,
   list = { swablu, altaria, mega_altaria }
 }

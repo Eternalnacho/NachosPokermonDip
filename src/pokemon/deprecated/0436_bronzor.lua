@@ -82,6 +82,5 @@ local bronzong = {
 return {
   can_load = false,
   config_key = "bronzor",
-  misc_config = true,
   list = { bronzor, bronzong }
 }

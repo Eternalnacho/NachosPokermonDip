@@ -106,6 +106,5 @@ local arboliva = {
 return {
   can_load = false,
   config_key = "smoliv",
-  misc_config = true,
   list = { smoliv, dolliv, arboliva }
 }

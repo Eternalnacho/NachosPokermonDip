@@ -24,8 +24,7 @@ local function create_tile_grid(args)
       display_cards = tile.list,
       ref_table = nacho_config,
       ref_value = tile.config_key,
-      condition = tile.condition,
-      mod_tVal = tile.mod_tVal,
+      mod_req = tile.mod_req,
     }
   end) or {}
   
