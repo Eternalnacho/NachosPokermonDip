@@ -80,6 +80,7 @@ local bronzong = {
 }
 
 return {
+  can_load = false,
   config_key = "bronzor",
   list = { bronzor, bronzong }
 }
