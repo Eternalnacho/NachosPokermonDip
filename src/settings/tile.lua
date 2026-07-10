@@ -1,6 +1,3 @@
-local DipTile = Object:extend()
-local DisplayCard = assert(SMODS.load_file("src/settings/display_card.lua"))()
-
 local tile_colour_enabled = G.C.GREY
 local tile_colour_disabled = mix_colours(G.C.GREY, G.C.UI.BACKGROUND_INACTIVE, 0.3)
 local text_colour_enabled = G.C.WHITE
@@ -9,6 +6,20 @@ local backdrop_colour_enabled = mix_colours(G.C.GREY, G.C.BLACK, 0.3)
 local backdrop_colour_disabled = mix_colours(G.C.UI.BACKGROUND_INACTIVE, G.C.BLACK, 0.3)
 local outline_colour_enabled = mix_colours(tile_colour_enabled, G.C.BLACK, 0.5)
 local outline_colour_disabled = mix_colours(tile_colour_disabled, G.C.BLACK, 0.5)
+
+--
+
+local templates = assert(SMODS.load_file("src/settings/load_templates.lua"))()
+local SettingsComponent = PokeDisplayCardComponent:extend()
+function SettingsComponent:apply(args)
+  for k, v in pairs(args.properties or {}) do
+    self.display_card.properties[k] = v
+  end
+  self.display_card.properties.generate_ui = SMODS.Center.generate_ui
+  self.display_card.no_ui = nil
+end
+
+--
 
 local function update_centers(config_key, enable)
   for _, center in pairs(G.P_CENTERS) do
@@ -37,6 +48,10 @@ function G.FUNCS.toggle_nacho_settings_tile(e)
   e.children[2].children[1].children[1].config.colour = enabled and text_colour_enabled or text_colour_disabled
 end
 
+--
+
+local DipTile = Object:extend()
+
 function DipTile:init(args)
   self.label = args.label or ''
   self.ref_value = args.ref_value
@@ -44,9 +59,16 @@ function DipTile:init(args)
   self.condition = args.condition
   self.mod_tVal = args.mod_tVal
   self.display_cards = args.display_cards or {}
-  self.cardarea = CardArea(0, 0, G.CARD_W * (2 - 1 / #self.display_cards), G.CARD_H, { card_limit = #self.display_cards, type = 'title' })
+  self.cardarea = CardArea(0, 0, G.CARD_W * (2 - 1 / #self.display_cards), G.CARD_H,
+    { card_limit = #self.display_cards, type = 'title' })
   for _, key in ipairs(self.display_cards) do
-    local card = DisplayCard(0, 0, G.CARD_W, G.CARD_H, key)
+    local template = templates[key]
+    local _args = {
+      properties = template,
+      components = { SettingsComponent() }
+    }
+    local card = PokeDisplayCard(_args, 0, 0, G.CARD_W, G.CARD_H, { bypass_discovery_center = true })
+    card.sticker_run = 'NONE'
     self.cardarea:emplace(card)
   end
 end

@@ -1,7 +1,5 @@
+local map_list = PkmnDip.utils.map_list
 local DipTile = assert(SMODS.load_file("src/settings/tile.lua"))()
-
-local list_map = PkmnDip.utils.map_list
-
 local content = assert(SMODS.load_file("src/settings/contents.lua"))()
 
 local function create_tile_spacer()
@@ -20,7 +18,7 @@ local function create_tile_grid(args)
   local first_row = { n = G.UIT.R, config = { align = "cm" }, nodes = { create_tile_spacer() } }
   local second_row = { n = G.UIT.R, config = { align = "cm" }, nodes = { create_tile_spacer() } }
 
-  local tiles = current_page.tiles and list_map(current_page.tiles, function(tile)
+  local tiles = current_page.tiles and map_list(current_page.tiles, function(tile)
     return DipTile {
       label = tile.label(),
       display_cards = tile.list,
@@ -82,14 +80,14 @@ function G.FUNCS.nacho_update_config_page(e)
   if not e or not e.cycle_config then return end
   
   local grid_wrap = G.OVERLAY_MENU:get_UIE_by_ID("nacho_grid_wrap")
-  
-  grid_wrap.config.object:remove()
-  grid_wrap.config.object = UIBox {
-    definition = create_tile_grid { page_num = e.cycle_config.current_option },
-    config = { parent = grid_wrap, type = "cm" },
-  }
-  
-  grid_wrap.UIBox:recalculate()
+  if grid_wrap then
+    grid_wrap.config.object:remove()
+    grid_wrap.config.object = UIBox {
+      definition = create_tile_grid { page_num = e.cycle_config.current_option },
+      config = { parent = grid_wrap, type = "cm" },
+    }
+    grid_wrap.UIBox:recalculate()
+  end
 end
 
 -- Stealing this from Cardsauce
@@ -119,73 +117,19 @@ function SMODS.current_mod.extra_tabs()
         return {
           n = G.UIT.ROOT,
           config = {
-          r = 0.1,
-          minw = 14,
-          minh = 8.5,
-          align = "cm",
-          colour = G.C.BLACK,
-          emboss = 0.05,
+            r = 0.1,
+            minw = 14,
+            minh = 8.5,
+            align = "cm",
+            colour = G.C.BLACK,
+            emboss = 0.05,
           },
           nodes = {
-          { n = G.UIT.O, config = { id = "nacho_grid_wrap", object = grid } }
+            { n = G.UIT.O, config = { id = "nacho_grid_wrap", object = grid } }
           }
         }
       end
     },
-		{
-			label = 'Extra',
-			tab_definition_function = function()
-				-- works in the same way as mod.config_tab
-				return {n = G.UIT.ROOT, config = {
-        -- config values here, see 'Building a UI' page
-        r = 0.1,
-        minw = 7,
-        align = "cm",
-        colour = G.C.BLACK,
-        emboss = 0.05,
-				},
-        nodes =
-        {
-          {
-            n = G.UIT.C,
-            config = {
-                align = "bm",
-                padding = 0.05,
-                colour = G.C.CLEAR,
-            },
-            nodes =
-            {
-              {
-                n = G.UIT.R,
-                config = {
-                    align = "bm",
-                    padding = 0.05,
-                    colour = G.C.CLEAR,
-                },
-                nodes =
-                {{
-                  n = G.UIT.T,
-                  config = {
-                    align = 'tm',
-                    text = "Restart Required:",
-                    shadow = true,
-                    scale = 0.75 * 0.7,
-                    colour = HEX("ED533A")
-                  }
-                }},
-              },
-              create_toggle({
-                  label = "Allow Custom Stakes?",
-                  ref_table = nacho_config,
-                  ref_value = "customStakes",
-                  callback = G.FUNCS.nacho_force_restart
-              }),
-            }
-          }
-        }
-      }
-			end,
-		},
 		-- insert more tables with the same structure here
 	}
 end

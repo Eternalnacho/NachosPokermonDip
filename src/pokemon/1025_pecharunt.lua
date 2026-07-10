@@ -45,5 +45,6 @@ local pecharunt = {
 return {
   config_key = "pecharunt",
   can_load = (SMODS.Mods["ToxicStall"] or {}).can_load or false,
+  misc_config = true,
   list = {pecharunt}
 }

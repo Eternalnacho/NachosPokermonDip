@@ -8,7 +8,9 @@ end
 --Load atlases
 assert(SMODS.load_file("src/atlases.lua"))()
 
-PkmnDip = {}
+PkmnDip = {
+  list = {}
+}
 
 -- Load functions
 local load_directory, item_loader = assert(SMODS.load_file("src/loader.lua"))()
@@ -16,7 +18,10 @@ local load_directory, item_loader = assert(SMODS.load_file("src/loader.lua"))()
 load_directory("src/functions")
 
 --Load pokemon
-load_directory("src/pokemon", item_loader.load_pokemon, { post_load = item_loader.load_pokemon_family })
+load_directory("src/pokemon", item_loader.load_pokemon, {
+  pre_load = item_loader.prep_config,
+  post_load = item_loader.load_pokemon_family
+})
 
 -- Load consumables
 load_directory("src/consumables", SMODS.Consumable)

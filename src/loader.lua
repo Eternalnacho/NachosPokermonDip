@@ -76,8 +76,22 @@ local function load_pokemon_family(file)
   end
 end
 
+local function prep_config(file)
+  if file.list and not file.misc_config then
+    local list = PkmnDip.utils.map_list(file.list, function(item)
+      local custom_prefix = item.nacho_inject_prefix or "nacho"
+      return 'j_' .. custom_prefix .. '_' .. (item.key or item.name)
+    end)
+    PkmnDip.list[#PkmnDip.list+1] = {
+      list = list,
+      config_key = file.config_key
+    }
+  end
+end
+
 return load_directory, {
   load_sleeves = load_sleeves,
   load_pokemon = load_pokemon,
   load_pokemon_family = load_pokemon_family,
+  prep_config = prep_config,
 }

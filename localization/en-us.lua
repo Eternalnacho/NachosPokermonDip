@@ -795,35 +795,11 @@ return {
       poke_toxic_chain_ex = "Toxic Chain!",
       poke_malignant_chain_ex = "Malignant Chain!",
 
-
       -- Stellar Badge
       poke_stellar_badge = "Stellar",
-      
-      -- Config Descriptions
-      ralts_line = "Ralts line?",
-      swablu_line = "Swablu line?",
-      bagon_line = "Bagon line?",
-      turtwig_line = "Turtwig line?",
-      chimchar_line = "Chimchar line?",
-      piplup_line = "Piplup line?",
-      clauncher_line = "Clauncher line?",
-      dedenne = "Dedenne?",
-      carbink = "Carbink?",
-      oranguru = "Oranguru?",
-      passimian = "Passimian?",
-      goomy_line = "Goomy line?",
-      turtonator = "Turtonator?",
-      skwovet_line = "Skwovet line?",
-      galarian_meowth_line = "Galarian Meowth line?",
-      hisuian_zorua_line = "Hisuian Zorua line?",
-      terapagos_line = "Terapagos line?",
 
       -- Settings
-      nacho_pokemon1 = "Pokemon 1/5",
-      nacho_pokemon2 = "Pokemon 2/5",
-      nacho_pokemon3 = "Pokemon 3/5",
-      nacho_pokemon4 = "Pokemon 4/5",
-      nacho_pokemon5 = "Pokemon 5/5",
+      nacho_pokemonMega = "Mega Pokemon",
       nacho_crossMod = "Cross-Mod Pokemon",
     },
     v_text = {

@@ -45,5 +45,6 @@ end
 return {
   can_load = nacho_config.other_megas,
   init = init,
+  misc_config = true,
   list = { mega_gallade }
 }
