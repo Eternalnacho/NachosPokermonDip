@@ -6,7 +6,7 @@ local pages = {
       { list = { 'j_nacho_chimchar', 'j_nacho_monferno', 'j_nacho_infernape'  }, label = function() return localize { type = "name_text", set = "Joker", key = "j_nacho_chimchar" } end, config_key = "chimchar" },
       { list = { 'j_nacho_piplup', 'j_nacho_prinplup', 'j_nacho_empoleon'  }, label = function() return localize { type = "name_text", set = "Joker", key = "j_nacho_piplup" } end, config_key = "piplup" },
       { list = { 'j_nacho_shieldon', 'j_nacho_bastiodon' }, label = function() return localize { type = "name_text", set = "Joker", key = "j_nacho_shieldon" } end, config_key = "shieldon" },
-      { list = { 'j_nacho_bronzor', 'j_nacho_bronzong' }, label = function() return localize { type = "name_text", set = "Joker", key = "j_nacho_bronzor" } end, config_key = "bronzor" },
+      -- { list = { 'j_nacho_bronzor', 'j_nacho_bronzong' }, label = function() return localize { type = "name_text", set = "Joker", key = "j_nacho_bronzor" } end, config_key = "bronzor" },
       { list = { 'j_nacho_snover', 'j_nacho_abomasnow', 'j_nacho_mega_abomasnow' }, label = function() return localize { type = "name_text", set = "Joker", key = "j_nacho_snover" } end, config_key = "snover" },
     }
   },
