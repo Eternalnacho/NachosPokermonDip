@@ -15,11 +15,7 @@ else
 '''
 position = "before"
 payload = '''
-elseif G.GAME.modifiers.sinnoh_adv and SMODS.calculate_context({starting_shop = true}) then
-  for _, starter in ipairs { 'turtwig', 'chimchar', 'piplup' } do
-    local shop_card = SMODS.create_card({set = 'Joker', key = 'j_nacho_'..starter, area = G.shop_jokers})
-    G.shop_jokers:emplace(shop_card)
-    create_shop_card_ui(shop_card)
-  end
+elseif G.GAME.modifiers.sinnoh_adv then
+  SMODS.calculate_context({starting_shop = true})
 '''
 match_indent = true

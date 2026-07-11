@@ -8,6 +8,17 @@ SMODS.current_mod.set_debuff = function(card)
   return false
 end
 
+SMODS.current_mod.calculate = function(self, context)
+  if G.GAME.modifiers.sinnoh_adv and context.starting_shop then
+    for _, starter in ipairs { 'turtwig', 'chimchar', 'piplup' } do
+      local shop_card = SMODS.create_card({set = 'Joker', key = 'j_nacho_'..starter, area = G.shop_jokers})
+      G.shop_jokers:emplace(shop_card)
+      create_shop_card_ui(shop_card)
+    end
+    G.GAME.modifiers.sinnoh_adv = nil
+  end
+end
+
 -- Deck Rank Evo conditions
 pokermon.deck_rank_evo = function(self, card, context, forced_key, rank, percentage, flat)
   if pokermon.can_evolve(self, card, context, forced_key) then
