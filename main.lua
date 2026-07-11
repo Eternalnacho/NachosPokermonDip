@@ -2,7 +2,7 @@ nacho_config = SMODS.current_mod.config
 nacho_restart_req_toggles = {}
 SMODS.current_mod.optional_features = { retrigger_joker = true, quantum_enhancements = true }
 if (SMODS.Mods["Pokermon"] or {}).can_load then
-    pokermon_config = SMODS.Mods["Pokermon"].config
+  pokermon_config = SMODS.Mods["Pokermon"].config
 end
 
 --Load atlases

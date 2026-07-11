@@ -84,7 +84,7 @@ local function prep_config(file)
       local custom_prefix = item.nacho_inject_prefix or "nacho"
       return 'j_' .. custom_prefix .. '_' .. (item.key or item.name)
     end)
-    if file.misc_config then 
+    if file.misc_config then
       PkmnDip.config_list[file.misc_config] = PkmnDip.config_list[file.misc_config] or {}
     end
     table.insert(PkmnDip.config_list[(file.misc_config or "main")], {

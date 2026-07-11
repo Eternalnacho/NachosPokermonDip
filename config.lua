@@ -27,7 +27,7 @@ return {
   loyal_three = true,
   terapagos = true,
   pecharunt = true,
-  hisuian_sneasel = true,
+  hisuian_sneasel = SMODS.Mods["ToxicStall"].can_load and not SMODS.Mods["ToxicStall"].disabled and true or false,
   mega_altaria = true,
   mega_gardevoir = true,
   mega_gallade = true,
