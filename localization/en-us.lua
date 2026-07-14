@@ -139,7 +139,7 @@ return {
       j_nacho_bronzong = {
         name = "Bronzong",
         text = {
-          "This Joker and adjacent {X:poke_Metal,C:white}Metal{}",
+          "This Joker and adjacent {X:poke_metal,C:white}Metal{}",
           "Jokers score as {C:attention}held Steel{} cards",
         }
       },
