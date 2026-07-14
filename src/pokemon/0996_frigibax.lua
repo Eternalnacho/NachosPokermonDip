@@ -161,7 +161,7 @@ local mega_baxcalibur = {
       return { Xmult = 1 + card.ability.extra.Xmult_multi * foil_count }
     end
 
-    if context.after then
+    if context.after and not context.blueprint then
       card.ability.extra.bax_flag = nil
       card.ability.extra.no_score = nil
       PkmnDip.faint(card, true)
