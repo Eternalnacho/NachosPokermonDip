@@ -33,26 +33,11 @@ SMODS.Atlas({
     path = "consumables.png"
 })
 
--- Terapagos Stellar
-SMODS.Atlas({
-  key = "terapagos_stellar",
-  px = 71,
-  py = 95,
-  path = "j_nacho_terapagos_stellar.png"
-})
-
-SMODS.Atlas({
-  key = "shiny_terapagos_stellar",
-  px = 71,
-  py = 95,
-  path = "shiny_j_nacho_terapagos_stellar.png"
-})
-
 SMODS.Atlas({
   key = "terapagos_stellar_soul",
   px = 110,
   py = 147,
-  path = "j_nacho_terapagos_stellar_soul.png",
+  path = "terapagos_stellar.png",
   atlas_table = 'ANIMATION_ATLAS',
   frames = 13,
   fps = 12,
@@ -62,7 +47,7 @@ SMODS.Atlas({
   key = "shiny_terapagos_stellar_soul",
   px = 110,
   py = 147,
-  path = "shiny_j_nacho_terapagos_stellar_soul.png",
+  path = "terapagos_stellar_shiny.png",
   atlas_table = 'ANIMATION_ATLAS',
   frames = 13,
   fps = 12,

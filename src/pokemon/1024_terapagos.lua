@@ -3,7 +3,8 @@ local terapagos={
   name = "terapagos",
   config = {extra = {}},
   loc_vars = function(self, info_queue, card)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
+    info_queue[#info_queue+1] = {set = 'Other', key = 'holding', vars = {"Tera Orb"}}
+    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_teraorb
     return {vars = {}}
   end,
   rarity = 4,
@@ -34,7 +35,7 @@ local terapagos_terastal={
   config = {extra = {Xmult_mod = 0.4, changedtype = "Colorless"}},
   loc_vars = function(self, info_queue, card)
     local count = not pokermon.is_in_collection(card) and (#pokermon.find_pokemon_type(card.ability.extra.ptype) - 1) or 0
-    info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
+    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_teraorb
     return {vars = {card.ability.extra.Xmult_mod, math.max(1, 1 + card.ability.extra.Xmult_mod * count)}}
   end,
   rarity = 4,
@@ -79,7 +80,7 @@ local terapagos_terastal={
 local terapagos_stellar={
   name = "terapagos_stellar",
   poke_custom_prefix = "nacho",
-  pos = {x = 0, y = 0},
+  pos = {x = 4, y = 6},
   soul_pos = {x = 0, y = 0,
     draw = function(card, scale_mod, rotate_mod)
       local _c, _f = card.children.center, card.children.floating_sprite
@@ -98,15 +99,17 @@ local terapagos_stellar={
     end},
   config = {extra = {Xmult_mod = 0.1, Xmult = 1, energy_total = 0}},
   loc_vars = function(self, info_queue, card)
-    info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
     info_queue[#info_queue+1] = {set = 'Other', key = 'stellar_type'}
+    info_queue[#info_queue+1] = G.P_CENTERS.c_poke_teraorb
     return {vars = {card.ability.extra.Xmult_mod, card.ability.extra.Xmult}}
   end,
   rarity = 4,
   cost = 20,
   stage = "Legendary",
   ptype = "Stellar",
-  atlas = "nacho_terapagos_stellar",
+  atlas = "AtlasJokersBasicGen09",
+  soul_altas = 'nacho_terapagos_stellar_soul',
+  gen = 9,
   blueprint_compat = true,
   custom_pool_func = true,
   in_pool = function(self)
