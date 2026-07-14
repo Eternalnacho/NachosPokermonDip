@@ -128,7 +128,7 @@ local mega_baxcalibur = {
   name = "mega_baxcalibur",
   pos = { x = 8, y = 7 },
   soul_pos = { x = 9, y = 7 },
-  config = { extra = { Xmult_multi = 0.07 } },
+  config = { extra = { Xmult_multi = 0.05 } },
   loc_vars = function(self, info_queue, card)
     local a = card.ability.extra or self.config.extra
     local foil_count = G.playing_cards and #filter(G.playing_cards, is_foil) or 0
