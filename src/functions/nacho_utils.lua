@@ -72,44 +72,20 @@ end
 
 -- metafunctions
 function PkmnDip.utils.hook_before_function(table, funcname, hook)
-  if not table[funcname] then
-    table[funcname] = hook
-  else
-    local orig = table[funcname]
-    table[funcname] = function(...)
-      return hook(...)
-          or orig(...)
-    end
-  end
+  local orig = table[funcname] or function(...) end
+  table[funcname] = function(...) return hook(...) or orig(...) end
 end
 
-function PkmnDip.utils.hook_after_function(table, funcname, hook, always_run)
-  if not table[funcname] then
-    table[funcname] = hook
-  else
-    local orig = table[funcname]
-    if always_run then
-      table[funcname] = function(...)
-        local ret = orig(...)
-        local hook_ret = hook(...)
-        return ret or hook_ret
-      end
-    else
-      table[funcname] = function(...)
-        return orig(...)
-            or hook(...)
-      end
-    end
+function PkmnDip.utils.hook_after_function(table, funcname, hook, prevent_run)
+  local orig = table[funcname] or function(...) end
+  table[funcname] = function(...)
+    local ret = orig(...)
+    local h_ret = (not prevent_run or ret) and hook(...)
+    return ret or h_ret
   end
 end
 
 function PkmnDip.utils.hook_around_function(table, funcname, hook)
-  if not table[funcname] then
-    table[funcname] = function(...)
-      return hook(function() end, ...)
-    end
-  else
-    local orig = table[funcname]
-    table[funcname] = function(...) return hook(orig, ...) end
-  end
+  local orig = table[funcname] or function(...) end
+  table[funcname] = function(...) return hook(orig, ...) end
 end

@@ -485,37 +485,46 @@ return {
       j_nacho_frigibax = {
         name = "Frigibax",
         text = {
-          "If played hand is a {C:attention}Five of a Kind{},",
+          "When a {C:attention}Five of a Kind{} is played,",
           "{C:attention}held{} cards become {C:dark_edition}Foil{}",
           "{br:2.5}ERROR - CONTACT STEAK",
-          "If poker hand contains cards",
-          "that give {C:red}Mult{}, one random",
-          "card in deck becomes {C:dark_edition}Foil{}",
+          "The first card with {C:red}Mult{}",
+          "in poker hand becomes {C:dark_edition}Foil{}",
           "{C:inactive,s:0.8}(Evolves when deck has #1#{C:dark_edition,s:0.8}Foil{C:inactive,s:0.8} cards)"
         }
       },
       j_nacho_arctibax = {
         name = "Arctibax",
         text = {
-          "If played hand is a {C:attention}Five of a Kind{},",
+          "When a {C:attention}Five of a Kind{} is played,",
           "{C:attention}held{} cards become {C:dark_edition}Foil{}",
           "{br:2.5}ERROR - CONTACT STEAK",
-          "One random card in deck",
-          "becomes {C:dark_edition}Foil{} for each card",
-          "that gives {C:red}Mult{} of the",
-          "same {C:attention}rank{} in poker hand",
+          "The first two cards with {C:red}Mult{}",
+          "in poker hand become {C:dark_edition}Foil{}",
           "{C:inactive,s:0.8}(Evolves when deck has #1#{C:dark_edition,s:0.8}Foil{C:inactive,s:0.8} cards)"
         }
       },
       j_nacho_baxcalibur = {
         name = "Baxcalibur",
         text = {
-          "Scoring cards with {C:red}Mult{} become {C:dark_edition}Foil{}",
-          "{br:2.5}ERROR - CONTACT STEAK",
           "When a {C:attention}Five of a Kind{} is played,",
           "scoring cards give {X:mult,C:white}X#1#{} Mult",
           "for each {C:dark_edition}Foil{} card in full deck",
-          "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult){}"
+          "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult){}",
+          "{br:2.5}ERROR - CONTACT STEAK",
+          "Scoring cards with {C:red}Mult{} become {C:dark_edition}Foil{}",
+        }
+      },
+      j_nacho_mega_baxcalibur = {
+        name = "Mega Baxcalibur",
+        text = {
+          "Scoring {C:dark_edition}Foil{} cards give {X:mult,C:white}X#1#{} Mult",
+          "for each {C:dark_edition}Foil{} card in full deck,",
+          "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult){}",
+          "{br:2.5}ERROR - CONTACT STEAK",
+          "Debuffs self during scoring",
+          "if poker hand doesn't contain",
+          "a card with {C:red}Mult{}"
         }
       },
       j_nacho_dipplin = {

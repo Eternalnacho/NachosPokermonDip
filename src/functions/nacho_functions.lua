@@ -23,17 +23,13 @@ end
 pokermon.deck_rank_evo = function(self, card, context, forced_key, rank, percentage, flat)
   if pokermon.can_evolve(self, card, context, forced_key) then
     local count = 0
-    for k, v in pairs(G.playing_cards) do
+    for _, v in pairs(G.playing_cards) do
       if v.base.nominal >= rank then count = count + 1 end
     end
     if percentage and (count/#G.playing_cards >= percentage) then
-      return {
-        message = pokermon.evolve(card, forced_key)
-      }
+      return { message = pokermon.evolve(card, forced_key) }
     elseif flat and (count >= flat) then
-      return {
-        message = pokermon.evolve(card, forced_key)
-      }
+      return { message = pokermon.evolve(card, forced_key) }
     end
   end
 end
@@ -42,47 +38,43 @@ end
 pokermon.edition_evo = function(self, card, context, forced_key, edition, percentage, flat)
   if pokermon.can_evolve(self, card, context, forced_key) then
     local count = 0
-    for k, v in pairs(G.playing_cards) do
+    for _, v in pairs(G.playing_cards) do
       if v.edition and v.edition[edition] then count = count + 1 end
     end
     if percentage and (count/#G.playing_cards >= percentage) then
-      return {
-        message = pokermon.evolve(card, forced_key)
-      }
+      return { message = pokermon.evolve(card, forced_key) }
     elseif flat and (count >= flat) then
-      return {
-        message = pokermon.evolve(card, forced_key)
-      }
+      return { message = pokermon.evolve(card, forced_key) }
     end
   end
 end
 
--- Get card's total mult (parallels pokermon.total_chips)
-pokermon.total_mult = pokermon.total_mult or function(card)
-  local total_mult = (card.ability.perma_mult or 0)
-  if card.config.center ~= G.P_CENTERS.m_lucky then
-    total_mult = total_mult + card.ability.mult
-  end
-  if card.edition then
-    total_mult = total_mult + (card.edition.mult or 0)
+-- Get card's total mult (oh dear god lucky cards why)
+PkmnDip.total_mult = function(card, pre_eval)
+  local total_mult = 0
+  if pre_eval then
+    local chip_mult = card:get_chip_mult()
+    local chip_h_mult = card:get_chip_h_mult()
+    total_mult = total_mult + chip_mult
+    total_mult = total_mult + chip_h_mult
+  else
+    total_mult = total_mult + (card.ability.perma_mult or 0)
+    if card.config.center ~= G.P_CENTERS.m_lucky or card.lucky_mult_trigger then
+      total_mult = total_mult + card.ability.mult
+    end
+    if card.edition then
+      total_mult = total_mult + (card.edition.mult or 0)
+    end
   end
   return total_mult
 end
 
 PkmnDip.copy_playing_card = function(card, modify, to_hand)
   PkmnDip.defer(function()
-    local copy = copy_card(card, nil, nil, G.playing_card)
-    table.insert(G.playing_cards, copy)
-    copy:add_to_deck()
-    G.deck:emplace(copy)
-    
-    if modify then
-      pokermon.convert_cards(copy, modify, true, true)
-    end
-    if to_hand then
-      draw_card(G.deck, G.hand, nil, nil, nil, copy)
-    end
-    playing_card_joker_effects({copy})
+    local copy = SMODS.copy_card(card, {area = G.deck})
+    if modify then pokermon.convert_cards(copy, modify, true, true) end
+    if to_hand then draw_card(G.deck, G.hand, nil, nil, nil, copy) end
+    SMODS.calculate_context({playing_card_added = true, cards = {copy}})
   end)
 end
 
@@ -202,4 +194,12 @@ PkmnDip.attach_mega = function(center, target)
     discovered = true,
   }, true)
   pokermon.add_to_family(target:sub(6, -1), center.name)
+end
+
+PkmnDip.faint = function(card, undebuff)
+  PkmnDip.defer(function()
+    card:juice_up()
+    card.ability.fainted = not undebuff and G.GAME.round
+    card:set_debuff()
+  end)
 end
