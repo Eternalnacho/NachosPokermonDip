@@ -1,4 +1,4 @@
-SMODS.Shader({ key = 'hisuian_zorua', path = 'hisuian_zorua.fs' }):register()
+SMODS.Shader({ key = 'hisuian_zorua', path = 'hisuian_zorua.fs' })
 
 SMODS.DrawStep({
   key = 'hisuian_zorua_shadow',

@@ -1,11 +1,4 @@
 SMODS.Atlas({
-    key = "modicon",
-    path = "icon.png",
-    px = 31,
-    py = 31
-})
-
-SMODS.Atlas({
     key = "stakes",
     px = 29,
     py = 29,
