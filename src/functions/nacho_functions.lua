@@ -203,3 +203,11 @@ PkmnDip.faint = function(card, undebuff)
     card:set_debuff()
   end)
 end
+
+PkmnDip.has_repeat_effect = function(context)
+  return context.repetition and (next(context.card_effects[1]) or #context.card_effects > 1)
+end
+
+PkmnDip.played_or_held = function(context)
+  return context.cardarea == G.hand or context.cardarea == G.play
+end
