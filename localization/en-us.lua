@@ -368,10 +368,10 @@ return {
       j_nacho_turtonator = {
         name = "Turtonator",
         text = {
-          "If a played card, {C:attention}poker hand{},",
-          "or Joker is {C:attention}debuffed{}, scoring",
-          "cards give {X:red,C:white}X#1#{} Mult during",
-          "your next played hand",
+          "{C:attention}Shell Trap",
+          "{br:2}ERROR - CONTACT STEAK",
+          "When this Joker is {C:attention}Active{},",
+          "scoring cards give {X:red,C:white}X#1#{} Mult",
           "{C:inactive}(#2#){}",
         }
       },
@@ -693,13 +693,6 @@ return {
           "{C:attention}Stake{} difficulty",
         },
       },
-      stellar_type = {
-        name = "Stellar Type",
-        text = {
-          "{C:nacho_sg1}S{C:nacho_sg2}t{C:nacho_sg3}e{C:nacho_sg4}l{C:nacho_sg5}l{C:nacho_sg6}a{C:nacho_sg7}r{} Jokers are",
-          "every type",
-        },
-      },
       -- Incubator tooltip for Mega Audino
       incubator = {
         name = "Fast Incubator",
@@ -708,6 +701,24 @@ return {
             "will always hatch in {C:attention}1{} round",
         }
       },
+      -- Shell Trap tooltip for Turtonator
+      shell_trap = {
+        name = "Shell Trap",
+        text = {
+            "Ability activates when",
+            "a {C:attention}Joker{}, {C:attention}playing card{} or",
+            "{C:attention}poker hand{} is debuffed"
+        }
+      },
+      -- Stellar Type tooltip
+      stellar_type = {
+        name = "Stellar Type",
+        text = {
+          "{C:nacho_sg1}S{C:nacho_sg2}t{C:nacho_sg3}e{C:nacho_sg4}l{C:nacho_sg5}l{C:nacho_sg6}a{C:nacho_sg7}r{} Jokers are",
+          "every type",
+        },
+      },
+      
       -- Rank lists for most common ranks
       rank_lists_1 = {
         name = "Common Ranks",

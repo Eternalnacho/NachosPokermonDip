@@ -1,0 +1,114 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 1
+
+### Audino : Post-Evolution context
+[[patches]]
+[patches.pattern]
+target = '=[SMODS Pokermon "functions/pokefunctions.lua"]'
+pattern = '''
+card:set_ability(new_card, true)
+card:set_cost()
+'''
+position = "after"
+match_indent = true
+payload = '''
+
+if G.P_CENTERS[to_key].rarity ~= "poke_mega" and G.P_CENTERS[old_key].rarity ~= "poke_mega" then SMODS.calculate_context({poke_evolved = true}) end
+'''
+
+
+### Dedenne : Post-Gold Trigger Context
+
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = '''
+-- TARGET: main scoring on held cards
+'''
+position = "after"
+match_indent = true
+payload = '''
+if context.other_card and (ret.playing_card.h_chips or ret.playing_card.h_mult
+    or ret.playing_card.x_chips or ret.playing_card.x_mult)
+    and SMODS.has_enhancement(context.other_card, 'm_gold') then
+  SMODS.calculate_context({dedenne_trig = true})
+end
+'''
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''
+local o, t = obj:calculate(self, context)
+'''
+position = "after"
+match_indent = true
+payload = '''
+if context.other_card and context.individual and context.cardarea == G.hand and (o or t) and SMODS.has_enhancement(context.other_card, 'm_gold') then
+  SMODS.calculate_context({dedenne_trig = true})
+end
+'''
+
+
+### Passimian : Copy Card fix
+
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = '''
+for k, v in pairs(other.ability) do
+    if type(v) == 'table' then 
+        new_card.ability[k] = copy_table(v)
+    else
+        new_card.ability[k] = v
+    end
+end
+'''
+position = "at"
+match_indent = true
+payload = '''
+if other.config.center.name == "passimian" then
+  if other.ability.received_card then
+    new_card:set_ability(other.config.center)
+    new_card.config.center:receive_card(new_card, other.ability.received_card.key)
+  end
+else
+  for k, v in pairs(other.ability) do
+      if type(v) == 'table' then 
+          new_card.ability[k] = copy_table(v)
+      else
+          new_card.ability[k] = v
+      end
+  end
+end
+'''
+
+
+### Turtonator : Shell Trap context from debuffing cards
+
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/overrides.lua"]'
+pattern = '''
+if not card.debuff then card:set_debuff(true) end
+'''
+position = "after"
+match_indent = true
+payload = '''
+if card.debuff and next(SMODS.find_card('j_nacho_turtonator')) then SMODS.calculate_context({ shell_trap = true }) end
+'''
+
+
+### Frigibax : [Card:get_chip_mult] Get Lucky Mult procs
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+position = "after"
+match_indent = true
+pattern = '''self.lucky_trigger = true
+ret = ret + self.ability.mult'''
+payload = '''
+self.lucky_mult_trigger = true'''
