@@ -22,10 +22,7 @@ end
 -- Deck Rank Evo conditions
 pokermon.deck_rank_evo = function(self, card, context, forced_key, rank, percentage, flat)
   if pokermon.can_evolve(self, card, context, forced_key) then
-    local count = 0
-    for _, v in pairs(G.playing_cards) do
-      if v.base.nominal >= rank then count = count + 1 end
-    end
+    local count = #PkmnDip.utils.filter(G.playing_cards, function(v) return v.base.nominal >= rank end)
     if percentage and (count/#G.playing_cards >= percentage) then
       return { message = pokermon.evolve(card, forced_key) }
     elseif flat and (count >= flat) then
@@ -37,10 +34,7 @@ end
 -- Edition Evo conditions
 pokermon.edition_evo = function(self, card, context, forced_key, edition, percentage, flat)
   if pokermon.can_evolve(self, card, context, forced_key) then
-    local count = 0
-    for _, v in pairs(G.playing_cards) do
-      if v.edition and v.edition[edition] then count = count + 1 end
-    end
+    local count = #PkmnDip.utils.filter(G.playing_cards, PkmnDip.con['is_'..edition])
     if percentage and (count/#G.playing_cards >= percentage) then
       return { message = pokermon.evolve(card, forced_key) }
     elseif flat and (count >= flat) then
@@ -69,64 +63,37 @@ PkmnDip.total_mult = function(card, pre_eval)
   return total_mult
 end
 
--- calculate most played hand
-PkmnDip.calc_most_played_hand = function()
-  local hands, _tally = {}, 0
-  for _, v in ipairs(G.handlist) do
-    if G.GAME.hands[v].visible and G.GAME.hands[v].played > _tally then
-      hands = {v}
-      _tally = G.GAME.hands[v].played
-    elseif G.GAME.hands[v].visible and G.GAME.hands[v].played == _tally then
-      table.insert(hands, v)
-    end
-  end
-  return #hands == 1 and hands[1] or pseudorandom_element(hands, 'handcalc')
-end
-
--- Get most common rank(s) in a list of cards
-PkmnDip.get_common_ranks = function(cards)
-  if not cards then cards = G.playing_cards end
-  local _ranks, _tally = {}, 0
-  for _, r in pairs(SMODS.Ranks) do
-    local count = #PkmnDip.utils.filter(cards, function(card) return card:get_id() == r.id and not SMODS.has_no_rank(card) end)
-    if count > _tally then
-      _ranks = {r}
-      _tally = count
-    elseif count == _tally then
-      table.insert(_ranks, r)
-    end
-  end
-  return _ranks
-end
-
 -- Create tooltip for common ranks (Oranguru)
-PkmnDip.common_ranks_tooltip = function(self, info_queue)
+PkmnDip.common_ranks_tooltip = function()
+  if not G.playing_cards and G.STAGE == G.STAGES.RUN then return end
   local ranks = {}
-  if G.playing_cards and G.STAGE == G.STAGES.RUN then
-    local r = PkmnDip.get_common_ranks(G.playing_cards)
-    -- sort in descending order if multiple
-    if #r > 1 then
-      table.sort(r, function(a, b) return a.id > b.id end)
-    end
-    -- get card key for each rank because it's a single character
-    for i = 1, #r do
-      ranks[i] = #r > 3 and r[i].card_key or r[i].key
-      if ranks[i] == 'T' then ranks[i] = '10' end
-    end
-  -- return early if there's no cards to get common ranks from
-  else return end
+  local r = PkmnDip.get_common_ranks(G.playing_cards)
+  -- sort in descending order if multiple
+  if #r > 1 then table.sort(r, function(a, b) return a.id > b.id end) end
+  -- get card key for each rank because it's a single character
+  for i = 1, #r do
+    ranks[i] = #r > 3 and r[i].card_key or r[i].key
+    if ranks[i] == 'T' then ranks[i] = '10' end
+  end
   -- Organize into even lists (max 3)
   local rank_lists = {}
   local rows = math.min(3, math.ceil(#ranks / 4))
   if rows == 1 then
     rank_lists[1] = table.concat(ranks, ", ")
   else
+    local mod = math.ceil(#ranks / rows)
     for i = 1, rows do
-      rank_lists[i] = table.concat(ranks, ", ", 1 + (i - 1) * math.ceil(#ranks / rows), math.min(#ranks, i * math.ceil(#ranks / rows)))
+      rank_lists[i] = table.concat(ranks, ", ", 1 + (i - 1) * mod, math.min(#ranks, i * mod))
     end
   end
-  local key = "rank_lists_" .. #rank_lists     -- dynamic key
-  info_queue[#info_queue + 1] = { set = 'Other', key = key, vars = rank_lists }
+  local text = PkmnDip.utils.map_list(rank_lists, function(l) return '{C:attention}'..l..'{}' end)
+  local text_parsed = PkmnDip.utils.map_list(text, loc_parse_string)
+  G.localization.descriptions.Other['pkmndip_rank_lists'].text = text
+  G.localization.descriptions.Other['pkmndip_rank_lists'].text_parsed = text_parsed
+  return {
+    set = 'Other',
+    key = 'pkmndip_rank_lists'
+  }
 end
 
 PkmnDip.keep_values = function(card)

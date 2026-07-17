@@ -731,28 +731,10 @@ return {
           "every type",
         },
       },
-      
       -- Rank lists for most common ranks
-      rank_lists_1 = {
+      pkmndip_rank_lists = {
         name = "Common Ranks",
-        text = {
-          '{C:attention}#1#{}',
-        }
-      },
-      rank_lists_2 = {
-        name = "Common Ranks",
-        text = {
-          '{C:attention}#1#{}',
-          '{C:attention}#2#{}',
-        }
-      },
-      rank_lists_3 = {
-        name = "Common Ranks",
-        text = {
-          '{C:attention}#1#{}',
-          '{C:attention}#2#{}',
-          '{C:attention}#3#{}',
-        }
+        text = { 'potato' }
       },
       -- Received Card tooltip for Passimian
       received_card = {
@@ -761,6 +743,7 @@ return {
           '#1#',
         }
       },
+      -- Applin evo tooltip
       apple_evolutions = {
         name = "Evolutions",
         text = {
