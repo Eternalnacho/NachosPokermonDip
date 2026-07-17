@@ -1,10 +1,49 @@
+local get_adj = pokermon.get_adjacent_jokers
+local is_metal = function(card) return pokermon.is_type(card, "Metal") end
+local get_ecount = pokermon.energy.get_total_energy
+local total_ecount = function(key)
+  local count = 0
+  local add_total = function(joker) count = count + get_ecount(joker) end
+  PkmnDip.utils.for_each(SMODS.find_card(key), add_total)
+  return count
+end
+
+local score_metal_jokers = function(card, context)
+  -- Create a temporary steel card and set it's position to the relevant joker
+  local temp_steel = SMODS.create_card({set = 'Enhanced', enhancement = 'm_steel'})
+  temp_steel.scoring_metal_for = card
+  -- Call set_base with no args to remove rank + suit
+  temp_steel:set_base()
+  -- Set the steel card's major to the joker for click + drag reasons
+  PkmnDip.defer(function() temp_steel:set_role({major = card, role_type = 'Glued'}) end)
+  -- Set the scoring animation bit onto the target joker
+  temp_steel.juice_up = function(self, ...) card:juice_up(...) end
+  -- Create fake context to trick Balatro into thinking we're calculating held steel cards
+  local temp_context = {
+    cardarea = G.hand,
+    individual = true,
+    main_scoring = true,
+    other_card = temp_steel,
+    full_hand = context.full_hand,
+    poker_hands = context.poker_hands,
+    scoring_hand = context.scoring_hand,
+    scoring_name = context.scoring_name,
+    retrigger_joker = context.retrigger_joker,
+  }
+  -- The scoring code I had before wound up being a 1-for-1 of SMODS.score_card
+  SMODS.score_card(temp_steel, temp_context)
+  -- Remove the temporary steel card to save memory / screen real-estate
+  temp_steel:remove()
+end
+
 -- Meowth 52-2
 local galarian_meowth={
   name = "galarian_meowth",
-  config = {extra = { retriggers = 1, triggered = 0 }, evo_rqmt = 20},
+  config = { extra = { Xmult_multi = 1.5 }, evo_rqmt = 2 },
   loc_vars = function(self, info_queue, card)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
     info_queue[#info_queue+1] = G.P_CENTERS.m_steel
-		return {vars = {card.ability.extra.retriggers, math.max(card.ability.evo_rqmt - card.ability.extra.triggered, 0)}}
+		return { vars = { card.ability.extra.Xmult_multi } }
   end,
   rarity = 2,
   cost = 6,
@@ -16,25 +55,11 @@ local galarian_meowth={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.repetition and context.cardarea == G.hand and (next(context.card_effects[1]) or #context.card_effects > 1)
-    and SMODS.has_enhancement(context.other_card, "m_steel") then
-      if not context.blueprint then
-        local eor
-        for i = 1, #context.card_effects do
-          if context.card_effects[i].end_of_round and next(context.card_effects[i].end_of_round) then eor = true
-          elseif context.end_of_round and context.card_effects[i].jokers then eor = true end
-        end
-        if not context.end_of_round or eor then
-          card.ability.extra.triggered = card.ability.extra.triggered + 1
-        end
-      end
-      return {
-        message = localize('k_again_ex'),
-        repetitions = card.ability.extra.retriggers,
-        card = card
-      }
+    if context.other_joker and card == context.other_joker then
+      score_metal_jokers(context.other_joker, context)
     end
-    return pokermon.scaling_evo(self, card, context, "j_nacho_perrserker", card.ability.extra.triggered, self.config.evo_rqmt)
+    local adj_req = #PkmnDip.utils.filter(get_adj(card), is_metal)
+    return pokermon.scaling_evo(self, card, context, "j_nacho_perrserker", adj_req, self.config.evo_rqmt)
   end,
   attributes = {"enhancements", "retrigger", "condition_evo"}
 }
@@ -42,48 +67,45 @@ local galarian_meowth={
 -- Perrserker 863
 local perrserker = {
   name = "perrserker",
-  config = { extra = { Xmult_multi = 1.5, retriggers = 1 } },
+  config = { extra = { Xmult_multi = 1.5 } },
   loc_vars = function(self, info_queue, card)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
     info_queue[#info_queue+1] = G.P_CENTERS.m_steel
-    local total_xmult = 1.5
-    local total_energy = 0
-    PkmnDip.utils.for_each(SMODS.find_card('j_nacho_perrserker'), function(v) total_energy = total_energy + pokermon.energy.get_total_energy(v) end)
-    total_xmult = total_xmult + total_xmult * .05 * total_energy
-    return { vars = { total_xmult } }
+    local steel_energy = 1.5 + 1.5 * .05 * total_ecount('j_nacho_perrserker')
+    return { vars = { steel_energy } }
   end,
   rarity = "poke_safari",
   cost = 10,
   stage = "One",
   ptype = "Metal",
-  perishable_compat = true,
   blueprint_compat = true,
-  eternal_compat = true,
   calculate = function(self, card, context)
-    if context.repetition and context.cardarea == G.hand and (next(context.card_effects[1]) or #context.card_effects > 1) 
-    and SMODS.has_enhancement(context.other_card, "m_steel") then
-      return {
-        message = not context.retrigger_joker and localize('k_again_ex'),
-        repetitions = card.ability.extra.retriggers,
-        card = card
-      }
+    if context.other_joker then
+      local metal_adj = PkmnDip.utils.filter(get_adj(card), is_metal)
+      local other = context.other_joker
+      if card == other or (next(metal_adj) and PkmnDip.utils.contains(metal_adj, other)) then
+        score_metal_jokers(other, context)
+      end
     end
   end,
   attributes = {"enhancements", "retrigger", "modify_card", "energy"}
 }
 
 local init = function()
-  get_h_x_mult_ref = Card.get_chip_h_x_mult
-  Card.get_chip_h_x_mult = function(self)
+  PkmnDip.utils.hook_around_function(Card, 'get_chip_h_x_mult', function(orig, self, ...)
     local data = self.ability.h_x_mult
-    if next(SMODS.find_card('j_nacho_perrserker')) and SMODS.has_enhancement(self, 'm_steel') then
-      local total_energy = 0
-      PkmnDip.utils.for_each(SMODS.find_card('j_nacho_perrserker'), function(v) total_energy = total_energy + pokermon.energy.get_total_energy(v) end)
-      self.ability.h_x_mult = (data + self.ability.h_x_mult * .05 * total_energy) or 1
+    if (next(SMODS.find_card('j_nacho_perrserker')) or next(SMODS.find_card('j_nacho_galarian_meowth')))
+        and SMODS.has_enhancement(self, 'm_steel') then
+      local ecount = total_ecount('j_nacho_perrserker')
+      PkmnDip.utils.for_each(SMODS.find_card('j_nacho_galarian_meowth'), function(v)
+        if self.scoring_metal_for == v then ecount = ecount + get_ecount(v) end
+      end)
+      data = (data + self.ability.h_x_mult * .05 * ecount) or 1
     end
-    local ret = get_h_x_mult_ref(self)
+    local ret = orig(self)
     self.ability.h_x_mult = data
     return ret
-  end
+  end)
 end
 
 return {

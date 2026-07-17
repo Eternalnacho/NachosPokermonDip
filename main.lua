@@ -46,7 +46,7 @@ if (SMODS.Mods["JokerDisplay"] or {}).can_load then
   load_directory("jokerdisplay")
 end
 
-PkmnDip.utils.hook_before_function(SMODS.current_mod, 'reset_game_globals', function(run_start)
+PkmnDip.Hook("before", SMODS.current_mod, 'reset_game_globals', function(run_start)
   if run_start then
     for _, center in pairs(G.P_CENTERS) do
       if center.nacho_config_key and not nacho_config[center.nacho_config_key] then

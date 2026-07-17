@@ -99,7 +99,7 @@ local passimian={
 
 local init = function()
   -- Card.save hook to save received card key
-  PkmnDip.utils.hook_around_function(Card, 'save', function(orig, self) 
+  PkmnDip.Hook("around", Card, 'save', function(orig, self) 
     local saved_table = orig(self)
     if self.config.center_key == 'j_nacho_passimian' and self.area == G.jokers and self.ability.received_card then
       saved_table.received_key = self.ability.received_card.key
@@ -108,7 +108,7 @@ local init = function()
   end)
 
   -- find_card hooks
-  PkmnDip.utils.hook_around_function(SMODS, 'find_card', function(orig, key, count_debuffed, ...)
+  PkmnDip.Hook("around", SMODS, 'find_card', function(orig, key, count_debuffed, ...)
     local results = orig(key, count_debuffed)
     if G.jokers and type(results) == "table" then
       PkmnDip.utils.for_each(SMODS.get_card_areas('jokers'), function(area) 
@@ -125,7 +125,7 @@ local init = function()
     return results
   end)
 
-  PkmnDip.utils.hook_around_function(pokermon, 'find_card', function(orig, key_or_function, use_highlighted, ...)
+  PkmnDip.Hook("around", pokermon, 'find_card', function(orig, key_or_function, use_highlighted, ...)
     local ret = orig(function(joker) 
       return joker.ability.received_card and (joker.ability.received_card == key_or_function
           or joker.ability.received_card.key == key_or_function)
@@ -133,12 +133,12 @@ local init = function()
     return ret or orig(key_or_function, use_highlighted, ...)
   end)
 
-  PkmnDip.utils.hook_before_function(pokermon, 'can_set_sprite', function(card, ...)
+  PkmnDip.Hook("before", pokermon, 'can_set_sprite', function(card, ...)
     if card.config.center_key == 'j_nacho_passimian' then return false end
   end)
 
   -- pokermon.evolve and pokermon.backend_evolve hooks for passimian's received card
-  PkmnDip.utils.hook_around_function(pokermon, 'evolve', function(orig, card, to_key, immediate, evolve_message, transformation, energize_amount) 
+  PkmnDip.Hook("around", pokermon, 'evolve', function(orig, card, to_key, immediate, evolve_message, transformation, energize_amount) 
     if card.config.center.key == 'j_nacho_passimian' and not transformation then
       card.ability.extra.pass_evolving = true
       immediate = true
@@ -146,7 +146,7 @@ local init = function()
     return orig(card, to_key, immediate, evolve_message, transformation, energize_amount)
   end)
 
-  PkmnDip.utils.hook_before_function(pokermon, 'backend_evolve', function(card, to_key, energize_amount) 
+  PkmnDip.Hook("before", pokermon, 'backend_evolve', function(card, to_key, energize_amount) 
     if card.config.center.key == 'j_nacho_passimian' and card.ability.extra.pass_evolving then
       card.ability.extra.pass_evolving = nil
       card.config.center:receive_card(card, to_key)
@@ -155,7 +155,7 @@ local init = function()
   end)
   
   -- pokermon.energy.energize hook
-  PkmnDip.utils.hook_around_function(pokermon.energy, 'energize', function(orig, card, etype, evolving, silent, amount, center, ...) 
+  PkmnDip.Hook("around", pokermon.energy, 'energize', function(orig, card, etype, evolving, silent, amount, center, ...) 
     if card.config.center.key == 'j_nacho_passimian' and card.ability.received_card then
       center = card.ability.received_card
     end

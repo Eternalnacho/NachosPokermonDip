@@ -47,18 +47,6 @@ function PkmnDip.utils.append(t1, t2)
   end
 end
 
--- Stealing this one from Emma holy moly that's useful
-function PkmnDip.defer(func, delay)
-  G.E_MANAGER:add_event(Event({
-    trigger = delay and 'after',
-    delay = delay,
-    func = function()
-      func()
-      return true
-    end
-  }))
-end
-
 -- Talisman shorthand
 to_number = to_number or function(x) return x end
 
@@ -68,24 +56,4 @@ function math.clamp(num, min, max)
     min = min or -math.huge
     assert(min <= max)
     return math.min(math.max(num, min), max)
-end
-
--- metafunctions
-function PkmnDip.utils.hook_before_function(table, funcname, hook)
-  local orig = table[funcname] or function(...) end
-  table[funcname] = function(...) return hook(...) or orig(...) end
-end
-
-function PkmnDip.utils.hook_after_function(table, funcname, hook, prevent_run)
-  local orig = table[funcname] or function(...) end
-  table[funcname] = function(...)
-    local ret = orig(...)
-    local h_ret = (not prevent_run or ret) and hook(...)
-    return ret or h_ret
-  end
-end
-
-function PkmnDip.utils.hook_around_function(table, funcname, hook)
-  local orig = table[funcname] or function(...) end
-  table[funcname] = function(...) return hook(orig, ...) end
 end

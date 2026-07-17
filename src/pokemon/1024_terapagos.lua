@@ -169,22 +169,22 @@ local init = function()
     {pokermon.energy, 'energy_matches', true},
     {pokermon.energy, 'get_matching_energy', 'c_poke_colorless_energy'}
   } do 
-    PkmnDip.utils.hook_before_function(func[1], func[2], function(card, ...)
+    PkmnDip.Hook("before", func[1], func[2], function(card, ...)
       if card and card.ability and card.ability['stellar_sticker'] then return func[3] end
     end)
   end
 
-  PkmnDip.utils.hook_around_function(pokermon, 'apply_type_sticker', function(orig, card, sticker_type, ...)
+  PkmnDip.Hook("around", pokermon, 'apply_type_sticker', function(orig, card, sticker_type, ...)
     return next(SMODS.find_card('j_nacho_terapagos_stellar')) and orig(card, "stellar", ...)
         or orig(card, sticker_type, ...)
   end)
 
-  PkmnDip.utils.hook_around_function(pokermon, 'type_evo', function(orig, self, card, context, forced_key, type_req, ...)
+  PkmnDip.Hook("around", pokermon, 'type_evo', function(orig, self, card, context, forced_key, type_req, ...)
     return orig(self, card, context, forced_key, 'stellar', ...)
         or orig(self, card, context, forced_key, type_req, ...)
   end)
 
-  PkmnDip.utils.hook_around_function(pokermon, 'find_pokemon_type', function(orig, target_type, exclude_card, exclude_name, ...)
+  PkmnDip.Hook("around", pokermon, 'find_pokemon_type', function(orig, target_type, exclude_card, exclude_name, ...)
     local ret = orig(target_type, exclude_card, exclude_name, ...)
     if type(ret) == "table" and G.jokers then
       pokermon.table_append(ret, PkmnDip.utils.filter(G.jokers.cards, function(joker)

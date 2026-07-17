@@ -43,7 +43,7 @@ local turtonator={
 }
 
 init = function()
-  PkmnDip.utils.hook_after_function(Card, 'set_debuff', function(self, should_debuff)
+  PkmnDip.Hook("after", Card, 'set_debuff', function(self, should_debuff)
     if (self.debuff or should_debuff) and (self.area == G.jokers or self.playing_card) 
         and next(SMODS.find_card('j_nacho_turtonator')) then
       SMODS.calculate_context({ shell_trap = true })
