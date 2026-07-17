@@ -46,3 +46,10 @@ function PkmnDip.Hook(hook_type, table, funcname, hook, prevent_run)
   if not hook then return end
   if hooks[hook_type] then hooks[hook_type](table, funcname, hook, hook_type == 'after' and prevent_run) end
 end
+
+-- Because sometimes you just want effects to not advance RNG
+function PkmnDip.RNG_protect(func)
+  local RNG_state = copy_table(G.GAME.pseudorandom)
+  func()
+  G.GAME.pseudorandom = RNG_state
+end

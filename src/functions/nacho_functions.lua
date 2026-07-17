@@ -4,7 +4,7 @@
 SMODS.current_mod.set_debuff = function(card)
   -- prevent debuffs
   if card.ability.name == "mega_gallade" then return 'prevent_debuff' end
-  if card:get_id() == 9 and next(find_joker("mega_altaria")) then return 'prevent_debuff' end
+  if card:get_id() == 9 and next(SMODS.find_card("j_poke_mega_altaria")) then return 'prevent_debuff' end
   return false
 end
 
@@ -43,31 +43,11 @@ pokermon.edition_evo = function(self, card, context, forced_key, edition, percen
   end
 end
 
--- Get card's total mult (oh dear god lucky cards why)
-PkmnDip.total_mult = function(card, pre_eval)
-  local total_mult = 0
-  if pre_eval then
-    local chip_mult = card:get_chip_mult()
-    local chip_h_mult = card:get_chip_h_mult()
-    total_mult = total_mult + chip_mult
-    total_mult = total_mult + chip_h_mult
-  else
-    total_mult = total_mult + (card.ability.perma_mult or 0)
-    if card.config.center ~= G.P_CENTERS.m_lucky or card.lucky_mult_trigger then
-      total_mult = total_mult + card.ability.mult
-    end
-    if card.edition then
-      total_mult = total_mult + (card.edition.mult or 0)
-    end
-  end
-  return total_mult
-end
-
 -- Create tooltip for common ranks (Oranguru)
 PkmnDip.common_ranks_tooltip = function()
   if not G.playing_cards and G.STAGE == G.STAGES.RUN then return end
   local ranks = {}
-  local r = PkmnDip.get_common_ranks(G.playing_cards)
+  local r = PkmnDip.calc.get_common_ranks(G.playing_cards)
   -- sort in descending order if multiple
   if #r > 1 then table.sort(r, function(a, b) return a.id > b.id end) end
   -- get card key for each rank because it's a single character

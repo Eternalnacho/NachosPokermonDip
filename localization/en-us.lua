@@ -739,9 +739,7 @@ return {
       -- Received Card tooltip for Passimian
       received_card = {
         name = "Received Card",
-        text = {
-          '#1#',
-        }
+        text = { '#1#' }
       },
       -- Applin evo tooltip
       apple_evolutions = {
@@ -775,9 +773,7 @@ return {
       -- Mod Req tooltip for config menu
       modname_tooltip = {
         name = "Required Mod",
-        text = {
-          '{C:attention}#1#{}',
-        }
+        text = { '{C:attention}#1#{}' }
       },
     },
   },

@@ -69,3 +69,15 @@ PkmnDip.eff.faint = function(card, undebuff)
 end
 
 --#endregion [[ faint ]]
+
+
+--#region [[ mod_booster ]]
+
+PkmnDip.eff.mod_booster = function(amount)
+  local choice_mod = G.GAME.modifiers.booster_choice_mod
+  choice_mod = math.max(0, (choice_mod or 0) + amount)
+  G.GAME.pack_choices = G.GAME.pack_choices + amount
+  if G.GAME.pack_choices <= 0 then G.FUNCS.end_consumeable() end
+end
+
+--#endregion [[ faint ]]
