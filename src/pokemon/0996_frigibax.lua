@@ -149,7 +149,7 @@ local mega_baxcalibur = {
       end)
       if not card.ability.extra.bax_flag then
         card.ability.extra.no_score = true
-        PkmnDip.faint(card)
+        PkmnDip.eff.faint(card)
       end
       G.GAME.pseudorandom = RNG_state
     end
@@ -164,7 +164,7 @@ local mega_baxcalibur = {
     if context.after and not context.blueprint then
       card.ability.extra.bax_flag = nil
       card.ability.extra.no_score = nil
-      PkmnDip.faint(card, true)
+      PkmnDip.eff.faint(card, true)
     end
   end,
   megas = {'mega_baxcalibur'},
