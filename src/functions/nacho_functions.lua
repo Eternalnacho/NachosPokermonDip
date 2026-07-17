@@ -1,10 +1,10 @@
+---@diagnostic disable: param-type-mismatch
 -- Describe all the logic for debuffing or undebuffing
 -- return values: true, false, or 'prevent_debuff'
 SMODS.current_mod.set_debuff = function(card)
   -- prevent debuffs
   if card.ability.name == "mega_gallade" then return 'prevent_debuff' end
   if card:get_id() == 9 and next(find_joker("mega_altaria")) then return 'prevent_debuff' end
-
   return false
 end
 
@@ -67,15 +67,6 @@ PkmnDip.total_mult = function(card, pre_eval)
     end
   end
   return total_mult
-end
-
-PkmnDip.copy_playing_card = function(card, modify, to_hand)
-  PkmnDip.defer(function()
-    local copy = SMODS.copy_card(card, {area = G.deck})
-    if modify then pokermon.convert_cards(copy, modify, true, true) end
-    if to_hand then draw_card(G.deck, G.hand, nil, nil, nil, copy) end
-    SMODS.calculate_context({playing_card_added = true, cards = {copy}})
-  end)
 end
 
 -- calculate most played hand
@@ -194,20 +185,4 @@ PkmnDip.attach_mega = function(center, target)
     discovered = true,
   }, true)
   pokermon.add_to_family(target:sub(6, -1), center.name)
-end
-
-PkmnDip.faint = function(card, undebuff)
-  PkmnDip.defer(function()
-    card:juice_up()
-    card.ability.fainted = not undebuff and G.GAME.round
-    card:set_debuff()
-  end)
-end
-
-PkmnDip.has_repeat_effect = function(context)
-  return context.repetition and (next(context.card_effects[1]) or #context.card_effects > 1)
-end
-
-PkmnDip.played_or_held = function(context)
-  return context.cardarea == G.hand or context.cardarea == G.play
 end

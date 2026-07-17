@@ -34,7 +34,7 @@ local goomy={
       end
     end
     -- Main scoring bit
-    if context.individual and (context.cardarea == G.hand or context.cardarea == G.play) and not context.end_of_round then
+    if context.individual and PkmnDip.con.played_or_held(context) and not context.end_of_round then
       if next(context.poker_hands['Flush']) and a.scoring_flush then
         -- Get cards specifically in Flush
         local wildcount = #PkmnDip.utils.filter(a.scoring_flush, function(v) return SMODS.has_enhancement(v, 'm_wild') end)
@@ -85,7 +85,7 @@ local sliggoo={
       a.flushes = a.flushes + 1
     end
     -- Main effect
-    if context.individual and (context.cardarea == G.hand or context.cardarea == G.play) and not context.end_of_round then
+    if context.individual and PkmnDip.con.played_or_held(context) and not context.end_of_round then
       if context.scoring_name == 'Flush' and a.scoring_flush then
         local wildcount = #PkmnDip.utils.filter(a.scoring_flush, function(v) return SMODS.has_enhancement(v, 'm_wild') end)
         -- Count the unique ranks in scoring hand
@@ -130,7 +130,7 @@ local goodra={
       a.scoring_flush = get_flush(G.hand.highlighted)[1]
       a.matching_suit = a.scoring_flush and a.scoring_flush[1].config.card.suit
     end
-    if context.individual and (context.cardarea == G.hand or G.play) and not context.end_of_round then
+    if context.individual and PkmnDip.con.played_or_held(context) and not context.end_of_round then
       if context.scoring_name == 'Flush' and a.scoring_flush then
         local wildcount = #PkmnDip.utils.filter(a.scoring_flush, function(v) return SMODS.has_enhancement(v, 'm_wild') end)
         -- Count the unique ranks in scoring hand

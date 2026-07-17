@@ -22,7 +22,7 @@ local clauncher = {
   calculate = function(self, card, context)
     local a = card.ability.extra
     -- Retriggers all the unique editions (played and held counted separately)
-    if PkmnDip.has_repeat_effect(context) and PkmnDip.played_or_held(context) and context.other_card.edition then
+    if PkmnDip.con.has_repeat_effect(context) and PkmnDip.con.played_or_held(context) and context.other_card.edition then
       local other = context.other_card
       -- Played unique editions
       if context.cardarea == G.play and not a.played_editions[other.edition.key] then
@@ -68,7 +68,7 @@ local clawitzer = {
   blueprint_compat = true,
   custom_pool_func = true,
   calculate = function(self, card, context)
-    if PkmnDip.has_repeat_effect(context) and PkmnDip.played_or_held(context) and context.other_card.edition then
+    if PkmnDip.con.has_repeat_effect(context) and PkmnDip.con.played_or_held(context) and context.other_card.edition then
       return { repetitions = card.ability.extra.retriggers }
     end
   end,
