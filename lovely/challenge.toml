@@ -3,7 +3,8 @@ version = "1.0.0"
 dump_lua = true
 priority = 1
 
-# Sinnoh Adventure Shop Function
+
+### Sinnoh Adventure Shop Function
 [[patches]]
 [patches.pattern]
 target = "game.lua"
