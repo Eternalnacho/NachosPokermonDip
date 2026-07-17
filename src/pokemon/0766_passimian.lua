@@ -1,3 +1,31 @@
+local keep_values = function(card)
+  local names_to_keep = {"targets", "rank", "id", "cards_scored", "cards_drawn", "energy_count", "c_energy_count", "e_limit_up", "form"}
+  if pokermon.type_sticker_applied(card) then table.insert(names_to_keep, "ptype") end
+  local values_to_keep = pokermon.copy_scaled_values(card)
+  if type(card.ability.extra) == "table" then
+    for _, k in pairs(names_to_keep) do
+      values_to_keep[k] = card.ability.extra[k]
+    end
+  end
+  if card.config.center.poke_custom_values_to_keep then
+    for _, v in pairs(card.config.center.poke_custom_values_to_keep) do
+      values_to_keep[v] = card.ability.extra[v]
+    end
+  end
+  return values_to_keep
+end
+
+local get_kept_values = function(card, kept_vals)
+  for k, v in pairs(kept_vals) do
+    card.ability[k] = type(v) == 'table' and copy_table(v) or v
+    if type(card.ability.extra) == "table" and (card.ability.extra[k] or k == "energy_count" or k == "c_energy_count" or k == "e_limit_up")
+        and (type(card.ability.extra[k]) ~= "number" or (type(v) == "number" and v > card.ability.extra[k])) then
+      card.ability.extra[k] = v
+    end
+  end
+end
+
+
 -- Passimian 766
 local passimian={
   name = "passimian",
@@ -36,9 +64,9 @@ local passimian={
       -- Keep relevant values stored
       local values_to_keep = {}
       if card.ability.received_card then
-        values_to_keep = PkmnDip.keep_values(card)
+        values_to_keep = keep_values(card)
       elseif context and context.card and context.card.ability then
-        values_to_keep = PkmnDip.keep_values(context.card)
+        values_to_keep = keep_values(context.card)
       end
       -- Set ability to received card's
       for k, v in pairs(_r.config) do
@@ -46,7 +74,7 @@ local passimian={
       end
       card.ability.received_card = _r
       -- Re-add kept values and handle energy, type
-      if next(values_to_keep) then PkmnDip.get_kept_values(card, values_to_keep) end
+      if next(values_to_keep) then get_kept_values(card, values_to_keep) end
       if card.ability.extra.energy_count or card.ability.extra.c_energy_count then pokermon.energy.energize(card, nil, true, true) end
       card.ability.extra.ptype = "Fighting"
       -- Calls the add_to_deck function of the received card if it exists
@@ -74,6 +102,7 @@ local passimian={
       -- Info_queue for received card
       local v = {}; if r_center.loc_vars then v = r_center:loc_vars({}, card) or {} end
       local r_name = localize({type = "name_text", set = v.set or r_center.set, key = v.key or r_center.key})
+      r_name = type(r_name) == 'string' and r_name or ''
       if r_name:match("#%d+#") and v.vars then
         r_name = r_name:gsub("#(%d+)#", "%1")
         r_name = v.vars[tonumber(r_name)]
@@ -90,7 +119,7 @@ local passimian={
   end,
   update = function(self, card, dt)
     if G.STAGE == G.STAGES.RUN and card.area == G.jokers and (card.children.center.atlas ~= self.atlas or card.children.center.pos ~= self.pos) then
-      card.children.center.atlas = SMODS.get_atlas(card.edition and card.edition.poke_shiny and "poke_AtlasJokersBasicNatdexShiny" or "poke_AtlasJokersBasicNatdex")
+      card.children.center.atlas = SMODS.get_atlas("poke_AtlasJokersBasicNatdex" .. (PkmnDip.con.is_shiny(card) and "Shiny" or ""))
       card.children.center:set_sprite_pos(self.pos)
     end
   end,

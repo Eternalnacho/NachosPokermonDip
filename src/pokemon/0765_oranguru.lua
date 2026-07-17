@@ -3,7 +3,7 @@ local oranguru={
   name = "oranguru",
   config = {extra = {booster_choice_mod = 1}},
   loc_vars = function(self, info_queue, card)
-    info_queue[#info_queue + 1] = PkmnDip.common_ranks_tooltip()
+    info_queue[#info_queue + 1] = PkmnDip.calc.common_ranks_tooltip()
     return {vars = {}}
   end,
   rarity = 3,

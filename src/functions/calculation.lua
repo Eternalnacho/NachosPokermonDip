@@ -1,17 +1,6 @@
 PkmnDip.calc = {}
 
--- calculate most played hand
-PkmnDip.calc.most_played_hand = function()
-  local hands = PkmnDip.utils.map_list(G.handlist, function(v) return G.GAME.hands[v].visible end)
-  local tally = hands[1].played
-  table.sort(hands, function(a, b) return G.GAME.hands[a].played > G.GAME.hands[b].played end)
-  local ret = {}
-  for _, v in ipairs(hands) do 
-    if G.GAME.hands[v].played == tally then table.insert(ret, v)
-    else break end
-  end
-  return #hands == 1 and hands[1] or pseudorandom_element(hands, 'handcalc')
-end
+--#region [[ get_common_ranks ]]
 
 -- Get most common rank(s) in a list of cards
 PkmnDip.calc.get_common_ranks = function(cards)
@@ -26,6 +15,42 @@ PkmnDip.calc.get_common_ranks = function(cards)
   end
   return ret
 end
+
+-- Create tooltip for common ranks (Oranguru)
+PkmnDip.calc.common_ranks_tooltip = function()
+  if not G.playing_cards and G.STAGE == G.STAGES.RUN then return end
+  local ranks = {}
+  local r = PkmnDip.calc.get_common_ranks(G.playing_cards)
+  -- sort in descending order if multiple
+  if #r > 1 then table.sort(r, function(a, b) return a.id > b.id end) end
+  -- get card key for each rank because it's a single character
+  for i = 1, #r do
+    ranks[i] = #r > 3 and r[i].card_key or r[i].key
+    if ranks[i] == 'T' then ranks[i] = '10' end
+  end
+  -- Organize into even lists (max 3)
+  local rank_lists = {}
+  local rows = math.min(3, math.ceil(#ranks / 4))
+  if rows == 1 then
+    rank_lists[1] = table.concat(ranks, ", ")
+  else
+    local mod = math.ceil(#ranks / rows)
+    for i = 1, rows do
+      rank_lists[i] = table.concat(ranks, ", ", 1 + (i - 1) * mod, math.min(#ranks, i * mod))
+    end
+  end
+  local text = PkmnDip.utils.map_list(rank_lists, function(l) return '{C:attention}'..l..'{}' end)
+  local text_parsed = PkmnDip.utils.map_list(text, loc_parse_string)
+  G.localization.descriptions.Other['pkmndip_rank_lists'].text = text
+  G.localization.descriptions.Other['pkmndip_rank_lists'].text_parsed = text_parsed
+  return {
+    set = 'Other',
+    key = 'pkmndip_rank_lists'
+  }
+end
+
+--#endregion [[ get_common_ranks ]]
+
 
 --#region [[ get_mult ]]
 
@@ -48,3 +73,16 @@ PkmnDip.calc.get_mult = function(card)
 end
 
 --#endregion [[ get_mult ]]
+
+
+--#region [[ get_key ]]
+
+function Card:poke_get_prefix()
+  return self.config.center.poke_custom_prefix or 'poke'
+end
+
+PkmnDip.calc.get_key = function(card, name)
+  return 'j_'..card:poke_get_prefix().."_"..(name or card.config.center.name)
+end
+
+--#endregion [[ get_key ]]

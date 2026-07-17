@@ -57,7 +57,7 @@ local mega_audino = {
       local adjacent_jokers = pokermon.get_adjacent_jokers(card)
       local incompatible = { "Other", "Baby", "Legendary" }
       local breedable = #PkmnDip.utils.filter(adjacent_jokers, function(adj_joker)
-        local lowest_key = PkmnDip.create_full_poke_key(adj_joker, pokermon.get_lowest_evo(adj_joker))
+        local lowest_key = PkmnDip.calc.get_key(adj_joker, pokermon.get_lowest_evo(adj_joker))
         return adj_joker.config.center.stage
            and not PkmnDip.utils.contains(incompatible, adj_joker.config.center.stage)
            and G.P_CENTERS[lowest_key].stage ~= "Legendary"
@@ -78,7 +78,7 @@ local mega_audino = {
                     { name = 'e_polychrome', weight = 1/3 }
                   })
               local egg = SMODS.add_card{set = 'Joker', key = 'j_poke_mystery_egg', edition = edition}
-              egg.ability.extra.key = PkmnDip.create_full_poke_key(parent, lowest)
+              egg.ability.extra.key = PkmnDip.calc.get_key(parent, lowest)
               egg.ability.extra.rounds = 1
             end
           end, 0.4)

@@ -1,4 +1,4 @@
-PkmnDip.eff = {}
+PkmnDip.eff = {} -- Joker Effects
 
 --#region [[ joker_as_card ]]
 
@@ -80,4 +80,4 @@ PkmnDip.eff.mod_booster = function(amount)
   if G.GAME.pack_choices <= 0 then G.FUNCS.end_consumeable() end
 end
 
---#endregion [[ faint ]]
+--#endregion [[ mod_booster ]]
