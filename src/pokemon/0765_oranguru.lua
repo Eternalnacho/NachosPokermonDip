@@ -19,10 +19,14 @@ local oranguru={
     end
   end,
   add_to_deck = function(self, card, from_debuff)
-    if PkmnDip.con.in_booster('Standard') then PkmnDip.eff.mod_booster(card.ability.extra.booster_choice_mod) end
+    if PkmnDip.con.in_booster('Standard') then
+      PkmnDip.eff.mod_booster(card.ability.extra.booster_choice_mod)
+    end
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if PkmnDip.con.in_booster('Standard') then PkmnDip.eff.mod_booster(-card.ability.extra.booster_choice_mod) end
+    if PkmnDip.con.in_booster('Standard') then
+      PkmnDip.eff.mod_booster(-card.ability.extra.booster_choice_mod)
+    end
   end,
   attributes = {"passive", "full deck"},
 }

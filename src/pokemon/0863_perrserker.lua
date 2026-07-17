@@ -29,10 +29,7 @@ local galarian_meowth={
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.before then
-      PkmnDip.eff.joker_as_card(card, {
-        area = G.hand,
-        enhancement = 'm_steel',
-      })
+      
     end
     local adj_req = #filter(get_adj(card), is_metal)
     return pokermon.scaling_evo(self, card, context, "j_nacho_perrserker", adj_req, self.config.evo_rqmt)

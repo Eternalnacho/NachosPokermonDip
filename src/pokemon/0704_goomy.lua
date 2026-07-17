@@ -26,7 +26,7 @@ local goomy={
       a.matching_suit = a.scoring_flush and a.scoring_flush[1].config.card.suit
     end
     -- Check if Flush House played
-    if context.before and context.main_eval then
+    if context.before and not context.blueprint then
       if context.scoring_name == 'Flush' then
         a.flushes = a.flushes + 1
       elseif context.scoring_name == 'Flush House' then
@@ -34,7 +34,7 @@ local goomy={
       end
     end
     -- Main scoring bit
-    if context.individual and PkmnDip.con.played_or_held(context) and not context.end_of_round then
+    if context.individual and PkmnDip.con.played_or_held(context) and context.main_scoring then
       if next(context.poker_hands['Flush']) and a.scoring_flush then
         -- Get cards specifically in Flush
         local wildcount = #PkmnDip.utils.filter(a.scoring_flush, function(v) return SMODS.has_enhancement(v, 'm_wild') end)
@@ -42,8 +42,7 @@ local goomy={
         if wildcount == #a.scoring_flush or context.other_card:is_suit(a.matching_suit) then
           context.other_card.ability.perma_mult = (context.other_card.ability.perma_mult or 0) + a.mult_mod
           return {
-            extra = {message = localize('k_upgrade_ex'), colour = G.C.MULT},
-            colour = G.C.MULT,
+            extra = { message = localize('k_upgrade_ex'), colour = G.C.MULT },
             card = card
           }
         end
@@ -78,29 +77,21 @@ local sliggoo={
     local a = card.ability.extra
     if context.press_play then
       a.scoring_flush = get_flush(G.hand.highlighted)[1]
-      a.matching_suit = a.scoring_flush and a.scoring_flush[1].config.card.suit
+      a.matching_suit = PkmnDip.calc.get_flush_suit(G.hand.highlighted)
     end
     -- Count # of Flushes played
-    if context.before and context.main_eval and context.scoring_name == 'Flush' then
+    if context.before and not context.blueprint and context.scoring_name == 'Flush' then
       a.flushes = a.flushes + 1
     end
     -- Main effect
-    if context.individual and PkmnDip.con.played_or_held(context) and not context.end_of_round then
-      if context.scoring_name == 'Flush' and a.scoring_flush then
-        local wildcount = #PkmnDip.utils.filter(a.scoring_flush, function(v) return SMODS.has_enhancement(v, 'm_wild') end)
-        -- Count the unique ranks in scoring hand
-        local unique_ranks = {}
-        for i = 1, #context.scoring_hand do
-          if not PkmnDip.utils.contains(unique_ranks, context.scoring_hand[i]:get_id()) then
-            unique_ranks[#unique_ranks+1] = context.scoring_hand[i]:get_id()
-          end
-        end
-        -- Increment permamult if card matches Flush suit
-        if wildcount == #a.scoring_flush or context.other_card:is_suit(a.matching_suit) then
-          context.other_card.ability.perma_mult = (context.other_card.ability.perma_mult or 0) + a.mult_mod * #unique_ranks
+    if context.individual and context.scoring_name == 'Flush' and a.scoring_flush then
+      if PkmnDip.con.played_or_held(context) and context.main_scoring then
+        local unique_ranks = PkmnDip.utils.count_unique(context.scoring_hand, Card.get_id)
+        if a.matching_suit == 'Any' or context.other_card:is_suit(a.matching_suit) then
+          local perma_mult = context.other_card.ability.perma_mult
+          perma_mult = (perma_mult or 0) + a.mult_mod * unique_ranks
           return {
-            extra = {message = localize('k_upgrade_ex'), colour = G.C.MULT},
-            colour = G.C.MULT,
+            extra = { message = localize('k_upgrade_ex'), colour = G.C.MULT },
             card = card
           }
         end
@@ -128,24 +119,16 @@ local goodra={
     local a = card.ability.extra
     if context.press_play then
       a.scoring_flush = get_flush(G.hand.highlighted)[1]
-      a.matching_suit = a.scoring_flush and a.scoring_flush[1].config.card.suit
+      a.matching_suit = PkmnDip.calc.get_flush_suit(G.hand.highlighted)
     end
-    if context.individual and PkmnDip.con.played_or_held(context) and not context.end_of_round then
-      if context.scoring_name == 'Flush' and a.scoring_flush then
-        local wildcount = #PkmnDip.utils.filter(a.scoring_flush, function(v) return SMODS.has_enhancement(v, 'm_wild') end)
-        -- Count the unique ranks in scoring hand
-        local unique_ranks = {}
-        for i = 1, #context.scoring_hand do
-          if not PkmnDip.utils.contains(unique_ranks, context.scoring_hand[i]:get_id()) then
-            unique_ranks[#unique_ranks+1] = context.scoring_hand[i]:get_id()
-          end
-        end
-        -- Increment permamult if card matches Flush suit
-        if wildcount == #a.scoring_flush or context.other_card:is_suit(a.matching_suit) then
-          context.other_card.ability.perma_x_mult = (context.other_card.ability.perma_x_mult or 0) + a.Xmult_multi * #unique_ranks
+    if context.individual and context.scoring_name == 'Flush' and a.scoring_flush then
+      if PkmnDip.con.played_or_held(context) and context.main_scoring then
+        local unique_ranks = PkmnDip.utils.count_unique(context.scoring_hand, Card.get_id)
+        if a.matching_suit == 'Any' or context.other_card:is_suit(a.matching_suit) then
+          local perma_x_mult = context.other_card.ability.perma_x_mult
+          perma_x_mult = (perma_x_mult or 0) + a.Xmult_multi * unique_ranks
           return {
-            extra = {message = localize('k_upgrade_ex'), colour = G.C.MULT},
-            colour = G.C.MULT,
+            extra = { message = localize('k_upgrade_ex'), colour = G.C.MULT },
             card = card
           }
         end
@@ -174,7 +157,9 @@ local hisuian_sliggoo={
     if context.before and context.main_eval and context.scoring_name == 'Flush House' then
       -- Create a Metal Coat
       pokermon.create_held_item('c_poke_metalcoat')
-      card.ability.extra.flush_houses = card.ability.extra.flush_houses + 1
+      if not context.blueprint then
+        card.ability.extra.flush_houses = card.ability.extra.flush_houses + 1
+      end
 
       -- Get the two ranks of the Flush House
       local part_major = get_X_same(3, context.scoring_hand, true)[1][1]

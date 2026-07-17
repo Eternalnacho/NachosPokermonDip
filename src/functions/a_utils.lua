@@ -41,6 +41,40 @@ function PkmnDip.utils.id(a)
   return a
 end
 
+function PkmnDip.utils.any(list, func)
+  -- if we didn't care about performance, we'd do it like this:
+  -- return #AG.list_utils.filter(list, func) > 0
+  for _, v in pairs(list) do
+    if func(v) then
+      return true
+    end
+  end
+  return false
+end
+
+function PkmnDip.utils.all(list, func)
+  -- if we didn't care about performance, we'd do it like this:
+  -- return #AG.list_utils.filter(list, func) == #list
+  for _, v in pairs(list) do
+    if not func(v) then
+      return false
+    end
+  end
+  return true
+end
+
+function PkmnDip.utils.count_unique(list, optional_map)
+  local seen, count = {}, 0
+  for _, v in pairs(list) do
+    if optional_map then v = optional_map(v) end
+    if v and not seen[v] then
+      seen[v] = true
+      count = count + 1
+    end
+  end
+  return count
+end
+
 function PkmnDip.utils.append(t1, t2)
   for _, v in ipairs(t2) do
     table.insert(t1, v)

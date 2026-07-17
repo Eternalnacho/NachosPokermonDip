@@ -1,10 +1,10 @@
 PkmnDip.calc = {}
 
---#region [[ get_common_ranks ]]
+--#region [[ get_rank ]]
 
 -- Get most common rank(s) in a list of cards
 PkmnDip.calc.get_common_ranks = function(cards)
-  local is_rank = function(card, id) return card:get_id() == id and not SMODS.has_no_rank(card) end
+  local is_rank = function(card, id) return card:get_id() == id end
   local get_count = function(rank) return #PkmnDip.utils.filter(cards, function(c) return is_rank(c, rank.id) end) end
   local ranks = PkmnDip.utils.map_list(SMODS.Ranks, function(rank) return { rank = rank, count = get_count(rank) } end)
   table.sort(ranks, function(a, b) return a.count > b.count end)
@@ -19,24 +19,26 @@ end
 -- Create tooltip for common ranks (Oranguru)
 PkmnDip.calc.common_ranks_tooltip = function()
   if not G.playing_cards and G.STAGE == G.STAGES.RUN then return end
-  local ranks = {}
-  local r = PkmnDip.calc.get_common_ranks(G.playing_cards)
+  local rank_keys = {}
+  local ranks = PkmnDip.calc.get_common_ranks(G.playing_cards)
   -- sort in descending order if multiple
-  if #r > 1 then table.sort(r, function(a, b) return a.id > b.id end) end
+  if #ranks > 1 then table.sort(ranks, function(a, b) return a.id > b.id end) end
   -- get card key for each rank because it's a single character
-  for i = 1, #r do
-    ranks[i] = #r > 3 and r[i].card_key or r[i].key
-    if ranks[i] == 'T' then ranks[i] = '10' end
+  for i = 1, #ranks do
+    rank_keys[i] = #ranks > 3 and ranks[i].card_key or ranks[i].key
+    if rank_keys[i] == 'T' then rank_keys[i] = '10' end
   end
   -- Organize into even lists (max 3)
   local rank_lists = {}
-  local rows = math.min(3, math.ceil(#ranks / 4))
+  local rows = math.min(3, math.ceil(#rank_keys / 4))
   if rows == 1 then
-    rank_lists[1] = table.concat(ranks, ", ")
+    rank_lists[1] = table.concat(rank_keys, ", ")
   else
-    local mod = math.ceil(#ranks / rows)
+    local mod = math.ceil(#rank_keys / rows)
+    local st_i = function(x) return 1 + (x - 1) * mod end
+    local ed_i = function(x) return x * mod end
     for i = 1, rows do
-      rank_lists[i] = table.concat(ranks, ", ", 1 + (i - 1) * mod, math.min(#ranks, i * mod))
+      rank_lists[i] = table.concat(rank_keys, ", ", st_i(i), math.min(#rank_keys, ed_i(i)))
     end
   end
   local text = PkmnDip.utils.map_list(rank_lists, function(l) return '{C:attention}'..l..'{}' end)
@@ -49,7 +51,31 @@ PkmnDip.calc.common_ranks_tooltip = function()
   }
 end
 
---#endregion [[ get_common_ranks ]]
+--#endregion [[ get_rank ]]
+
+
+--#region [[ get_suit ]]
+
+PkmnDip.calc.get_suit = function(card)
+  if SMODS.has_any_suit(card) then return
+  else return card.base.suit end
+end
+
+PkmnDip.calc.get_flush_suit = function(cards)
+  local flush = get_flush(cards)[1]
+  if not flush then return end
+  if PkmnDip.utils.all(flush, PkmnDip.con.is_wild) then return 'Any' end
+
+  local suit
+  PkmnDip.utils.for_each(flush, function(c)
+    if PkmnDip.calc.get_suit(c) and not suit then
+      suit = PkmnDip.calc.get_suit(c)
+    end
+  end)
+  return suit
+end
+
+--#endregion [[ get_suit ]]
 
 
 --#region [[ get_mult ]]
