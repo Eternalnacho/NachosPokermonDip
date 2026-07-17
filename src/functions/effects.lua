@@ -40,6 +40,21 @@ end)
 --#endregion [[ joker_as_card ]]
 
 
+--#region [[ copy_playing_card ]]
+
+PkmnDip.eff.copy_playing_card = function(card, modify, to_hand, message_card)
+  PkmnDip.defer(function()
+    local copy = SMODS.copy_card(card, {area = G.deck})
+    if modify then pokermon.convert_cards(copy, modify, true, true) end
+    if to_hand then draw_card(G.deck, G.hand, nil, nil, nil, copy) end
+    SMODS.calculate_context({playing_card_added = true, cards = {copy}})
+  end)
+  SMODS.calculate_effect({message = localize('k_copied_ex')}, message_card)
+end
+
+--#endregion [[ copy_playing_card ]]
+
+
 --#region [[ faint ]]
 
 -- Shorthand for the debuff/undebuff thing
@@ -54,19 +69,3 @@ PkmnDip.eff.faint = function(card, undebuff)
 end
 
 --#endregion [[ faint ]]
-
-
---#region [[ copy_playing_card ]]
-
-PkmnDip.eff.copy_playing_card = function(card, modify, to_hand)
-  PkmnDip.defer(function()
-    local copy = SMODS.copy_card(card, {area = G.deck})
-    if modify then pokermon.convert_cards(copy, modify, true, true) end
-    if to_hand then draw_card(G.deck, G.hand, nil, nil, nil, copy) end
-    SMODS.calculate_context({playing_card_added = true, cards = {copy}})
-  end)
-end
-
---#endregion [[ end copy_playing_card ]]
-
-

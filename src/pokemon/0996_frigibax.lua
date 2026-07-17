@@ -1,6 +1,5 @@
 local filter = PkmnDip.utils.filter
 local for_each = PkmnDip.utils.for_each
-local is_foil = function(card) return card.edition and card.edition.foil end
 local set_foil = function(card) card:set_edition({foil = true}, true, true) end
 local foil_sound = function() play_sound(G.P_CENTERS['e_foil'].sound.sound, G.P_CENTERS['e_foil'].sound.per, G.P_CENTERS['e_foil'].sound.vol) end
 local has_mult = function(card, pre_eval) return PkmnDip.total_mult(card, pre_eval) > 0 end
@@ -12,7 +11,7 @@ local frigibax = {
   loc_vars = function(self, info_queue, card)
     local deck_data
     if G.playing_cards and G.STAGE == G.STAGES.RUN then
-      local foil_count = tostring( #filter(G.playing_cards, is_foil) )
+      local foil_count = #filter(G.playing_cards, PkmnDip.con.is_foil)
       deck_data = '['.. foil_count .. '/' .. card.ability.evo_rqmt ..']' .. ' '
     else
       deck_data = card.ability.evo_rqmt .. ' '
@@ -54,7 +53,7 @@ local arctibax = {
   loc_vars = function(self, info_queue, card)
     local deck_data
     if G.playing_cards and G.STAGE == G.STAGES.RUN then
-      local foil_count = tostring( #filter(G.playing_cards, is_foil) )
+      local foil_count = tostring( #filter(G.playing_cards, PkmnDip.con.is_foil) )
       deck_data = '[' .. foil_count .. '/' .. card.ability.evo_rqmt .. ']' .. ' '
     else
       deck_data = card.ability.evo_rqmt .. ' '
@@ -94,7 +93,7 @@ local baxcalibur = {
   config = { extra = { Xmult_multi = 0.03 } },
   loc_vars = function(self, info_queue, card)
     local a = card.ability.extra or self.config.extra
-    local foil_count = G.playing_cards and #filter(G.playing_cards, is_foil) or 0
+    local foil_count = G.playing_cards and #filter(G.playing_cards, PkmnDip.con.is_foil) or 0
     return { vars = { a.Xmult_multi, 1 + a.Xmult_multi * foil_count } }
   end,
   designer = "king_alloy, roxie",
@@ -109,13 +108,13 @@ local baxcalibur = {
       -- We have to do this rng state bullshit because of lucky cards
       local RNG_state = copy_table(G.GAME.pseudorandom)
       for_each(context.scoring_hand, function(c)
-        if not is_foil(c) and has_mult(c, true) then set_foil(c) end
+        if not PkmnDip.con.is_foil(c) and has_mult(c, true) then set_foil(c) end
       end)
       G.GAME.pseudorandom = RNG_state
     end
     -- Five of a Kinds go stoopid
     if context.individual and context.cardarea == G.play and context.scoring_name == "Five of a Kind" then
-      local foil_count = #filter(G.playing_cards, is_foil)
+      local foil_count = #filter(G.playing_cards, PkmnDip.con.is_foil)
       return { Xmult = 1 + card.ability.extra.Xmult_multi * foil_count }
     end
   end,
@@ -131,7 +130,7 @@ local mega_baxcalibur = {
   config = { extra = { Xmult_multi = 0.05 } },
   loc_vars = function(self, info_queue, card)
     local a = card.ability.extra or self.config.extra
-    local foil_count = G.playing_cards and #filter(G.playing_cards, is_foil) or 0
+    local foil_count = G.playing_cards and #filter(G.playing_cards, PkmnDip.con.is_foil) or 0
     return { vars = { a.Xmult_multi, 1 + a.Xmult_multi * foil_count } }
   end,
   rarity = "poke_mega",
@@ -157,7 +156,7 @@ local mega_baxcalibur = {
     -- Foil cards go even stoopider (but only sometimes)
     if context.individual and context.cardarea == G.play and not card.ability.extra.no_score
         and (context.other_card.edition and context.other_card.edition.foil) then
-      local foil_count = #filter(G.playing_cards, is_foil)
+      local foil_count = #filter(G.playing_cards, PkmnDip.con.is_foil)
       return { Xmult = 1 + card.ability.extra.Xmult_multi * foil_count }
     end
 

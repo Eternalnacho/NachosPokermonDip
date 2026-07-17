@@ -134,8 +134,13 @@ local dipplin = {
     if pokermon_config.detailed_tooltips then
       info_queue[#info_queue+1] = G.P_CENTERS.m_wild
     end
-    local enhance_count = G.playing_cards and G.STAGE == G.STAGES.RUN and #PkmnDip.utils.filter(G.playing_cards, function(v) return SMODS.has_enhancement(v, 'm_wild') end) or 0
-    local deck_data = G.playing_cards and G.STAGE == G.STAGES.RUN and '['..tostring(enhance_count)..'/'..tostring(math.ceil(#G.playing_cards/4))..'] ' or ''
+    local deck_data
+    if G.playing_cards and G.STAGE == G.STAGES.RUN then
+      local enhance_count = #PkmnDip.utils.filter(G.playing_cards, PkmnDip.con.is_wild)
+      deck_data = '[' .. enhance_count .. '/' .. math.ceil(#G.playing_cards/4) .. '] '
+    else
+      deck_data = ''
+    end
     return { vars = { deck_data } }
   end,
   rarity = "poke_safari",
@@ -148,14 +153,10 @@ local dipplin = {
     if context.remove_playing_cards then
       for _, removed in pairs(context.removed) do
         local copies = SMODS.has_enhancement(removed, 'm_wild') and 2 or 1
-        for _ = 1, copies do
-          -- copy destroyed card and convert to wild
-          PkmnDip.eff.copy_playing_card(removed, {mod_conv = 'm_wild'})
-          -- "copied" status text
-          card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_copied_ex'), colour = G.C.FILTER})
-        end
+        -- copy destroyed cards and convert to wild
+        for _ = 1, copies do PkmnDip.eff.copy_playing_card(removed, {mod_conv = 'm_wild'}, nil, card) end
       end
-      return { playing_cards_created = {true} }
+      return { playing_cards_created = { true } }
     end
     return pokermon.deck_enhance_evo(self, card, context, "j_nacho_hydrapple", "Wild", .25)
   end,
@@ -181,23 +182,18 @@ local hydrapple = {
   blueprint_compat = true,
   calculate = function(self, card, context)
     local a = card.ability.extra
-    -- Replace all destroyed cards with Wild copies and count Wild cards destroyed
     if context.remove_playing_cards then
       for _, removed in pairs(context.removed) do
-        -- copy destroyed card and convert to wild
-        PkmnDip.eff.copy_playing_card(removed, {mod_conv = 'm_wild'})
-        -- increment Xmult
+        PkmnDip.eff.copy_playing_card(removed, {mod_conv = 'm_wild'}, nil, card)
         SMODS.scale_card(card, {
           ref_value = 'Xmult',
           scalar_value = 'Xmult_mod',
           operation = function(ref_table, ref_value, initial, change)
-            ref_table[ref_value] = initial + change * (SMODS.has_enhancement(removed, 'm_wild') and 2 or 1)
+            ref_table[ref_value] = initial + change * (PkmnDip.con.is_wild(removed) and 2 or 1)
           end,
           message_key = 'a_xmult',
           message_colour = G.C.XMULT
         })
-        -- "copied" status text
-        card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_copied_ex'), colour = G.C.FILTER})
       end
       return { playing_cards_created = {true} }
     end
