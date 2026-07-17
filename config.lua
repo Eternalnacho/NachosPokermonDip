@@ -19,6 +19,7 @@ return {
   oranguru = true,
   passimian = true,
   turtonator = true,
+  dhelmise = true,
   skwovet = true,
   applin = true,
   galarian_meowth = true,
