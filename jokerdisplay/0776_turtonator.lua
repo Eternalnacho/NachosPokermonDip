@@ -11,14 +11,13 @@ jd_def["j_nacho_turtonator"] = {
     },
   },
   calc_function = function(card)
-    local x_mult = 1
-    if card.ability.extra.trapped then
-      local _, _, scoring_hand = JokerDisplay.evaluate_hand()
+    local triggers = 0
+    local _, _, scoring_hand = JokerDisplay.evaluate_hand()
+    if card.ability.extra.trapped or G.play.cards then
       for _, scoring_card in pairs(scoring_hand) do
-        local retriggers = JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
-        x_mult = x_mult * (card.ability.extra.Xmult_multi ^ retriggers)
+        triggers = triggers + JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
       end
     end
-    card.joker_display_values.x_mult = x_mult
+    card.joker_display_values.x_mult = card.ability.extra.Xmult_multi ^ triggers
   end
 }

@@ -1,5 +1,3 @@
-local for_each = PkmnDip.utils.for_each
-
 -- Turtonator 776
 local turtonator={
   name = "turtonator",
@@ -16,19 +14,24 @@ local turtonator={
   blueprint_compat = true,
   calculate = function(self, card, context)
     local a = card.ability.extra
-    -- Calculating debuffs
+    -- Setting Blind juice function
+    if context.setting_blind and a.trapped then
+      local eval = function() return a.trapped and G.GAME.in_blind end
+      juice_card_until(card, eval, true)
+    end
+    -- Triggering Shell Trap
     if (context.debuffed_hand or context.shell_trap) and not a.trapped then
-      a.trapped = true
-      return { message = localize('k_active_ex') }
+      local eval = function() return a.trapped and G.GAME.in_blind end
+      juice_card_until(card, eval, true)
+      return { message = localize('k_active_ex'), func = function() a.trapped = true end }
     end
 
-    if context.after and not a.trapped then
-      local debuffed
-      local debuff_check = function(c) if c.debuff then debuffed = true end end
-      for_each(context.scoring_hand, debuff_check)
-      if debuffed then SMODS.calculate_context({ shell_trap = true }) end
-    elseif context.after then
-      PkmnDip.defer(function() a.trapped = nil end) -- In event for jokerdisplay
+    if context.after then
+      PkmnDip.defer(function()
+        if a.trapped then a.trapped = nil end
+        local debuffed = PkmnDip.utils.any(context.scoring_hand, function(c) return c.debuff end)
+        if debuffed then SMODS.calculate_context({ shell_trap = true }) end
+      end)
     end
 
     -- Scoring Bit
