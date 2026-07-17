@@ -70,7 +70,7 @@ local perrserker = {
 }
 
 local init = function()
-  PkmnDip.utils.hook_around_function(Card, 'get_chip_h_x_mult', function(orig, self, ...)
+  PkmnDip.Hook("around", Card, 'get_chip_h_x_mult', function(orig, self, ...)
     local data = self.ability.h_x_mult
     if (next(SMODS.find_card('j_nacho_perrserker')) or next(SMODS.find_card('j_nacho_galarian_meowth')))
         and SMODS.has_enhancement(self, 'm_steel') then
