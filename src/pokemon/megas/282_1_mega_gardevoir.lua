@@ -58,7 +58,7 @@ local mega_gardevoir = {
 }
 
 local function init()
-  if nacho_config.mega_gardevoir then
+  if PkmnDip.config.mega_gardevoir then
     SMODS.Joker:take_ownership('poke_gardevoir', { megas = { 'mega_gardevoir' } }, true)
     pokermon.add_to_family("gardevoir", "mega_gardevoir")
   end

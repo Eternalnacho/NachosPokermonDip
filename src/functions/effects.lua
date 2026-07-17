@@ -58,7 +58,7 @@ end
 
 --#region [[ copy_playing_card ]]
 
-PkmnDip.copy_playing_card = function(card, modify, to_hand)
+PkmnDip.eff.copy_playing_card = function(card, modify, to_hand)
   PkmnDip.defer(function()
     local copy = SMODS.copy_card(card, {area = G.deck})
     if modify then pokermon.convert_cards(copy, modify, true, true) end

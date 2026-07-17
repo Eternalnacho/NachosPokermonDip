@@ -6,7 +6,7 @@ local function load_file(file, load_item)
     for _, item in ipairs(file.list) do
       if file.config_key then
         item.nacho_config_key = file.config_key
-        if not nacho_config[item.nacho_config_key] then
+        if not PkmnDip.config[item.nacho_config_key] then
           item.no_collection = true
         end
       end
@@ -54,8 +54,8 @@ local function load_pokemon(item)
     pokermon.sprites.load_atlas(item)
     pokermon.sprites.load_sprites(item)
   end
-  if item.nacho_starter then item.starter = nacho_config[item.name] end
-  if item.nacho_pseudol then item.pseudol = nacho_config[item.name] end
+  if item.nacho_starter then item.starter = PkmnDip.config[item.name] end
+  if item.nacho_pseudol then item.pseudol = PkmnDip.config[item.name] end
   pokermon.Pokemon(item, custom_prefix, custom_atlas)
 end
 

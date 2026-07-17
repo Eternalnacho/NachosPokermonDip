@@ -1,5 +1,8 @@
-nacho_config = SMODS.current_mod.config
-nacho_restart_req_toggles = {}
+PkmnDip = {
+  config = SMODS.current_mod.config,
+  config_list = { main = {}}
+}
+
 SMODS.current_mod.optional_features = { retrigger_joker = true, quantum_enhancements = true }
 if (SMODS.Mods["Pokermon"] or {}).can_load then
   pokermon_config = SMODS.Mods["Pokermon"].config
@@ -7,10 +10,6 @@ end
 
 --Load atlases
 assert(SMODS.load_file("src/atlases.lua"))()
-
-PkmnDip = {
-  config_list = { main = {}}
-}
 
 -- Load functions
 local load_directory, item_loader = assert(SMODS.load_file("src/loader.lua"))()
@@ -49,7 +48,7 @@ end
 PkmnDip.Hook("before", SMODS.current_mod, 'reset_game_globals', function(run_start)
   if run_start then
     for _, center in pairs(G.P_CENTERS) do
-      if center.nacho_config_key and not nacho_config[center.nacho_config_key] then
+      if center.nacho_config_key and not PkmnDip.config[center.nacho_config_key] then
         G.GAME.banned_keys[center.key] = true
       end
     end

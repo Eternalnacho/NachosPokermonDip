@@ -150,7 +150,7 @@ local dipplin = {
         local copies = SMODS.has_enhancement(removed, 'm_wild') and 2 or 1
         for _ = 1, copies do
           -- copy destroyed card and convert to wild
-          PkmnDip.copy_playing_card(removed, {mod_conv = 'm_wild'})
+          PkmnDip.eff.copy_playing_card(removed, {mod_conv = 'm_wild'})
           -- "copied" status text
           card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_copied_ex'), colour = G.C.FILTER})
         end
@@ -185,7 +185,7 @@ local hydrapple = {
     if context.remove_playing_cards then
       for _, removed in pairs(context.removed) do
         -- copy destroyed card and convert to wild
-        PkmnDip.copy_playing_card(removed, {mod_conv = 'm_wild'})
+        PkmnDip.eff.copy_playing_card(removed, {mod_conv = 'm_wild'})
         -- increment Xmult
         SMODS.scale_card(card, {
           ref_value = 'Xmult',

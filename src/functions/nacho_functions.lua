@@ -181,7 +181,7 @@ end
 
 PkmnDip.attach_mega = function(center, target)
   SMODS.Joker:take_ownership(target, {
-    megas = nacho_config[center.name] and { center.name } or nil,
+    megas = PkmnDip.config[center.name] and { center.name } or nil,
     discovered = true,
   }, true)
   pokermon.add_to_family(target:sub(6, -1), center.name)

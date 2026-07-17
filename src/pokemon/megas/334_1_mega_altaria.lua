@@ -53,7 +53,7 @@ local mega_altaria = {
 }
 
 local function init()
-  if nacho_config.mega_altaria then
+  if PkmnDip.config.mega_altaria then
     SMODS.Joker:take_ownership('poke_altaria', { megas = { 'mega_altaria' } }, true)
     pokermon.add_to_family("altaria", "mega_altaria")
   end
