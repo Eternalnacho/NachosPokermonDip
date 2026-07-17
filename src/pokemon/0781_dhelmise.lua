@@ -9,7 +9,7 @@ end
 -- Dhelmise 781
 local dhelmise = {
   name = "dhelmise",
-  config = { extra = {} },
+  config = { extra = { Xmult_multi = 1.5 } },
   loc_vars = function(self, info_queue, card)
     info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
     info_queue[#info_queue+1] = G.P_CENTERS.m_steel
