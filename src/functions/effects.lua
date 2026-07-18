@@ -95,30 +95,39 @@ end
 ---@param context table
 PkmnDip.eff.switch_cards = function(area, seed, context)
   if not area then area = G.play end
-  local targets = pokermon.pseudorandom_multi({ array = area.cards, amt = 2, seed = seed })
-  targets = PkmnDip.utils.map_list(targets, function(t) return G.play.cards[t.rank] end)
-  targets[1], targets[2] = targets[2], targets[1]
-  G.play:set_ranks()
+  local t = pokermon.pseudorandom_multi({ array = area.cards, amt = 2, seed = seed })
+  t = PkmnDip.utils.map_list(t, function(card) return card.rank end)
+  area.cards[t[1]], area.cards[t[2]] = area.cards[t[2]], area.cards[t[1]]
+  area:set_ranks()
   table.sort(context.scoring_hand, function(a, b)
-    return get_index(G.play.cards, a) < get_index(G.play.cards, b)
+    return get_index(area.cards, a) < get_index(area.cards, b)
   end)
 end
 
 ---@param area CardArea
----@param amount integer?
 ---@param seed string
 ---@param context table
-PkmnDip.eff.shuffle_cards = function(area, amount, seed, context)
+---@param amount integer?
+PkmnDip.eff.shuffle_cards = function(area, seed, context, amount)
   if not area then area = G.play end
   if not amount then area.cards:shuffle(seed)
   else
+    local base, pos = {}, {}
     local targets = pokermon.pseudorandom_multi({ array = area.cards, amt = amount, seed = seed })
-    targets = PkmnDip.utils.map_list(targets, function(t) return area.cards[t.rank] end)
-    pseudoshuffle(targets, seed)
+    PkmnDip.utils.for_each(targets, function(t)
+      base[#base+1] = t.rank
+      pos[#pos+1] = t.rank
+      t = area.cards[t.rank]
+    end)
+    while PkmnDip.utils.compare(base, pos) do
+      pseudoshuffle(targets, seed)
+      for i, t in ipairs(targets) do pos[i] = t.rank end
+    end
+    for i = 1, #pos do area.cards[base[i]] = targets[i] end
     area:set_ranks()
   end
   table.sort(context.scoring_hand, function(a, b)
-    return get_index(G.play.cards, a) < get_index(G.play.cards, b)
+    return get_index(area.cards, a) < get_index(area.cards, b)
   end)
 end
 

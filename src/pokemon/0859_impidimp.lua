@@ -33,7 +33,7 @@ local morgrem={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.before then
-      PkmnDip.eff.shuffle_cards(G.play, 3, 'impidimp', context)
+      PkmnDip.eff.shuffle_cards(G.play, 'morgrem', context, 3)
     end
     return pokermon.level_evo(self, card, context, "j_nacho_grimmsnarl")
   end,
@@ -54,14 +54,14 @@ local grimmsnarl={
   blueprint_compat = true,
   calculate = function(self, card, context)
     if context.before then
-      PkmnDip.eff.shuffle_cards(G.play, nil, 'impidimp', context)
+      PkmnDip.eff.shuffle_cards(G.play, 'grimmsnarl', context)
     end
   end,
   attributes = {},
 }
 
 return {
-  can_load = false,
+  -- can_load = false,
   config_key = "impidimp",
   list = { impidimp, morgrem, grimmsnarl }
 }

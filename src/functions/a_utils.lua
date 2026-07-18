@@ -43,7 +43,7 @@ end
 
 function PkmnDip.utils.any(list, func)
   -- if we didn't care about performance, we'd do it like this:
-  -- return #AG.list_utils.filter(list, func) > 0
+  -- return #PkmnDip.utils.filter(list, func) > 0
   for _, v in pairs(list) do
     if func(v) then
       return true
@@ -54,7 +54,7 @@ end
 
 function PkmnDip.utils.all(list, func)
   -- if we didn't care about performance, we'd do it like this:
-  -- return #AG.list_utils.filter(list, func) == #list
+  -- return #PkmnDip.utils.filter(list, func) == #list
   for _, v in pairs(list) do
     if not func(v) then
       return false
@@ -79,6 +79,14 @@ function PkmnDip.utils.append(t1, t2)
   for _, v in ipairs(t2) do
     table.insert(t1, v)
   end
+end
+
+function PkmnDip.utils.compare(t1, t2)
+  if #t1 ~= #t2 then return false end
+  for i = 1, #t1 do
+    if t1[i] ~= t2[i] then return false end
+  end
+  return true
 end
 
 -- Talisman shorthand
