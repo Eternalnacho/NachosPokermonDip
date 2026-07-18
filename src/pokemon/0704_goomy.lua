@@ -174,6 +174,7 @@ local hisuian_sliggoo={
     end
     return pokermon.scaling_evo(self, card, context, "j_nacho_hisuian_goodra", card.ability.extra.flush_houses, self.config.evo_rqmt)
   end,
+  in_pool = function(self) return G.GAME.hands['Flush House'].visible end,
   attributes = {"hand_type", "generation", "item", "trigger_evo"},
 }
 
@@ -218,6 +219,7 @@ local hisuian_goodra={
       extra.second_rank = nil
     end
   end,
+  in_pool = function(self) return G.GAME.hands['Flush House'].visible end,
   attributes = {"hand_type", "enhancements", "generation", "item", "xmult"},
 }
 

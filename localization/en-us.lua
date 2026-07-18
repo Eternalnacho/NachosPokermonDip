@@ -276,9 +276,9 @@ return {
       j_nacho_goomy = {
         name = "Goomy",
         text = {
-          "If scoring hand contains a {C:attention}Flush{},",
-          "scoring cards and cards {C:attention}held in hand{}",
-          "with the {C:attention}same suit{} gain {C:red}+#1#{} Mult",
+          "If played hand contains a {C:attention}Flush{},",
+          "{C:attention}scored{} and {C:attention}held{} cards with the",
+          "{C:attention}same suit{} gain {C:red}+#1#{} Mult",
           "{C:inactive,s:0.8}(Evolves after playing {C:attention,s:0.8}#2# {C:inactive,s:0.8}#3#)",
           "{C:inactive,s:0.8}(Evolves after playing a {C:attention,s:0.8}Flush House{C:inactive,s:0.8})",
         }
@@ -286,10 +286,10 @@ return {
       j_nacho_sliggoo = {
         name = "Sliggoo",
         text = {
-          "If played hand is a {C:attention}Flush{}, scoring cards",
-          "and cards {C:attention}held in hand{} with",
-          "the {C:attention}same suit{} gain {C:red}+#1#{} Mult for each",
-          "unique {C:attention}rank{} among scoring cards",
+          "If played hand is a {C:attention}Flush{},",
+          "{C:attention}scored{} and {C:attention}held{} cards with the",
+          "{C:attention}same suit{} gain {C:red}+#1#{} Mult for",
+          "each unique {C:attention}rank{} in poker hand",
           "{C:inactive,s:0.8}(Evolves after playing {C:attention,s:0.8}#2# {C:inactive,s:0.8}#3#)",
         }
       },
@@ -308,10 +308,10 @@ return {
       j_nacho_goodra = {
         name = "Goodra",
         text = {
-          "If played hand is a {C:attention}Flush{}, scoring cards",
-          "and cards {C:attention}held in hand{} with",
-          "the {C:attention}same suit{} gain {X:red,C:white}X#1#{} Mult for each",
-          "unique {C:attention}rank{} among scoring cards",
+          "If played hand is a {C:attention}Flush{},",
+          "{C:attention}scored{} and {C:attention}held{} cards with the",
+          "{C:attention}same suit{} gain {X:red,C:white}X#1#{} Mult for",
+          "each unique {C:attention}rank{} in poker hand",
         }
       },
       j_nacho_hisuian_goodra = {
@@ -443,13 +443,29 @@ return {
           "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult)",
         }
       },
+      j_nacho_impidimp = {
+        name = "Impidimp",
+        text = {
+          "Shuffle Shuffle",
+        }
+      },
+      j_nacho_morgrem = {
+        name = "Morgrem",
+        text = {
+        }
+      },
+      j_nacho_grimmsnarl = {
+        name = "Grimmsnarl",
+        text = {
+        }
+      },
       j_nacho_galarian_meowth = {
         name = "{s:0.6}Galarian{}Meowth",
         text = {
           "Adjacent {X:poke_metal,C:white}Metal{} Jokers have",
           "{C:poke_pink}+1 Energy{} if poker hand",
           "contains a {C:attention}Steel{} card",
-          "{C:inactive,s:0.8}(Evolves after scoring {C:attention,s:0.8}#2# Steel{C:inactive,s:0.8} cards})",
+          "{C:inactive,s:0.8}(Evolves after scoring {C:attention,s:0.8}#2# Steel{C:inactive,s:0.8} cards)",
         }
       },
       j_nacho_perrserker = {

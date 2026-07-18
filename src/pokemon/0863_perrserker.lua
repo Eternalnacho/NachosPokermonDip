@@ -11,8 +11,7 @@ local galarian_meowth={
     local extra = card.ability.extra or self.config.extra
     info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
     info_queue[#info_queue+1] = G.P_CENTERS.m_steel
-    local evo_req = math.max(0, self.config.evo_rqmt - extra.scored)
-		return { vars = { extra.raised, evo_req } }
+		return { vars = { extra.raised, math.max(0, self.config.evo_rqmt - extra.steel_scored) } }
   end,
   rarity = 2,
   cost = 6,
@@ -25,19 +24,27 @@ local galarian_meowth={
     local extra = card.ability.extra
     if context.before and utils.any(context.scoring_hand, PkmnDip.con.is_steel) and not (extra.raised > 0) then
       local other_metals = utils.filter(get_adj(card), is_metal)
-      utils.for_each(other_metals, function(j) energize(j, get_type(j), extra.e_amount, true) end)
+      utils.for_each(other_metals, function(j)
+        if pokermon.energy.is_energizable(j) then
+          energize(j, get_type(j), extra.e_amount, true)
+        end
+      end)
       extra.raised = extra.raised + 1 -- Counting the number of times this effect activates
       return { message = localize('poke_energized_ex'), colour = pokermon.colours.metal }
     end
 
-    if context.individual and not context.end_of_round and context.card_area == G.play and not context.blueprint
+    if context.individual and not context.end_of_round and context.cardarea == G.play and not context.blueprint
         and PkmnDip.con.is_steel(context.other_card) then
       extra.steel_scored = extra.steel_scored + 1
     end
 
     if context.end_of_round and context.main_eval and extra.raised > 0 then
       local other_metals = utils.filter(get_adj(card), is_metal)
-      utils.for_each(other_metals, function(j) energize(j, get_type(j), -extra.e_amount * extra.raised, true) end)
+      utils.for_each(other_metals, function(j) 
+        if pokermon.energy.is_energizable(j) then
+          energize(j, get_type(j), -extra.e_amount * extra.raised, true) 
+        end
+      end)
       extra.raised = 0
       return { message = localize('k_reset'), colour = pokermon.colours.metal }
     end
@@ -66,7 +73,11 @@ local perrserker = {
     if context.before and utils.any(context.scoring_hand, PkmnDip.con.is_steel) and not (extra.b_raised >= extra.limit) then
       local other_metals = utils.filter(get_adj(card), is_metal)
       local amount = math.min(3, #utils.filter(context.scoring_hand, PkmnDip.con.is_steel))
-      utils.for_each(other_metals, function(j) energize(j, get_type(j), extra.e_amount * amount ) end)
+      utils.for_each(other_metals, function(j)
+        if pokermon.energy.is_energizable(j) then
+          energize(j, get_type(j), extra.e_amount * amount, true)
+        end
+      end)
       extra.raised = extra.raised + amount -- Counting the number of times this effect activates
       if not context.blueprint then extra.b_raised = extra.b_raised + amount end -- same as above but not counting blueprints
       return { message = localize('poke_energized_ex'), colour = pokermon.colours.metal }
@@ -74,7 +85,11 @@ local perrserker = {
 
     if context.after and context.main_eval and extra.raised > 0 then
       local other_metals = utils.filter(get_adj(card), is_metal)
-      utils.for_each(other_metals, function(j) energize(j, get_type(j), -extra.e_amount * extra.raised, true) end)
+      utils.for_each(other_metals, function(j)
+        if pokermon.energy.is_energizable(j) then
+          energize(j, get_type(j), -extra.e_amount * extra.raised, true) 
+        end
+      end)
       extra.raised = 0; extra.b_raised = 0
       return { message = localize('k_reset'), colour = pokermon.colours.metal }
     end

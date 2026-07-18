@@ -42,6 +42,10 @@ end)
 
 --#region [[ copy_playing_card ]]
 
+---@param card Card
+---@param modify table?
+---@param to_hand boolean?
+---@param message_card Card?
 PkmnDip.eff.copy_playing_card = function(card, modify, to_hand, message_card)
   PkmnDip.defer(function()
     local copy = SMODS.copy_card(card, {area = G.deck})
@@ -49,7 +53,7 @@ PkmnDip.eff.copy_playing_card = function(card, modify, to_hand, message_card)
     if to_hand then draw_card(G.deck, G.hand, nil, nil, nil, copy) end
     SMODS.calculate_context({playing_card_added = true, cards = {copy}})
   end)
-  SMODS.calculate_effect({message = localize('k_copied_ex')}, message_card)
+  SMODS.calculate_effect({message = localize('k_copied_ex')}, message_card or card)
 end
 
 --#endregion [[ copy_playing_card ]]
@@ -73,6 +77,7 @@ end
 
 --#region [[ mod_booster ]]
 
+---@param amount integer
 PkmnDip.eff.mod_booster = function(amount)
   local choice_mod = G.GAME.modifiers.booster_choice_mod
   choice_mod = math.max(0, (choice_mod or 0) + amount)
@@ -81,3 +86,40 @@ PkmnDip.eff.mod_booster = function(amount)
 end
 
 --#endregion [[ mod_booster ]]
+
+
+--#region [[ shuffle_cards ]]
+
+---@param area CardArea
+---@param seed string
+---@param context table
+PkmnDip.eff.switch_cards = function(area, seed, context)
+  if not area then area = G.play end
+  local targets = pokermon.pseudorandom_multi({ array = area.cards, amt = 2, seed = seed })
+  targets = PkmnDip.utils.map_list(targets, function(t) return G.play.cards[t.rank] end)
+  targets[1], targets[2] = targets[2], targets[1]
+  G.play:set_ranks()
+  table.sort(context.scoring_hand, function(a, b)
+    return get_index(G.play.cards, a) < get_index(G.play.cards, b)
+  end)
+end
+
+---@param area CardArea
+---@param amount integer?
+---@param seed string
+---@param context table
+PkmnDip.eff.shuffle_cards = function(area, amount, seed, context)
+  if not area then area = G.play end
+  if not amount then area.cards:shuffle(seed)
+  else
+    local targets = pokermon.pseudorandom_multi({ array = area.cards, amt = amount, seed = seed })
+    targets = PkmnDip.utils.map_list(targets, function(t) return area.cards[t.rank] end)
+    pseudoshuffle(targets, seed)
+    area:set_ranks()
+  end
+  table.sort(context.scoring_hand, function(a, b)
+    return get_index(G.play.cards, a) < get_index(G.play.cards, b)
+  end)
+end
+
+--#endregion [[ shuffle_cards ]]
