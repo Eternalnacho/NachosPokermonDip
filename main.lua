@@ -44,13 +44,3 @@ end)
 if (SMODS.Mods["JokerDisplay"] or {}).can_load then
   load_directory("jokerdisplay")
 end
-
-PkmnDip.Hook("before", SMODS.current_mod, 'reset_game_globals', function(run_start)
-  if run_start then
-    for _, center in pairs(G.P_CENTERS) do
-      if center.nacho_config_key and not PkmnDip.config[center.nacho_config_key] then
-        G.GAME.banned_keys[center.key] = true
-      end
-    end
-  end
-end)

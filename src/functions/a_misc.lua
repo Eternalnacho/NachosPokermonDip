@@ -55,3 +55,11 @@ function PkmnDip.RNG_protect(func)
   func()
   G.GAME.pseudorandom = RNG_state
 end
+
+-- (Thank you TMJ, I also wonder why these functions dont exist.)
+function math.clamp(num, min, max)
+  max = max or math.huge
+  min = min or -math.huge
+  assert(min <= max)
+  return math.min(math.max(num, min), max)
+end

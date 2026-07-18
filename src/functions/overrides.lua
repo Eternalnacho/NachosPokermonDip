@@ -1,4 +1,4 @@
--- TAKING OWNERSHIP / OVERRIDES FOR MULTIPLE JOKERS
+-- Taking Ownership / Overriding for Multiple Jokers
 
 -- Booster Functionality for Oranguru (and maybe smth else...)
 SMODS.Booster:take_ownership_by_kind('Standard',

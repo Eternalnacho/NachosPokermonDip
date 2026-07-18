@@ -88,14 +88,3 @@ function PkmnDip.utils.compare(t1, t2)
   end
   return true
 end
-
--- Talisman shorthand
-to_number = to_number or function(x) return x end
-
--- (Thank you TMJ, I also wonder why these functions dont exist.)
-function math.clamp(num, min, max)
-    max = max or math.huge
-    min = min or -math.huge
-    assert(min <= max)
-    return math.min(math.max(num, min), max)
-end

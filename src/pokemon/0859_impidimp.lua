@@ -61,7 +61,7 @@ local grimmsnarl={
 }
 
 return {
-  -- can_load = false,
+  can_load = false,
   config_key = "impidimp",
   list = { impidimp, morgrem, grimmsnarl }
 }
