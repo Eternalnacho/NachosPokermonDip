@@ -41,7 +41,7 @@ local hisuian_zorua = {
       PkmnDip.defer(function()
         a.active = false
         SMODS.calculate_effect({message = localize('poke_reveal_ex')}, card)
-      end, 0.2)
+      end, {delay = 0.2})
     end
     if context.end_of_round and context.game_over == false and context.main_eval and not a.active then
       a.active = true

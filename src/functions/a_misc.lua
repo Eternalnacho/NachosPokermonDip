@@ -1,5 +1,6 @@
 -- Event Helper function
-function PkmnDip.defer(func, args) 
+function PkmnDip.defer(func, args)
+  if type(args) == 'number' then args = {delay = args} end
   if not args then args = {} end
   G.E_MANAGER:add_event(Event({
     trigger = args.trigger or args.delay and 'after',
@@ -10,6 +11,7 @@ function PkmnDip.defer(func, args)
     end,
     blocking = args.blocking or true,
     blockable = args.blockable or false,
+    ease_to = args.trigger == 'ease' and args.ease_to
   }))
 end
 

@@ -81,7 +81,7 @@ local mega_audino = {
               egg.ability.extra.key = PkmnDip.calc.get_key(parent, lowest)
               egg.ability.extra.rounds = 1
             end
-          end, 0.4)
+          end, {delay = 0.4})
         end
       end
     end
