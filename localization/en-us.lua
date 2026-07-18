@@ -446,20 +446,18 @@ return {
       j_nacho_galarian_meowth = {
         name = "{s:0.6}Galarian{}Meowth",
         text = {
-          "This Joker scores as a {C:attention}held Steel{} card",
-          "{br:2}ERROR - CONTACT STEAK",
-          "This Joker can be {C:poke_pink}Energized{}",
-          "{C:inactive,s:0.8}(Evolves when adjacent jokers are both {X:poke_metal,C:white,s:0.8}Metal{C:inactive,s:0.8})",
+          "Adjacent {X:poke_metal,C:white}Metal{} Jokers have",
+          "{C:poke_pink}+1 Energy{} if poker hand",
+          "contains a {C:attention}Steel{} card",
+          "{C:inactive,s:0.8}(Evolves after scoring {C:attention,s:0.8}#2# Steel{C:inactive,s:0.8} cards})",
         }
       },
       j_nacho_perrserker = {
         name = "Perrserker",
         text = {
-          "This Joker and adjacent {X:poke_metal,C:white}Metal{}",
-          "Jokers score as {C:attention}held Steel{} cards",
-          "{br:2}ERROR - CONTACT STEAK",
-          "{C:poke_pink}Energy{} on this Joker applies",
-          "to {C:attention}held Steel{} cards",
+          "Adjacent {X:poke_metal,C:white}Metal{} Jokers have",
+          "{C:poke_pink}+1 Energy{} for each {C:attention}Steel{} card",
+          "in poker hand {C:inactive}(Max of 3){}",
         }
       },
       j_nacho_hisuian_sneasel = {
