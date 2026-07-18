@@ -162,8 +162,9 @@ local init = function()
     return ret or orig(key_or_function, use_highlighted, ...)
   end)
 
-  PkmnDip.Hook("before", pokermon, 'can_set_sprite', function(card, ...)
+  PkmnDip.Hook("around", pokermon, 'can_set_sprite', function(orig, card, ...)
     if card.config.center_key == 'j_nacho_passimian' then return false end
+    return orig(card, ...)
   end)
 
   -- pokermon.evolve and pokermon.backend_evolve hooks for passimian's received card
