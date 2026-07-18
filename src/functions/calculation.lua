@@ -18,7 +18,7 @@ end
 
 -- Create tooltip for common ranks (Oranguru)
 PkmnDip.calc.common_ranks_tooltip = function()
-  if not G.playing_cards and G.STAGE == G.STAGES.RUN then return end
+  if not (G.playing_cards and G.STAGE == G.STAGES.RUN) then return end
   local rank_keys = {}
   local ranks = PkmnDip.calc.get_common_ranks(G.playing_cards)
   -- sort in descending order if multiple
@@ -112,3 +112,16 @@ PkmnDip.calc.get_key = function(card, name)
 end
 
 --#endregion [[ get_key ]]
+
+
+--#region [[ daycare_compatible ]]
+
+PkmnDip.calc.daycare_compatible = function(card)
+  local lowest_key = PkmnDip.calc.get_key(card, pokermon.get_lowest_evo(card))
+  local incompatible = { "Other", "Baby", "Legendary" }
+  return card.config.center.stage
+      and not PkmnDip.utils.contains(incompatible, card.config.center.stage)
+      and G.P_CENTERS[lowest_key].stage ~= "Legendary"
+end
+
+--#endregion [[ daycare_compatible ]]
