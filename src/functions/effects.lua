@@ -132,3 +132,42 @@ PkmnDip.eff.shuffle_cards = function(area, seed, context, amount)
 end
 
 --#endregion [[ shuffle_cards ]]
+
+
+--#region [[ create_joker ]]
+
+---@param args table
+---@param pre_call function
+---@param post_call function
+PkmnDip.eff.create_joker = function(args, pre_call, post_call)
+  if type(args) == 'string' then args = { key = args } end
+  if not args.set then args.set = "Joker" end
+  if (#G.jokers.cards + G.GAME.joker_buffer) <= G.jokers.config.card_limit or args.edition == 'e_negative' then
+    G.GAME.joker_buffer = G.GAME.joker_buffer + 1
+    PkmnDip.defer(function()
+      G.GAME.joker_buffer = 0
+      if pre_call then pre_call(args) end
+      local card = SMODS.add_card(args)
+      if post_call then post_call(card) end
+    end, 0.4)
+  end
+end
+
+---@param card Card
+---@param adj SMODS.Joker[]
+---@param pre_call function
+---@param post_call function
+PkmnDip.eff.breed = function(card, adj, pre_call, post_call)
+  if PkmnDip.utils.all(adj, PkmnDip.calc.daycare_compatible) then
+    local parent = pseudorandom_element(adj, pseudoseed("daycare"))
+    local lowest = pokermon.get_lowest_evo(parent)
+    if lowest and type(lowest) == "string" then
+      PkmnDip.eff.create_joker({key = 'j_poke_mystery_egg'}, pre_call, function(egg)
+        egg.ability.extra.key = PkmnDip.calc.get_key(parent, lowest)
+        if post_call then post_call(egg) end
+      end)
+    end
+  end
+end
+
+--#endregion [[ create_joker ]]
