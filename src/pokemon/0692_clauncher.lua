@@ -1,4 +1,3 @@
-local filter = PkmnDip.utils.filter
 local not_edition = function(card, e) return not card.edition or (card.edition and not card.edition[e]) end
 
 -- Clauncher 692
@@ -44,7 +43,7 @@ local clauncher = {
   end,
   in_pool = function(self, args)
     local has_edition = function(pcard) return pcard.edition end
-    return G.playing_cards and #filter(G.playing_cards, has_edition) > 0
+    return G.playing_cards and PkmnDip.utils.any(G.playing_cards, has_edition)
   end,
   attributes = {"editions", "retrigger", "round_evo"}
 }
@@ -74,7 +73,7 @@ local clawitzer = {
   end,
   in_pool = function(self, args)
     local has_edition = function(pcard) return pcard.edition end
-    return G.playing_cards and #filter(G.playing_cards, has_edition) > 0
+    return G.playing_cards and PkmnDip.utils.any(G.playing_cards, has_edition)
   end,
   attributes = {"editions", "retrigger"}
 }
