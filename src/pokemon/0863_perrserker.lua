@@ -13,8 +13,8 @@ local galarian_meowth={
     info_queue[#info_queue+1] = G.P_CENTERS.m_steel
 		return { vars = { extra.raised, math.max(0, self.config.evo_rqmt - extra.steel_scored) } }
   end,
-  rarity = 2,
-  cost = 6,
+  rarity = 1,
+  cost = 5,
   enhancement_gate = 'm_steel',
   stage = "Basic",
   ptype = "Metal",
@@ -65,6 +65,7 @@ local perrserker = {
   end,
   rarity = "poke_safari",
   cost = 10,
+  enhancement_gate = 'm_steel',
   stage = "One",
   ptype = "Metal",
   blueprint_compat = true,
