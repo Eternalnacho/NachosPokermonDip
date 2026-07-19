@@ -23,7 +23,7 @@ local goomy={
     local a = card.ability.extra
     if context.press_play then
       a.scoring_flush = get_flush(G.hand.highlighted)[1]
-      a.matching_suit = a.scoring_flush and a.scoring_flush[1].config.card.suit
+      a.matching_suit = a.scoring_flush and PkmnDip.calc.get_flush_suit(G.hand.highlighted)
     end
     -- Check if Flush House played
     if context.before and not context.blueprint then
@@ -36,10 +36,8 @@ local goomy={
     -- Main scoring bit
     if context.individual and PkmnDip.con.played_or_held(context) and context.main_scoring then
       if next(context.poker_hands['Flush']) and a.scoring_flush then
-        -- Get cards specifically in Flush
-        local wildcount = #PkmnDip.utils.filter(a.scoring_flush, function(v) return SMODS.has_enhancement(v, 'm_wild') end)
         -- Give cards in hand with matching suit permamult
-        if wildcount == #a.scoring_flush or context.other_card:is_suit(a.matching_suit) then
+        if a.matching_suit == 'Any' or context.other_card:is_suit(a.matching_suit) then
           context.other_card.ability.perma_mult = (context.other_card.ability.perma_mult or 0) + a.mult_mod
           return {
             extra = { message = localize('k_upgrade_ex'), colour = G.C.MULT },
@@ -77,7 +75,7 @@ local sliggoo={
     local a = card.ability.extra
     if context.press_play then
       a.scoring_flush = get_flush(G.hand.highlighted)[1]
-      a.matching_suit = PkmnDip.calc.get_flush_suit(G.hand.highlighted)
+      a.matching_suit = a.scoring_flush and PkmnDip.calc.get_flush_suit(G.hand.highlighted)
     end
     -- Count # of Flushes played
     if context.before and not context.blueprint and context.scoring_name == 'Flush' then
@@ -119,7 +117,7 @@ local goodra={
     local a = card.ability.extra
     if context.press_play then
       a.scoring_flush = get_flush(G.hand.highlighted)[1]
-      a.matching_suit = PkmnDip.calc.get_flush_suit(G.hand.highlighted)
+      a.matching_suit = a.scoring_flush and PkmnDip.calc.get_flush_suit(G.hand.highlighted)
     end
     if context.individual and context.scoring_name == 'Flush' and a.scoring_flush then
       if PkmnDip.con.played_or_held(context) and context.main_scoring then
@@ -153,23 +151,17 @@ local hisuian_sliggoo={
   gen = 6,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    -- Count # of Flush Houses played
     if context.before and context.main_eval and context.scoring_name == 'Flush House' then
-      -- Create a Metal Coat
-      pokermon.create_held_item('c_poke_metalcoat')
+      -- Count # of Flush Houses played
       if not context.blueprint then
         card.ability.extra.flush_houses = card.ability.extra.flush_houses + 1
       end
-
-      -- Get the two ranks of the Flush House
-      local part_major = get_X_same(3, context.scoring_hand, true)[1][1]
-      local part_minor = get_X_same(2, PkmnDip.utils.filter(context.scoring_hand, function(v) return v:get_id() ~= part_major:get_id() end), true)[1][1]
-      local first_rank = part_major.base.nominal
-      local second_rank = part_minor.base.nominal
-
-      -- Create a second Metal Coat if rank diff > 6
+      -- Create a Metal Coat
+      pokermon.create_consumeable('c_poke_metalcoat', true, card)
+      -- Create a second Metal Coat if rank difference > 6
+      local first_rank, second_rank = PkmnDip.calc.get_full_house(context.scoring_hand, 'nominal')
       if math.abs(second_rank - first_rank) > 6 then
-        pokermon.create_held_item('c_poke_metalcoat')
+        pokermon.create_consumeable('c_poke_metalcoat', true, card)
       end
     end
     return pokermon.scaling_evo(self, card, context, "j_nacho_hisuian_goodra", card.ability.extra.flush_houses, self.config.evo_rqmt)
@@ -181,7 +173,7 @@ local hisuian_sliggoo={
 -- Hisuian Goodra 706-1
 local hisuian_goodra={
   name = "hisuian_goodra",
-  config = {extra = {Xmult = 1}},
+  config = {extra = {Xmult_steel = 1}},
   loc_vars = function(self, info_queue, card)
     return {vars = {}}
   end,
@@ -192,31 +184,20 @@ local hisuian_goodra={
   gen = 6,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    local extra = card.ability.extra
+    local a = card.ability.extra
     if context.scoring_name == 'Flush House' then
+      -- Create a metal coat
       if context.before and context.main_eval then
-        -- Create a Metal Coat
-        pokermon.create_held_item('c_poke_metalcoat')
-
-        -- Get the two ranks of the Flush House
-        local part_major = get_X_same(3, context.scoring_hand, true)[1][1]
-        local part_minor = get_X_same(2, PkmnDip.utils.filter(context.scoring_hand, function(v) return v:get_id() ~= part_major:get_id() end), true)[1][1]
-        extra.first_rank = part_major.base.nominal
-        extra.second_rank = part_minor.base.nominal
+        pokermon.create_held_item('c_poke_metalcoat', true, card)
       end
-
+      -- Score held steel cards by rank difference in Flush House
       if context.individual and context.cardarea == G.hand and not context.end_of_round then
-        -- Set Xmult
-        extra.Xmult = math.abs(extra.second_rank - extra.first_rank) / 3
-        -- Score Steel cards in hand
-        if extra.Xmult > 1 and SMODS.has_enhancement(context.other_card, 'm_steel') then
-          return { xmult = extra.Xmult }
+        local first_rank, second_rank = PkmnDip.calc.get_full_house(context.scoring_hand, 'nominal')
+        a.Xmult_steel = math.abs(second_rank - first_rank) / 3
+        if a.Xmult_steel > 1 and SMODS.has_enhancement(context.other_card, 'm_steel') then
+          return { xmult = a.Xmult_steel }
         end
       end
-    end
-    if context.after then
-      extra.first_rank = nil
-      extra.second_rank = nil
     end
   end,
   in_pool = function(self) return G.GAME.hands['Flush House'].visible end,

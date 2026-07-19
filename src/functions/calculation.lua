@@ -2,6 +2,22 @@ PkmnDip.calc = {}
 
 --#region [[ get_rank ]]
 
+---@alias rank_type
+---| 'id' # use rank id
+---| 'nominal' # use rank nominal value
+---@param cards Card[]
+---@param get_ranks_by rank_type?
+-- Get the two parts of a Full House, return two lists of cards or their ranks
+PkmnDip.calc.get_full_house = function(cards, get_ranks_by)
+  local part_major = get_X_same(3, cards, true)[1]
+  local not_in_major = function(card) return card:get_id() ~= part_major[1]:get_id() end
+  local part_minor = get_X_same(2, PkmnDip.utils.filter(cards, not_in_major), true)[1]
+
+  if get_ranks_by == 'nominal' then return part_major[1]:get_id(), part_minor[1]:get_id() end
+  if get_ranks_by == 'nominal' then return part_major[1].base.nominal, part_minor[1].base.nominal end
+  return part_major, part_minor
+end
+
 -- Get most common rank(s) in a list of cards
 PkmnDip.calc.get_common_ranks = function(cards)
   local is_rank = function(card, id) return card:get_id() == id end
