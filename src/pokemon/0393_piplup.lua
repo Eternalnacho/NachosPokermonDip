@@ -51,16 +51,15 @@ local prinplup={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.individual and not context.end_of_round and context.cardarea == G.hand and not SMODS.has_no_rank(context.other_card) then
+    if context.individual and not context.end_of_round and context.cardarea == G.hand
+        and not SMODS.has_no_rank(context.other_card) then
       return {
         h_chips = context.other_card.base.nominal,
         card = card,
       }
     end
     if context.joker_main then
-      return {
-        chips = card.ability.extra.chips,
-      }
+      return { chips = card.ability.extra.chips }
     end
     return pokermon.level_evo(self, card, context, "j_nacho_empoleon")
   end,
@@ -95,16 +94,15 @@ local empoleon={
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.individual and not context.end_of_round and context.cardarea == G.hand and not SMODS.has_no_rank(context.other_card) then
+    if context.individual and not context.end_of_round and context.cardarea == G.hand
+        and not SMODS.has_no_rank(context.other_card) then
       return {
         h_chips = context.other_card.base.nominal * 2,
         card = card,
       }
     end
     if context.joker_main then
-      return {
-        chips = card.ability.extra.chips,
-      }
+      return { chips = card.ability.extra.chips }
     end
   end,
   add_to_deck = function(self, card, from_debuff)

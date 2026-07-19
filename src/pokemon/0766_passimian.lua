@@ -1,3 +1,31 @@
+local keep_values = function(card)
+  local names_to_keep = {"targets", "rank", "id", "cards_scored", "cards_drawn", "energy_count", "c_energy_count", "e_limit_up", "form"}
+  if pokermon.type_sticker_applied(card) then table.insert(names_to_keep, "ptype") end
+  local values_to_keep = pokermon.copy_scaled_values(card)
+  if type(card.ability.extra) == "table" then
+    for _, k in pairs(names_to_keep) do
+      values_to_keep[k] = card.ability.extra[k]
+    end
+  end
+  if card.config.center.poke_custom_values_to_keep then
+    for _, v in pairs(card.config.center.poke_custom_values_to_keep) do
+      values_to_keep[v] = card.ability.extra[v]
+    end
+  end
+  return values_to_keep
+end
+
+local get_kept_values = function(card, kept_vals)
+  for k, v in pairs(kept_vals) do
+    card.ability[k] = type(v) == 'table' and copy_table(v) or v
+    if type(card.ability.extra) == "table" and (card.ability.extra[k] or k == "energy_count" or k == "c_energy_count" or k == "e_limit_up")
+        and (type(card.ability.extra[k]) ~= "number" or (type(v) == "number" and v > card.ability.extra[k])) then
+      card.ability.extra[k] = v
+    end
+  end
+end
+
+
 -- Passimian 766
 local passimian={
   name = "passimian",
@@ -36,9 +64,9 @@ local passimian={
       -- Keep relevant values stored
       local values_to_keep = {}
       if card.ability.received_card then
-        values_to_keep = PkmnDip.keep_values(card)
+        values_to_keep = keep_values(card)
       elseif context and context.card and context.card.ability then
-        values_to_keep = PkmnDip.keep_values(context.card)
+        values_to_keep = keep_values(context.card)
       end
       -- Set ability to received card's
       for k, v in pairs(_r.config) do
@@ -46,7 +74,7 @@ local passimian={
       end
       card.ability.received_card = _r
       -- Re-add kept values and handle energy, type
-      if next(values_to_keep) then PkmnDip.get_kept_values(card, values_to_keep) end
+      if next(values_to_keep) then get_kept_values(card, values_to_keep) end
       if card.ability.extra.energy_count or card.ability.extra.c_energy_count then pokermon.energy.energize(card, nil, true, true) end
       card.ability.extra.ptype = "Fighting"
       -- Calls the add_to_deck function of the received card if it exists
@@ -74,6 +102,7 @@ local passimian={
       -- Info_queue for received card
       local v = {}; if r_center.loc_vars then v = r_center:loc_vars({}, card) or {} end
       local r_name = localize({type = "name_text", set = v.set or r_center.set, key = v.key or r_center.key})
+      r_name = type(r_name) == 'string' and r_name or ''
       if r_name:match("#%d+#") and v.vars then
         r_name = r_name:gsub("#(%d+)#", "%1")
         r_name = v.vars[tonumber(r_name)]
@@ -90,7 +119,7 @@ local passimian={
   end,
   update = function(self, card, dt)
     if G.STAGE == G.STAGES.RUN and card.area == G.jokers and (card.children.center.atlas ~= self.atlas or card.children.center.pos ~= self.pos) then
-      card.children.center.atlas = SMODS.get_atlas(card.edition and card.edition.poke_shiny and "poke_AtlasJokersBasicNatdexShiny" or "poke_AtlasJokersBasicNatdex")
+      card.children.center.atlas = SMODS.get_atlas("poke_AtlasJokersBasicNatdex" .. (PkmnDip.con.is_shiny(card) and "Shiny" or ""))
       card.children.center:set_sprite_pos(self.pos)
     end
   end,
@@ -99,7 +128,7 @@ local passimian={
 
 local init = function()
   -- Card.save hook to save received card key
-  PkmnDip.utils.hook_around_function(Card, 'save', function(orig, self) 
+  PkmnDip.Hook("around", Card, 'save', function(orig, self) 
     local saved_table = orig(self)
     if self.config.center_key == 'j_nacho_passimian' and self.area == G.jokers and self.ability.received_card then
       saved_table.received_key = self.ability.received_card.key
@@ -108,7 +137,7 @@ local init = function()
   end)
 
   -- find_card hooks
-  PkmnDip.utils.hook_around_function(SMODS, 'find_card', function(orig, key, count_debuffed, ...)
+  PkmnDip.Hook("around", SMODS, 'find_card', function(orig, key, count_debuffed, ...)
     local results = orig(key, count_debuffed)
     if G.jokers and type(results) == "table" then
       PkmnDip.utils.for_each(SMODS.get_card_areas('jokers'), function(area) 
@@ -125,7 +154,7 @@ local init = function()
     return results
   end)
 
-  PkmnDip.utils.hook_around_function(pokermon, 'find_card', function(orig, key_or_function, use_highlighted, ...)
+  PkmnDip.Hook("around", pokermon, 'find_card', function(orig, key_or_function, use_highlighted, ...)
     local ret = orig(function(joker) 
       return joker.ability.received_card and (joker.ability.received_card == key_or_function
           or joker.ability.received_card.key == key_or_function)
@@ -133,12 +162,13 @@ local init = function()
     return ret or orig(key_or_function, use_highlighted, ...)
   end)
 
-  PkmnDip.utils.hook_before_function(pokermon, 'can_set_sprite', function(card, ...)
+  PkmnDip.Hook("around", pokermon, 'can_set_sprite', function(orig, card, ...)
     if card.config.center_key == 'j_nacho_passimian' then return false end
+    return orig(card, ...)
   end)
 
   -- pokermon.evolve and pokermon.backend_evolve hooks for passimian's received card
-  PkmnDip.utils.hook_around_function(pokermon, 'evolve', function(orig, card, to_key, immediate, evolve_message, transformation, energize_amount) 
+  PkmnDip.Hook("around", pokermon, 'evolve', function(orig, card, to_key, immediate, evolve_message, transformation, energize_amount) 
     if card.config.center.key == 'j_nacho_passimian' and not transformation then
       card.ability.extra.pass_evolving = true
       immediate = true
@@ -146,7 +176,7 @@ local init = function()
     return orig(card, to_key, immediate, evolve_message, transformation, energize_amount)
   end)
 
-  PkmnDip.utils.hook_before_function(pokermon, 'backend_evolve', function(card, to_key, energize_amount) 
+  PkmnDip.Hook("before", pokermon, 'backend_evolve', function(card, to_key, energize_amount) 
     if card.config.center.key == 'j_nacho_passimian' and card.ability.extra.pass_evolving then
       card.ability.extra.pass_evolving = nil
       card.config.center:receive_card(card, to_key)
@@ -155,7 +185,7 @@ local init = function()
   end)
   
   -- pokermon.energy.energize hook
-  PkmnDip.utils.hook_around_function(pokermon.energy, 'energize', function(orig, card, etype, evolving, silent, amount, center, ...) 
+  PkmnDip.Hook("around", pokermon.energy, 'energize', function(orig, card, etype, evolving, silent, amount, center, ...) 
     if card.config.center.key == 'j_nacho_passimian' and card.ability.received_card then
       center = card.ability.received_card
     end

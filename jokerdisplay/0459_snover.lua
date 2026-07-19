@@ -12,7 +12,7 @@ jd_def["j_nacho_snover"] = {
       local hand = next(G.play.cards) and G.play.cards or G.hand.highlighted
       local text, _, scoring_hand = JokerDisplay.evaluate_hand(hand)
       if text ~= "Unknown" then
-          for _, scoring_card in pairs(scoring_hand) do --Polychrome cards scored
+          for _, scoring_card in pairs(scoring_hand) do
               if scoring_card.ability.effect and scoring_card.ability.effect == "Glass Card" then
                   count = count + JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
               end
@@ -34,7 +34,7 @@ jd_def["j_nacho_abomasnow"] = {
       local hand = next(G.play.cards) and G.play.cards or G.hand.highlighted
       local text, _, scoring_hand = JokerDisplay.evaluate_hand(hand)
       if text ~= "Unknown" then
-          for _, scoring_card in pairs(scoring_hand) do --Polychrome cards scored
+          for _, scoring_card in pairs(scoring_hand) do
               if scoring_card.ability.effect and scoring_card.ability.effect == "Glass Card" then
                   count = count + JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
               end

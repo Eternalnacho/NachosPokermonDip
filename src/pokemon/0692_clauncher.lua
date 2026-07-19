@@ -1,4 +1,3 @@
-local filter = PkmnDip.utils.filter
 local not_edition = function(card, e) return not card.edition or (card.edition and not card.edition[e]) end
 
 -- Clauncher 692
@@ -22,7 +21,7 @@ local clauncher = {
   calculate = function(self, card, context)
     local a = card.ability.extra
     -- Retriggers all the unique editions (played and held counted separately)
-    if PkmnDip.has_repeat_effect(context) and PkmnDip.played_or_held(context) and context.other_card.edition then
+    if PkmnDip.con.has_repeat_effect(context) and PkmnDip.con.played_or_held(context) and context.other_card.edition then
       local other = context.other_card
       -- Played unique editions
       if context.cardarea == G.play and not a.played_editions[other.edition.key] then
@@ -44,7 +43,7 @@ local clauncher = {
   end,
   in_pool = function(self, args)
     local has_edition = function(pcard) return pcard.edition end
-    return G.playing_cards and #filter(G.playing_cards, has_edition) > 0
+    return G.playing_cards and PkmnDip.utils.any(G.playing_cards, has_edition)
   end,
   attributes = {"editions", "retrigger", "round_evo"}
 }
@@ -68,13 +67,13 @@ local clawitzer = {
   blueprint_compat = true,
   custom_pool_func = true,
   calculate = function(self, card, context)
-    if PkmnDip.has_repeat_effect(context) and PkmnDip.played_or_held(context) and context.other_card.edition then
+    if PkmnDip.con.has_repeat_effect(context) and PkmnDip.con.played_or_held(context) and context.other_card.edition then
       return { repetitions = card.ability.extra.retriggers }
     end
   end,
   in_pool = function(self, args)
     local has_edition = function(pcard) return pcard.edition end
-    return G.playing_cards and #filter(G.playing_cards, has_edition) > 0
+    return G.playing_cards and PkmnDip.utils.any(G.playing_cards, has_edition)
   end,
   attributes = {"editions", "retrigger"}
 }

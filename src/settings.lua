@@ -22,7 +22,7 @@ local function create_tile_grid(args)
     return DipTile {
       label = tile.label(),
       display_cards = tile.list,
-      ref_table = nacho_config,
+      ref_table = PkmnDip.config,
       ref_value = tile.config_key,
       mod_req = tile.mod_req,
     }
@@ -87,21 +87,6 @@ function G.FUNCS.nacho_update_config_page(e)
     }
     grid_wrap.UIBox:recalculate()
   end
-end
-
--- Stealing this from Cardsauce
-function G.FUNCS.nacho_force_restart()
-  local settingsMatch = true
-  for k, v in pairs(nacho_restart_req_toggles) do
-		if nacho_config[k] ~= v then
-      settingsMatch = false
-		end
-	end
-  if settingsMatch then
-    SMODS.full_restart = 0
-  else
-		SMODS.full_restart = 1
-	end
 end
 
 function SMODS.current_mod.extra_tabs()

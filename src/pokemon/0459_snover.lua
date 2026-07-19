@@ -22,33 +22,27 @@ local snover = {
   gen = 4,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    local a = card.ability.extra
-
     -- Check if first glass card breaks, then convert an unenhanced card in deck to glass
-    if context.remove_playing_cards then
+    if context.remove_playing_cards and not card.ability.extra.triggered then
       local glass_cards = #PkmnDip.utils.filter(context.removed, function(v) return v.shattered end)
-      if glass_cards > 0 and not a.triggered then
-        local viable_targets = PkmnDip.utils.filter(G.deck.cards, function(v) return v.config.center == G.P_CENTERS.c_base end)
+      if glass_cards > 0 then
+        local viable_targets = PkmnDip.utils.filter(G.deck.cards, PkmnDip.con.is_base)
         local target = pseudorandom_element(viable_targets, pseudoseed('snover'))
         pokermon.convert_cards(target, {mod_conv = 'm_glass'}, true, true)
         SMODS.calculate_effect({ message = localize('poke_ice_shard_ex') }, card)
-        a.triggered = true
+        card.ability.extra.triggered = true
       end
     end
 
     -- Earn money when glass is scored
-    if context.individual and not context.end_of_round and context.cardarea == G.play and SMODS.has_enhancement(context.other_card, 'm_glass') then
-      local earned = pokermon.ease_poke_dollars(card, "snover", a.money_mod, true)
-      return {
-        dollars = earned,
-        card = card
-      }
+    if context.individual and context.cardarea == G.play and context.main_scoring
+        and PkmnDip.con.is_glass(context.other_card) then
+      local earned = pokermon.ease_poke_dollars(card, "snover", card.ability.extra.money_mod, true)
+      return { dollars = earned, card = card }
     end
-
     -- Reset trigger at end of round
-    if context.end_of_round then
-      a.triggered = false
-    end
+    if context.end_of_round then card.ability.extra.triggered = false end
+
     return pokermon.deck_enhance_evo(self, card, context, "j_nacho_abomasnow", "Glass", .125)
   end,
   attributes = {"enhancements", "economy", "modify_card", "condition_evo"},
@@ -77,24 +71,20 @@ local abomasnow = {
     if context.remove_playing_cards then
       local glass_cards = #PkmnDip.utils.filter(context.removed, function(v) return v.shattered end)
       if glass_cards > 0 then
-        for _ = 1, glass_cards do
-          local viable_targets = PkmnDip.utils.filter(G.deck.cards, function(v) return v.config.center == G.P_CENTERS.c_base end)
-          local target = pseudorandom_element(viable_targets, pseudoseed('abomasnow'))
-          if target then
-            pokermon.convert_cards(target, {mod_conv = 'm_glass', edition = "e_foil"}, true, true)
-            SMODS.calculate_effect({ message = localize('poke_ice_shard_ex') }, card)
-          end
-        end
+        local targets = {}
+        local viable_targets = PkmnDip.utils.filter(G.deck.cards, PkmnDip.con.is_base)
+        pseudoshuffle(viable_targets, pseudoseed('abomasnow'))
+        table.move(viable_targets, 1, glass_cards, 1, targets)
+        pokermon.convert_cards(targets, {mod_conv = 'm_glass', edition = "e_foil"}, true, true)
+        SMODS.calculate_effect({ message = localize('poke_ice_shard_ex') }, card)
       end
     end
 
     -- Earn money when glass is scored
-    if context.individual and not context.end_of_round and context.cardarea == G.play and SMODS.has_enhancement(context.other_card, 'm_glass') then
+    if context.individual and context.cardarea == G.play and context.main_scoring
+        and PkmnDip.con.is_glass(context.other_card) then
       local earned = pokermon.ease_poke_dollars(card, "snover", card.ability.extra.money_mod, true)
-      return {
-        dollars = earned,
-        card = card
-      }
+      return { dollars = earned, card = card }
     end
   end,
   megas = {"mega_abomasnow"},

@@ -49,41 +49,25 @@ local mega_audino = {
   blueprint_compat = true,
   calculate = function(self, card, context)
     local a = card.ability.extra
-    if context.joker_main then
-      return {xmult = a.Xmult}
-    end
-
+    -- Main Scoring
+    if context.joker_main then return {xmult = a.Xmult} end
+    -- Daycare Effect
     if context.end_of_round and context.beat_boss and context.game_over == false and not context.blueprint then
-      local adjacent_jokers = pokermon.get_adjacent_jokers(card)
-      local incompatible = { "Other", "Baby", "Legendary" }
-      local breedable = #PkmnDip.utils.filter(adjacent_jokers, function(adj_joker)
-        local lowest_key = PkmnDip.create_full_poke_key(adj_joker, pokermon.get_lowest_evo(adj_joker))
-        return adj_joker.config.center.stage
-           and not PkmnDip.utils.contains(incompatible, adj_joker.config.center.stage)
-           and G.P_CENTERS[lowest_key].stage ~= "Legendary"
-        end)
-      if breedable >= 2 then
-        G.GAME.joker_buffer = G.GAME.joker_buffer + 1
-        if (#G.jokers.cards < G.jokers.config.card_limit) then
-          PkmnDip.defer(function()
-            G.GAME.joker_buffer = 0
-            play_sound('timpani')
-            local parent = pseudorandom_element(adjacent_jokers, pseudoseed("daycare"))
-            local lowest = pokermon.get_lowest_evo(parent)
-            if lowest and type(lowest) == "string" then
-              local edition = SMODS.pseudorandom_probability(card, 'mega_audino', a.num, a.den, 'mega_audino') and 'e_poke_shiny'
-                  or poll_edition('audino', nil, true, true, {
-                    { name = 'e_foil', weight = 1/3 },
-                    { name = 'e_holo', weight = 1/3 },
-                    { name = 'e_polychrome', weight = 1/3 }
-                  })
-              local egg = SMODS.add_card{set = 'Joker', key = 'j_poke_mystery_egg', edition = edition}
-              egg.ability.extra.key = PkmnDip.create_full_poke_key(parent, lowest)
-              egg.ability.extra.rounds = 1
-            end
-          end, 0.4)
-        end
+      local adj = pokermon.get_adjacent_jokers(card)
+      -- Pre-call function to set the edition
+      local poll_audino_edition = function(args)
+        local shiny_odds = SMODS.pseudorandom_probability(card, 'mega_audino', a.num, a.den)
+        args.edition = shiny_odds and 'e_poke_shiny' or poll_edition('mega_audino', nil, true, true, {
+          { name = 'e_foil', weight = 1/3 },
+          { name = 'e_holo', weight = 1/3 },
+          { name = 'e_polychrome', weight = 1/3 }
+        })
       end
+      -- Post-call function to set the rounds to hatch
+      local incubate = function(egg) egg.ability.extra.rounds = 1 end
+      -- Calling the daycare function
+      PkmnDip.eff.breed(card, adj, poll_audino_edition, incubate)
+      PkmnDip.defer(function() play_sound('timpani') end)
     end
   end,
   attributes = {"generation", "joker", "xmult", "boss_blind"}

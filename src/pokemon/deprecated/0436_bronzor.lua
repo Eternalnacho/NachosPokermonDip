@@ -1,30 +1,6 @@
-local score_metal_jokers = function(card, context)
-  -- Create a temporary steel card and set it's position to the relevant joker
-  local temp_steel = SMODS.create_card({set = 'Enhanced', enhancement = 'm_steel'})
-  -- Call set_base with no args to remove rank + suit
-  temp_steel:set_base()
-  -- Set the steel card's major to the joker for click + drag reasons
-  PkmnDip.defer(function() temp_steel:set_role({major = card, role_type = 'Glued'}) end)
-  -- Set the scoring animation bit onto the target joker
-  temp_steel.juice_up = function(self, ...) card:juice_up(...) end
-  -- Create fake context to trick Balatro into thinking we're calculating held steel cards
-  local temp_context = {
-    cardarea = G.hand,
-    individual = true,
-    main_scoring = true,
-    other_card = temp_steel,
-    full_hand = context.full_hand,
-    poker_hands = context.poker_hands,
-    scoring_hand = context.scoring_hand,
-    scoring_name = context.scoring_name,
-    retrigger_joker = context.retrigger_joker,
-    scoring_metal_for = card
-  }
-  -- The scoring code I had before wound up being a 1-for-1 of SMODS.score_card
-  SMODS.score_card(temp_steel, temp_context)
-  -- Remove the temporary steel card to save memory / screen real-estate
-  temp_steel:remove()
-end
+local filter = PkmnDip.utils.filter
+local get_adj = pokermon.get_adjacent_jokers
+local is_metal = function(card) return pokermon.is_type(card, "Metal") end
 
 -- Bronzor 436
 local bronzor = {
@@ -42,10 +18,13 @@ local bronzor = {
   perishable_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.other_joker and context.other_joker == card then
-      score_metal_jokers(context.other_joker, context)
+    if context.before then
+      PkmnDip.eff.joker_as_card(card, {
+        area = G.hand,
+        enhancement = 'm_steel',
+      })
     end
-    if context.individual and context.cardarea == G.hand and context.scoring_metal_for == card then
+    if context.individual and context.cardarea == G.hand and context.other_card.scoring_for == card then
       card.ability.extra.triggered = card.ability.extra.triggered + 1
     end
     return pokermon.scaling_evo(self, card, context, "j_nacho_bronzong", card.ability.extra.triggered, self.config.evo_rqmt)
@@ -69,11 +48,14 @@ local bronzong = {
   perishable_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.other_joker then
-      local adjacent = pokermon.get_adjacent_jokers(card)
-      if context.other_joker == card or (PkmnDip.utils.contains(adjacent, context.other_joker) and pokermon.is_type(context.other_joker, "Metal")) then
-        score_metal_jokers(context.other_joker, context)
-      end
+    if context.before then
+      local metal_adj = filter(get_adj(card), is_metal)
+      PkmnDip.utils.for_each(metal_adj, function(joker)
+        PkmnDip.eff.joker_as_card(joker, {
+          area = G.hand,
+          enhancement = 'm_steel',
+        })
+      end)
     end
   end,
   attributes = {"enhancements", "joker", "types"},

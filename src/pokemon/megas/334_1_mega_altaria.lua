@@ -38,7 +38,7 @@ local mega_altaria = {
       PkmnDip.utils.for_each(SMODS.drawn_cards, function(pcard)
         if pcard:get_id() == 9 then
           -- Make drawn 9s polychrome
-          PkmnDip.defer(function() pcard:set_edition('e_polychrome', true) end, 0.4)
+          PkmnDip.defer(function() pcard:set_edition('e_polychrome', true) end, { delay = 0.4 })
           -- Earn $2 per drawn 9
           local earned = pokermon.ease_poke_dollars(card, "mega_altaria", card.ability.extra.money_mod)
           G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + earned
@@ -53,7 +53,7 @@ local mega_altaria = {
 }
 
 local function init()
-  if nacho_config.mega_altaria then
+  if PkmnDip.config.mega_altaria then
     SMODS.Joker:take_ownership('poke_altaria', { megas = { 'mega_altaria' } }, true)
     pokermon.add_to_family("altaria", "mega_altaria")
   end

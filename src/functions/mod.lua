@@ -1,0 +1,38 @@
+-- Mod Object Functions and Mod-Facing Functions
+
+SMODS.current_mod.set_debuff = function(card)
+  -- prevent debuffs
+  if card.ability.name == "mega_gallade" then return 'prevent_debuff' end
+  if card:get_id() == 9 and next(SMODS.find_card("j_poke_mega_altaria")) then return 'prevent_debuff' end
+  return false
+end
+
+SMODS.current_mod.calculate = function(self, context)
+  if G.GAME.modifiers.sinnoh_adv and context.starting_shop then
+    for _, starter in ipairs { 'turtwig', 'chimchar', 'piplup' } do
+      local shop_card = SMODS.create_card({set = 'Joker', key = 'j_nacho_'..starter, area = G.shop_jokers})
+      G.shop_jokers:emplace(shop_card)
+      create_shop_card_ui(shop_card)
+    end
+    G.GAME.modifiers.sinnoh_adv = nil
+  end
+end
+
+SMODS.current_mod.reset_game_globals = function(run_start)
+  if run_start then PkmnDip.utils.for_each(G.P_CENTERS, function(center) 
+    if center.nacho_config_key and not PkmnDip.config[center.nacho_config_key] then
+      G.GAME.banned_keys[center.key] = true
+    end
+  end) end
+end
+
+PkmnDip.attach_mega = function(center, target)
+  SMODS.Joker:take_ownership(target, {
+    megas = PkmnDip.config[center.name] and { center.name } or nil,
+    discovered = true,
+  }, true)
+  pokermon.add_to_family(target:sub(6, -1), center.name)
+end
+
+-- Talisman compat shorthand (still recommend just using Amulet atp but eh)
+to_number = to_number or function(x) return x end

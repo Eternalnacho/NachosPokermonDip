@@ -5,7 +5,8 @@ local dedenne = {
   loc_vars = function(self, info_queue, card)
     info_queue[#info_queue+1] = G.P_CENTERS.m_gold
     info_queue[#info_queue+1] = {set = 'Other', key = 'pickup'}
-    local num, den = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.den, 'dedenne')
+    local a = card.ability.extra
+    local num, den = SMODS.get_probability_vars(card, a.num, a.den, 'dedenne')
     return {vars = {num, den}}
   end,
   rarity = 1,
@@ -15,14 +16,13 @@ local dedenne = {
   ptype = "Lightning",
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if context.dedenne_trig and (#G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit)
-        and SMODS.pseudorandom_probability(card, 'dedenne', card.ability.extra.num, card.ability.extra.den, 'dedenne') then
-      G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
-      PkmnDip.defer(function()
-        local _card = SMODS.add_card({set = 'poke_item', area = G.consumeables, key = pokermon.generate_pickup_item_key('dedenne')})
-        SMODS.calculate_effect({message = localize('poke_plus_pokeitem'), colour = G.ARGS.LOC_COLOURS.item}, _card)
-        G.GAME.consumeable_buffer = 0
-      end)
+    local a = card.ability.extra
+    if context.dedenne_trig and SMODS.pseudorandom_probability(card, 'dedenne', a.num, a.den) then
+      local key = pokermon.generate_pickup_item_key('dedenne')
+      return {
+        remove_default_message = true,
+        func = function() pokermon.create_consumeable({set = 'poke_item', key = key}, true, card) end
+      }
     end
   end,
   attributes = {"enhancements", "chance", "item", "generation"}

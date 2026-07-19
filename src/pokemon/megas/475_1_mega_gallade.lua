@@ -43,7 +43,7 @@ local mega_gallade = {
 }
 
 local function init()
-  if nacho_config.mega_gallade then
+  if PkmnDip.config.mega_gallade then
     SMODS.Joker:take_ownership('poke_gallade', { megas = { 'mega_gallade' } }, true)
     pokermon.add_to_family("gallade", "mega_gallade")
   end

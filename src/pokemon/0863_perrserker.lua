@@ -1,10 +1,17 @@
+local utils = PkmnDip.utils
+local get_adj = pokermon.get_adjacent_jokers
+local is_metal = function(card) return pokermon.is_type(card, "Metal") end
+local energize = pokermon.energy.modify
+
 -- Meowth 52-2
 local galarian_meowth={
   name = "galarian_meowth",
-  config = {extra = { retriggers = 1, triggered = 0 }, evo_rqmt = 20},
+  config = { extra = { e_amount = 1, raised = 0, steel_scored = 0 }, evo_rqmt = 15 },
   loc_vars = function(self, info_queue, card)
+    local extra = card.ability.extra or self.config.extra
+    info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
     info_queue[#info_queue+1] = G.P_CENTERS.m_steel
-		return {vars = {card.ability.extra.retriggers, math.max(card.ability.evo_rqmt - card.ability.extra.triggered, 0)}}
+		return { vars = { extra.raised, math.max(0, self.config.evo_rqmt - extra.steel_scored) } }
   end,
   rarity = 2,
   cost = 6,
@@ -12,78 +19,86 @@ local galarian_meowth={
   stage = "Basic",
   ptype = "Metal",
   gen = 1,
-  perishable_compat = true,
   blueprint_compat = true,
-  eternal_compat = true,
   calculate = function(self, card, context)
-    if context.repetition and context.cardarea == G.hand and (next(context.card_effects[1]) or #context.card_effects > 1)
-    and SMODS.has_enhancement(context.other_card, "m_steel") then
-      if not context.blueprint then
-        local eor
-        for i = 1, #context.card_effects do
-          if context.card_effects[i].end_of_round and next(context.card_effects[i].end_of_round) then eor = true
-          elseif context.end_of_round and context.card_effects[i].jokers then eor = true end
+    local extra = card.ability.extra
+    if context.before and utils.any(context.scoring_hand, PkmnDip.con.is_steel) and not (extra.raised > 0) then
+      local other_metals = utils.filter(get_adj(card), is_metal)
+      utils.for_each(other_metals, function(j)
+        if pokermon.energy.is_energizable(j) then
+          energize(j, get_type(j), extra.e_amount, true)
         end
-        if not context.end_of_round or eor then
-          card.ability.extra.triggered = card.ability.extra.triggered + 1
-        end
-      end
-      return {
-        message = localize('k_again_ex'),
-        repetitions = card.ability.extra.retriggers,
-        card = card
-      }
+      end)
+      extra.raised = extra.raised + 1 -- Counting the number of times this effect activates
+      return { message = localize('poke_energized_ex'), colour = pokermon.colours.metal }
     end
-    return pokermon.scaling_evo(self, card, context, "j_nacho_perrserker", card.ability.extra.triggered, self.config.evo_rqmt)
+
+    if context.individual and not context.end_of_round and context.cardarea == G.play and not context.blueprint
+        and PkmnDip.con.is_steel(context.other_card) then
+      extra.steel_scored = extra.steel_scored + 1
+    end
+
+    if context.end_of_round and context.main_eval and extra.raised > 0 then
+      local other_metals = utils.filter(get_adj(card), is_metal)
+      utils.for_each(other_metals, function(j) 
+        if pokermon.energy.is_energizable(j) then
+          energize(j, get_type(j), -extra.e_amount * extra.raised, true) 
+        end
+      end)
+      extra.raised = 0
+      return { message = localize('k_reset'), colour = pokermon.colours.metal }
+    end
+    return pokermon.scaling_evo(self, card, context, "j_nacho_perrserker", extra.steel_scored, self.config.evo_rqmt)
   end,
-  attributes = {"enhancements", "retrigger", "condition_evo"}
+  attributes = {"enhancements", "energy", "condition_evo"}
 }
 
 -- Perrserker 863
 local perrserker = {
   name = "perrserker",
-  config = { extra = { Xmult_multi = 1.5, retriggers = 1 } },
+  config = { extra = { e_amount = 1, raised = 0, b_raised = 0, limit = 2 } },
   loc_vars = function(self, info_queue, card)
+    local extra = card.ability.extra or self.config.extra
+    info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
     info_queue[#info_queue+1] = G.P_CENTERS.m_steel
-    local total_xmult = 1.5
-    local total_energy = 0
-    PkmnDip.utils.for_each(SMODS.find_card('j_nacho_perrserker'), function(v) total_energy = total_energy + pokermon.energy.get_total_energy(v) end)
-    total_xmult = total_xmult + total_xmult * .05 * total_energy
-    return { vars = { total_xmult } }
+    return { vars = { extra.b_raised, extra.limit } }
   end,
   rarity = "poke_safari",
   cost = 10,
   stage = "One",
   ptype = "Metal",
-  perishable_compat = true,
   blueprint_compat = true,
-  eternal_compat = true,
   calculate = function(self, card, context)
-    if context.repetition and context.cardarea == G.hand and (next(context.card_effects[1]) or #context.card_effects > 1) 
-    and SMODS.has_enhancement(context.other_card, "m_steel") then
-      return {
-        message = not context.retrigger_joker and localize('k_again_ex'),
-        repetitions = card.ability.extra.retriggers,
-        card = card
-      }
+    local extra = card.ability.extra
+    if context.before and utils.any(context.scoring_hand, PkmnDip.con.is_steel) and not (extra.b_raised >= extra.limit) then
+      local other_metals = utils.filter(get_adj(card), is_metal)
+      local amount = math.min(3, #utils.filter(context.scoring_hand, PkmnDip.con.is_steel))
+      utils.for_each(other_metals, function(j)
+        if pokermon.energy.is_energizable(j) then
+          energize(j, get_type(j), extra.e_amount * amount, true)
+        end
+      end)
+      extra.raised = extra.raised + amount -- Counting the number of times this effect activates
+      if not context.blueprint then extra.b_raised = extra.b_raised + amount end -- same as above but not counting blueprints
+      return { message = localize('poke_energized_ex'), colour = pokermon.colours.metal }
+    end
+
+    if context.after and context.main_eval and extra.raised > 0 then
+      local other_metals = utils.filter(get_adj(card), is_metal)
+      utils.for_each(other_metals, function(j)
+        if pokermon.energy.is_energizable(j) then
+          energize(j, get_type(j), -extra.e_amount * extra.raised, true) 
+        end
+      end)
+      extra.raised = 0; extra.b_raised = 0
+      return { message = localize('k_reset'), colour = pokermon.colours.metal }
     end
   end,
-  attributes = {"enhancements", "retrigger", "modify_card", "energy"}
+  attributes = {"enhancements", "modify_card", "energy"}
 }
 
 local init = function()
-  get_h_x_mult_ref = Card.get_chip_h_x_mult
-  Card.get_chip_h_x_mult = function(self)
-    local data = self.ability.h_x_mult
-    if next(SMODS.find_card('j_nacho_perrserker')) and SMODS.has_enhancement(self, 'm_steel') then
-      local total_energy = 0
-      PkmnDip.utils.for_each(SMODS.find_card('j_nacho_perrserker'), function(v) total_energy = total_energy + pokermon.energy.get_total_energy(v) end)
-      self.ability.h_x_mult = (data + self.ability.h_x_mult * .05 * total_energy) or 1
-    end
-    local ret = get_h_x_mult_ref(self)
-    self.ability.h_x_mult = data
-    return ret
-  end
+
 end
 
 return {

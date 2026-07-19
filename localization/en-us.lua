@@ -1,22 +1,6 @@
 return {
   descriptions = {
     Joker = {
-      j_nacho_galarian_meowth = {
-        name = "{s:0.6}Galarian{}Meowth",
-        text = {
-          "Retrigger each {C:attention}held Steel{} card",
-          "{C:inactive,s:0.8}(Evolves after retriggering {C:attention,s:0.8}#2# Steel{C:inactive,s:0.8} cards)",
-        }
-      },
-      j_nacho_hisuian_sneasel = {
-        name = "{s:0.6}Hisuian{}Sneasel",
-        text = {
-          "If played hand is a",
-          "single {C:attention}enhanced{} card,",
-          "it becomes {C:attention}Toxic{}",
-          "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Dawn Stone{C:inactive,s:0.8})",
-        }
-      },
       j_nacho_turtwig = {
         name = "Turtwig",
         text = {
@@ -292,9 +276,9 @@ return {
       j_nacho_goomy = {
         name = "Goomy",
         text = {
-          "If scoring hand contains a {C:attention}Flush{},",
-          "scoring cards and cards {C:attention}held in hand{}",
-          "with the {C:attention}same suit{} gain {C:red}+#1#{} Mult",
+          "If played hand contains a {C:attention}Flush{},",
+          "{C:attention}scored{} and {C:attention}held{} cards with the",
+          "{C:attention}same suit{} gain {C:red}+#1#{} Mult",
           "{C:inactive,s:0.8}(Evolves after playing {C:attention,s:0.8}#2# {C:inactive,s:0.8}#3#)",
           "{C:inactive,s:0.8}(Evolves after playing a {C:attention,s:0.8}Flush House{C:inactive,s:0.8})",
         }
@@ -302,10 +286,10 @@ return {
       j_nacho_sliggoo = {
         name = "Sliggoo",
         text = {
-          "If played hand is a {C:attention}Flush{}, scoring cards",
-          "and cards {C:attention}held in hand{} with",
-          "the {C:attention}same suit{} gain {C:red}+#1#{} Mult for each",
-          "unique {C:attention}rank{} among scoring cards",
+          "If played hand is a {C:attention}Flush{},",
+          "{C:attention}scored{} and {C:attention}held{} cards with the",
+          "{C:attention}same suit{} gain {C:red}+#1#{} Mult for",
+          "each unique {C:attention}rank{} in poker hand",
           "{C:inactive,s:0.8}(Evolves after playing {C:attention,s:0.8}#2# {C:inactive,s:0.8}#3#)",
         }
       },
@@ -324,10 +308,10 @@ return {
       j_nacho_goodra = {
         name = "Goodra",
         text = {
-          "If played hand is a {C:attention}Flush{}, scoring cards",
-          "and cards {C:attention}held in hand{} with",
-          "the {C:attention}same suit{} gain {X:red,C:white}X#1#{} Mult for each",
-          "unique {C:attention}rank{} among scoring cards",
+          "If played hand is a {C:attention}Flush{},",
+          "{C:attention}scored{} and {C:attention}held{} cards with the",
+          "{C:attention}same suit{} gain {X:red,C:white}X#1#{} Mult for",
+          "each unique {C:attention}rank{} in poker hand",
         }
       },
       j_nacho_hisuian_goodra = {
@@ -373,6 +357,16 @@ return {
           "When this Joker is {C:attention}Active{},",
           "scoring cards give {X:red,C:white}X#1#{} Mult",
           "{C:inactive}(#2#){}",
+        }
+      },
+      j_nacho_dhelmise = {
+        name = "Dhelmise",
+        text = {
+          "This Joker scores as a",
+          "{C:attention}held Steel{} card",
+          "{br:2}ERROR - CONTACT STEAK",
+          "{C:poke_pink}Energy{} on this Joker applies",
+          "to {C:attention}held Steel{} cards",
         }
       },
       j_nacho_skwovet = {
@@ -427,13 +421,69 @@ return {
           "is {C:attention}destroyed{}, earn {C:money}$#1#{}",
         }
       },
+      j_nacho_dipplin = {
+        name = "Dipplin",
+        text = {
+          "Whenever a {C:attention}playing card{} is {C:attention}destroyed{},",
+          "add a {C:attention}Wild copy{} of it to your {C:attention}deck{}",
+          "If the {C:attention}destroyed{} card was {C:attention}Wild{},",
+          "add {C:attention}2 copies{} instead",
+          "{C:inactive,s:0.8}(Evolves when deck is >= 25% #1#{C:attention,s:0.8}Wild{C:inactive,s:0.8} cards)"
+        }
+      },
+      j_nacho_hydrapple = {
+        name = "Hydrapple",
+        text = {
+          "Whenever a {C:attention}playing card{} is {C:attention}destroyed{},",
+          "add a {C:attention}Wild copy{} of it to your {C:attention}deck{}",
+          "and this Joker gains {X:mult,C:white}X#2#{} Mult",
+          "{br:2.5}ERROR - CONTACT STEAK",
+          "If the {C:attention}destroyed{} card was {C:attention}Wild{},",
+          "gain {X:mult,C:white}X#3#{} Mult instead",
+          "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult)",
+        }
+      },
+      j_nacho_impidimp = {
+        name = "Impidimp",
+        text = {
+          "Shuffle Shuffle",
+        }
+      },
+      j_nacho_morgrem = {
+        name = "Morgrem",
+        text = {
+        }
+      },
+      j_nacho_grimmsnarl = {
+        name = "Grimmsnarl",
+        text = {
+        }
+      },
+      j_nacho_galarian_meowth = {
+        name = "{s:0.6}Galarian{}Meowth",
+        text = {
+          "Adjacent {X:poke_metal,C:white}Metal{} Jokers score",
+          "with {C:poke_pink}+1 Energy{} if poker hand",
+          "contains a {C:attention}Steel{} card",
+          "{C:inactive,s:0.8}(Evolves after scoring {C:attention,s:0.8}#2# Steel{C:inactive,s:0.8} cards)",
+        }
+      },
       j_nacho_perrserker = {
         name = "Perrserker",
         text = {
-          "Retrigger each {C:attention}held Steel{} card",
-          "{br:2}ERROR - CONTACT STEAK",
-          "{C:poke_pink}Energy{} on this Joker applies to",
-          "{C:attention}held Steel{} cards",
+          "Adjacent {X:poke_metal,C:white}Metal{} Jokers score",
+          "with {C:poke_pink}+1 Energy{} for each",
+          "{C:attention}Steel{} card in poker hand",
+          "{C:inactive}(Max of 3){}"
+        }
+      },
+      j_nacho_hisuian_sneasel = {
+        name = "{s:0.6}Hisuian{}Sneasel",
+        text = {
+          "If played hand is a",
+          "single {C:attention}enhanced{} card,",
+          "it becomes {C:attention}Toxic{}",
+          "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Dawn Stone{C:inactive,s:0.8})",
         }
       },
       j_nacho_sneasler = {
@@ -527,14 +577,43 @@ return {
           "a card with {C:red}Mult{}"
         }
       },
-      j_nacho_dipplin = {
-        name = "Dipplin",
+      j_nacho_terapagos = {
+        name = "Terapagos",
         text = {
-          "Whenever a {C:attention}playing card{} is {C:attention}destroyed{},",
-          "add a {C:attention}Wild copy{} of it to your {C:attention}deck{}",
-          "If the {C:attention}destroyed{} card was {C:attention}Wild{},",
-          "add {C:attention}2 copies{} instead",
-          "{C:inactive,s:0.8}(Evolves when deck is >= 25% #1#{C:attention,s:0.8}Wild{C:inactive,s:0.8} cards)"
+          "{C:attention}Holding{} {C:dark_edition}Negative{} {C:poke_item}Tera Orb{}",
+          "Creates a {C:dark_edition}Negative{} {C:poke_item}Tera Orb{}",
+          "at end of round",
+          "{C:poke_pink}Energizes{} all Jokers upon",
+          "transforming",
+          "{C:inactive,s:0.8}(Transforms after using a",
+          "{C:poke_item,s:0.8}Tera Orb{C:inactive,s:0.8} on Terapagos)",
+        }
+      },
+      j_nacho_terapagos_terastal = {
+        name = "Terapagos-Terastal",
+        text = {
+          "{C:poke_pink}+3{} Energy Limit",
+          "Using a {C:poke_item}Tera Orb{} on Terapagos",
+          "applies a {C:poke_item}Tera Orb{} to each Joker",
+          "{br:2.5}ERROR - CONTACT STEAK",
+          "{X:mult,C:white}X#1#{} Mult for each Joker with",
+          "the same type as Terapagos",
+          "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)",
+          "{C:inactive,s:0.8}(Transforms after using a {C:poke_item,s:0.8}Tera Orb{}",
+          "{C:inactive,s:0.8}on Terapagos {C:inactive,s:0.8}if it has 6+ Energy)",
+        }
+      },
+      j_nacho_terapagos_stellar = {
+        name = "Terapagos-Stellar",
+        text = {
+          "{C:poke_pink}+5{} Energy Limit",
+          "Each Joker with a Type Sticker",
+          "becomes {C:nacho_sg1}S{C:nacho_sg2}t{C:nacho_sg3}e{C:nacho_sg4}l{C:nacho_sg5}l{C:nacho_sg6}a{C:nacho_sg7}r{} Type",
+          "Using a {C:poke_item}Tera Orb{} on Terapagos",
+          "applies a {C:poke_item}Tera Orb{} to each Joker",
+          "{br:2.5}ERROR - CONTACT STEAK",
+          "Each {C:nacho_sg1}S{C:nacho_sg2}t{C:nacho_sg3}e{C:nacho_sg4}l{C:nacho_sg5}l{C:nacho_sg6}a{C:nacho_sg7}r{} Joker gives {X:mult,C:white}X#1#{} Mult",
+          "for each Energy applied to it",
         }
       },
       j_nacho_okidogi = {
@@ -573,57 +652,6 @@ return {
           "{br:2.5}ERROR - CONTACT STEAK",
           "{C:attention}Lucky{} card triggers",
           "scale {C:attention}Toxic{} cards",
-        }
-      },
-      j_nacho_hydrapple = {
-        name = "Hydrapple",
-        text = {
-          "Whenever a {C:attention}playing card{} is {C:attention}destroyed{},",
-          "add a {C:attention}Wild copy{} of it to your {C:attention}deck{}",
-          "and this Joker gains {X:mult,C:white}X#2#{} Mult",
-          "{br:2.5}ERROR - CONTACT STEAK",
-          "If the {C:attention}destroyed{} card was {C:attention}Wild{},",
-          "gain {X:mult,C:white}X#3#{} Mult instead",
-          "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult)",
-        }
-      },
-      j_nacho_terapagos = {
-        name = "Terapagos",
-        text = {
-          "{C:attention}Holding{} {C:dark_edition}Negative{} {C:poke_item}Tera Orb{}",
-          "Creates a {C:dark_edition}Negative{} {C:poke_item}Tera Orb{}",
-          "at end of round",
-          "{C:poke_pink}Energizes{} all Jokers upon",
-          "transforming",
-          "{C:inactive,s:0.8}(Transforms after using a",
-          "{C:poke_item,s:0.8}Tera Orb{C:inactive,s:0.8} on Terapagos)",
-        }
-      },
-      j_nacho_terapagos_terastal = {
-        name = "Terapagos-Terastal",
-        text = {
-          "{C:poke_pink}+3{} Energy Limit",
-          "Using a {C:poke_item}Tera Orb{} on Terapagos",
-          "applies a {C:poke_item}Tera Orb{} to each Joker",
-          "{br:2.5}ERROR - CONTACT STEAK",
-          "{X:mult,C:white}X#1#{} Mult for each Joker with",
-          "the same type as Terapagos",
-          "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)",
-          "{C:inactive,s:0.8}(Transforms after using a {C:poke_item,s:0.8}Tera Orb{}",
-          "{C:inactive,s:0.8}on Terapagos {C:inactive,s:0.8}if it has 6+ Energy)",
-        }
-      },
-      j_nacho_terapagos_stellar = {
-        name = "Terapagos-Stellar",
-        text = {
-          "{C:poke_pink}+5{} Energy Limit",
-          "Each Joker with a Type Sticker",
-          "becomes {C:nacho_sg1}S{C:nacho_sg2}t{C:nacho_sg3}e{C:nacho_sg4}l{C:nacho_sg5}l{C:nacho_sg6}a{C:nacho_sg7}r{} Type",
-          "Using a {C:poke_item}Tera Orb{} on Terapagos",
-          "applies a {C:poke_item}Tera Orb{} to each Joker",
-          "{br:2.5}ERROR - CONTACT STEAK",
-          "Each {C:nacho_sg1}S{C:nacho_sg2}t{C:nacho_sg3}e{C:nacho_sg4}l{C:nacho_sg5}l{C:nacho_sg6}a{C:nacho_sg7}r{} Joker gives {X:mult,C:white}X#1#{} Mult",
-          "for each Energy applied to it",
         }
       },
       j_nacho_pecharunt = {
@@ -718,36 +746,17 @@ return {
           "every type",
         },
       },
-      
       -- Rank lists for most common ranks
-      rank_lists_1 = {
+      pkmndip_rank_lists = {
         name = "Common Ranks",
-        text = {
-          '{C:attention}#1#{}',
-        }
-      },
-      rank_lists_2 = {
-        name = "Common Ranks",
-        text = {
-          '{C:attention}#1#{}',
-          '{C:attention}#2#{}',
-        }
-      },
-      rank_lists_3 = {
-        name = "Common Ranks",
-        text = {
-          '{C:attention}#1#{}',
-          '{C:attention}#2#{}',
-          '{C:attention}#3#{}',
-        }
+        text = { 'potato' }
       },
       -- Received Card tooltip for Passimian
       received_card = {
         name = "Received Card",
-        text = {
-          '#1#',
-        }
+        text = { '#1#' }
       },
+      -- Applin evo tooltip
       apple_evolutions = {
         name = "Evolutions",
         text = {
@@ -779,9 +788,7 @@ return {
       -- Mod Req tooltip for config menu
       modname_tooltip = {
         name = "Required Mod",
-        text = {
-          '{C:attention}#1#{}',
-        }
+        text = { '{C:attention}#1#{}' }
       },
     },
   },

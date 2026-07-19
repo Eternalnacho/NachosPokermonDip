@@ -63,10 +63,10 @@ for _ = 1, 2 do
 end
 
 local list = {}
-if nacho_config.piplup and nacho_config.chimchar and nacho_config.turtwig then list[#list + 1] = sinnoh_adv end
-if nacho_config.skwovet then list[#list + 1] = hibernation end
-if nacho_config.carbink then list[#list + 1] = gems end
-if nacho_config.goomy then list[#list + 1] = goomygoomy end
+if PkmnDip.config.piplup and PkmnDip.config.chimchar and PkmnDip.config.turtwig then list[#list + 1] = sinnoh_adv end
+if PkmnDip.config.skwovet then list[#list + 1] = hibernation end
+if PkmnDip.config.carbink then list[#list + 1] = gems end
+if PkmnDip.config.goomy then list[#list + 1] = goomygoomy end
 
 return {
   name = "Challenges",
