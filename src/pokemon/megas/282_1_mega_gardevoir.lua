@@ -1,3 +1,5 @@
+local has_energy = function(joker) return pokermon.energy.get_total_energy(joker) > 0 end
+
 -- Mega Gardevoir 282-1
 local mega_gardevoir = {
   name = "mega_gardevoir",
@@ -25,9 +27,9 @@ local mega_gardevoir = {
     end
     -- Count energized jokers
     if G.jokers and G.jokers.cards then
-      xmult = xmult + a.Xmult_mod * #PkmnDip.utils.filter(G.jokers.cards, function(joker) return pokermon.energy.get_total_energy(joker) > 0 end)
+      xmult = xmult + a.Xmult_mod * #PkmnDip.utils.filter(G.jokers.cards, has_energy)
     end
-    return {vars = { a.e_limit, a.Xmult_mod, xmult }}
+    return { vars = { a.e_limit, a.Xmult_mod, xmult } }
   end,
   rarity = "poke_mega",
   cost = 12,
@@ -43,15 +45,13 @@ local mega_gardevoir = {
       local xmult = a.Xmult
       -- Count hand levels above 1
       for _, v in pairs(G.GAME.hands) do
-        local hand_level = (SMODS.Mods["Talisman"] or {}).can_load and (to_number(v.level) - 1) or (v.level - 1)
+        local hand_level = to_number(v.level) - 1
         xmult = xmult + math.max(hand_level * a.Xmult_mod, 0)
       end
       -- Count energized jokers
-      xmult = xmult + a.Xmult_mod * #PkmnDip.utils.filter(G.jokers.cards, function(joker) return pokermon.energy.get_total_energy(joker) > 0 end)
+      xmult = xmult + a.Xmult_mod * #PkmnDip.utils.filter(G.jokers.cards, has_energy)
 
-      if xmult > 1 then
-        return { xmult = xmult }
-      end
+      if xmult > 1 then return { xmult = xmult } end
     end
   end,
   attach_mega = function(self) PkmnDip.attach_mega(self, 'poke_gardevoir') end
