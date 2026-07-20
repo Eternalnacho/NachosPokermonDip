@@ -276,7 +276,7 @@ return {
       j_nacho_goomy = {
         name = "Goomy",
         text = {
-          "If played hand contains a {C:attention}Flush{},",
+          "If poker hand contains a {C:attention}Flush{},",
           "{C:attention}scored{} and {C:attention}held{} cards with the",
           "{C:attention}same suit{} gain {C:red}+#1#{} Mult",
           "{C:inactive,s:0.8}(Evolves after playing {C:attention,s:0.8}#2# {C:inactive,s:0.8}#3#)",
@@ -286,7 +286,7 @@ return {
       j_nacho_sliggoo = {
         name = "Sliggoo",
         text = {
-          "If played hand is a {C:attention}Flush{},",
+          "If {C:attention}poker hand{} is a {C:attention}Flush{},",
           "{C:attention}scored{} and {C:attention}held{} cards with the",
           "{C:attention}same suit{} gain {C:red}+#1#{} Mult for",
           "each unique {C:attention}rank{} in poker hand",
@@ -296,7 +296,7 @@ return {
       j_nacho_hisuian_sliggoo = {
         name = "{s:0.6}Hisuian{}Sliggoo",
         text = {
-          "If played hand is a {C:attention}Flush House{},",
+          "If {C:attention}poker hand{} is a {C:attention}Flush House{},",
           "creates a {C:poke_item}Metal Coat{}",
           "{br:2.5}ERROR - CONTACT STEAK",
           "Creates another {C:poke_item}Metal Coat{} if",
@@ -308,7 +308,7 @@ return {
       j_nacho_goodra = {
         name = "Goodra",
         text = {
-          "If played hand is a {C:attention}Flush{},",
+          "If {C:attention}poker hand{} is a {C:attention}Flush{},",
           "{C:attention}scored{} and {C:attention}held{} cards with the",
           "{C:attention}same suit{} gain {X:red,C:white}X#1#{} Mult for",
           "each unique {C:attention}rank{} in poker hand",
@@ -317,10 +317,10 @@ return {
       j_nacho_hisuian_goodra = {
         name = "{s:0.6}Hisuian{}Goodra",
         text = {
-          "If played hand is a {C:attention}Flush House{},",
+          "If {C:attention}poker hand{} is a {C:attention}Flush House{},",
           "creates a {C:poke_item}Metal Coat{}",
           "{br:2.5}ERROR - CONTACT STEAK",
-          "If played hand is a {C:attention}Flush House{},",
+          "If {C:attention}poker hand{} is a {C:attention}Flush House{},",
           "{C:attention}Steel{} cards {C:attention}held in hand{}",
           "give {X:mult,C:white}X{} Mult equal to one third of",
           "the difference in scoring {C:attention}ranks{}",
@@ -535,7 +535,7 @@ return {
       j_nacho_frigibax = {
         name = "Frigibax",
         text = {
-          "When a {C:attention}Five of a Kind{} is played,",
+          "If {C:attention}poker hand{} is a {C:attention}Five of a Kind{},",
           "{C:attention}held{} cards become {C:dark_edition}Foil{}",
           "{br:2.5}ERROR - CONTACT STEAK",
           "The first card with {C:red}Mult{}",
@@ -546,7 +546,7 @@ return {
       j_nacho_arctibax = {
         name = "Arctibax",
         text = {
-          "When a {C:attention}Five of a Kind{} is played,",
+          "If {C:attention}poker hand{} is a {C:attention}Five of a Kind{},",
           "{C:attention}held{} cards become {C:dark_edition}Foil{}",
           "{br:2.5}ERROR - CONTACT STEAK",
           "The first two cards with {C:red}Mult{}",
@@ -557,7 +557,7 @@ return {
       j_nacho_baxcalibur = {
         name = "Baxcalibur",
         text = {
-          "When a {C:attention}Five of a Kind{} is played,",
+          "If {C:attention}poker hand{} is a {C:attention}Five of a Kind{},",
           "scoring cards give {X:mult,C:white}X#1#{} Mult",
           "for each {C:dark_edition}Foil{} card in full deck",
           "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult){}",
