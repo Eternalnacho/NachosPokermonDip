@@ -1,5 +1,3 @@
-local is_grass = function(j) return pokermon.is_type(j, "Grass") end
-
 local bounsweet = {
   name = "bounsweet",
   config = { extra = { mult = 3, rounds = 4 } },
@@ -43,11 +41,10 @@ local steenee = {
   blueprint_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.joker_main then
-      local count = #pokermon.find_pokemon_type("Grass")
-      return { mult = card.ability.extra.mult * count }
-    end
     local grass_count = #pokermon.find_pokemon_type("Grass")
+    if context.joker_main then
+      return { mult = card.ability.extra.mult * grass_count }
+    end
     return pokermon.scaling_evo(self, card, context, "j_nacho_tsareena", grass_count, self.config.evo_rqmt)
   end
 }
