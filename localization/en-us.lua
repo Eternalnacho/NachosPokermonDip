@@ -100,7 +100,7 @@ return {
           "{X:attention,C:white}2+{} : {C:attention}First{} scoring card in {C:attention}poker hand{} becomes {C:attention}Steel{}",
           "{X:attention,C:white}3+{} : {C:attention}Held Steel{} cards give {C:chips}+#2#{} Chips for each played {C:attention}#1#{}",
           "{C:inactive,s:0.8}(Trigger {X:attention,C:white,s:0.8}3+{C:inactive,s:0.8} ability {C:attention,s:0.8}#3#{C:inactive,s:0.8} times to evolve)"
-        } 
+        }
       },
       j_nacho_bastiodon = {
         name = 'Bastiodon',
@@ -110,7 +110,7 @@ return {
           "{X:attention,C:white}2+{} : {C:attention}First{} scoring card in {C:attention}poker hand{} becomes {C:attention}Steel{}",
           "{X:attention,C:white}3+{} : {C:attention}Held Steel{} cards give {C:chips}+#2#{} Chips for each played {C:attention}#1#{}",
           "{X:attention,C:white}4+{} : {C:attention}Held ranks{} below {C:attention}#1#{} become {C:attention}Steel{}",
-        } 
+        }
       },
       j_nacho_bronzor = {
         name = "Bronzor",
@@ -352,7 +352,7 @@ return {
       j_nacho_turtonator = {
         name = "Turtonator",
         text = {
-          "{C:attention}Shell Trap",
+          "Applies {C:attention}Shell Trap",
           "{br:2}ERROR - CONTACT STEAK",
           "When this Joker is {C:attention}Active{},",
           "scoring cards give {X:red,C:white}X#1#{} Mult",
@@ -581,8 +581,9 @@ return {
         name = "Terapagos",
         text = {
           "{C:attention}Holding{} {C:dark_edition}Negative{} {C:poke_item}Tera Orb{}",
-          "Creates a {C:dark_edition}Negative{} {C:poke_item}Tera Orb{}",
-          "at end of round",
+          "Creates a {C:dark_edition}Negative{}",
+          "{C:poke_item}Tera Orb{} at end of round",
+          "{br:2.5}ERROR - CONTACT STEAK",
           "{C:poke_pink}Energizes{} all Jokers upon",
           "transforming",
           "{C:inactive,s:0.8}(Transforms after using a",
@@ -592,12 +593,10 @@ return {
       j_nacho_terapagos_terastal = {
         name = "Terapagos-Terastal",
         text = {
-          "{C:poke_pink}+3{} Energy Limit",
-          "Using a {C:poke_item}Tera Orb{} on Terapagos",
-          "applies a {C:poke_item}Tera Orb{} to each Joker",
+          "{C:poke_pink}+3{} Energy Limit, {C:attention}Tera Shell{}",
           "{br:2.5}ERROR - CONTACT STEAK",
           "{X:mult,C:white}X#1#{} Mult for each Joker with",
-          "the same type as Terapagos",
+          "the same {C:poke_pink}Type{} as Terapagos",
           "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)",
           "{C:inactive,s:0.8}(Transforms after using a {C:poke_item,s:0.8}Tera Orb{}",
           "{C:inactive,s:0.8}on Terapagos {C:inactive,s:0.8}if it has 6+ Energy)",
@@ -606,14 +605,12 @@ return {
       j_nacho_terapagos_stellar = {
         name = "Terapagos-Stellar",
         text = {
-          "{C:poke_pink}+5{} Energy Limit",
-          "Each Joker with a Type Sticker",
-          "becomes {C:nacho_sg1}S{C:nacho_sg2}t{C:nacho_sg3}e{C:nacho_sg4}l{C:nacho_sg5}l{C:nacho_sg6}a{C:nacho_sg7}r{} Type",
-          "Using a {C:poke_item}Tera Orb{} on Terapagos",
-          "applies a {C:poke_item}Tera Orb{} to each Joker",
+          "{C:poke_pink}+5{} Energy Limit, {C:attention}Teraform Zero{}",
+          "Jokers with a {C:poke_pink}Type{C:poke_pink} Sticker{}",
+          "applied become {C:nacho_sg1}S{C:nacho_sg2}t{C:nacho_sg3}e{C:nacho_sg4}l{C:nacho_sg5}l{C:nacho_sg6}a{C:nacho_sg7}r{}",
           "{br:2.5}ERROR - CONTACT STEAK",
-          "Each {C:nacho_sg1}S{C:nacho_sg2}t{C:nacho_sg3}e{C:nacho_sg4}l{C:nacho_sg5}l{C:nacho_sg6}a{C:nacho_sg7}r{} Joker gives {X:mult,C:white}X#1#{} Mult",
-          "for each Energy applied to it",
+          "{C:nacho_sg1}S{C:nacho_sg2}t{C:nacho_sg3}e{C:nacho_sg4}l{C:nacho_sg5}l{C:nacho_sg6}a{C:nacho_sg7}r{} Jokers give {X:mult,C:white}X#1#{} Mult",
+          "for each {C:poke_pink}Energy{} applied to them",
         }
       },
       j_nacho_okidogi = {
@@ -701,6 +698,17 @@ return {
           "random non-{C:attention}Wild{} {C:attention}held{} card",
         },
       },
+      c_poke_teraorb_stellar = {
+        name = "Tera Orb",
+        text = {
+            "{C:attention}Type Changer:{} {B:1,V:2}Stellar{}",
+            "{br:2}ERROR - CONTACT STEAK",
+            "{C:poke_pink}Energize{} leftmost or",
+            "selected Joker if it",
+            "is already {B:3,V:4}#1#{} {C:poke_pink}Type{}",
+            "{C:inactive,s:0.8}({C:poke_pink,s:0.8}Type{C:inactive,s:0.8} changes with every discard){}",
+        },
+      },
     },
     Stake = {
       stake_nacho_elite_stake = {
@@ -725,18 +733,35 @@ return {
       incubator = {
         name = "Fast Incubator",
         text = {
-            "Created {C:attention}Mystery Eggs{}",
-            "will always hatch in {C:attention}1{} round",
+          "Created {C:attention}Mystery Eggs{}",
+          "will always hatch in {C:attention}1{} round",
         }
       },
       -- Shell Trap tooltip for Turtonator
       shell_trap = {
         name = "Shell Trap",
         text = {
-            "Ability activates when",
-            "a {C:attention}Joker{}, {C:attention}playing card{} or",
-            "{C:attention}poker hand{} is debuffed"
+          "Ability activates when",
+          "a {C:attention}Joker{}, {C:attention}playing card{} or",
+          "{C:attention}poker hand{} is debuffed"
         }
+      },
+      -- Terapagos Tera Orb clause
+      tera_shell = {
+        name = "Tera Shell",
+        text = {
+          "Using a {C:poke_item}Tera Orb{} on",
+          "Terapagos applies a",
+          "{C:poke_item}Tera Orb{} to each Joker",
+        } 
+      },
+      teraform_zero = {
+        name = "Teraform Zero",
+        text = {
+          "Using a {C:nacho_sg1}T{C:nacho_sg2}e{C:nacho_sg3}r{C:nacho_sg4}a{C:nacho_sg6} O{C:nacho_sg7}r{C:nacho_sg8}b{} on",
+          "Terapagos applies a",
+          "{C:nacho_sg1}T{C:nacho_sg2}e{C:nacho_sg3}r{C:nacho_sg4}a{C:nacho_sg6} O{C:nacho_sg7}r{C:nacho_sg8}b{} to each Joker",
+        } 
       },
       -- Stellar Type tooltip
       stellar_type = {
@@ -745,6 +770,14 @@ return {
           "{C:nacho_sg1}S{C:nacho_sg2}t{C:nacho_sg3}e{C:nacho_sg4}l{C:nacho_sg5}l{C:nacho_sg6}a{C:nacho_sg7}r{} Jokers are",
           "every type",
         },
+      },
+      -- Stellar Type Changer tooltip
+      typechangerstellar = {
+        name = "Type Changer",
+        text = {
+          "Applies a {C:nacho_sg1}S{C:nacho_sg2}t{C:nacho_sg3}e{C:nacho_sg4}l{C:nacho_sg5}l{C:nacho_sg6}a{C:nacho_sg7}r{} sticker",
+          "to leftmost or selected Joker"
+        }
       },
       -- Rank lists for most common ranks
       pkmndip_rank_lists = {
@@ -760,29 +793,29 @@ return {
       apple_evolutions = {
         name = "Evolutions",
         text = {
-            "{C:attention}Tart Apple{} - {X:poke_grass,C:white}Flapple{}",
-            "{C:attention}Sweet Apple{} - {X:poke_fire,C:white}Appletun{}",
-            "{C:attention}Syrupy Apple{} - {X:poke_dragon,C:white}Dipplin{}",
+          "{C:attention}Tart Apple{} - {X:poke_grass,C:white}Flapple{}",
+          "{C:attention}Sweet Apple{} - {X:poke_fire,C:white}Appletun{}",
+          "{C:attention}Syrupy Apple{} - {X:poke_dragon,C:white}Dipplin{}",
         }
       },
       -- Toxic Chain tooltip for Loyal Three
       toxic_chain = {
         name = "Toxic Chain",
         text = {
-            "The first time this",
-            "Joker enters a blind,",
-            "converts {C:attention}4{} cards",
-            "in hand to {C:attention}Toxic{}",
+          "The first time this",
+          "Joker enters a blind,",
+          "converts {C:attention}4{} cards",
+          "in hand to {C:attention}Toxic{}",
         }
       },
       -- Malignant Chain tooltip for Pecharunt
       malignant_chain = {
         name = "Malignant Chain",
         text = {
-            "The first time this",
-            "Joker enters a blind,",
-            "converts {C:attention}8{} cards",
-            "in hand to {C:attention}Toxic 8s{}",
+          "The first time this",
+          "Joker enters a blind,",
+          "converts {C:attention}8{} cards",
+          "in hand to {C:attention}Toxic 8s{}",
         }
       },
       -- Mod Req tooltip for config menu

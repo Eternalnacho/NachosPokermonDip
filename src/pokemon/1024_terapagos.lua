@@ -34,7 +34,8 @@ local terapagos_terastal={
   name = "terapagos_terastal",
   config = {extra = {Xmult_mod = 0.4, changedtype = "Colorless"}},
   loc_vars = function(self, info_queue, card)
-    local count = not pokermon.is_in_collection(card) and (#pokermon.find_pokemon_type(card.ability.extra.ptype) - 1) or 0
+    local count = not pokermon.is_in_collection(card) and #pokermon.find_pokemon_type(card.ability.extra.ptype, card) or 0
+    info_queue[#info_queue+1] = {set = 'Other', key = 'tera_shell'}
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_teraorb
     return {vars = {card.ability.extra.Xmult_mod, math.max(1, 1 + card.ability.extra.Xmult_mod * count)}}
   end,
@@ -57,7 +58,7 @@ local terapagos_terastal={
       end
     end
     if context.joker_main then
-      local count = #pokermon.find_pokemon_type(card.ability.extra.ptype) - 1
+      local count = #pokermon.find_pokemon_type(card.ability.extra.ptype, card)
       return{
         xmult = 1 + card.ability.extra.Xmult_mod * count
       }
@@ -80,27 +81,15 @@ local terapagos_terastal={
 local terapagos_stellar={
   name = "terapagos_stellar",
   poke_custom_prefix = "nacho",
-  pos = {x = 4, y = 6},
-  soul_pos = {x = 0, y = 0,
-    draw = function(card, scale_mod, rotate_mod)
-      local _c, _f = card.children.center, card.children.floating_sprite
-      -- this little for loop gives the floating sprite the right parameters to draw from itself
-      for k, v in pairs(_c.VT) do _f.VT[k] = v end
-      -- first line draws the shadow, second draws the sprite
-      _f:draw_shader('dissolve', 0, nil, nil, _f, scale_mod, rotate_mod, nil, 0.1 + 0.03 * math.sin(1.8 * G.TIMERS.REAL), nil, 0.6)
-      _f:draw_shader('dissolve', nil, nil, nil, _f, scale_mod, rotate_mod, nil)
-      if card.edition then
-        local edition = G.P_CENTERS[card.edition.key]
-        if edition.apply_to_float then
-          edition.apply_to_float = false
-          _f:draw_shader(edition.shader, nil, nil, nil, _f, scale_mod, rotate_mod)
-        end
-      end
-    end},
+  pos = { x = 4, y = 6 },
+  soul_pos = { x = 0, y = 0 },
   config = {extra = {Xmult_mod = 0.1, Xmult = 1, energy_total = 0}},
   loc_vars = function(self, info_queue, card)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'teraform_zero'}
     info_queue[#info_queue+1] = {set = 'Other', key = 'stellar_type'}
+    if pokermon.is_in_collection(card) then PkmnDip.stellar_loc = true end
     info_queue[#info_queue+1] = G.P_CENTERS.c_poke_teraorb
+    PkmnDip.defer(function() PkmnDip.stellar_loc = nil end)
     return {vars = {card.ability.extra.Xmult_mod, card.ability.extra.Xmult}}
   end,
   rarity = 4,
@@ -111,10 +100,7 @@ local terapagos_stellar={
   soul_altas = 'nacho_terapagos_stellar_soul',
   gen = 9,
   blueprint_compat = true,
-  custom_pool_func = true,
-  in_pool = function(self)
-    return false
-  end,
+  in_pool = function(self) return false end,
   calculate = function(self, card, context)
     if context.using_consumeable and context.consumeable.ability.name == 'teraorb' and card == pokermon.find_leftmost_or_highlighted() then
       PkmnDip.utils.for_each(G.jokers.cards,
@@ -146,10 +132,8 @@ local terapagos_stellar={
       card.children.floating_sprite:remove()
       -- creates the animated sprite with its atlas (since they're separate)
       local soul_altas = 'nacho_'..(card.edition and card.edition.poke_shiny and 'shiny_' or '')..'terapagos_stellar_soul'
-      card.children.floating_sprite = SMODS.create_sprite(card.T.x, card.T.y, card.T.w * (71 / 108), card.T.h * (95 / 145), soul_altas, card.config.center.soul_pos)
-      card.children.floating_sprite.role.draw_major = card
-      card.children.floating_sprite.states.hover.can = false
-      card.children.floating_sprite.states.click.can = false
+      card.children.floating_sprite = SMODS.create_sprite(card.T.x, card.T.y, card.T.w, card.T.h, soul_altas, card.config.center.soul_pos)
+      card.children.floating_sprite:set_role({ major = card, role_type = 'Glued', draw_major = card })
     end
   end,
   update = function(self, card, dt)
@@ -159,6 +143,22 @@ local terapagos_stellar={
   end,
   attributes = {"energy_limit", "item", "passive", "types", "joker", "xmult"}
 }
+
+terapagos_stellar.soul_pos.draw = function(card, scale_mod, rotate_mod)
+  local _c, _f = card.children.center, card.children.floating_sprite
+  -- this little for loop gives the floating sprite the right parameters to draw from itself
+  for k, v in pairs(_c.VT) do _f.VT[k] = v end
+  -- first line draws the shadow, second draws the sprite
+  _f:draw_shader('dissolve', 0, nil, nil, _f, scale_mod, rotate_mod, nil, 0.1 + 0.03 * math.sin(1.8 * G.TIMERS.REAL), nil, 0.6)
+  _f:draw_shader('dissolve', nil, nil, nil, _f, scale_mod, rotate_mod, nil)
+  if card.edition then
+    local edition = G.P_CENTERS[card.edition.key]
+    if edition.apply_to_float then
+      edition.apply_to_float = false
+      _f:draw_shader(edition.shader, nil, nil, nil, _f, scale_mod, rotate_mod)
+    end
+  end
+end
 
 local init = function()
   -- Hooking Pokermon Type-related functions for the stellar type
@@ -196,6 +196,32 @@ local init = function()
     end
     return ret
   end)
+
+  local teraorb_loc_vars = SMODS.Consumable.obj_table.c_poke_teraorb.loc_vars
+  assert(teraorb_loc_vars)
+  SMODS.Consumable:take_ownership('poke_teraorb', {
+    loc_vars = function(self, info_queue, card)
+      if next(SMODS.find_card('j_nacho_terapagos_stellar')) or PkmnDip.stellar_loc then
+        info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
+        info_queue[#info_queue+1] = {set = 'Other', key = 'typechangerstellar'}
+        local info = card.ability.extra or self.config.extra
+        local highlight_colour = info.change_to_type ~= "Lightning" and G.C.WHITE or G.C.BLACK
+        return {
+          key = 'c_poke_teraorb_stellar',
+          vars = { info.change_to_type,
+            colours = {
+              pokermon.colours.stellar,
+              G.C.WHITE,
+              pokermon.colours[info.change_to_type:lower()],
+              highlight_colour
+            }
+          }
+        }
+      else
+        return teraorb_loc_vars(self, info_queue, card)
+      end
+    end,
+  }, true)
 end
 
 return {

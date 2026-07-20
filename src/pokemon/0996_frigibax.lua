@@ -27,7 +27,7 @@ local frigibax = {
     end
     return { vars = { deck_data } }
   end,
-  designer = "king_alloy, roxie",
+  designer = "king_alloy, princessroxie",
   rarity = 2,
   cost = 6,
   stage = "Basic",
@@ -66,7 +66,7 @@ local arctibax = {
     end
     return { vars = { deck_data } }
   end,
-  designer = "king_alloy, roxie",
+  designer = "king_alloy, princessroxie",
   rarity = "poke_safari",
   cost = 8,
   stage = "One",
@@ -98,7 +98,7 @@ local baxcalibur = {
     local foil_count = G.playing_cards and #filter(G.playing_cards, PkmnDip.con.is_foil) or 0
     return { vars = { a.Xmult_multi, 1 + a.Xmult_multi * foil_count } }
   end,
-  designer = "king_alloy, roxie",
+  designer = "king_alloy, princessroxie",
   rarity = "poke_safari",
   cost = 10,
   stage = "Two",
