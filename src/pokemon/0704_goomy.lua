@@ -83,7 +83,7 @@ local sliggoo={
     end
     -- Main effect
     if context.individual and context.scoring_name == 'Flush' and a.scoring_flush then
-      if PkmnDip.con.played_or_held(context) and context.main_scoring then
+      if PkmnDip.con.played_or_held(context) and not context.end_of_round then
         local unique_ranks = PkmnDip.utils.count_unique(context.scoring_hand, Card.get_id)
         if a.matching_suit == 'Any' or context.other_card:is_suit(a.matching_suit) then
           local perma_mult = context.other_card.ability.perma_mult
@@ -120,7 +120,7 @@ local goodra={
       a.matching_suit = a.scoring_flush and PkmnDip.calc.get_flush_suit(G.hand.highlighted)
     end
     if context.individual and context.scoring_name == 'Flush' and a.scoring_flush then
-      if PkmnDip.con.played_or_held(context) and context.main_scoring then
+      if PkmnDip.con.played_or_held(context) and not context.end_of_round then
         local unique_ranks = PkmnDip.utils.count_unique(context.scoring_hand, Card.get_id)
         if a.matching_suit == 'Any' or context.other_card:is_suit(a.matching_suit) then
           local perma_x_mult = context.other_card.ability.perma_x_mult
