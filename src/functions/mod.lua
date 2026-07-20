@@ -3,6 +3,7 @@
 SMODS.current_mod.set_debuff = function(card)
   -- prevent debuffs
   if card.ability.name == "mega_gallade" then return 'prevent_debuff' end
+  if card.ability.name == "tsareena" and PkmnDip.con.all_grass then return 'prevent_debuff' end
   if card:get_id() == 9 and next(SMODS.find_card("j_poke_mega_altaria")) then return 'prevent_debuff' end
   return false
 end
@@ -33,6 +34,23 @@ PkmnDip.attach_mega = function(center, target)
   }, true)
   pokermon.add_to_family(target:sub(6, -1), center.name)
 end
+
+PkmnDip.Hook('around', SMODS, 'create_mod_badges', function(orig, obj, badges)
+  if obj and obj.nacho_from_bfp then
+    obj.mod = {
+      id = "BarelyFunctioningPokermon",
+      display_name = "Dip+BFP",
+      author = "Onepunchidiot",
+      prefix = "bfp",
+      badge_colour = HEX("F0B6AF"),
+      badge_text_colour = HEX("FFFFFF"),
+    }
+    orig(obj, badges)
+    obj.mod = SMODS.Mods['NachosPokermonDip']
+  else
+    orig(obj, badges)
+  end
+end)
 
 -- Talisman compat shorthand (still recommend just using Amulet atp but eh)
 to_number = to_number or function(x) return x end

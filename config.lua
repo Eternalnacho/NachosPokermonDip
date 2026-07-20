@@ -16,6 +16,7 @@ return {
   dedenne = true,
   carbink = true,
   goomy = true,
+  bounsweet = true,
   oranguru = true,
   passimian = true,
   turtonator = true,

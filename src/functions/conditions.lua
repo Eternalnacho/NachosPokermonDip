@@ -69,3 +69,17 @@ PkmnDip.con.is_shiny = function(card)
 end
 
 --#endregion [[ is_enhancement / is_edition ]]
+
+
+--#region [[ is_type ]]
+
+for _, type in pairs(POKE_TYPES) do
+  PkmnDip.con['is_'..type:lower()] = function(card)
+    return pokermon.is_type(card, type)
+  end
+  PkmnDip.con['all_'..type:lower()] = function()
+    return PkmnDip.utils.all(G.jokers.cards, PkmnDip.con['is_'..type:lower()])
+  end
+end
+
+--#endregion [[ is_type ]]
