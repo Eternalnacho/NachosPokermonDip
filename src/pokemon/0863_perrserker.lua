@@ -1,6 +1,5 @@
 local utils = PkmnDip.utils
 local get_adj = pokermon.get_adjacent_jokers
-local is_metal = function(card) return pokermon.is_type(card, "Metal") end
 local energize = pokermon.energy.modify
 
 -- Meowth 52-2
@@ -23,7 +22,7 @@ local galarian_meowth={
   calculate = function(self, card, context)
     local extra = card.ability.extra
     if context.before and utils.any(context.scoring_hand, PkmnDip.con.is_steel) and not (extra.raised > 0) then
-      local other_metals = utils.filter(get_adj(card), is_metal)
+      local other_metals = utils.filter(get_adj(card), PkmnDip.con.is_metal)
       utils.for_each(other_metals, function(j)
         if pokermon.energy.is_energizable(j) then
           energize(j, get_type(j), extra.e_amount, true)
@@ -39,7 +38,7 @@ local galarian_meowth={
     end
 
     if context.end_of_round and context.main_eval and extra.raised > 0 then
-      local other_metals = utils.filter(get_adj(card), is_metal)
+      local other_metals = utils.filter(get_adj(card), PkmnDip.con.is_metal)
       utils.for_each(other_metals, function(j) 
         if pokermon.energy.is_energizable(j) then
           energize(j, get_type(j), -extra.e_amount * extra.raised, true) 
@@ -72,7 +71,7 @@ local perrserker = {
   calculate = function(self, card, context)
     local extra = card.ability.extra
     if context.before and utils.any(context.scoring_hand, PkmnDip.con.is_steel) and not (extra.b_raised >= extra.limit) then
-      local other_metals = utils.filter(get_adj(card), is_metal)
+      local other_metals = utils.filter(get_adj(card), PkmnDip.con.is_metal)
       local amount = math.min(3, #utils.filter(context.scoring_hand, PkmnDip.con.is_steel))
       utils.for_each(other_metals, function(j)
         if pokermon.energy.is_energizable(j) then
@@ -85,7 +84,7 @@ local perrserker = {
     end
 
     if context.after and context.main_eval and extra.raised > 0 then
-      local other_metals = utils.filter(get_adj(card), is_metal)
+      local other_metals = utils.filter(get_adj(card), PkmnDip.con.is_metal)
       utils.for_each(other_metals, function(j)
         if pokermon.energy.is_energizable(j) then
           energize(j, get_type(j), -extra.e_amount * extra.raised, true) 
