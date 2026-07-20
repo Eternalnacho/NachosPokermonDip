@@ -13,7 +13,7 @@ PkmnDip.calc.get_full_house = function(cards, get_ranks_by)
   local not_in_major = function(card) return card:get_id() ~= part_major[1]:get_id() end
   local part_minor = get_X_same(2, PkmnDip.utils.filter(cards, not_in_major), true)[1]
 
-  if get_ranks_by == 'nominal' then return part_major[1]:get_id(), part_minor[1]:get_id() end
+  if get_ranks_by == 'id' then return part_major[1]:get_id(), part_minor[1]:get_id() end
   if get_ranks_by == 'nominal' then return part_major[1].base.nominal, part_minor[1].base.nominal end
   return part_major, part_minor
 end
