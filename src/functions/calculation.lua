@@ -30,7 +30,6 @@ PkmnDip.calc.get_depleted = function()
     end
     ::continue::
   end
-  print(depleted)
   return depleted
 end
 
