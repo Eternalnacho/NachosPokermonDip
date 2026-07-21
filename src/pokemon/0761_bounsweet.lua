@@ -29,7 +29,7 @@ local steenee = {
   name = "steenee",
   config = { extra = { mult = 7 }, evo_rqmt = 3 },
   loc_vars = function(self, info_queue, card)
-    return { vars = { card.ability.extra.mult, self.config.evo_rqmt } }
+    return { vars = { card.ability.extra.mult } }
   end,
   designer = "One Punch Idiot",
   nacho_from_bfp = true,

@@ -311,6 +311,35 @@ return {
           "the difference in scoring {C:attention}ranks{}",
         }
       },
+      j_nacho_bounsweet = {
+        name = "Bounsweet",
+        text = {
+          "{C:red}+#1#{} Mult",
+          "{C:attention}Tripled{} if you have",
+          "another {X:poke_grass,C:white}Grass{} Joker",
+          "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)"
+        }
+      },
+      j_nacho_steenee = {
+        name = "Steenee",
+        text = {
+          "{C:mult}+#1#{} Mult for each",
+          "{X:poke_grass,C:white}Grass{} Joker you have",
+          "{C:inactive,s:0.8}(Evolves when you have",
+          "{C:attention,s:0.8}3 {X:poke_grass,C:white,s:0.8}Grass{C:inactive,s:0.8} Jokers)",
+        }
+      },
+      j_nacho_tsareena = {
+        name = "Tsareena",
+        text = {
+          "{C:mult}+#1#{} Mult for each",
+          "{X:poke_grass,C:white}Grass{} Joker you have",
+          "{br:2}ERROR - CONTACT STEAK",
+          "This Joker {C:attention}can't{} be",
+          "debuffed if all owned",
+          "Jokers are {X:poke_grass,C:white}Grass{}"
+        }
+      },
       j_nacho_oranguru = {
         name = "Oranguru",
         text = {
