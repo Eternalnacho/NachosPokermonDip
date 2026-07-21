@@ -196,32 +196,6 @@ local init = function()
     end
     return ret
   end)
-
-  local teraorb_loc_vars = SMODS.Consumable.obj_table.c_poke_teraorb.loc_vars
-  assert(teraorb_loc_vars)
-  SMODS.Consumable:take_ownership('poke_teraorb', {
-    loc_vars = function(self, info_queue, card)
-      if next(SMODS.find_card('j_nacho_terapagos_stellar')) or PkmnDip.stellar_loc then
-        info_queue[#info_queue+1] = {set = 'Other', key = 'energize'}
-        info_queue[#info_queue+1] = {set = 'Other', key = 'typechangerstellar'}
-        local info = card.ability.extra or self.config.extra
-        local highlight_colour = info.change_to_type ~= "Lightning" and G.C.WHITE or G.C.BLACK
-        return {
-          key = 'c_poke_teraorb_stellar',
-          vars = { info.change_to_type,
-            colours = {
-              pokermon.colours.stellar,
-              G.C.WHITE,
-              pokermon.colours[info.change_to_type:lower()],
-              highlight_colour
-            }
-          }
-        }
-      else
-        return teraorb_loc_vars(self, info_queue, card)
-      end
-    end,
-  }, true)
 end
 
 return {

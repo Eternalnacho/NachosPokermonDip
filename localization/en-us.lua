@@ -472,11 +472,11 @@ return {
       j_nacho_dipplin = {
         name = "Dipplin",
         text = {
-          "Whene a {C:attention}playing card{}",
-          "is {C:attention}destroyed{}, add a {C:attention}Wild{}",
+          "When a {C:attention}playing card{}",
+          "is destroyed, add a {C:attention}Wild{}",
           "{C:attention}copy{} of it to your {C:attention}deck{}",
           "{br:2}ERROR - CONTACT STEAK",
-          "If the {C:attention}destroyed{} card was",
+          "If the destroyed card was",
           "{C:attention}Wild{}, add {C:attention}2 copies{} instead",
           "{C:inactive,s:0.8}(Evolves when deck is >= 25% #1#{C:attention,s:0.8}Wild{C:inactive,s:0.8} cards)"
         }
@@ -484,11 +484,11 @@ return {
       j_nacho_hydrapple = {
         name = "Hydrapple",
         text = {
-          "When a {C:attention}playing card{} is {C:attention}destroyed{},",
+          "When a {C:attention}playing card{} is destroyed,",
           "add a {C:attention}Wild copy{} of it to your {C:attention}deck{}",
           "and this Joker gains {X:mult,C:white}X#2#{} Mult",
           "{br:2.5}ERROR - CONTACT STEAK",
-          "If the {C:attention}destroyed{} card was {C:attention}Wild{},",
+          "If the destroyed card was {C:attention}Wild{},",
           "gain {X:mult,C:white}X#3#{} Mult instead",
           "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult)",
         }
