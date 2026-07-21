@@ -74,7 +74,7 @@ local abomasnow = {
         local targets = {}
         local viable_targets = PkmnDip.utils.filter(G.deck.cards, PkmnDip.con.is_base)
         pseudoshuffle(viable_targets, pseudoseed('abomasnow'))
-        table.move(viable_targets, 1, glass_cards, 1, targets)
+        for i = 1, glass_cards do targets[#targets+1] = viable_targets[i] end
         pokermon.convert_cards(targets, {mod_conv = 'm_glass', edition = "e_foil"}, true, true)
         SMODS.calculate_effect({ message = localize('poke_ice_shard_ex') }, card)
       end
