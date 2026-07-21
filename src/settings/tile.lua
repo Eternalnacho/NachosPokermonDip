@@ -28,6 +28,7 @@ local function update_centers(config_key, enable)
       if center.nacho_pseudol then center.pseudol = enable end
       if center.nacho_starter then center.starter = enable end
       if center.attach_mega then center:attach_mega() end
+      if center.attach_gmax then center:attach_gmax() end
     end
   end
 end

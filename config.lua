@@ -35,5 +35,5 @@ return {
   mega_gardevoir = true,
   mega_gallade = true,
   other_megas = true,
-  gmax = true,
+  gmax_apples = true,
 }

@@ -48,8 +48,20 @@ local mega_list = PkmnDip.config_list.megas
 populate_pages(mega_list, 'nacho_pokemon_mega', "Mega Pokemon")
 
 -- Adding the Gmax joker page(s)
-local gmax_list = PkmnDip.config_list.gmax
-populate_pages(gmax_list, 'nacho_pokemon_gmax', "Gigantamax Pokemon")
+if next(SMODS.find_mod("Agarmons")) then
+  SMODS.process_loc_text(G.localization.misc.dictionary, 'nacho_pokemon_gmax'..'1', "Gigantamax Pokemon")
+  pages[#pages+1] = {
+    title = function() return localize('nacho_pokemon_gmax'..'1') end,
+    tiles = {
+      {
+        label = function() return "Apples" end,
+        list = {'j_nacho_gmax_flapple', 'j_nacho_gmax_appletun'},
+        config_key = 'gmax_apples',
+        mod_req = 'Agarmons'
+      }
+    }
+  }
+end
 
 -- Adding in the Cross-Mod joker page(s)
 local cross_list = {}

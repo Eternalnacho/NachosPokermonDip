@@ -27,9 +27,17 @@ SMODS.current_mod.reset_game_globals = function(run_start)
   end) end
 end
 
-PkmnDip.attach_mega = function(center, target)
+PkmnDip.attach_mega = function(center, target, config_key)
   SMODS.Joker:take_ownership(target, {
-    megas = PkmnDip.config[center.name] and { center.name } or nil,
+    megas = PkmnDip.config[(config_key or center.name)] and { center.name } or nil,
+    discovered = true,
+  }, true)
+  pokermon.add_to_family(target:sub(6, -1), center.name)
+end
+
+PkmnDip.attach_gmax = function(center, target, config_key)
+  SMODS.Joker:take_ownership(target, {
+    gmax = PkmnDip.config[(config_key or center.name)] and { center.name } or nil,
     discovered = true,
   }, true)
   pokermon.add_to_family(target:sub(6, -1), center.name)

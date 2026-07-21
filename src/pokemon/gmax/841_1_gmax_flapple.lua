@@ -3,7 +3,6 @@ local gmax_flapple = {
   name = "gmax_flapple",
   config = { extra = { Xmult = 1, Xmult1 = 1.5 } },
   loc_vars = function(self, info_queue, card)
-    local a = card.ability.extra
     return { vars = { card.ability.extra.Xmult1 } }
   end,
   loc_txt = {
@@ -31,7 +30,8 @@ local gmax_flapple = {
       return { xmult = a.Xmult1 * #context.scoring_hand }
     end
   end,
-  attributes = {"enhancements", "generation", "xmult", "modify_card"}
+  attach_gmax = function(self) PkmnDip.attach_gmax(self, 'nacho_flapple', 'gmax_apples') end,
+  attributes = {"xmult", "destroy_card"}
 }
 
 local init = function()
@@ -45,7 +45,7 @@ end
 
 return {
   can_load = not not (next(SMODS.find_mod("Agarmons"))),
-  config_key = "gmax",
+  config_key = "gmax_apples",
   init = init,
   misc_config = "gmax",
   list = { gmax_flapple }
