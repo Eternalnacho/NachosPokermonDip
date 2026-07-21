@@ -363,6 +363,30 @@ return {
           "non-{C:dark_edition}Negative{C:attention} edition{}"
         }
       },
+      j_nacho_wimpod = {
+        name = 'Wimpod',
+        text = {
+          "{C:chips}+#1#{} Chips",
+          "{br:2}ERROR - CONTACT STEAK",
+          "Debuff self this round",
+          "if played hand is not",
+          "the {C:attention}first hand{} of round",
+          "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds not debuffed)"
+        }
+      },
+      j_nacho_golisopod = {
+        name = 'Golisopod',
+        text = {
+          "{X:mult,C:white}X#1#{} Mult",
+          "{C:attention}+1{} hand size if this",
+          "Joker was not debuffed",
+          "by the end of the ante",
+          "{br:2}ERROR - CONTACT STEAK",
+          "Debuff self this round",
+          "if played hand is not",
+          "the {C:attention}first hand{} of round",
+        }
+      },
       j_nacho_turtonator = {
         name = "Turtonator",
         text = {
@@ -675,18 +699,18 @@ return {
           "Enhances {C:attention}#2#{} random {C:attention}held{}",
           "cards and {C:attention}#1#{} selected card",
           "into {C:attention}Wild{} cards, destroys a",
-          "random non-{C:attention}Wild{} {C:attention}held{} card",
+          "random {C:attention}non-Wild{} {C:attention}held{} card",
         },
       },
       c_poke_teraorb_stellar = {
         name = "Tera Orb",
         text = {
-            "{C:attention}Type Changer:{} {B:1,V:2}Stellar{}",
-            "{br:2}ERROR - CONTACT STEAK",
-            "{C:poke_pink}Energize{} leftmost or",
-            "selected Joker if it",
-            "is already {B:3,V:4}#1#{} {C:poke_pink}Type{}",
-            "{C:inactive,s:0.8}({C:poke_pink,s:0.8}Type{C:inactive,s:0.8} changes with every discard){}",
+          "{C:attention}Type Changer:{} {B:1,V:2}Stellar{}",
+          "{br:2}ERROR - CONTACT STEAK",
+          "{C:poke_pink}Energize{} leftmost or",
+          "selected Joker if it",
+          "is already {B:3,V:4}#1#{} {C:poke_pink}Type{}",
+          "{C:inactive,s:0.8}({C:poke_pink,s:0.8}Type{C:inactive,s:0.8} changes with every discard){}",
         },
       },
     },
@@ -733,7 +757,7 @@ return {
           "Using a {C:poke_item}Tera Orb{} on",
           "Terapagos applies a",
           "{C:poke_item}Tera Orb{} to each Joker",
-        } 
+        }
       },
       teraform_zero = {
         name = "Teraform Zero",
@@ -741,7 +765,7 @@ return {
           "Using a {C:nacho_sg1}T{C:nacho_sg2}e{C:nacho_sg3}r{C:nacho_sg4}a{C:nacho_sg6} O{C:nacho_sg7}r{C:nacho_sg8}b{} on",
           "Terapagos applies a",
           "{C:nacho_sg1}T{C:nacho_sg2}e{C:nacho_sg3}r{C:nacho_sg4}a{C:nacho_sg6} O{C:nacho_sg7}r{C:nacho_sg8}b{} to each Joker",
-        } 
+        }
       },
       -- Stellar Type tooltip
       stellar_type = {

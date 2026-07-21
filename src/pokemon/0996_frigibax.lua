@@ -160,7 +160,6 @@ local mega_baxcalibur = {
 
     if context.after and not context.blueprint then
       a.no_score = nil
-      if card.debuff then PkmnDip.eff.faint(card, true) end
     end
   end,
   megas = {'mega_baxcalibur'},
