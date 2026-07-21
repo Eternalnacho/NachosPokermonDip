@@ -18,53 +18,75 @@ PkmnDip.calc.get_full_house = function(cards, get_ranks_by)
   return part_major, part_minor
 end
 
+PkmnDip.calc.get_depleted = function()
+  local depleted = {}
+  for _, rank in pairs(SMODS.Ranks) do
+    if rank.in_pool and not rank:in_pool({}) then goto continue end
+    local is_rank = function(card)
+      return card:get_id() == rank.id
+    end
+    if pokermon.get_depleted(is_rank) then
+      depleted[#depleted+1] = rank.key
+    end
+    ::continue::
+  end
+  print(depleted)
+  return depleted
+end
+
+PkmnDip.calc.count_ranks = function(cards)
+  if not cards then cards = G.playing_cards end
+  -- Count suits
+  local ranks = {}
+  for _, pcard in ipairs(G.playing_cards) do
+    if not SMODS.has_no_rank(pcard) then ranks[pcard.base.value] = (ranks[pcard.base.value] or 0) + 1 end
+  end
+  local ranks_by_count = {}
+  for rank, count in pairs(ranks) do
+    table.insert(ranks_by_count, {rank = rank, count = count})
+  end
+  table.sort(ranks_by_count, function(a, b) return a.count > b.count end)
+  return ranks_by_count
+end
+
 -- Get most common rank(s) in a list of cards
 PkmnDip.calc.get_common_ranks = function(cards)
-  local is_rank = function(card, id) return card:get_id() == id end
-  local get_count = function(rank) return #PkmnDip.utils.filter(cards, function(c) return is_rank(c, rank.id) end) end
-  local ranks = PkmnDip.utils.map_list(SMODS.Ranks, function(rank) return { rank = rank, count = get_count(rank) } end)
-  table.sort(ranks, function(a, b) return a.count > b.count end)
-  local ret, tally = {}, ranks[1].count
-  for _, v in ipairs(ranks) do
-    if v.count == tally then table.insert(ret, v.rank)
-    else break end
+  local ranks_by_count = PkmnDip.calc.count_ranks(cards)
+  local common_ranks = { SMODS.Ranks[ranks_by_count[1].rank] }
+  for i = 2, #ranks_by_count do
+    if ranks_by_count[i].count == ranks_by_count[1].count then
+      table.insert(common_ranks, SMODS.Ranks[ranks_by_count[i].rank])
+    end
   end
-  return ret
+  return common_ranks
 end
 
 -- Create tooltip for common ranks (Oranguru)
 PkmnDip.calc.common_ranks_tooltip = function()
   if not (G.playing_cards and G.STAGE == G.STAGES.RUN) then return end
-  local rank_keys = {}
-  local ranks = PkmnDip.calc.get_common_ranks(G.playing_cards)
-  -- sort in descending order if multiple
-  if #ranks > 1 then table.sort(ranks, function(a, b) return a.id > b.id end) end
-  -- get card key for each rank because it's a single character
-  for i = 1, #ranks do
-    rank_keys[i] = #ranks > 3 and ranks[i].card_key or ranks[i].key
-    if rank_keys[i] == 'T' then rank_keys[i] = '10' end
+  local ranks = PkmnDip.calc.get_common_ranks()
+  if #ranks > 1 then
+    table.sort(ranks, function(a, b) return a.id > b.id end)
   end
+  ranks = PkmnDip.utils.map_list(ranks, function(r)
+    return #ranks > 3 and r.shorthand or r.key
+  end)
   -- Organize into even lists (max 3)
+  local rows = math.min(3, math.ceil(#ranks / 4))
   local rank_lists = {}
-  local rows = math.min(3, math.ceil(#rank_keys / 4))
-  if rows == 1 then
-    rank_lists[1] = table.concat(rank_keys, ", ")
-  else
-    local mod = math.ceil(#rank_keys / rows)
-    local st_i = function(x) return 1 + (x - 1) * mod end
-    local ed_i = function(x) return x * mod end
-    for i = 1, rows do
-      rank_lists[i] = table.concat(rank_keys, ", ", st_i(i), math.min(#rank_keys, ed_i(i)))
-    end
+  local start_index = function(x) return 1 + (x - 1) * math.ceil(#ranks / rows) end
+  local end_index = function(x) return x * math.ceil(#ranks / rows) end
+  for i = 1, rows do
+    rank_lists[i] = table.concat(ranks, ", ", 
+      rows > 1 and start_index(i) or nil,
+      rows > 1 and math.min(#ranks, end_index(i)) or nil
+    )
   end
   local text = PkmnDip.utils.map_list(rank_lists, function(l) return '{C:attention}'..l..'{}' end)
   local text_parsed = PkmnDip.utils.map_list(text, loc_parse_string)
   G.localization.descriptions.Other['pkmndip_rank_lists'].text = text
   G.localization.descriptions.Other['pkmndip_rank_lists'].text_parsed = text_parsed
-  return {
-    set = 'Other',
-    key = 'pkmndip_rank_lists'
-  }
+  return { set = 'Other', key = 'pkmndip_rank_lists' }
 end
 
 --#endregion [[ get_rank ]]

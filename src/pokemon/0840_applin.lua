@@ -87,6 +87,7 @@ local appletun = {
   name = "appletun",
   config = { extra = { h_size = 1, money = 3 } },
   loc_vars = function(self, info_queue, card)
+    info_queue[#info_queue+1] = {set = 'Other', key = 'depleted'}
     return { vars = { card.ability.extra.money } }
   end,
   designer = "Kek",
@@ -98,14 +99,10 @@ local appletun = {
   blueprint_compat = true,
   calculate = function(self, card, context)
     local a = card.ability.extra
-    if context.setting_blind or context.pre_discard then
-      local old_h_size = a.h_size
-      local ranks = {}
-      PkmnDip.utils.for_each(G.deck.cards, function(v)
-        if not PkmnDip.utils.contains(ranks, v:get_id()) then ranks[#ranks+1] = v:get_id() end
-      end)
-      a.h_size = #ranks < 13 and 2 or 1
-      G.hand:change_size(a.h_size - old_h_size)
+    if (context.hand_drawn or context.other_drawn) and not context.blueprint then
+      local h_size = a.h_size
+      a.h_size = #PkmnDip.calc.get_depleted() > 0 and 2 or 1
+      G.hand:change_size(a.h_size - h_size)
     end
     if context.remove_playing_cards then
       local total_removed = #context.removed
@@ -113,11 +110,7 @@ local appletun = {
     end
   end,
   add_to_deck = function(self, card, from_debuff)
-    local ranks = {}
-    PkmnDip.utils.for_each(G.deck.cards, function(v)
-      if not PkmnDip.utils.contains(ranks, v:get_id()) then ranks[#ranks+1] = v:get_id() end
-    end)
-    card.ability.extra.h_size = #ranks < 13 and 2 or 1
+    if #PkmnDip.calc.get_depleted() > 0 then card.ability.extra.h_size = 2 end
     G.hand:change_size(card.ability.extra.h_size)
   end,
   remove_from_deck = function(self, card, from_debuff)

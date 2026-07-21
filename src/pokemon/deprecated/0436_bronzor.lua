@@ -9,6 +9,14 @@ local bronzor = {
     info_queue[#info_queue+1] = G.P_CENTERS.m_steel
 		return {vars = {math.max(card.ability.evo_rqmt - card.ability.extra.triggered, 0)}}
   end,
+  loc_txt = {
+    name = "Bronzor",
+    text = {
+      "This Joker scores",
+      "as a {C:attention}held Steel{} card",
+      "{C:inactive,s:0.8}(Evolves after triggering {C:attention,s:0.8}#1#{C:inactive,s:0.8} times)",
+    }
+  },
   rarity = 2,
   cost = 6,
   stage = "Basic",
@@ -39,6 +47,13 @@ local bronzong = {
     info_queue[#info_queue+1] = G.P_CENTERS.m_steel
 		return {vars = {}}
   end,
+  loc_txt = {
+    name = "Bronzong",
+    text = {
+      "This Joker and adjacent {X:poke_metal,C:white}Metal{}",
+      "Jokers score as {C:attention}held Steel{} cards",
+    }
+  },
   rarity = "poke_safari",
   cost = 10,
   stage = "One",
