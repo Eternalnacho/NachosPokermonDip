@@ -73,6 +73,5 @@ local tsareena = {
 
 return {
   config_key = 'bounsweet',
-  init = init,
   list = { bounsweet, steenee, tsareena }
 }

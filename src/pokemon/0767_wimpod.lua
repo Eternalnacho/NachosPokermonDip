@@ -1,3 +1,4 @@
+-- 767 Wimpod
 local wimpod = {
   name = "wimpod",
   config = { extra = { chips = 30, rounds = 4 } },
@@ -29,6 +30,8 @@ local wimpod = {
     return pokermon.level_evo(self, card, context, 'j_nacho_golisopod')
   end
 }
+
+-- 768 Golisopod
 local golisopod = {
   name = "golisopod",
   config = { extra = { Xmult = 3, h_size = 1 } },

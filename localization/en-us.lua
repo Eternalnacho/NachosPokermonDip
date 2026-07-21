@@ -397,6 +397,16 @@ return {
           "{C:inactive}(#2#){}",
         }
       },
+      j_nacho_togedemaru = {
+        name = "Togedemaru",
+        text = {
+          "Each {X:poke_lightning,C:black}Lightning{} Joker",
+          "gives {X:mult,C:white}X#1#{} Mult",
+          "{br:2}ERROR - CONTACT STEAK",
+          "Each {X:poke_metal,C:white}Metal{} Joker",
+          "earns {C:money}$#2#{} at end of round",
+        }
+      },
       j_nacho_dhelmise = {
         name = "Dhelmise",
         text = {
