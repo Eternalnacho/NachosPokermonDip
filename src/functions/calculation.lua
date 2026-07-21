@@ -2,22 +2,6 @@ PkmnDip.calc = {}
 
 --#region [[ get_rank ]]
 
----@alias rank_type
----| 'id' # use rank id
----| 'nominal' # use rank nominal value
----@param cards Card[]
----@param get_ranks_by rank_type?
--- Get the two parts of a Full House, return two lists of cards or their ranks
-PkmnDip.calc.get_full_house = function(cards, get_ranks_by)
-  local part_major = get_X_same(3, cards, true)[1]
-  local not_in_major = function(card) return card:get_id() ~= part_major[1]:get_id() end
-  local part_minor = get_X_same(2, PkmnDip.utils.filter(cards, not_in_major), true)[1]
-
-  if get_ranks_by == 'nominal' then return part_major[1]:get_id(), part_minor[1]:get_id() end
-  if get_ranks_by == 'nominal' then return part_major[1].base.nominal, part_minor[1].base.nominal end
-  return part_major, part_minor
-end
-
 PkmnDip.calc.get_depleted = function()
   local depleted = {}
   for _, rank in pairs(SMODS.Ranks) do
@@ -81,6 +65,7 @@ PkmnDip.calc.common_ranks_tooltip = function()
       rows > 1 and math.min(#ranks, end_index(i)) or nil
     )
   end
+  -- Map lists to localization text and update entry
   local text = PkmnDip.utils.map_list(rank_lists, function(l) return '{C:attention}'..l..'{}' end)
   local text_parsed = PkmnDip.utils.map_list(text, loc_parse_string)
   G.localization.descriptions.Other['pkmndip_rank_lists'].text = text
@@ -96,20 +81,6 @@ end
 PkmnDip.calc.get_suit = function(card)
   if SMODS.has_any_suit(card) then return
   else return card.base.suit end
-end
-
-PkmnDip.calc.get_flush_suit = function(cards)
-  local flush = get_flush(cards)[1]
-  if not flush then return end
-  if PkmnDip.utils.all(flush, PkmnDip.con.is_wild) then return 'Any' end
-
-  local suit
-  PkmnDip.utils.for_each(flush, function(c)
-    if PkmnDip.calc.get_suit(c) and not suit then
-      suit = PkmnDip.calc.get_suit(c)
-    end
-  end)
-  return suit
 end
 
 --#endregion [[ get_suit ]]
@@ -162,3 +133,39 @@ PkmnDip.calc.daycare_compatible = function(card)
 end
 
 --#endregion [[ daycare_compatible ]]
+
+
+--#region [[ hand_info ]]
+
+---@alias rank_type
+---| 'id' # use rank id
+---| 'nominal' # use rank nominal value
+---@param cards Card[]
+---@param get_ranks_by rank_type?
+-- Get the two parts of a Full House, return two lists of cards or their ranks
+PkmnDip.calc.get_full_house = function(cards, get_ranks_by)
+  local part_major = get_X_same(3, cards, true)[1]
+  local not_in_major = function(card) return card:get_id() ~= part_major[1]:get_id() end
+  local part_minor = get_X_same(2, PkmnDip.utils.filter(cards, not_in_major), true)[1]
+
+  if get_ranks_by == 'id' then return part_major[1]:get_id(), part_minor[1]:get_id() end
+  if get_ranks_by == 'nominal' then return part_major[1].base.nominal, part_minor[1].base.nominal end
+  return part_major, part_minor
+end
+
+-- Get the suit of scoring Flush in poker hand
+PkmnDip.calc.get_flush_suit = function(cards)
+  local flush = get_flush(cards)[1]
+  if not flush then return end
+  if PkmnDip.utils.all(flush, PkmnDip.con.is_wild) then return 'Any' end
+
+  local suit
+  PkmnDip.utils.for_each(flush, function(c)
+    if PkmnDip.calc.get_suit(c) and not suit then
+      suit = PkmnDip.calc.get_suit(c)
+    end
+  end)
+  return suit
+end
+
+--#region [[ hand_info ]]
