@@ -47,10 +47,14 @@ populate_pages(main_list, 'nacho_pokemon', "Pokemon")
 local mega_list = PkmnDip.config_list.megas
 populate_pages(mega_list, 'nacho_pokemon_mega', "Mega Pokemon")
 
+-- Adding the Gmax joker page(s)
+local gmax_list = PkmnDip.config_list.gmax
+populate_pages(gmax_list, 'nacho_pokemon_gmax', "Gigantamax Pokemon")
+
 -- Adding in the Cross-Mod joker page(s)
 local cross_list = {}
 for k, v in pairs(PkmnDip.config_list) do
-  if k ~= "main" and k ~= "megas" then
+  if k ~= "main" and k ~= "megas" and k ~= "gmax" then
     PkmnDip.utils.append(cross_list, v)
   end
 end

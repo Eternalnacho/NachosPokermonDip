@@ -146,7 +146,6 @@ local dipplin = {
     if context.remove_playing_cards then
       for _, removed in pairs(context.removed) do
         local copies = SMODS.has_enhancement(removed, 'm_wild') and 2 or 1
-        -- copy destroyed cards and convert to wild
         for _ = 1, copies do PkmnDip.eff.copy_playing_card(removed, {mod_conv = 'm_wild'}, nil, card) end
       end
       return { playing_cards_created = { true } }

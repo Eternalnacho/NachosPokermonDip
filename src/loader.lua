@@ -86,11 +86,17 @@ local function prep_config(file)
     end)
     if file.misc_config then
       PkmnDip.config_list[file.misc_config] = PkmnDip.config_list[file.misc_config] or {}
+      if file.misc_config.misc_config == 'megas' then
+      elseif file.misc_config.misc_config == 'gmax' then
+        file.mod_req = 'Agarmons'
+      else
+        file.mod_req = file.misc_config
+      end
     end
     table.insert(PkmnDip.config_list[(file.misc_config or "main")], {
       list = list,
       config_key = file.config_key,
-      mod_req = file.misc_config ~= 'megas' and file.misc_config
+      mod_req = file.mod_req
     })
   end
 end
