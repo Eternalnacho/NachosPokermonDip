@@ -8,8 +8,8 @@ local excavator = {
     local active = a.boss_beat and "Active!" or "Inactive"
     return { vars = { a.boss_req, a.bosses_beat } }
   end,
-  rarity = 2,
-  cost = 7,
+  rarity = 1,
+  cost = 5,
   stage = "Other",
   atlas = "nacho_excavator",
   eternal_compat = false,
