@@ -627,6 +627,14 @@ return {
           "for each {C:poke_pink}Energy{} applied to them",
         }
       },
+      j_nacho_excavator = {
+        name = "Excavator",
+        text = {
+          "After defeating {C:attention}#1#{} Boss Blinds, sell",
+          "this card to create a {C:attention}Fossil Tag",
+          "{C:inactive}(Currently {C:attention}#2#{C:inactive}/#1#){}"
+        }
+      },
       j_nacho_okidogi = {
         name = "Okidogi",
         text = {
@@ -724,23 +732,20 @@ return {
         },
       },
     },
-    Stake = {
-      stake_nacho_elite_stake = {
-        name = "Elite Stake",
+    Tag = {
+      tag_nacho_fossil_tag = {
+        name = "Fossil Tag",
         text = {
-          "{X:gray,C:attention}+2{} Ante win requirement",
-          "Last 4 Antes are Showdown Boss Blinds",
-          "{s:0.8}Applies all previous Stakes"
-        },
+          "Gives a free {C:attention}Ancient Pack",
+        }, 
       },
     },
     Other = {
-      nacho_elite_stake_sticker = {
-        name = "Elite Sticker",
+      p_nacho_ancient_pack = {
+        name = "Ancient Pack",
         text = {
-          "Used this {C:attention}Joker{}",
-          "to win on {C:attention}Elite{}",
-          "{C:attention}Stake{} difficulty",
+          "Choose {C:attention}#1# Fossil Pokemon{}",
+          "from among {C:attention}#2#{} Cards"
         },
       },
       -- Incubator tooltip for Mega Audino
@@ -847,6 +852,8 @@ return {
       c_nacho_goomygoomy = "Slime or Steel",
     },
     dictionary = {
+      k_nacho_ancient_pack = "Ancient Pack",
+
       -- From Turtwig, Grotle, Torterra
       poke_leech_seed_ex = "Leech Seed!",
       -- From Infernape

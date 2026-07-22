@@ -1,29 +1,29 @@
 SMODS.Atlas({
-    key = "stakes",
-    px = 29,
-    py = 29,
-    path = "stakes.png"
+  key = "nacho_consumables",
+  px = 71,
+  py = 95,
+  path = "consumables.png"
 })
 
 SMODS.Atlas({
-    key = "stake_stickers",
-    px = 71,
-    py = 95,
-    path = "stakes_stickers.png"
+  key = "nacho_boosters",
+  path = "boosters.png",
+  px = 71,
+  py = 95
 })
 
 SMODS.Atlas({
-    key = "stickers",
-    px = 71,
-    py = 95,
-    path = "stickers.png"
+  key = "nacho_tags",
+  path = "tags.png",
+  px = 34,
+  py = 34,
 })
 
 SMODS.Atlas({
-    key = "nacho_consumables",
-    px = 71,
-    py = 95,
-    path = "consumables.png"
+  key = "nacho_excavator",
+  path = "excavator.png",
+  px = 71,
+  py = 95,
 })
 
 SMODS.Atlas({
