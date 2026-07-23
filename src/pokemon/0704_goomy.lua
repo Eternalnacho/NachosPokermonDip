@@ -202,7 +202,13 @@ local hisuian_goodra={
   attributes = {"hand_type", "enhancements", "generation", "item", "xmult"},
 }
 
+init = function()
+  POKE_EVO_OVERRIDES[#POKE_EVO_OVERRIDES+1] = { "sliggoo", { "goodra" } }
+  POKE_EVO_OVERRIDES[#POKE_EVO_OVERRIDES+1] = { "hisuian_sliggoo", { "hisuian_goodra" } }
+end
+
 return {
   config_key = "goomy",
+  init = init,
   list = { goomy, sliggoo, goodra, hisuian_sliggoo, hisuian_goodra}
 }
