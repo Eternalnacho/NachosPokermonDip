@@ -403,8 +403,8 @@ return {
           "Each {X:poke_lightning,C:black}Lightning{} Joker",
           "gives {X:mult,C:white}X#1#{} Mult",
           "{br:2}ERROR - CONTACT STEAK",
-          "Each {X:poke_metal,C:white}Metal{} Joker",
-          "earns {C:money}$#2#{} at end of round",
+          "Each {X:poke_metal,C:white}Metal{} Joker earns",
+          "{C:money}$#2#{} at end of round",
         }
       },
       j_nacho_dhelmise = {
@@ -527,23 +527,22 @@ return {
           "{C:inactive}(Max of 3){}"
         }
       },
-      j_nacho_hisuian_sneasel = {
-        name = "{s:0.6}Hisuian{}Sneasel",
+      j_nacho_finizen = {
+        name = "Finizen",
         text = {
-          "If played hand is a",
-          "single {C:attention}enhanced{} card,",
-          "it becomes {C:attention}Toxic{}",
-          "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Dawn Stone{C:inactive,s:0.8})",
+          "Bonus Bonus",
         }
       },
-      j_nacho_sneasler = {
-        name = "Sneasler",
+      j_nacho_palafin = {
+        name = "Palafin",
         text = {
-          "If played hand is a single",
-          "{C:attention}enhanced{} card, it and",
-          "up to two {C:attention}enhanced held{}",
-          "cards become {C:attention}Toxic{} and",
-          "{C:attention}Toxic{} cards gain {X:mult,C:white}X#1#{} Mult",
+          "Metamorphosis",
+        }
+      },
+      j_nacho_palafin_hero = {
+        name = "Palafin",
+        text = {
+          "I can do anything!",
         }
       },
       j_nacho_frigibax = {
@@ -633,6 +632,25 @@ return {
           "After defeating {C:attention}#1#{} Boss Blinds, sell",
           "this card to create a {C:attention}Fossil Tag",
           "{C:inactive}(Currently {C:attention}#2#{C:inactive}/#1#){}"
+        }
+      },
+      j_nacho_hisuian_sneasel = {
+        name = "{s:0.6}Hisuian{}Sneasel",
+        text = {
+          "If played hand is a",
+          "single {C:attention}enhanced{} card,",
+          "it becomes {C:attention}Toxic{}",
+          "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Dawn Stone{C:inactive,s:0.8})",
+        }
+      },
+      j_nacho_sneasler = {
+        name = "Sneasler",
+        text = {
+          "If played hand is a single",
+          "{C:attention}enhanced{} card, it and",
+          "up to two {C:attention}enhanced held{}",
+          "cards become {C:attention}Toxic{} and",
+          "{C:attention}Toxic{} cards gain {X:mult,C:white}X#1#{} Mult",
         }
       },
       j_nacho_okidogi = {

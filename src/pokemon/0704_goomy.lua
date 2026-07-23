@@ -86,8 +86,7 @@ local sliggoo={
       if PkmnDip.con.played_or_held(context) and not context.end_of_round then
         local unique_ranks = PkmnDip.utils.count_unique(context.scoring_hand, Card.get_id)
         if a.matching_suit == 'Any' or context.other_card:is_suit(a.matching_suit) then
-          local perma_mult = context.other_card.ability.perma_mult
-          perma_mult = (perma_mult or 0) + a.mult_mod * unique_ranks
+          context.other_card.ability.perma_mult = (context.other_card.ability.perma_mult or 0) + a.mult_mod * unique_ranks
           return {
             extra = { message = localize('k_upgrade_ex'), colour = G.C.MULT },
             card = card
@@ -124,7 +123,7 @@ local goodra={
         local unique_ranks = PkmnDip.utils.count_unique(context.scoring_hand, Card.get_id)
         if a.matching_suit == 'Any' or context.other_card:is_suit(a.matching_suit) then
           local perma_x_mult = context.other_card.ability.perma_x_mult
-          perma_x_mult = (perma_x_mult or 0) + a.Xmult_multi * unique_ranks
+          context.other_card.ability.perma_x_mult = (perma_x_mult or 0) + a.Xmult_multi * unique_ranks
           return {
             extra = { message = localize('k_upgrade_ex'), colour = G.C.MULT },
             card = card

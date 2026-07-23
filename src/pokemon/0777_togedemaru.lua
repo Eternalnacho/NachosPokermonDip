@@ -1,4 +1,4 @@
--- 777 Togedemaru
+-- Togedemaru 777
 local togedemaru = {
   name = "togedemaru",
   config = { extra = { Xmult_multi = 1.3, money_mod = 3 } },

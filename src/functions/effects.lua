@@ -7,16 +7,17 @@ PkmnDip.eff = {} -- Joker Effects
 ---@param card_args table
 PkmnDip.eff.joker_as_card = function(card, card_args)
   if not card_args then card_args = { area = G.play } end
+  local properties = {
+    value = card_args.rank,
+    suit = card_args.suit
+  }
   -- Stop the card from actually moving to an area
   PkmnDip.no_align = true
   -- Create a temporary card
   local temp_card = SMODS.add_card(card_args)
   temp_card.dip_scoring_for = card
   temp_card.states.visible = nil
-  temp_card:set_base({
-    value = card_args.rank,
-    suit = card_args.suit
-  })
+  temp_card:set_base(next(properties) and properties or nil)
   -- Set the scoring animation bit onto the target joker
   temp_card:set_role({ major = card, role_type = 'Glued', draw_major = card })
   temp_card.juice_up = function(self, ...) card:juice_up(...) end
@@ -25,6 +26,7 @@ PkmnDip.eff.joker_as_card = function(card, card_args)
     temp_card:remove()
     PkmnDip.no_align = nil -- let cards align properly again lmao
   end, {trigger = 'immediate'})
+  return temp_card
 end
 
 -- Hook these two functions for joker_as_card to work properly

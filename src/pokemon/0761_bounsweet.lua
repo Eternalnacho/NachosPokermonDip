@@ -1,3 +1,4 @@
+-- Bounsweet 761
 local bounsweet = {
   name = "bounsweet",
   config = { extra = { mult = 3, rounds = 4 } },
@@ -25,6 +26,7 @@ local bounsweet = {
   end
 }
 
+-- Steenee 762
 local steenee = {
   name = "steenee",
   config = { extra = { mult = 7 }, evo_rqmt = 3 },
@@ -49,6 +51,7 @@ local steenee = {
   end
 }
 
+-- Tsareena 763
 local tsareena = {
   name = "tsareena",
   config = { extra = { mult = 11 } },

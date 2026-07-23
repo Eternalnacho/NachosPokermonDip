@@ -1,4 +1,4 @@
--- 767 Wimpod
+-- Wimpod 767
 local wimpod = {
   name = "wimpod",
   config = { extra = { chips = 30, rounds = 4 } },
@@ -31,7 +31,7 @@ local wimpod = {
   end
 }
 
--- 768 Golisopod
+-- Golisopod 768
 local golisopod = {
   name = "golisopod",
   config = { extra = { Xmult = 3, h_size = 1 } },

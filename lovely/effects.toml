@@ -1,0 +1,30 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 1
+
+
+### [SMODS.calculate_main_scoring] Ignore "Scores as X" cards for counting scored
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/utils.lua"]'
+position = "at"
+match_indent = true
+pattern = '''
+  if scoring_hand and not SMODS.has_no_rank(card) and in_scoring then
+    G.GAME.cards_played[card.base.value].total = G.GAME.cards_played[card.base.value].total + 1
+    if not SMODS.has_no_suit(card) then
+        G.GAME.cards_played[card.base.value].suits[card.base.suit] = true
+    end
+  end
+'''
+payload = '''
+  if not card.dip_scoring_for then
+    if scoring_hand and not SMODS.has_no_rank(card) and in_scoring then
+      G.GAME.cards_played[card.base.value].total = G.GAME.cards_played[card.base.value].total + 1
+      if not SMODS.has_no_suit(card) then
+          G.GAME.cards_played[card.base.value].suits[card.base.suit] = true
+      end
+    end
+  end
+'''
