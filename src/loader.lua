@@ -95,6 +95,7 @@ local function prep_config(file)
     end
     table.insert(PkmnDip.config_list[(file.misc_config or "main")], {
       list = list,
+      label = file.label,
       config_key = file.config_key,
       mod_req = file.mod_req
     })

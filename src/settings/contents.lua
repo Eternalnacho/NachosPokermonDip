@@ -27,7 +27,7 @@ local populate_pages = function(list, loc_entry, header)
       local config_name = list[index].list[1]
       table.insert(page.tiles,
         {
-          label = joker_name_wrapper(config_name),
+          label = list[index].label and function() return list[index].label end or joker_name_wrapper(config_name),
           list = list[index].list,
           config_key = list[index].config_key,
           mod_req = list[index].mod_req
@@ -66,7 +66,7 @@ end
 -- Adding in the Cross-Mod joker page(s)
 local cross_list = {}
 for k, v in pairs(PkmnDip.config_list) do
-  if k ~= "main" and k ~= "megas" and k ~= "gmax" then
+  if next(SMODS.find_mod(k)) then
     PkmnDip.utils.append(cross_list, v)
   end
 end
