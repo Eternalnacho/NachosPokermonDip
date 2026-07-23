@@ -35,12 +35,7 @@ local fossil_tag = {
 			return true
 		end
 	end,
-  in_pool = function(self)
-    for _, v in pairs(SMODS.get_attribute_pool("ancient")) do
-      if G.GAME.used_jokers[v] then return false end
-    end
-    return true
-  end
+  in_pool = function(self) return false end
 }
 
 return {
