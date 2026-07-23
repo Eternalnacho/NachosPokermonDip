@@ -37,7 +37,7 @@ PkmnDip.con.has_repeat_effect = function(context)
 end
 
 PkmnDip.con.played_or_held = function(context)
-  return (context.cardarea == G.hand or G.play)
+  return context.cardarea == G.hand or context.cardarea == G.play
 end
 
 PkmnDip.con.in_booster = function(name)
