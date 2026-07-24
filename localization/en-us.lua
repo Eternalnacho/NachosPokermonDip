@@ -530,19 +530,30 @@ return {
       j_nacho_finizen = {
         name = "Finizen",
         text = {
-          "Bonus Bonus",
+          "{C:chips}+#1#{} Chips",
+          "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)"
         }
       },
       j_nacho_palafin = {
         name = "Palafin",
         text = {
-          "Metamorphosis",
+          "{C:chips}+#1#{} Chips",
+          "{br:2}ERROR - CONTACT STEAK",
+          "This Joker vanishes after",
+          "{C:attention}first hand{} of round,",
+          "then returns {C:attention}transformed{}",
+          "at end of round"
         }
       },
       j_nacho_palafin_hero = {
         name = "Palafin",
         text = {
-          "I can do anything!",
+          "{C:chips}+#1#{} Chips",
+          "{br:2}ERROR - CONTACT STEAK",
+          "The first card in poker hand",
+          "permanently gains {C:chips}+#2#{} Chips,",
+          "also gains {X:mult,C:white}X#3#{} Mult if",
+          "it is a {C:attention}Bonus Card{}"
         }
       },
       j_nacho_frigibax = {
@@ -890,6 +901,10 @@ return {
       poke_stuff_cheeks_ex = "Stuff Cheeks!",
       -- From Hydrapple
       poke_fickle_beam_ex = "Fickle Beam!",
+      -- From Palafin
+      poke_aquajet_ex = "Aqua Jet!",
+      poke_jetpunch_ex = "Jet Punch!",
+      poke_flipturn_ex = "Flip Turn!",
       -- From Loyal Three, Pecharunt
       poke_toxic_chain_ex = "Toxic Chain!",
       poke_malignant_chain_ex = "Malignant Chain!",

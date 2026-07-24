@@ -17,6 +17,14 @@ SMODS.current_mod.calculate = function(self, context)
     end
     G.GAME.modifiers.sinnoh_adv = nil
   end
+
+  -- Palafin Transformation Sequence lmaooooooo
+  if context.end_of_round and PkmnDip.palafin then
+    local new_card = SMODS.copy_card(PkmnDip.palafin)
+    PkmnDip.palafin = nil
+    SMODS.calculate_effect({ message = localize('poke_transform_success'), colour = G.C.CHIPS }, new_card)
+    return { message = pokermon.evolve(new_card, 'j_nacho_palafin_hero', true) }
+  end
 end
 
 SMODS.current_mod.reset_game_globals = function(run_start)

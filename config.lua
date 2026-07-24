@@ -28,6 +28,7 @@ return {
   impidimp = true,
   galarian_meowth = true,
   smoliv = true,
+  finizen = true,
   frigibax = true,
   terapagos = true,
   hisuian_sneasel = SMODS.Mods["ToxicStall"].can_load and not SMODS.Mods["ToxicStall"].disabled and true or false,
