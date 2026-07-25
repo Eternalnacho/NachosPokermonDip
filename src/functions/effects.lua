@@ -173,3 +173,52 @@ PkmnDip.eff.breed = function(card, adj, pre_call, post_call)
 end
 
 --#endregion [[ create_joker ]]
+
+
+--#region [[ vanish_joker ]]
+
+PkmnDip.eff.vanish_joker = function(card)
+  PkmnDip.defer(function()
+    play_sound('tarot1')
+    card.T.r = -0.2
+    card:juice_up(0.3, 0.4)
+    card.states.drag.is = true
+    card.children.center.pinch.x = true
+    PkmnDip.defer(function()
+      card:remove()
+      PkmnDip.eff.reserve_joker_slot()
+    end, { delay = 0.3 })
+  end, { blockable = true })
+end
+
+--#endregion [[ vanish_joker ]]
+
+
+--#region [[ reserve_slots ]]
+
+PkmnDip.eff.reserve_joker_slot = function()
+  if not PkmnDip.slots_reserved then PkmnDip.slots_reserved = {} end
+  PkmnDip.slots_reserved['jokers'] = (PkmnDip.slots_reserved['jokers'] or 0) + 1
+  G.jokers.config.card_limits.extra_slots_used = G.jokers.config.card_limits.extra_slots_used + PkmnDip.slots_reserved['jokers']
+end
+
+PkmnDip.eff.release_reserved_slots = function()
+  if not PkmnDip.slots_reserved or not next(PkmnDip.slots_reserved) then return end
+  for area, amt in pairs(PkmnDip.slots_reserved) do
+    G[area].config.card_limits.extra_slots_used = G[area].config.card_limits.extra_slots_used - amt
+    PkmnDip.slots_reserved[area] = nil
+  end
+end
+
+PkmnDip.Hook("around", CardArea, 'count_property', function(orig, self, property, ...)
+  local ret = orig(self, property, ...)
+  if property == 'extra_slots_used' and PkmnDip.slots_reserved and next(PkmnDip.slots_reserved) then
+    for area, amt in pairs(PkmnDip.slots_reserved) do
+      if self == G[area] then ret = ret + amt end
+      break
+    end
+  end
+  return ret
+end)
+
+--#endregion [[ reserve_slots ]]

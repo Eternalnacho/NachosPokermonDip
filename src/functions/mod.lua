@@ -20,10 +20,15 @@ SMODS.current_mod.calculate = function(self, context)
 
   -- Palafin Transformation Sequence lmaooooooo
   if context.end_of_round and PkmnDip.palafin then
-    local new_card = SMODS.copy_card(PkmnDip.palafin)
+    for _, c in pairs(PkmnDip.palafin) do
+      PkmnDip.defer(function()
+        local new_card = SMODS.copy_card(c)
+        SMODS.calculate_effect({ message = pokermon.evolve(new_card, 'j_nacho_palafin_hero', true) }, new_card)
+        SMODS.calculate_effect({ message = localize('poke_transform_success'), colour = G.C.CHIPS }, new_card)
+      end, { blockable = true, delay = 0.2 })
+    end
+    PkmnDip.defer(PkmnDip.eff.release_reserved_slots, { blockable = true } )
     PkmnDip.palafin = nil
-    SMODS.calculate_effect({ message = localize('poke_transform_success'), colour = G.C.CHIPS }, new_card)
-    return { message = pokermon.evolve(new_card, 'j_nacho_palafin_hero', true) }
   end
 end
 

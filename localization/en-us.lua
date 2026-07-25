@@ -550,10 +550,10 @@ return {
         text = {
           "{C:chips}+#1#{} Chips",
           "{br:2}ERROR - CONTACT STEAK",
-          "The first card in poker hand",
-          "permanently gains {C:chips}+#2#{} Chips,",
-          "also gains {X:mult,C:white}X#3#{} Mult if",
-          "it is a {C:attention}Bonus Card{}"
+          "The {C:attention}first{} card in poker hand",
+          "permanently gains {C:chips}+#2#{} Chips when",
+          "scored, also gains {X:mult,C:white}X#3#{} Mult",
+          "if it is a {C:attention}Bonus Card{}"
         }
       },
       j_nacho_frigibax = {

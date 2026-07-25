@@ -53,7 +53,7 @@ PkmnDip.con.is_base = function(card)
   return card.config.center == G.P_CENTERS.c_base
 end
 
-for _, enh in pairs { 'glass', 'steel', 'wild', 'gold', 'lucky' } do
+for _, enh in pairs { 'glass', 'steel', 'wild', 'gold', 'lucky', 'bonus' } do
   PkmnDip.con['is_'..enh] = function(card)
     return SMODS.has_enhancement(card, 'm_'..enh)
   end
