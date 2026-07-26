@@ -199,13 +199,15 @@ end
 PkmnDip.eff.reserve_joker_slot = function()
   if not PkmnDip.slots_reserved then PkmnDip.slots_reserved = {} end
   PkmnDip.slots_reserved['jokers'] = (PkmnDip.slots_reserved['jokers'] or 0) + 1
-  G.jokers.config.card_limits.extra_slots_used = G.jokers.config.card_limits.extra_slots_used + PkmnDip.slots_reserved['jokers']
 end
 
-PkmnDip.eff.release_reserved_slots = function()
+PkmnDip.eff.release_reserved_slots = function(area)
   if not PkmnDip.slots_reserved or not next(PkmnDip.slots_reserved) then return end
-  for area, amt in pairs(PkmnDip.slots_reserved) do
-    G[area].config.card_limits.extra_slots_used = G[area].config.card_limits.extra_slots_used - amt
+  if not area then
+    for a, _ in pairs(PkmnDip.slots_reserved) do
+      PkmnDip.slots_reserved[a] = nil
+    end
+  elseif PkmnDip.slots_reserved[area] then
     PkmnDip.slots_reserved[area] = nil
   end
 end
