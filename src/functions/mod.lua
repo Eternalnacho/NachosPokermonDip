@@ -3,7 +3,7 @@
 SMODS.current_mod.set_debuff = function(card)
   -- prevent debuffs
   if card.ability.name == "mega_gallade" then return 'prevent_debuff' end
-  if card.ability.name == "tsareena" and PkmnDip.con.all_grass then return 'prevent_debuff' end
+  if card.ability.name == "tsareena" and PkmnDip.con.all_grass() then print(PkmnDip.con.all_grass()) return 'prevent_debuff' end
   if card:get_id() == 9 and next(SMODS.find_card("j_poke_mega_altaria")) then return 'prevent_debuff' end
   return false
 end
