@@ -39,5 +39,6 @@ end
 
 load_pokemon_folder("src/pokemon/")
 load_pokemon_folder("src/pokemon/megas/")
+load_pokemon_folder("src/pokemon/gmax/")
 
 return poke_templates

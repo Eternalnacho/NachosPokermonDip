@@ -162,6 +162,7 @@ local fezandipiti = {
 
 return {
   config_key = "loyal_three",
+  label = "Loyal Three",
   no_family = true,
   misc_config = "ToxicStall",
   list = { okidogi, munkidori, fezandipiti }

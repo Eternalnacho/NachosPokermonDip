@@ -1,6 +1,7 @@
 local stellar_sticker = {
   key = "stellar_sticker",
   hide_badge = true,
+  no_collection = true,
   prefix_config = {
     key = { mod = false },
  		atlas = false,

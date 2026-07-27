@@ -28,7 +28,7 @@ local oranguru={
       PkmnDip.eff.mod_booster(-card.ability.extra.booster_choice_mod)
     end
   end,
-  attributes = {"passive", "full deck"},
+  attributes = {"passive", "full_deck"},
 }
 
 return {

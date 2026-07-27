@@ -7,16 +7,17 @@ PkmnDip.eff = {} -- Joker Effects
 ---@param card_args table
 PkmnDip.eff.joker_as_card = function(card, card_args)
   if not card_args then card_args = { area = G.play } end
+  local properties = {
+    value = card_args.rank,
+    suit = card_args.suit
+  }
   -- Stop the card from actually moving to an area
   PkmnDip.no_align = true
   -- Create a temporary card
   local temp_card = SMODS.add_card(card_args)
   temp_card.dip_scoring_for = card
   temp_card.states.visible = nil
-  temp_card:set_base({
-    value = card_args.rank,
-    suit = card_args.suit
-  })
+  temp_card:set_base(next(properties) and properties or nil)
   -- Set the scoring animation bit onto the target joker
   temp_card:set_role({ major = card, role_type = 'Glued', draw_major = card })
   temp_card.juice_up = function(self, ...) card:juice_up(...) end
@@ -25,6 +26,7 @@ PkmnDip.eff.joker_as_card = function(card, card_args)
     temp_card:remove()
     PkmnDip.no_align = nil -- let cards align properly again lmao
   end, {trigger = 'immediate'})
+  return temp_card
 end
 
 -- Hook these two functions for joker_as_card to work properly
@@ -171,3 +173,54 @@ PkmnDip.eff.breed = function(card, adj, pre_call, post_call)
 end
 
 --#endregion [[ create_joker ]]
+
+
+--#region [[ vanish_joker ]]
+
+PkmnDip.eff.vanish_joker = function(card)
+  PkmnDip.defer(function()
+    play_sound('tarot1')
+    card.T.r = -0.2
+    card:juice_up(0.3, 0.4)
+    card.states.drag.is = true
+    card.children.center.pinch.x = true
+    PkmnDip.defer(function()
+      card:remove()
+      PkmnDip.eff.reserve_joker_slot()
+    end, { delay = 0.3 })
+  end, { blockable = true })
+end
+
+--#endregion [[ vanish_joker ]]
+
+
+--#region [[ reserve_slots ]]
+
+PkmnDip.eff.reserve_joker_slot = function()
+  if not PkmnDip.slots_reserved then PkmnDip.slots_reserved = {} end
+  PkmnDip.slots_reserved['jokers'] = (PkmnDip.slots_reserved['jokers'] or 0) + 1
+end
+
+PkmnDip.eff.release_reserved_slots = function(area)
+  if not PkmnDip.slots_reserved or not next(PkmnDip.slots_reserved) then return end
+  if not area then
+    for a, _ in pairs(PkmnDip.slots_reserved) do
+      PkmnDip.slots_reserved[a] = nil
+    end
+  elseif PkmnDip.slots_reserved[area] then
+    PkmnDip.slots_reserved[area] = nil
+  end
+end
+
+PkmnDip.Hook("around", CardArea, 'count_property', function(orig, self, property, ...)
+  local ret = orig(self, property, ...)
+  if property == 'extra_slots_used' and PkmnDip.slots_reserved and next(PkmnDip.slots_reserved) then
+    for area, amt in pairs(PkmnDip.slots_reserved) do
+      if self == G[area] then ret = ret + amt end
+      break
+    end
+  end
+  return ret
+end)
+
+--#endregion [[ reserve_slots ]]

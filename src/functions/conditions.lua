@@ -37,7 +37,7 @@ PkmnDip.con.has_repeat_effect = function(context)
 end
 
 PkmnDip.con.played_or_held = function(context)
-  return (context.cardarea == G.hand or G.play)
+  return context.cardarea == G.hand or context.cardarea == G.play
 end
 
 PkmnDip.con.in_booster = function(name)
@@ -53,7 +53,7 @@ PkmnDip.con.is_base = function(card)
   return card.config.center == G.P_CENTERS.c_base
 end
 
-for _, enh in pairs { 'glass', 'steel', 'wild', 'gold', 'lucky' } do
+for _, enh in pairs { 'glass', 'steel', 'wild', 'gold', 'lucky', 'bonus' } do
   PkmnDip.con['is_'..enh] = function(card)
     return SMODS.has_enhancement(card, 'm_'..enh)
   end
@@ -69,3 +69,17 @@ PkmnDip.con.is_shiny = function(card)
 end
 
 --#endregion [[ is_enhancement / is_edition ]]
+
+
+--#region [[ is_type ]]
+
+for _, type in pairs(POKE_TYPES) do
+  PkmnDip.con['is_'..type:lower()] = function(card)
+    return pokermon.is_type(card, type)
+  end
+  PkmnDip.con['all_'..type:lower()] = function()
+    return PkmnDip.utils.all(G.jokers.cards, PkmnDip.con['is_'..type:lower()])
+  end
+end
+
+--#endregion [[ is_type ]]

@@ -112,21 +112,6 @@ return {
           "{X:attention,C:white}4+{} : {C:attention}Held ranks{} below {C:attention}#1#{} become {C:attention}Steel{}",
         }
       },
-      j_nacho_bronzor = {
-        name = "Bronzor",
-        text = {
-          "This Joker scores",
-          "as a {C:attention}held Steel{} card",
-          "{C:inactive,s:0.8}(Evolves after triggering {C:attention,s:0.8}#1#{C:inactive,s:0.8} times)",
-        }
-      },
-      j_nacho_bronzong = {
-        name = "Bronzong",
-        text = {
-          "This Joker and adjacent {X:poke_metal,C:white}Metal{}",
-          "Jokers score as {C:attention}held Steel{} cards",
-        }
-      },
       j_nacho_snover = {
         name = "Snover",
         text = {
@@ -276,7 +261,7 @@ return {
       j_nacho_goomy = {
         name = "Goomy",
         text = {
-          "If played hand contains a {C:attention}Flush{},",
+          "If poker hand contains a {C:attention}Flush{},",
           "{C:attention}scored{} and {C:attention}held{} cards with the",
           "{C:attention}same suit{} gain {C:red}+#1#{} Mult",
           "{C:inactive,s:0.8}(Evolves after playing {C:attention,s:0.8}#2# {C:inactive,s:0.8}#3#)",
@@ -286,7 +271,7 @@ return {
       j_nacho_sliggoo = {
         name = "Sliggoo",
         text = {
-          "If played hand is a {C:attention}Flush{},",
+          "If {C:attention}poker hand{} is a {C:attention}Flush{},",
           "{C:attention}scored{} and {C:attention}held{} cards with the",
           "{C:attention}same suit{} gain {C:red}+#1#{} Mult for",
           "each unique {C:attention}rank{} in poker hand",
@@ -296,7 +281,7 @@ return {
       j_nacho_hisuian_sliggoo = {
         name = "{s:0.6}Hisuian{}Sliggoo",
         text = {
-          "If played hand is a {C:attention}Flush House{},",
+          "If {C:attention}poker hand{} is a {C:attention}Flush House{},",
           "creates a {C:poke_item}Metal Coat{}",
           "{br:2.5}ERROR - CONTACT STEAK",
           "Creates another {C:poke_item}Metal Coat{} if",
@@ -308,7 +293,7 @@ return {
       j_nacho_goodra = {
         name = "Goodra",
         text = {
-          "If played hand is a {C:attention}Flush{},",
+          "If {C:attention}poker hand{} is a {C:attention}Flush{},",
           "{C:attention}scored{} and {C:attention}held{} cards with the",
           "{C:attention}same suit{} gain {X:red,C:white}X#1#{} Mult for",
           "each unique {C:attention}rank{} in poker hand",
@@ -317,13 +302,42 @@ return {
       j_nacho_hisuian_goodra = {
         name = "{s:0.6}Hisuian{}Goodra",
         text = {
-          "If played hand is a {C:attention}Flush House{},",
+          "If {C:attention}poker hand{} is a {C:attention}Flush House{},",
           "creates a {C:poke_item}Metal Coat{}",
           "{br:2.5}ERROR - CONTACT STEAK",
-          "If played hand is a {C:attention}Flush House{},",
+          "If {C:attention}poker hand{} is a {C:attention}Flush House{},",
           "{C:attention}Steel{} cards {C:attention}held in hand{}",
           "give {X:mult,C:white}X{} Mult equal to one third of",
           "the difference in scoring {C:attention}ranks{}",
+        }
+      },
+      j_nacho_bounsweet = {
+        name = "Bounsweet",
+        text = {
+          "{C:red}+#1#{} Mult",
+          "{C:attention}Tripled{} if you have",
+          "another {X:poke_grass,C:white}Grass{} Joker",
+          "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)"
+        }
+      },
+      j_nacho_steenee = {
+        name = "Steenee",
+        text = {
+          "{C:mult}+#1#{} Mult for each",
+          "{X:poke_grass,C:white}Grass{} Joker you have",
+          "{C:inactive,s:0.8}(Evolves when you have",
+          "{C:attention,s:0.8}3 {X:poke_grass,C:white,s:0.8}Grass{C:inactive,s:0.8} Jokers)",
+        }
+      },
+      j_nacho_tsareena = {
+        name = "Tsareena",
+        text = {
+          "{C:mult}+#1#{} Mult for each",
+          "{X:poke_grass,C:white}Grass{} Joker you have",
+          "{br:2}ERROR - CONTACT STEAK",
+          "This Joker {C:attention}can't{} be",
+          "debuffed if all owned",
+          "Jokers are {X:poke_grass,C:white}Grass{}"
         }
       },
       j_nacho_oranguru = {
@@ -349,6 +363,30 @@ return {
           "non-{C:dark_edition}Negative{C:attention} edition{}"
         }
       },
+      j_nacho_wimpod = {
+        name = 'Wimpod',
+        text = {
+          "{C:chips}+#1#{} Chips",
+          "{br:2}ERROR - CONTACT STEAK",
+          "Debuff self this round",
+          "if played hand is not",
+          "the {C:attention}first hand{} of round",
+          "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds not debuffed)"
+        }
+      },
+      j_nacho_golisopod = {
+        name = 'Golisopod',
+        text = {
+          "{X:mult,C:white}X#1#{} Mult",
+          "{C:attention}+1{} hand size if this",
+          "Joker was not debuffed",
+          "by the end of the ante",
+          "{br:2}ERROR - CONTACT STEAK",
+          "Debuff self this round",
+          "if played hand is not",
+          "the {C:attention}first hand{} of round",
+        }
+      },
       j_nacho_turtonator = {
         name = "Turtonator",
         text = {
@@ -357,6 +395,16 @@ return {
           "When this Joker is {C:attention}Active{},",
           "scoring cards give {X:red,C:white}X#1#{} Mult",
           "{C:inactive}(#2#){}",
+        }
+      },
+      j_nacho_togedemaru = {
+        name = "Togedemaru",
+        text = {
+          "Each {X:poke_lightning,C:black}Lightning{} Joker",
+          "gives {X:mult,C:white}X#1#{} Mult",
+          "{br:2}ERROR - CONTACT STEAK",
+          "Each {X:poke_metal,C:white}Metal{} Joker earns",
+          "{C:money}$#2#{} at end of round",
         }
       },
       j_nacho_dhelmise = {
@@ -397,48 +445,50 @@ return {
           "{br:2}ERROR - CONTACT STEAK",
           "{C:attention}Destroys{} one card remaining",
           "in deck at end of round",
-          "{C:inactive,s:0.8}(Evolves with different Apples)",
+          "{C:inactive,s:0.8}(Evolves with different {C:attention,s:0.8}Apples{C:inactive,s:0.8})",
         }
       },
       j_nacho_flapple = {
         name = "Flapple",
         text = {
-          "Whenever a {C:attention}playing card{}",
-          "is {C:attention}destroyed{}, gain {X:mult,C:white}X#1#{} Mult",
+          "Gains {X:mult,C:white}X#1#{} Mult when a",
+          "{C:attention}playing card{} is destroyed",
           "{br:2}ERROR - CONTACT STEAK",
-          "Whenever a hand is {C:attention}played{},",
-          "lose {X:mult,C:white}X#2#{} Mult",
+          "Loses {X:mult,C:white}X#2#{} Mult for",
+          "every hand played",
           "{C:inactive}(Currently {X:mult,C:white}X#3#{C:inactive} Mult)",
         }
       },
       j_nacho_appletun = {
         name = "Appletun",
         text = {
-          "{C:attention}+1{} hand size, {C:attention}+1{} hand size if a {C:attention}rank{}",
-          "is missing from your {C:attention}full deck{}",
+          "Earns {C:money}$#1#{} when a",
+          "{C:attention}playing card{} is destroyed",
           "{br:2}ERROR - CONTACT STEAK",
-          "Whenever a {C:attention}playing card{}",
-          "is {C:attention}destroyed{}, earn {C:money}$#1#{}",
+          "{C:attention}+1{} hand size, {C:attention}+1{} hand size",
+          "if a {C:attention}rank{} is {C:attention}depleted",
         }
       },
       j_nacho_dipplin = {
         name = "Dipplin",
         text = {
-          "Whenever a {C:attention}playing card{} is {C:attention}destroyed{},",
-          "add a {C:attention}Wild copy{} of it to your {C:attention}deck{}",
-          "If the {C:attention}destroyed{} card was {C:attention}Wild{},",
-          "add {C:attention}2 copies{} instead",
+          "When a {C:attention}playing card{}",
+          "is destroyed, add a {C:attention}Wild{}",
+          "{C:attention}copy{} of it to your {C:attention}deck{}",
+          "{br:2}ERROR - CONTACT STEAK",
+          "If the destroyed card was",
+          "{C:attention}Wild{}, add {C:attention}2 copies{} instead",
           "{C:inactive,s:0.8}(Evolves when deck is >= 25% #1#{C:attention,s:0.8}Wild{C:inactive,s:0.8} cards)"
         }
       },
       j_nacho_hydrapple = {
         name = "Hydrapple",
         text = {
-          "Whenever a {C:attention}playing card{} is {C:attention}destroyed{},",
+          "When a {C:attention}playing card{} is destroyed,",
           "add a {C:attention}Wild copy{} of it to your {C:attention}deck{}",
           "and this Joker gains {X:mult,C:white}X#2#{} Mult",
           "{br:2.5}ERROR - CONTACT STEAK",
-          "If the {C:attention}destroyed{} card was {C:attention}Wild{},",
+          "If the destroyed card was {C:attention}Wild{},",
           "gain {X:mult,C:white}X#3#{} Mult instead",
           "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult)",
         }
@@ -477,65 +527,39 @@ return {
           "{C:inactive}(Max of 3){}"
         }
       },
-      j_nacho_hisuian_sneasel = {
-        name = "{s:0.6}Hisuian{}Sneasel",
+      j_nacho_finizen = {
+        name = "Finizen",
         text = {
-          "If played hand is a",
-          "single {C:attention}enhanced{} card,",
-          "it becomes {C:attention}Toxic{}",
-          "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Dawn Stone{C:inactive,s:0.8})",
+          "{C:chips}+#1#{} Chips",
+          "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)"
         }
       },
-      j_nacho_sneasler = {
-        name = "Sneasler",
+      j_nacho_palafin = {
+        name = "Palafin",
         text = {
-          "If played hand is a single",
-          "{C:attention}enhanced{} card, it and",
-          "up to two {C:attention}enhanced held{}",
-          "cards become {C:attention}Toxic{} and",
-          "{C:attention}Toxic{} cards gain {X:mult,C:white}X#1#{} Mult",
+          "{C:chips}+#1#{} Chips",
+          "{br:2}ERROR - CONTACT STEAK",
+          "This Joker vanishes after",
+          "{C:attention}first hand{} of round,",
+          "then returns {C:attention}transformed{}",
+          "at end of round"
         }
       },
-      j_nacho_smoliv = {
-        name = "Smoliv",
+      j_nacho_palafin_hero = {
+        name = "Palafin",
         text = {
-          "Adds {C:money}$#1#{} of sell value",
-          "to a random {X:poke_grass,C:white}Grass{} Joker",
-          "at end of round",
-          "{C:inactive,s:0.8}(Evolves after {C:attention,s:0.8}#2#{C:inactive,s:0.8} rounds)",
-        }
-      },
-      j_nacho_dolliv = {
-        name = "Dolliv",
-        text = {
-          "Adds {C:money}$#1#{} of sell value",
-          "to a random {X:poke_grass,C:white}Grass{} Joker",
-          "at end of round",
-          "{br:2.5}ERROR - CONTACT STEAK",
-          "{C:green}#3# in #4#{} chance to add",
-          "{C:money}$#2#{} of sell value to",
-          "each {X:poke_grass,C:white}Grass{} Joker instead",
-          "{C:inactive,s:0.8}(Evolves at {C:money,s:0.8}$#5#{C:inactive,s:0.8}/$#6# total",
-          "{C:inactive,s:0.8}sell value of {X:poke_grass,C:white,s:0.8}Grass{C:inactive,s:0.8} Jokers)",
-        }
-      },
-      j_nacho_arboliva = {
-        name = "Arboliva",
-        text = {
-          "Adds {C:money}$#1#{} of sell value",
-          "to each {X:poke_grass,C:white}Grass{} Joker",
-          "at end of round",
-          "{br:2.5}ERROR - CONTACT STEAK",
-          "{X:mult,C:white}X#2#{} Mult for every",
-          "{C:money}${} of sell value from",
-          "{X:poke_grass,C:white}Grass{} Jokers",
-          "{C:inactive}(Currently {X:mult,C:white}X#3#{})"
+          "{C:chips}+#1#{} Chips",
+          "{br:2}ERROR - CONTACT STEAK",
+          "The {C:attention}first{} card in poker hand",
+          "permanently gains {C:chips}+#2#{} Chips when",
+          "scored, also gains {X:mult,C:white}X#3#{} Mult",
+          "if it is a {C:attention}Bonus Card{}"
         }
       },
       j_nacho_frigibax = {
         name = "Frigibax",
         text = {
-          "When a {C:attention}Five of a Kind{} is played,",
+          "If {C:attention}poker hand{} is a {C:attention}Five of a Kind{},",
           "{C:attention}held{} cards become {C:dark_edition}Foil{}",
           "{br:2.5}ERROR - CONTACT STEAK",
           "The first card with {C:red}Mult{}",
@@ -546,7 +570,7 @@ return {
       j_nacho_arctibax = {
         name = "Arctibax",
         text = {
-          "When a {C:attention}Five of a Kind{} is played,",
+          "If {C:attention}poker hand{} is a {C:attention}Five of a Kind{},",
           "{C:attention}held{} cards become {C:dark_edition}Foil{}",
           "{br:2.5}ERROR - CONTACT STEAK",
           "The first two cards with {C:red}Mult{}",
@@ -557,7 +581,7 @@ return {
       j_nacho_baxcalibur = {
         name = "Baxcalibur",
         text = {
-          "When a {C:attention}Five of a Kind{} is played,",
+          "If {C:attention}poker hand{} is a {C:attention}Five of a Kind{},",
           "scoring cards give {X:mult,C:white}X#1#{} Mult",
           "for each {C:dark_edition}Foil{} card in full deck",
           "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult){}",
@@ -611,6 +635,33 @@ return {
           "{br:2.5}ERROR - CONTACT STEAK",
           "{C:nacho_sg1}S{C:nacho_sg2}t{C:nacho_sg3}e{C:nacho_sg4}l{C:nacho_sg5}l{C:nacho_sg6}a{C:nacho_sg7}r{} Jokers give {X:mult,C:white}X#1#{} Mult",
           "for each {C:poke_pink}Energy{} applied to them",
+        }
+      },
+      j_nacho_excavator = {
+        name = "Excavator",
+        text = {
+          "After defeating {C:attention}#1#{} Boss Blinds, sell",
+          "this card to create a {C:attention}Fossil Tag",
+          "{C:inactive}(Currently {C:attention}#2#{C:inactive}/#1#){}"
+        }
+      },
+      j_nacho_hisuian_sneasel = {
+        name = "{s:0.6}Hisuian{}Sneasel",
+        text = {
+          "If played hand is a",
+          "single {C:attention}enhanced{} card,",
+          "it becomes {C:attention}Toxic{}",
+          "{C:inactive,s:0.8}(Evolves with a {C:attention,s:0.8}Dawn Stone{C:inactive,s:0.8})",
+        }
+      },
+      j_nacho_sneasler = {
+        name = "Sneasler",
+        text = {
+          "If played hand is a single",
+          "{C:attention}enhanced{} card, it and",
+          "up to two {C:attention}enhanced held{}",
+          "cards become {C:attention}Toxic{} and",
+          "{C:attention}Toxic{} cards gain {X:mult,C:white}X#1#{} Mult",
         }
       },
       j_nacho_okidogi = {
@@ -695,38 +746,35 @@ return {
           "Enhances {C:attention}#2#{} random {C:attention}held{}",
           "cards and {C:attention}#1#{} selected card",
           "into {C:attention}Wild{} cards, destroys a",
-          "random non-{C:attention}Wild{} {C:attention}held{} card",
+          "random {C:attention}non-Wild{} {C:attention}held{} card",
         },
       },
       c_poke_teraorb_stellar = {
         name = "Tera Orb",
         text = {
-            "{C:attention}Type Changer:{} {B:1,V:2}Stellar{}",
-            "{br:2}ERROR - CONTACT STEAK",
-            "{C:poke_pink}Energize{} leftmost or",
-            "selected Joker if it",
-            "is already {B:3,V:4}#1#{} {C:poke_pink}Type{}",
-            "{C:inactive,s:0.8}({C:poke_pink,s:0.8}Type{C:inactive,s:0.8} changes with every discard){}",
+          "{C:attention}Type Changer:{} {B:1,V:2}Stellar{}",
+          "{br:2}ERROR - CONTACT STEAK",
+          "{C:poke_pink}Energize{} leftmost or",
+          "selected Joker if it",
+          "is already {B:3,V:4}#1#{} {C:poke_pink}Type{}",
+          "{C:inactive,s:0.8}({C:poke_pink,s:0.8}Type{C:inactive,s:0.8} changes with every discard){}",
         },
       },
     },
-    Stake = {
-      stake_nacho_elite_stake = {
-        name = "Elite Stake",
+    Tag = {
+      tag_nacho_fossil_tag = {
+        name = "Fossil Tag",
         text = {
-          "{X:gray,C:attention}+2{} Ante win requirement",
-          "Last 4 Antes are Showdown Boss Blinds",
-          "{s:0.8}Applies all previous Stakes"
-        },
+          "Gives a free {C:attention}Ancient Pack",
+        }, 
       },
     },
     Other = {
-      nacho_elite_stake_sticker = {
-        name = "Elite Sticker",
+      p_nacho_ancient_pack = {
+        name = "Ancient Pack",
         text = {
-          "Used this {C:attention}Joker{}",
-          "to win on {C:attention}Elite{}",
-          "{C:attention}Stake{} difficulty",
+          "Choose {C:attention}#1# Fossil Pokemon{}",
+          "from among {C:attention}#2#{} Cards"
         },
       },
       -- Incubator tooltip for Mega Audino
@@ -753,7 +801,7 @@ return {
           "Using a {C:poke_item}Tera Orb{} on",
           "Terapagos applies a",
           "{C:poke_item}Tera Orb{} to each Joker",
-        } 
+        }
       },
       teraform_zero = {
         name = "Teraform Zero",
@@ -761,7 +809,7 @@ return {
           "Using a {C:nacho_sg1}T{C:nacho_sg2}e{C:nacho_sg3}r{C:nacho_sg4}a{C:nacho_sg6} O{C:nacho_sg7}r{C:nacho_sg8}b{} on",
           "Terapagos applies a",
           "{C:nacho_sg1}T{C:nacho_sg2}e{C:nacho_sg3}r{C:nacho_sg4}a{C:nacho_sg6} O{C:nacho_sg7}r{C:nacho_sg8}b{} to each Joker",
-        } 
+        }
       },
       -- Stellar Type tooltip
       stellar_type = {
@@ -833,6 +881,8 @@ return {
       c_nacho_goomygoomy = "Slime or Steel",
     },
     dictionary = {
+      k_nacho_ancient_pack = "Ancient Pack",
+
       -- From Turtwig, Grotle, Torterra
       poke_leech_seed_ex = "Leech Seed!",
       -- From Infernape
@@ -851,6 +901,10 @@ return {
       poke_stuff_cheeks_ex = "Stuff Cheeks!",
       -- From Hydrapple
       poke_fickle_beam_ex = "Fickle Beam!",
+      -- From Palafin
+      poke_aquajet_ex = "Aqua Jet!",
+      poke_jetpunch_ex = "Jet Punch!",
+      poke_flipturn_ex = "Flip Turn!",
       -- From Loyal Three, Pecharunt
       poke_toxic_chain_ex = "Toxic Chain!",
       poke_malignant_chain_ex = "Malignant Chain!",

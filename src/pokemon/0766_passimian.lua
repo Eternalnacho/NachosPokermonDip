@@ -38,25 +38,32 @@ local passimian={
   perishable_compat = false,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    if not card.ability.received_card then
-      if context.selling_card and not context.selling_self and context.card.area == G.jokers and context.card.config.center.key ~= 'j_nacho_passimian' and not context.blueprint then
-        self:receive_card(card, context.card.config.center.key, context)
-      elseif context.joker_type_destroyed and context.card.area == G.jokers and context.card.config.center.key ~= 'j_nacho_passimian' and not context.blueprint then
-        self:receive_card(card, context.card.config.center.key, context)
+    local received = card.ability.received_card
+    if not received then
+      if (context.selling_card and not context.selling_self) or context.joker_type_destroyed then
+        local c = context.card
+        if c.area == G.jokers and c.config.center_key ~= self.key and not context.blueprint then
+          self:receive_card(card, c.config.center_key, context)
+        end
       end
-    elseif card.ability.received_card.calculate and (card.ability.received_card.blueprint_compat or not context.blueprint) then
-      return card.ability.received_card:calculate(card, context)
+    elseif received.calculate and (received.blueprint_compat or not context.blueprint) then
+      return received:calculate(card, context)
     end
   end,
   add_to_deck = function(self, card, from_debuff)
-    return card.ability.received_card and card.ability.received_card.add_to_deck and card.ability.received_card:add_to_deck(card, from_debuff)
+    local received = card.ability.received_card
+    return received and received.add_to_deck and received:add_to_deck(card, from_debuff)
   end,
   remove_from_deck = function(self, card, from_debuff)
-    if card.ability.extra.received_edition and not from_debuff then G.jokers.config.card_limit = G.jokers.config.card_limit - 1 end
-    return card.ability.received_card and card.ability.received_card.remove_from_deck and card.ability.received_card:remove_from_deck(card, from_debuff)
+    local received = card.ability.received_card
+    if card.ability.extra.received_edition and not from_debuff then
+      G.jokers.config.card_limit = G.jokers.config.card_limit - 1
+    end
+    return received and received.remove_from_deck and received:remove_from_deck(card, from_debuff)
   end,
   calc_dollar_bonus = function(self, card)
-    return card.ability.received_card and card.ability.received_card.calc_dollar_bonus and card.ability.received_card:calc_dollar_bonus(card)
+    local received = card.ability.received_card
+    return received and received.calc_dollar_bonus and received:calc_dollar_bonus(card)
   end,
   receive_card = function(self, card, to_key, context)
     if to_key and G.P_CENTERS[to_key].stage then

@@ -27,7 +27,7 @@ local populate_pages = function(list, loc_entry, header)
       local config_name = list[index].list[1]
       table.insert(page.tiles,
         {
-          label = joker_name_wrapper(config_name),
+          label = list[index].label and function() return list[index].label end or joker_name_wrapper(config_name),
           list = list[index].list,
           config_key = list[index].config_key,
           mod_req = list[index].mod_req
@@ -43,14 +43,22 @@ end
 local main_list = PkmnDip.config_list.main
 populate_pages(main_list, 'nacho_pokemon', "Pokemon")
 
--- Adding the Mega joker page(s)
+-- Adding the Mega (+Gmax) joker page(s)
 local mega_list = PkmnDip.config_list.megas
-populate_pages(mega_list, 'nacho_pokemon_mega', "Mega Pokemon")
+if next(SMODS.find_mod("Agarmons")) then
+  mega_list[#mega_list+1] = {
+    label = "G-Max Apples",
+    list = {'j_nacho_gmax_flapple', 'j_nacho_gmax_appletun'},
+    config_key = 'gmax_apples',
+    mod_req = 'Agarmons'
+  }
+end
+populate_pages(mega_list, 'nacho_pokemon_mega', next(SMODS.find_mod("Agarmons")) and "Pokemon Forms" or "Mega Pokemon")
 
 -- Adding in the Cross-Mod joker page(s)
 local cross_list = {}
 for k, v in pairs(PkmnDip.config_list) do
-  if k ~= "main" and k ~= "megas" then
+  if next(SMODS.find_mod(k)) then
     PkmnDip.utils.append(cross_list, v)
   end
 end

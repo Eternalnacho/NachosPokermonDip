@@ -25,8 +25,11 @@ load_directory("src/pokemon", item_loader.load_pokemon, {
 -- Load consumables
 load_directory("src/consumables", SMODS.Consumable)
 
---Load stakes
-load_directory("src/stakes", SMODS.Stake)
+--Load packs
+load_directory("src/boosters", SMODS.Booster)
+
+--Load tags
+load_directory("src/tags", SMODS.Tag)
 
 --Load stickers
 load_directory("src/stickers", SMODS.Sticker)

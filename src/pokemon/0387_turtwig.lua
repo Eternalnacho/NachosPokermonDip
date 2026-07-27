@@ -49,7 +49,7 @@ local grotle={
   poke_custom_values_to_keep = { "interest" },
   calculate = function(self, card, context)
     -- Check for hand-size changes
-    if context.setting_blind or context.pre_discard or context.drawing_cards then
+    if (context.hand_drawn or context.other_drawn) then
       local initial = card.ability.extra.h_size
       local dollars = to_number(G.GAME.dollars + (G.GAME.dollar_buffer or 0)) or 0
       card.ability.extra.h_size = math.clamp( math.floor(dollars / 15), 0, 2)
@@ -91,7 +91,7 @@ local torterra={
   blueprint_compat = false,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if context.setting_blind or context.pre_discard or context.drawing_cards then
+    if (context.hand_drawn or context.other_drawn) then
       local initial = card.ability.extra.h_size
       local dollars = to_number(G.GAME.dollars + (G.GAME.dollar_buffer or 0)) or 0
       card.ability.extra.h_size = math.clamp( math.floor(dollars / 15), 0, 3)
