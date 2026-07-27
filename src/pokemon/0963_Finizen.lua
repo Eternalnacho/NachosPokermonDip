@@ -1,7 +1,7 @@
 -- Finizen 963
 local finizen = {
   name = "finizen",
-  config = { extra = { chips = 30, rounds = 5 } },
+  config = { extra = { chips = 30, rounds = 6 } },
   loc_vars = function(self, info_queue, card)
     return { vars = { card.ability.extra.chips, card.ability.extra.rounds } }
   end,
