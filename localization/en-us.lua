@@ -553,7 +553,8 @@ return {
           "The {C:attention}first{} card in poker hand",
           "permanently gains {C:chips}+#2#{} Chips when",
           "scored, also gains {X:mult,C:white}X#3#{} Mult",
-          "if it is a {C:attention}Bonus Card{}"
+          "if it is a {C:attention}Bonus Card{}",
+          "{C:inactive,s:0.8}(Reverts at the end of the {C:attention,s:0.8}ante{C:inactive,s:0.8})"
         }
       },
       j_nacho_frigibax = {
