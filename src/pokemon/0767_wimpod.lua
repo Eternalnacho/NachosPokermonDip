@@ -60,7 +60,7 @@ local golisopod = {
     end
     if context.end_of_round and context.main_eval and not context.blueprint then
       if context.beat_boss then
-        if not a.ante_debuffed then
+        if not a.ante_debuffed and not a.raised then
           G.hand:change_size(a.h_size)
           a.raised = true
         end
