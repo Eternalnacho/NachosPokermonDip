@@ -23,7 +23,6 @@ SMODS.DrawStep({
   conditions = { vortex = false, facing = 'front' },
 })
 
-
 --#endregion [[ zorua ]]
 
 
