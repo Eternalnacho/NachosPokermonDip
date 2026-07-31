@@ -57,11 +57,7 @@ local mega_audino = {
       -- Pre-call function to set the edition
       local poll_audino_edition = function(args)
         local shiny_odds = SMODS.pseudorandom_probability(card, 'mega_audino', a.num, a.den)
-        args.edition = shiny_odds and 'e_poke_shiny' or poll_edition('mega_audino', nil, true, true, {
-          { name = 'e_foil', weight = 1/3 },
-          { name = 'e_holo', weight = 1/3 },
-          { name = 'e_polychrome', weight = 1/3 }
-        })
+        args.edition = shiny_odds and 'e_poke_shiny' or pseudorandom_element({ 'e_foil', 'e_holo', 'e_polychrome' }, 'mega_audino')
       end
       -- Post-call function to set the rounds to hatch
       local incubate = function(egg) egg.ability.extra.rounds = 1 end
