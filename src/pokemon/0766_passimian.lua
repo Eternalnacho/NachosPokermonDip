@@ -1,37 +1,14 @@
-local get_values_to_keep = function(card)
-  local names_to_keep = {
-    "targets", "rank", "id", "form",
-    "cards_scored", "cards_drawn",
-    "energy_count", "c_energy_count", "e_limit_up",
-    pokermon.type_sticker_applied(card) and "ptype"
-  }
-  if card.config.center.poke_custom_values_to_keep then
-    PkmnDip.utils.append(names_to_keep, card.config.center.poke_custom_values_to_keep)
-  end
-  local values_to_keep = pokermon.copy_scaled_values(card)
-  if type(card.ability.extra) == "table" then
-    local keep_value = function(val) values_to_keep[val] = card.ability.extra[val] end
-    PkmnDip.utils.for_each(names_to_keep, keep_value)
-  end
-  return values_to_keep
-end
-
-local get_kept_values = function(card, kept_vals)
-  for k, v in pairs(kept_vals) do
-    card.ability[k] = type(v) == 'table' and copy_table(v) or v
-    if type(card.ability.extra) == "table" 
-        and (card.ability.extra[k] or k == "energy_count" or k == "c_energy_count" or k == "e_limit_up")
-        and (type(card.ability.extra[k]) ~= "number" or (type(v) == "number" and v > card.ability.extra[k])) then
-      card.ability.extra[k] = v
-    end
-  end
-end
-
 -- Passimian 766
 local passimian={
   name = "passimian",
-  soul_pos = { x = 99, y = 99 },
   config = {extra = {}},
+  loc_vars = function(self, info_queue, card)
+    local received = self:get_received(card)
+    if received then
+      local vars = received.loc_vars and received:loc_vars(info_queue, card) or {}
+      return { key = vars.key or received.key, vars = vars.vars } 
+    end
+  end,
   rarity = 3,
   cost = 8,
   stage = "Basic",
@@ -49,42 +26,6 @@ local passimian={
       end
     elseif received and received.calculate and (received.blueprint_compat or not context.blueprint) then
       return received:calculate(card, context)
-    end
-  end,
-  receive_card = function(self, card, to_key, context)
-    if to_key and G.P_CENTERS[to_key].stage then
-      local _r = G.P_CENTERS[to_key]
-
-      -- Keep relevant values stored
-      local target = (card.ability.received_card and card) or (context and context.card)
-      local values_to_keep = get_values_to_keep(target)
-
-      -- Set ability to received card's
-      for k, v in pairs(_r.config) do
-        card.ability[k] = type(v) == 'table' and copy_table(v) or v
-      end
-      card.ability.received_card = _r.key
-
-      -- Re-add kept values and handle energy, type
-      if next(values_to_keep) then get_kept_values(card, values_to_keep) end
-      if card.ability.extra.energy_count or card.ability.extra.c_energy_count then
-        pokermon.energy.energize(card, nil, true, true)
-      end
-      card.ability.extra.ptype = "Fighting"
-
-      -- Calls the add_to_deck function of the received card if it exists
-      if _r.add_to_deck then _r:add_to_deck(card) end
-
-      -- Update JokerDisplay definition if JokerDisplay is loaded
-      if (SMODS.Mods["JokerDisplay"] or {}).can_load then
-        PkmnDip.update_pass_joker_display(card)
-        card:update_joker_display(false, true)
-      end
-
-      -- play the funny noises
-      local edition = context and context.card and context.card.edition
-      if edition then card:set_edition(edition.key) end
-      SMODS.calculate_effect({ message = localize('poke_receiver_ex'), colour = edition and G.C.DARK_EDITION }, card)
     end
   end,
   get_received = function(self, card)
@@ -106,15 +47,8 @@ local passimian={
       localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes}
     end
   end,
-  update = function(self, card, dt)
-    if G.STAGE == G.STAGES.RUN and card.area == G.jokers and (card.children.center.atlas ~= self.atlas or card.children.center.pos ~= self.pos) then
-      card.children.center.atlas = SMODS.get_atlas("poke_AtlasJokersBasicNatdex" .. (PkmnDip.con.is_shiny(card) and "Shiny" or ""))
-      card.children.center:set_sprite_pos(self.pos)
-    end
-  end,
   attributes = {"joker", "copying"}
 }
-
 for _, func in pairs({
   "add_to_deck",
   "remove_from_deck",
@@ -127,11 +61,52 @@ for _, func in pairs({
   end
 end
 
-passimian.loc_vars = function(self, info_queue, card)
-  local received = self:get_received(card)
-  if received then
-    local vars = received.loc_vars and received:loc_vars(info_queue, card) or {}
-    return { key = vars.key or received.key, vars = vars.vars } 
+passimian.receive_card = function(self, card, to_key, context)
+  if to_key and G.P_CENTERS[to_key].stage then
+    local _r = G.P_CENTERS[to_key]
+
+    -- Keep relevant values stored
+    local target = (card.ability.received_card and card) or (context and context.card)
+    local values_to_keep, custom_values_to_keep = pokermon.get_values_to_keep(target)
+
+    local old_center = (target == card and self:get_received(card)) or target.config.center
+    if old_center.poke_custom_values_to_keep then
+      custom_values_to_keep = custom_values_to_keep or {}
+      local add_target_val = function(v) custom_values_to_keep[v] = target.ability.extra[v] end
+      PkmnDip.utils.for_each(old_center.poke_custom_values_to_keep, add_target_val)
+    end
+
+    -- Set ability to received card's
+    for k, v in pairs(_r.config) do
+      card.ability[k] = type(v) == 'table' and copy_table(v) or v
+    end
+    card.ability.received_card = _r.key
+
+    -- Hooks into the center's set_sprites func if it exists
+    if type(_r.set_sprites) == 'function' and not _r.hooked_by_pass then
+      PkmnDip.Hook("before", _r, 'set_sprites', function(_self, _card, _front)
+        if _card.config.center_key == 'j_nacho_passimian' then return true end
+      end)
+      _r.hooked_by_pass = true
+    end
+
+    -- Re-add kept values and handle energy, type
+    pokermon.apply_kept_values(card, _r, values_to_keep, custom_values_to_keep)
+    if pokermon.type_sticker_applied(target) then pokermon.apply_type_sticker(card, pokermon.get_type(target)) end
+
+    -- Calls the add_to_deck function of the received card if it exists
+    if _r.add_to_deck then _r:add_to_deck(card, false) end
+    
+    -- Update JokerDisplay definition if JokerDisplay is loaded
+    if (SMODS.Mods["JokerDisplay"] or {}).can_load then
+      PkmnDip.update_pass_joker_display(card)
+      card:update_joker_display(false, true)
+    end
+
+    -- play the funny noises
+    local edition = context and context.card and context.card.edition
+    if edition then card:set_edition(edition.key) end
+    SMODS.calculate_effect({ message = localize('poke_receiver_ex'), colour = edition and G.C.DARK_EDITION }, card)
   end
 end
 
@@ -140,15 +115,14 @@ local init = function()
   PkmnDip.Hook("around", SMODS, 'find_card', function(orig, key, count_debuffed, ...)
     local results = orig(key, count_debuffed)
     if G.jokers and type(results) == "table" then
-      PkmnDip.utils.for_each(SMODS.get_card_areas('jokers'), function(area) 
-        if area.cards then
-          pokermon.table_append(results, PkmnDip.utils.filter(area.cards, function(card)
-            return type(card) == "table" and card.ability
-               and card.ability.received_card == key
-               and (count_debuffed or not card.debuff)
-          end))
-        end
-      end)
+      local is_target = function(card)
+        return type(card) == "table" and card.ability
+           and card.ability.received_card == key
+           and (count_debuffed or not card.debuff)
+      end
+      local get_targets = function(area) PkmnDip.utils.append(results, PkmnDip.utils.filter(area.cards, is_target)) end
+      local areas = PkmnDip.utils.filter(SMODS.get_card_areas('jokers'), function(a) return a.cards end)
+      PkmnDip.utils.for_each(areas, get_targets)
     end
     return results
   end)
@@ -156,11 +130,6 @@ local init = function()
   PkmnDip.Hook("around", pokermon, 'find_card', function(orig, key_or_function, use_highlighted, ...)
     local ret = orig(function(joker) return joker.ability.received_card == key_or_function end, use_highlighted, ...)
     return orig(key_or_function, use_highlighted, ...) or ret
-  end)
-
-  PkmnDip.Hook("around", pokermon, 'can_set_sprite', function(orig, card, ...)
-    if card.config.center_key == 'j_nacho_passimian' then return false end
-    return orig(card, ...)
   end)
 
   -- pokermon.evolve and pokermon.backend_evolve hooks for passimian's received card

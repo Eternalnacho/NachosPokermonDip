@@ -18,7 +18,7 @@ local oranguru={
       PkmnDip.eff.mod_booster(-card.ability.extra.booster_choice_mod)
     end
     -- Standard Packs always contain only your most common rank
-    if context.modify_booster_card then
+    if context.modify_booster_card and next(PkmnDip.calc.get_common_ranks()) then
       local common_ranks = PkmnDip.calc.get_common_ranks()
       local rank = pseudorandom_element(common_ranks, "Oranguru")
       context.card = SMODS.change_base(context.card, nil, rank.key)
@@ -39,6 +39,5 @@ local oranguru={
 
 return {
   config_key = "oranguru",
-  init = init,
   list = { oranguru }
 }

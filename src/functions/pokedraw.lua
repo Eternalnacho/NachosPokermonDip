@@ -32,6 +32,7 @@ SMODS.DrawStep({
 PkmnDip.calc.common_ranks_tooltip = function()
   if not (G.playing_cards and G.STAGE == G.STAGES.RUN) then return end
   local ranks = PkmnDip.calc.get_common_ranks()
+  if not next(ranks) then return end
   if #ranks > 1 then
     table.sort(ranks, function(a, b) return a.id > b.id end)
   end

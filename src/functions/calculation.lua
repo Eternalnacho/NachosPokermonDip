@@ -35,10 +35,13 @@ end
 -- Get most common rank(s) in a list of cards
 PkmnDip.calc.get_common_ranks = function(cards)
   local ranks_by_count = PkmnDip.calc.count_ranks(cards)
-  local common_ranks = { SMODS.Ranks[ranks_by_count[1].rank] }
-  for i = 2, #ranks_by_count do
-    if ranks_by_count[i].count == ranks_by_count[1].count then
-      table.insert(common_ranks, SMODS.Ranks[ranks_by_count[i].rank])
+  local common_ranks = {}
+  if next(ranks_by_count) then
+    common_ranks = { SMODS.Ranks[ranks_by_count[1].rank] }
+    for i = 2, #ranks_by_count do
+      if ranks_by_count[i].count == ranks_by_count[1].count then
+        table.insert(common_ranks, SMODS.Ranks[ranks_by_count[i].rank])
+      end
     end
   end
   return common_ranks
