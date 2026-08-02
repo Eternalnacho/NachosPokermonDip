@@ -32,9 +32,8 @@ local passimian={
     return card and card.ability and card.ability.received_card and G.P_CENTERS[card.ability.received_card]
   end,
   generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
-    local _c = card and card.config.center
     local received = self:get_received(card)
-    full_UI_table.name = localize({ type = "name", set = _c.set, key = _c.key, nodes = full_UI_table.name })
+    full_UI_table.name = localize({ type = "name", set = self.set, key = self.key, nodes = full_UI_table.name })
     if received then
       -- Info_queue for received card
       local v = received.loc_vars and received:loc_vars({}, card) or {}
@@ -44,7 +43,7 @@ local passimian={
       -- Use generic generate_ui func with received center
       return SMODS.Center.generate_ui(received, info_queue, card, desc_nodes, specific_vars, full_UI_table)
     else
-      localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes}
+      return SMODS.Center.generate_ui(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
     end
   end,
   attributes = {"joker", "copying"}
