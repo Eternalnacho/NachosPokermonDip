@@ -34,13 +34,14 @@ local passimian={
   generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
     local received = self:get_received(card)
     full_UI_table.name = localize({ type = "name", set = self.set, key = self.key, nodes = full_UI_table.name })
+    -- Routing the generic SMODS.Center generate_ui through either self or received center
     if received then
       -- Info_queue for received card
       local v = received.loc_vars and received:loc_vars({}, card) or {}
       local r_name = localize({ type = "name_text", set = v.set or received.set, key = v.key or received.key, vars = v.vars })
       r_name = type(r_name) == 'string' and r_name:gsub('(%l+)(%u)', '%1 %2') or r_name -- HisuianSneasel -> Hisuian Sneasel
       info_queue[#info_queue + 1] = { set = 'Other', key = 'received_card', vars = {r_name} }
-      -- Use generic generate_ui func with received center
+
       return SMODS.Center.generate_ui(received, info_queue, card, desc_nodes, specific_vars, full_UI_table)
     else
       return SMODS.Center.generate_ui(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
