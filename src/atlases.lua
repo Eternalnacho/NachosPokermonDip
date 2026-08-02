@@ -27,6 +27,13 @@ SMODS.Atlas({
 })
 
 SMODS.Atlas({
+  key = "nacho_shiny_excavator",
+  path = "excavator_shiny.png",
+  px = 71,
+  py = 95,
+})
+
+SMODS.Atlas({
   key = "terapagos_stellar_soul",
   px = 110,
   py = 147,
