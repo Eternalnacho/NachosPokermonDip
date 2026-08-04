@@ -1,6 +1,6 @@
 local function copy_card_to_play(joker, card)
   for _ = 1, joker.ability.extra.dip_card_dupes do
-    if #G.play.cards < 5 then
+    if #G.play.cards < G.GAME.starting_params.play_limit then
       local copy = SMODS.copy_card(card, {area = G.play})
       PkmnDip.defer(function() G.play:add_to_highlighted(copy) end)
       table.insert(joker.ability.extra.copied_cards, copy.unique_val)
@@ -106,17 +106,15 @@ local reuniclus = {
 
 local function init()
   if evaluate_play_intro then
-    local evaluate_play_intro_ref = evaluate_play_intro
-    evaluate_play_intro = function()
+    PkmnDip.Hook("around", _G, "evaluate_play_intro", function(orig, ...)
       SMODS.calculate_context({mitosis = true})
-      return evaluate_play_intro_ref()
-    end
+      return orig(...)
+    end)
   else
-    local eval_play_ref = G.FUNCS.evaluate_play
-    G.FUNCS.evaluate_play = function(e)
+    PkmnDip.Hook("before", G.FUNCS, "evaluate_play", function(orig, ...)
       SMODS.calculate_context({mitosis = true})
-      return eval_play_ref(e)
-    end
+      return orig(...)
+    end)
   end
 end
 
