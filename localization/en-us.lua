@@ -95,7 +95,7 @@ return {
       j_nacho_cranidos = {
         name = 'Cranidos',
         text = {
-          "{C:attention,s:1.1}Ancient #1#s{}",
+          "{C:attention}Ancient #1#s{}",
           "{X:attention,C:white}1+{} : {C:attention}First{} scoring {C:attention}#1#{} gives {C:mult}+#2#{} Mult",
           "{X:attention,C:white}2+{} : Destroy {C:attention}first unscored{} card",
           "{X:attention,C:white}3+{} : {C:attention}First{} scoring {C:attention}#1#{} gives {X:red,C:white}X#3#{} Mult",
