@@ -1,12 +1,12 @@
 local cranidos = {
   name = "cranidos",
-  config = { extra = { rank = "5", mult = 5, Xmult_mod = 0.1, third_times = 0 }, evo_rqmt = 5 },
+  config = { extra = { rank = "5", mult = 5, Xmult_mod = 1.1, third_times = 0 }, evo_rqmt = 5 },
   loc_vars = function(self, info_queue, card)
     local a = card.ability.extra or self.config.extra
     local rank = localize(a.rank, 'ranks')
     local evo_req = math.max(self.config.evo_rqmt - a.third_times, 0)
     info_queue[#info_queue+1] = { set = 'Other', key = 'ancient', vars = {rank} }
-    return { vars = { rank, a.mult, 1 + a.Xmult_mod, evo_req } }
+    return { vars = { rank, a.mult, a.Xmult_mod, evo_req } }
   end,
   rarity = 2,
   cost = 5,
