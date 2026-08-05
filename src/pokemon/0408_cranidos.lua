@@ -58,7 +58,7 @@ local rampardos = {
     local a = card.ability.extra or self.config.extra
     local rank = localize(a.rank, 'ranks')
     info_queue[#info_queue+1] = { set = 'Other', key = 'ancient', vars = {rank} }
-    return { vars = { rank, a.mult, 1 + a.Xmult_mod, a.retriggers } }
+    return { vars = { rank, a.mult, a.Xmult_mod, a.retriggers } }
   end,
   rarity = "poke_safari",
   cost = 8,
