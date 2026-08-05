@@ -74,15 +74,6 @@ PkmnDip.Hook('around', SMODS, 'create_mod_badges', function(orig, obj, badges)
 end)
 
 PkmnDip.use_better_fossil_ui = function()
-  if (SMODS.Mods["ToxicStall"] or {}).can_load then
-    SMODS.add_attribute("ancient", {
-      'j_stall_arctozolt',
-      'j_stall_arctovish',
-      'j_stall_dracozolt',
-      'j_stall_dracovish'
-    })
-  end
-
   for _, center in pairs(SMODS.get_attribute_pool("ancient")) do
     local loc_text = { name = G.localization.descriptions.Joker[center].name, text = {} }
     local text_parsed = {}
