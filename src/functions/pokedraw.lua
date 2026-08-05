@@ -68,12 +68,10 @@ PkmnDip.revised_fossil_ui = function(self, info_queue, card, desc_nodes, specifi
   for _, box in ipairs(full_UI_table.multi_box) do
     for _, node in ipairs(box) do
       box.poke_custom_desc = true
+      box.poke_box_minh = 0.5
       if is_ability(node) then
         box.align = "cl"
         box.padding = 0.1
-        box.poke_box_minh = 0.5
-      else
-        box.poke_box_minh = 0.5
       end
     end
   end
