@@ -73,5 +73,39 @@ PkmnDip.Hook('around', SMODS, 'create_mod_badges', function(orig, obj, badges)
   end
 end)
 
+PkmnDip.use_better_fossil_ui = function()
+  for _, center in pairs(SMODS.get_attribute_pool("ancient")) do
+    if not G.P_CENTERS[center].poke_custom_prefix or G.P_CENTERS[center].poke_custom_prefix == "nacho" then
+      local loc_text = { name = G.localization.descriptions.Joker[center].name, text = {} }
+      local text_parsed = {}
+      for i, line in ipairs(G.localization.descriptions.Joker[center].text) do
+        if line:find("%d%+") or line:find("Trigger") or i < 2 then
+          if line:find("Ancient") and PkmnDip.config.use_better_fossil_ui then
+            line = line:gsub('%{C:attention', '{C:attention,s:1.1')
+          end
+          loc_text.text[#loc_text.text+1] = {line}
+          text_parsed[#text_parsed+1] = {loc_parse_string(line)}
+        else
+          table.insert(loc_text.text[#loc_text.text], '     ' .. line)
+          table.insert(text_parsed[#text_parsed], loc_parse_string('     ' .. line))
+        end
+      end
+      SMODS.process_loc_text(G.localization.descriptions.Joker, center .. '_bf', loc_text)
+      G.localization.descriptions.Joker[center .. '_bf'].text_parsed = text_parsed
+      local center_loc_vars = G.P_CENTERS[center].loc_vars
+      local prefix = G.P_CENTERS[center].poke_custom_prefix or "poke"
+      SMODS.Joker:take_ownership(prefix..'_'..G.P_CENTERS[center].name, {
+        loc_vars = function(self, info_queue, card)
+          local ret = center_loc_vars(self, info_queue, card)
+          if PkmnDip.config.use_better_fossil_ui then ret.key = self.key .. "_bf" end
+          return ret
+        end,
+        generate_ui = PkmnDip.config.use_better_fossil_ui and PkmnDip.revised_fossil_ui or pokermon.fossil_generate_ui,
+        discovered = true,
+      }, true)
+    end
+  end
+end
+
 -- Talisman compat shorthand (still recommend just using Amulet atp but eh)
 to_number = to_number or function(x) return x end

@@ -142,4 +142,20 @@ PkmnDip.calc.get_flush_suit = function(cards)
   return suit
 end
 
+-- Copy of pokermon.find_playing_card, with option to find a specific number and return early
+PkmnDip.calc.find_playing_card = function(findFunc, findArea, findNumber)
+  local area = findArea or G.deck.cards
+  local found = {}
+  for _, v in ipairs(area) do
+    if findFunc(v) then
+      found[#found + 1] = v
+      if findNumber and #found >= findNumber then
+        break
+      end
+    end
+  end
+  if #found == 1 then found = found[1] end
+  return found
+end
+
 --#region [[ hand_info ]]

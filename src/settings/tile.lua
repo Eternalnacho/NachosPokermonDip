@@ -15,7 +15,7 @@ function SettingsComponent:apply(args)
   for k, v in pairs(args.properties or {}) do
     self.display_card.properties[k] = v
   end
-  self.display_card.properties.generate_ui = SMODS.Center.generate_ui
+  self.display_card.properties.generate_ui = args.properties and args.properties.generate_ui or SMODS.Center.generate_ui
   self.display_card.no_ui = nil
 end
 

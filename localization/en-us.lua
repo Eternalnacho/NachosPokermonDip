@@ -92,13 +92,41 @@ return {
           "Chips equal to {C:attention}double{} its rank",
         }
       },
+      j_nacho_cranidos = {
+        name = 'Cranidos',
+        text = {
+          "{C:attention,s:1.1}Ancient #1#s{}",
+          "{X:attention,C:white}1+{} : {C:attention}First{} scoring {C:attention}#1#{} gives {C:mult}+#2#{} Mult",
+          "{X:attention,C:white}2+{} : Destroy {C:attention}first unscored{} card",
+          "{X:attention,C:white}3+{} : {C:attention}First{} scoring {C:attention}#1#{} gives {X:red,C:white}X#3#{} Mult",
+          "{C:inactive,s:0.85}(Trigger {X:attention,C:white,s:0.85}3+{C:inactive,s:0.85} ability {C:attention,s:0.85}#4#{C:inactive,s:0.85} times to evolve)",
+        }
+      },
+      j_nacho_rampardos = {
+        name = 'Rampardos',
+        text = {
+          "{C:attention}Ancient #1#s{}",
+          "{X:attention,C:white}1+{} : {C:attention}First{} scoring {C:attention}#1#{} gives {C:mult}+#2#{} Mult",
+          "for each {C:attention}#1#{} in played hand",
+          "{X:attention,C:white}2+{} : Destroy {C:attention}first unscored{} card",
+          "{X:attention,C:white}3+{} : {C:attention}First{} scoring {C:attention}#1#{} gives {X:red,C:white}X#3#{} Mult",
+          "for each {C:attention}#1#{} in played hand",
+          "{X:attention,C:white}4+{} : Only {C:attention}first{} played {C:attention}#1#{} will score",
+          "Retrigger {C:attention}first{} scoring {C:attention}#1#",
+          "{C:attention}1{} additional time for each",
+          "{C:attention}unscored #1#{} in played hand",
+        }
+      },
       j_nacho_shieldon = {
         name = 'Shieldon',
         text = {
           "{C:attention}Ancient #1#s{}",
-          "{X:attention,C:white}1+{} : Scoring {C:attention}#1#s{} give {C:chips}+#2#{} Chips for each played {C:attention}#1#{}",
-          "{X:attention,C:white}2+{} : {C:attention}First{} scoring card in {C:attention}poker hand{} becomes {C:attention}Steel{}",
-          "{X:attention,C:white}3+{} : {C:attention}Held Steel{} cards give {C:chips}+#2#{} Chips for each played {C:attention}#1#{}",
+          "{X:attention,C:white}1+{} : Scoring {C:attention}#1#s{} give {C:chips}+#2#{} Chips", 
+          "for each played {C:attention}#1#{}",
+          "{X:attention,C:white}2+{} : {C:attention}First{} scoring card in",
+          "{C:attention}poker hand{} becomes {C:attention}Steel{}",
+          "{X:attention,C:white}3+{} : {C:attention}Held Steel{} cards give {C:chips}+#2#{} Chips",
+          "for each played {C:attention}#1#{}",
           "{C:inactive,s:0.8}(Trigger {X:attention,C:white,s:0.8}3+{C:inactive,s:0.8} ability {C:attention,s:0.8}#3#{C:inactive,s:0.8} times to evolve)"
         }
       },
@@ -106,9 +134,12 @@ return {
         name = 'Bastiodon',
         text = {
           "{C:attention}Ancient #1#s{}",
-          "{X:attention,C:white}1+{} : Scoring {C:attention}#1#s{} give {C:chips}+#2#{} Chips for each played {C:attention}#1#{}",
-          "{X:attention,C:white}2+{} : {C:attention}First{} scoring card in {C:attention}poker hand{} becomes {C:attention}Steel{}",
-          "{X:attention,C:white}3+{} : {C:attention}Held Steel{} cards give {C:chips}+#2#{} Chips for each played {C:attention}#1#{}",
+          "{X:attention,C:white}1+{} : Scoring {C:attention}#1#s{} give {C:chips}+#2#{} Chips", 
+          "for each played {C:attention}#1#{}",
+          "{X:attention,C:white}2+{} : {C:attention}First{} scoring card in",
+          "{C:attention}poker hand{} becomes {C:attention}Steel{}",
+          "{X:attention,C:white}3+{} : {C:attention}Held Steel{} cards give {C:chips}+#2#{} Chips",
+          "for each played {C:attention}#1#{}",
           "{X:attention,C:white}4+{} : {C:attention}Held ranks{} below {C:attention}#1#{} become {C:attention}Steel{}",
         }
       },

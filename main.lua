@@ -47,3 +47,8 @@ end)
 if (SMODS.Mods["JokerDisplay"] or {}).can_load then
   load_directory("jokerdisplay")
 end
+
+--Do Things
+if PkmnDip.config.use_better_fossil_ui then
+  PkmnDip.defer(PkmnDip.use_better_fossil_ui)
+end

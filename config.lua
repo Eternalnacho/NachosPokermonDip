@@ -5,6 +5,7 @@ return {
   turtwig = true,
   chimchar = true,
   piplup = true,
+  cranidos = true,
   shieldon = true,
   bronzor = true,
   snover = true,
@@ -40,4 +41,5 @@ return {
   mega_gallade = true,
   other_megas = true,
   gmax_apples = true,
+  use_better_fossil_ui = false,
 }

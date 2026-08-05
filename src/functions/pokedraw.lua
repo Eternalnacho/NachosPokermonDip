@@ -58,6 +58,83 @@ PkmnDip.calc.common_ranks_tooltip = function()
   return { set = 'Other', key = 'pkmndip_rank_lists' }
 end
 
+PkmnDip.revised_fossil_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
+  SMODS.Center.generate_ui(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
+  full_UI_table.main.poke_custom_desc = true
+  full_UI_table.main.poke_box_minh = 0.2
+  full_UI_table.main.align = "bm"
+  full_UI_table.box_colours[1] = G.C.CLEAR
+  local is_ability = function(v) return v[2] and v[2].config.text and string.find(v[2].config.text, ":") end
+  for _, box in ipairs(full_UI_table.multi_box) do
+    for _, node in ipairs(box) do
+      box.poke_custom_desc = true
+      if is_ability(node) then
+        box.align = "cl"
+        box.padding = 0.1
+        box.poke_box_minh = 0.5
+      else
+        box.poke_box_minh = 0.5
+      end
+    end
+  end
+end
+
+PkmnDip.revised_fossil_ui_but_boring = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
+  SMODS.Center.generate_ui(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
+  desc_nodes.poke_custom_desc = true
+  desc_nodes.padding = 0.04
+  desc_nodes.align = "cm"
+  local is_ability = function(v) return v and v[2] and v[2].config.text and string.find(v[2].config.text, ":") end
+  for i, node in ipairs(desc_nodes) do
+    if i > 1 then
+      node.align = "cl"
+    else
+      node.align = "cm"
+    end
+    if is_ability(desc_nodes[i+1]) and (node[1] and node[1].config.text or node[2] and node[2].config.text) then
+      table.insert(desc_nodes, i + 1, {{n = G.UIT.R, config = {minh = 0.1, colour = G.C.CLEAR}, is_spacer = true}})
+    end
+  end
+end
+
+PkmnDip.Hook("around", _G, 'desc_from_rows', function(orig, desc_nodes, empty, maxw)
+  local ret
+  if desc_nodes.poke_custom_desc then
+    ret = {}
+    local t = {}
+    for _, v in ipairs(desc_nodes) do
+      t[#t + 1] = { n = G.UIT.R, config = { align = v.align or desc_nodes.align or "cm", maxw = maxw }, nodes = v }
+    end
+    ret = {
+      n = G.UIT.R,
+      config = {
+        align = desc_nodes.align or "cm",
+        colour = desc_nodes.background_colour or empty and G.C.CLEAR or G.C.UI.BACKGROUND_WHITE,
+        r = 0.1,
+        padding = desc_nodes.padding or -0.03,
+        minw = desc_nodes.poke_box_minw or 2,
+        minh = desc_nodes.poke_box_minh or 0.8,
+        emboss = not empty and 0.05 or nil,
+        filler = true,
+        main_box_flag = desc_nodes.main_box_flag and true or nil
+      },
+      nodes = {
+        {
+          n = G.UIT.R,
+          config = {
+            align = desc_nodes.align or "cm",
+            padding = 0.04,
+          },
+          nodes = t
+        }
+      }
+    }
+  else
+    ret = orig(desc_nodes, empty, maxw)
+  end
+  return ret
+end)
+
 --#endregion [[ localization ]]
 
 

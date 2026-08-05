@@ -216,7 +216,7 @@ PkmnDip.Hook("around", CardArea, 'count_property', function(orig, self, property
   local ret = orig(self, property, ...)
   if property == 'extra_slots_used' and PkmnDip.slots_reserved and next(PkmnDip.slots_reserved) then
     for area, amt in pairs(PkmnDip.slots_reserved) do
-      if self == G[area] then ret = ret + amt end
+      if self == G[area] then ret = (ret or 0) + amt end
       break
     end
   end
