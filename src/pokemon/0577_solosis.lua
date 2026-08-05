@@ -111,7 +111,7 @@ local function init()
       return orig(...)
     end)
   else
-    PkmnDip.Hook("before", G.FUNCS, "evaluate_play", function(orig, ...)
+    PkmnDip.Hook("around", G.FUNCS, "evaluate_play", function(orig, ...)
       SMODS.calculate_context({mitosis = true})
       return orig(...)
     end)
