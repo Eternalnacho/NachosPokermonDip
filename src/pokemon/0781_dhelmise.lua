@@ -27,6 +27,7 @@ local dhelmise = {
       PkmnDip.eff.joker_as_card(card, {
         area = G.hand,
         enhancement = 'm_steel',
+        edition = card.edition,
       })
     end
   end,

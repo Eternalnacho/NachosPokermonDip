@@ -13,6 +13,8 @@ PkmnDip.eff.joker_as_card = function(card, card_args)
   }
   -- Stop the card from actually moving to an area
   PkmnDip.no_align = true
+  if not card_args.skip_materialize then card_args.skip_materialize = true end
+  if not card_args.silent then card_args.silent = true end
   -- Create a temporary card
   local temp_card = SMODS.add_card(card_args)
   temp_card.dip_scoring_for = card
