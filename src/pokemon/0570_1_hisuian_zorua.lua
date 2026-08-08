@@ -2,7 +2,7 @@
 local hisuian_zorua = {
   name = "hisuian_zorua",
   pos = { x = 0, y = 9 },
-  soul_pos = { x = 99, y = 99 },
+  soul_pos = { x = 99, y = 99},
   config = {extra = {hidden_key = nil, rounds = 5, active = true}},
   loc_vars = function(self, info_queue, card)
     local a = card.ability.extra or card.config.center.config.extra
@@ -85,6 +85,11 @@ local hisuian_zorua = {
           -- and other_joker.children.center.atlas.px == 71 -- Disables Unown Swarm drawing, because I just couldn't be bothered today.
           and other_joker.config.center.blueprint_compat then
         pokermon.copy_joker_sprites(card, other_joker)
+        if other_joker.config.center.soul_pos and other_joker.config.center.soul_pos.draw then
+          self.soul_pos.draw = other_joker.config.center.soul_pos.draw
+        else
+          self.soul_pos.draw = nil
+        end
       else
         pokermon.reset_sprite(card)
       end
