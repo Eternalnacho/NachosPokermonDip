@@ -33,11 +33,16 @@ SMODS.current_mod.calculate = function(self, context)
 end
 
 SMODS.current_mod.reset_game_globals = function(run_start)
-  if run_start then PkmnDip.utils.for_each(G.P_CENTERS, function(center) 
-    if center.nacho_config_key and not PkmnDip.config[center.nacho_config_key] then
-      G.GAME.banned_keys[center.key] = true
-    end
-  end) end
+  if run_start then
+    PkmnDip.utils.for_each(G.P_CENTERS, function(center) 
+      if center.nacho_config_key and not PkmnDip.config[center.nacho_config_key] then
+        G.GAME.banned_keys[center.key] = true
+      end
+    end)
+
+    PkmnDip.slots_reserved = {}
+    PkmnDip.palafin = nil
+  end
 end
 
 PkmnDip.attach_mega = function(center, target, config_key)
