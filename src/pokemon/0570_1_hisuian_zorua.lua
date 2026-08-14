@@ -174,6 +174,11 @@ local hisuian_zoroark = {
           -- and other_joker.children.center.atlas.px == 71 -- Disables Unown Swarm drawing, because I just couldn't be bothered today.
           and other_joker.config.center.blueprint_compat then
         pokermon.copy_joker_sprites(card, other_joker)
+        if other_joker.config.center.soul_pos and other_joker.config.center.soul_pos.draw then
+          self.soul_pos.draw = other_joker.config.center.soul_pos.draw
+        else
+          self.soul_pos.draw = nil
+        end
       else
         pokermon.reset_sprite(card)
       end
