@@ -37,7 +37,7 @@ local hisuian_zorua = {
         return ret
       end
     end
-    if context.after then
+    if context.after and other_joker and other_joker ~= card then
       PkmnDip.defer(function()
         a.active = false
         SMODS.calculate_effect({message = localize('poke_reveal_ex')}, card)
