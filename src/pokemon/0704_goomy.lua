@@ -46,6 +46,10 @@ local goomy={
         end
       end
     end
+    if context.after then
+      a.scoring_flush = nil
+      a.matching_suit = nil
+    end
     return pokermon.scaling_evo(self, card, context, "j_nacho_hisuian_sliggoo", card.ability.extra.flush_houses, self.config.evo_rqmt2)
         or pokermon.scaling_evo(self, card, context, "j_nacho_sliggoo", card.ability.extra.flushes, self.config.evo_rqmt1)
   end,
@@ -94,6 +98,10 @@ local sliggoo={
         end
       end
     end
+    if context.after then
+      a.scoring_flush = nil
+      a.matching_suit = nil
+    end
     return pokermon.scaling_evo(self, card, context, "j_nacho_goodra", card.ability.extra.flushes, self.config.evo_rqmt)
   end,
   attributes = {"hand_type", "mult", "modify_card", "perma_bonus", "trigger_evo"},
@@ -129,6 +137,10 @@ local goodra={
           }
         end
       end
+    end
+    if context.after then
+      a.scoring_flush = nil
+      a.matching_suit = nil
     end
   end,
   attributes = {"hand_type", "xmult", "modify_card", "perma_bonus"},
