@@ -69,10 +69,12 @@ local rampardos = {
   calculate = function(self, card, context)
     local a = card.ability.extra
     if context.press_play and not context.blueprint then
-      pokermon.get_ancient_amount(G.hand.highlighted, 5, card)
-      for _, v in ipairs(G.hand.highlighted) do
-        if v:get_id() == 5 then a.first_five = v; break end
-      end
+      PkmnDip.defer(function() 
+        pokermon.get_ancient_amount(G.play.cards, 5, card)
+        for _, v in ipairs(G.play.cards) do
+          if v:get_id() == 5 then a.first_five = v; break end
+        end
+      end, {delay = 0.3, blockable = true})
     end
     -- 1: 3:
     if context.individual and context.cardarea == G.play and context.other_card:get_id() == 5 and context.other_card == a.first_five then

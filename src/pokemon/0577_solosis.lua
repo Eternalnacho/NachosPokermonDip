@@ -1,21 +1,9 @@
-local function copy_card_to_play(joker, card)
-  for _ = 1, joker.ability.extra.dip_card_dupes do
-    if #G.play.cards < G.GAME.starting_params.play_limit then
-      local copy = SMODS.copy_card(card, {area = G.play})
-      PkmnDip.defer(function() G.play:add_to_highlighted(copy) end)
-      table.insert(joker.ability.extra.copied_cards, copy.unique_val)
-      if joker.ability.extra.copies_req then joker.ability.extra.copies_req = joker.ability.extra.copies_req + 1 end
-      playing_card_joker_effects(copy)
-    end
-  end
-end
-
 -- Solosis 577
 local solosis = {
   name = "solosis",
-  config = { extra = { dip_card_dupes = 1, copied_cards = {}, copies_req = 0 }, evo_rqmt = 4 },
+  config = { extra = { copies = 1, copies_made = 0 }, evo_rqmt = 4 },
   loc_vars = function(self, info_queue, card)
-    return { vars = { card.ability.extra.dip_card_dupes, math.max(0, self.config.evo_rqmt - card.ability.extra.copies_req) } }
+    return { vars = { card.ability.extra.copies, math.max(0, self.config.evo_rqmt - card.ability.extra.copies_made) } }
   end,
   rarity = 3,
   cost = 7,
@@ -29,17 +17,32 @@ local solosis = {
       local eval = function() return G.GAME.current_round.hands_played == 0 and not G.RESET_JIGGLES end
       juice_card_until(card, eval, true)
     end
-    -- I made a custom context for this effect
-    if context.mitosis and G.GAME.current_round.hands_played == 0 then
-      copy_card_to_play(card, G.play.cards[1])
+
+    -- Copy the first scoring card if there are open slots to do it
+    if context.press_play and G.GAME.current_round.hands_played == 0 then
+      PkmnDip.defer(function()
+        local copies = {}
+        local delta = G.GAME.starting_params.play_limit - #G.play.cards
+        if delta > 0 then
+          for _ = 1, math.min(card.ability.extra.copies, delta) do
+            local copy = SMODS.copy_card(G.play.cards[1], {area = G.play})
+            copies[#copies+1] = copy
+            copy.is_solosis_copy = true
+            card.ability.extra.copies_made = card.ability.extra.copies_made + 1
+          end
+        end
+        if next(copies) then
+          SMODS.calculate_context({ playing_card_added = true, cards = copies })
+        end
+      end, {delay = 0.2, blockable = true})
     end
+
     -- destroy the temporary copies after scoring them
-    if context.destroy_card and card.ability.extra.copied_cards and not context.blueprint then
-      for _, v in pairs(card.ability.extra.copied_cards) do
-        if v == context.destroy_card.unique_val then return {remove = true} end
-      end
+    if context.destroy_card and context.destroy_card.is_solosis_copy and not context.blueprint then
+      return {remove = true}
     end
-    return pokermon.scaling_evo(self, card, context, "j_nacho_duosion", card.ability.extra.copies_req, self.config.evo_rqmt)
+  
+    return pokermon.scaling_evo(self, card, context, "j_nacho_duosion", card.ability.extra.copies_made, self.config.evo_rqmt)
   end,
   attributes = {"generation", "hands", "condition_evo"},
 }
@@ -47,9 +50,9 @@ local solosis = {
 -- Duosion 578
 local duosion = {
   name = "duosion",
-  config = { extra = { dip_card_dupes = 2, copied_cards = {}, copies_req = 0 }, evo_rqmt = 8 },
+  config = { extra = { copies = 2, copies_made = 0 }, evo_rqmt = 8 },
   loc_vars = function(self, info_queue, card)
-    return { vars = { card.ability.extra.dip_card_dupes, math.max(0, self.config.evo_rqmt - card.ability.extra.copies_req) } }
+    return { vars = { card.ability.extra.copies, math.max(0, self.config.evo_rqmt - card.ability.extra.copies_made) } }
   end,
   rarity = "poke_safari",
   cost = 9,
@@ -62,26 +65,40 @@ local duosion = {
       local eval = function() return G.GAME.current_round.hands_played == 0 and not G.RESET_JIGGLES end
       juice_card_until(card, eval, true)
     end
-    -- I made a custom context for this effect
-    if context.mitosis and G.GAME.current_round.hands_played == 0 then
-      copy_card_to_play(card, G.play.cards[1])
+    -- Copy the first scoring card if there are open slots to do it
+    if context.press_play and G.GAME.current_round.hands_played == 0 then
+      PkmnDip.defer(function()
+        local copies = {}
+        local delta = G.GAME.starting_params.play_limit - #G.play.cards
+        if delta > 0 then
+          for _ = 1, math.min(card.ability.extra.copies, delta) do
+            local copy = SMODS.copy_card(G.play.cards[1], {area = G.play})
+            copies[#copies+1] = copy
+            copy.is_solosis_copy = true
+            card.ability.extra.copies_made = card.ability.extra.copies_made + 1
+          end
+        end
+        if next(copies) then
+          SMODS.calculate_context({ playing_card_added = true, cards = copies })
+        end
+      end, {delay = 0.2, blockable = true})
     end
+
     -- destroy the temporary copies after scoring them
-    if context.destroy_card and card.ability.extra.copied_cards and not context.blueprint then
-      for _, v in pairs(card.ability.extra.copied_cards) do
-        if v == context.destroy_card.unique_val then return {remove = true} end
-      end
+    if context.destroy_card and context.destroy_card.is_solosis_copy and not context.blueprint then
+      return {remove = true}
     end
-    return pokermon.scaling_evo(self, card, context, "j_nacho_reuniclus", card.ability.extra.copies_req, self.config.evo_rqmt)
+
+    return pokermon.scaling_evo(self, card, context, "j_nacho_reuniclus", card.ability.extra.copies_made, self.config.evo_rqmt)
   end,
   attributes = {"generation", "hands", "condition_evo"},
 }
 
 local reuniclus = {
   name = "reuniclus",
-  config = { extra = { dip_card_dupes = 2, copied_cards = {} } },
+  config = { extra = { copies = 2 } },
   loc_vars = function(self, info_queue, card)
-    return { vars = { card.ability.extra.dip_card_dupes } }
+    return { vars = { card.ability.extra.copies } }
   end,
   rarity = "poke_safari",
   cost = 11,
@@ -90,36 +107,33 @@ local reuniclus = {
   gen = 5,
   blueprint_compat = true,
   calculate = function(self, card, context)
-    -- I made a custom context for this effect
-    if context.mitosis then
-      copy_card_to_play(card, G.play.cards[1])
+    -- Copy the first scoring card if there are open slots to do it
+    if context.press_play then
+      PkmnDip.defer(function()
+        local copies = {}
+        local delta = G.GAME.starting_params.play_limit - #G.play.cards
+        if delta > 0 then
+          for _ = 1, math.min(card.ability.extra.copies, delta) do
+            local copy = SMODS.copy_card(G.play.cards[1], {area = G.play})
+            copies[#copies+1] = copy
+            copy.is_solosis_copy = true
+          end
+        end
+        if next(copies) then
+          SMODS.calculate_context({ playing_card_added = true, cards = copies })
+        end
+      end, {delay = 0.2, blockable = true})
     end
+
     -- destroy the temporary copies after scoring them
-    if context.destroy_card and card.ability.extra.copied_cards and not context.blueprint then
-      for _, v in pairs(card.ability.extra.copied_cards) do
-        if v == context.destroy_card.unique_val then return {remove = true} end
-      end
+    if context.destroy_card and context.destroy_card.is_solosis_copy and not context.blueprint then
+      return {remove = true}
     end
   end,
   attributes = {"generation"},
 }
 
-local function init()
-  if evaluate_play_intro then
-    PkmnDip.Hook("around", _G, "evaluate_play_intro", function(orig, ...)
-      SMODS.calculate_context({mitosis = true})
-      return orig(...)
-    end)
-  else
-    PkmnDip.Hook("around", G.FUNCS, "evaluate_play", function(orig, ...)
-      SMODS.calculate_context({mitosis = true})
-      return orig(...)
-    end)
-  end
-end
-
 return {
   config_key = "solosis",
-  init = init,
   list = { solosis, duosion, reuniclus }
 }
