@@ -34,7 +34,7 @@ end
 -- Hook these two functions for joker_as_card to work properly
 PkmnDip.Hook("before", CardArea, 'align_cards', function(self) if PkmnDip.no_align then return true end end)
 PkmnDip.Hook("around", _G, 'card_eval_status_text', function(orig, card, eval_type, amt, percent, dir, extra, ...)
-  if card.dip_scoring_for then
+  if card and card.dip_scoring_for then
     if extra then extra.focus = card.dip_scoring_for
     else extra = { focus = card.dip_scoring_for } end
   end
