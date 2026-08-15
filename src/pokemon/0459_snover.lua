@@ -35,8 +35,7 @@ local snover = {
     end
 
     -- Earn money when glass is scored
-    if context.individual and context.cardarea == G.play and context.main_scoring
-        and PkmnDip.con.is_glass(context.other_card) then
+    if context.individual and context.cardarea == G.play and PkmnDip.con.is_glass(context.other_card) then
       local earned = pokermon.ease_poke_dollars(card, "snover", card.ability.extra.money_mod, true)
       return { dollars = earned, card = card }
     end
@@ -81,8 +80,7 @@ local abomasnow = {
     end
 
     -- Earn money when glass is scored
-    if context.individual and context.cardarea == G.play and context.main_scoring
-        and PkmnDip.con.is_glass(context.other_card) then
+    if context.individual and context.cardarea == G.play and PkmnDip.con.is_glass(context.other_card) then
       local earned = pokermon.ease_poke_dollars(card, "snover", card.ability.extra.money_mod, true)
       return { dollars = earned, card = card }
     end
