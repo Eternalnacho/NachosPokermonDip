@@ -20,7 +20,7 @@ local bounsweet = {
       if #pokermon.find_pokemon_type("Grass", card) > 0 then
         mult = mult * 3
       end
-      return { mult = card.ability.extra.mult }
+      return { mult = mult }
     end
     return pokermon.level_evo(self, card, context, "j_nacho_steenee")
   end
@@ -31,7 +31,9 @@ local steenee = {
   name = "steenee",
   config = { extra = { mult = 7 }, evo_rqmt = 3 },
   loc_vars = function(self, info_queue, card)
-    return { vars = { card.ability.extra.mult } }
+    local extra = card.ability.extra or self.config.extra
+    local grass_count = #pokermon.find_pokemon_type("Grass")
+    return { vars = { extra.mult, extra.mult * grass_count } }
   end,
   designer = "One Punch Idiot",
   nacho_from_bfp = true,
@@ -56,7 +58,9 @@ local tsareena = {
   name = "tsareena",
   config = { extra = { mult = 11 } },
   loc_vars = function(self, info_queue, card)
-    return { vars = { card.ability.extra.mult } }
+    local extra = card.ability.extra or self.config.extra
+    local grass_count = #pokermon.find_pokemon_type("Grass")
+    return { vars = { extra.mult, extra.mult * grass_count } }
   end,
   designer = "One Punch Idiot",
   nacho_from_bfp = true,

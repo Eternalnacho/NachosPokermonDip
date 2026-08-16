@@ -356,6 +356,7 @@ return {
         text = {
           "{C:mult}+#1#{} Mult for each",
           "{X:poke_grass,C:white}Grass{} Joker you have",
+          "{C:inactive}(Currently {C:mult}+#2#{} {C:inactive}Mult)",
           "{C:inactive,s:0.8}(Evolves when you have",
           "{C:attention,s:0.8}3 {X:poke_grass,C:white,s:0.8}Grass{C:inactive,s:0.8} Jokers)",
         }
@@ -365,6 +366,7 @@ return {
         text = {
           "{C:mult}+#1#{} Mult for each",
           "{X:poke_grass,C:white}Grass{} Joker you have",
+          "{C:inactive}(Currently {C:mult}+#2#{} {C:inactive}Mult)",
           "{br:2}ERROR - CONTACT STEAK",
           "This Joker {C:attention}can't{} be",
           "debuffed if all owned",
