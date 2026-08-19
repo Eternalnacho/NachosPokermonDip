@@ -58,7 +58,9 @@ local greedent={
       -- 1 in 8 chance for Leftovers
       if SMODS.pseudorandom_probability(card, 'greedent', card.ability.extra.num, card.ability.extra.den, 'greedent') and not card.debuff and
           context.consumeable.config.center.key ~= 'c_poke_leftovers' then
-        SMODS.add_card({set = 'poke_item', area = G.consumeables, edition = 'e_negative', key = 'c_poke_leftovers'})
+        PkmnDip.defer(function()
+          SMODS.add_card({set = 'poke_item', area = G.consumeables, edition = 'e_negative', key = 'c_poke_leftovers'})
+        end, {delay = 0.2, blockable = true})
         SMODS.calculate_effect({ message = localize('poke_stuff_cheeks_ex'), colour = G.C.SECONDARY_SET['poke_item'] }, card)
       end
     end
