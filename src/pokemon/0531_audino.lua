@@ -12,6 +12,7 @@ local audino = {
   ptype = "Colorless",
   gen = 5,
   blueprint_compat = true,
+  perishable_compat = false,
   calculate = function(self, card, context)
     if context.poke_evolved and not context.blueprint then
       SMODS.scale_card(card, {
