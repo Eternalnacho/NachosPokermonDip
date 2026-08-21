@@ -29,7 +29,11 @@ local mega_gallade = {
   calculate = function(self, card, context)
     if context.using_consumeable and context.consumeable.ability.set == 'poke_item' then
       local target = pseudorandom_element(G.jokers.cards, 'mega_gallade')
-      target.ability.extra.e_limit_up = target.ability.extra.e_limit_up and target.ability.extra.e_limit_up + 1 or 1
+      if type(target.ability.extra) == 'table' then
+        target.ability.extra.e_limit_up = target.ability.extra.e_limit_up and target.ability.extra.e_limit_up + 1 or 1
+      else
+        target.ability.extra = { e_limit_up = 1 }
+      end
       return {
         message = localize('k_upgrade_ex'),
         message_card = target
@@ -38,6 +42,12 @@ local mega_gallade = {
     if context.joker_main then
       return { xmult = card.ability.extra.Xmult }
     end
+  end,
+  add_to_deck = function(self, card, from_debuff)
+    G.GAME.poke_energy_plus = G.GAME.poke_energy_plus and G.GAME.poke_energy_plus + 1 or 1
+  end,
+  remove_from_deck = function(self, card, from_debuff)
+    G.GAME.poke_energy_plus = G.GAME.poke_energy_plus and math.max(G.GAME.poke_energy_plus - 1, 0) or 0
   end,
   attach_mega = function(self) PkmnDip.attach_mega(self, 'poke_gallade') end
 }
