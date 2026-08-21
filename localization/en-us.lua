@@ -541,8 +541,8 @@ return {
       j_nacho_galarian_meowth = {
         name = "{s:0.6}Galarian{}Meowth",
         text = {
-          "Adjacent {X:poke_metal,C:white}Metal{} Jokers score",
-          "with {C:poke_pink}+1 Energy{} if poker hand",
+          "{X:poke_metal,C:white}Metal{} Jokers score with",
+          "{C:poke_pink}+#1# Energy{} if poker hand",
           "contains a {C:attention}Steel{} card",
           "{C:inactive,s:0.8}(Evolves after scoring {C:attention,s:0.8}#2# Steel{C:inactive,s:0.8} cards)",
         }
@@ -550,10 +550,9 @@ return {
       j_nacho_perrserker = {
         name = "Perrserker",
         text = {
-          "Adjacent {X:poke_metal,C:white}Metal{} Jokers score",
-          "with {C:poke_pink}+1 Energy{} for each",
-          "{C:attention}Steel{} card in poker hand",
-          "{C:inactive}(Max of 3){}"
+          "{X:poke_metal,C:white}Metal{} Jokers score with",
+          "{C:poke_pink}+#1# Energy{} if poker hand",
+          "contains a {C:attention}Steel{} card",
         }
       },
       j_nacho_finizen = {
