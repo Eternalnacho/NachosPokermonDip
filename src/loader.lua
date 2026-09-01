@@ -93,6 +93,11 @@ local function prep_config(file)
         file.mod_req = file.misc_config
       end
     end
+    if file.mod_req and SMODS.Mods[file.mod_req] then
+      if PkmnDip.config[file.config_key] == true and not SMODS.Mods[file.mod_req].can_load then
+        PkmnDip.config[file.config_key] = false
+      end
+    end
     table.insert(PkmnDip.config_list[(file.misc_config or "main")], {
       list = list,
       label = file.label,
