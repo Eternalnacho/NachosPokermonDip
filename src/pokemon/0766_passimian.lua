@@ -47,7 +47,9 @@ local passimian={
       return SMODS.Center.generate_ui(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
     end
   end,
-  attributes = {"joker", "copying"}
+  attributes = {"joker", "copying"},
+  unlocked = true,
+  discovered = true,
 }
 for _, func in pairs({
   "add_to_deck",
