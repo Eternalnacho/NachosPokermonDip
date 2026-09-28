@@ -23,7 +23,7 @@ local terapagos={
   end,
   add_to_deck = function(self, card, from_debuff)
     if not from_debuff then
-      pokermon.create_held_item({ key = 'c_poke_teraorb', edition = 'e_negative' })
+      pokermon.create_consumeable({ key = 'c_poke_teraorb', edition = 'e_negative' })
     end
   end,
   attributes = {"item", "generation", "condition_evo"}
