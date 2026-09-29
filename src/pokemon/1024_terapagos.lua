@@ -18,7 +18,7 @@ local terapagos={
       pokermon.evolve(card, 'j_nacho_terapagos_terastal')
     end
     if context.end_of_round and context.main_eval then
-      pokermon.create_held_item({ key = 'c_poke_teraorb', edition = 'e_negative' })
+      pokermon.create_consumeable({ key = 'c_poke_teraorb', edition = 'e_negative' })
     end
   end,
   add_to_deck = function(self, card, from_debuff)

@@ -198,7 +198,7 @@ local hisuian_goodra={
     if context.scoring_name == 'Flush House' then
       -- Create a metal coat
       if context.before and context.main_eval then
-        pokermon.create_held_item('c_poke_metalcoat', true, card)
+        pokermon.create_consumeable('c_poke_metalcoat', true, card)
       end
       -- Score held steel cards by rank difference in Flush House
       if context.individual and context.cardarea == G.hand and not context.end_of_round then
