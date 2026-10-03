@@ -24,7 +24,7 @@ local galarian_meowth={
     if context.before and any(context.scoring_hand, PkmnDip.con.is_steel) then
       for_each(pokermon.find_pokemon_type("Metal", card), function(j)
         if pokermon.energy.is_energizable(j) then
-          mod_energy(j, get_type(j), extra.e_amount, true)
+          mod_energy(j, pokermon.get_type(j), extra.e_amount, true)
         end
       end)
       extra.raised = extra.raised + 1 -- Counting the number of times this effect activates
@@ -39,7 +39,7 @@ local galarian_meowth={
     if context.end_of_round and context.main_eval and extra.raised > 0 then
       for_each(pokermon.find_pokemon_type("Metal", card), function(j) 
         if pokermon.energy.is_energizable(j) then
-          mod_energy(j, get_type(j), -extra.e_amount * extra.raised, true) 
+          mod_energy(j, pokermon.get_type(j), -extra.e_amount * extra.raised, true) 
         end
       end)
       extra.raised = 0
@@ -71,7 +71,7 @@ local perrserker = {
     if context.before and any(context.scoring_hand, PkmnDip.con.is_steel) then
       for_each(pokermon.find_pokemon_type("Metal", card), function(j)
         if pokermon.energy.is_energizable(j) then
-          mod_energy(j, get_type(j), extra.e_amount, true)
+          mod_energy(j, pokermon.get_type(j), extra.e_amount, true)
         end
       end)
       extra.raised = extra.raised + 1 -- Counting the number of times this effect activates
@@ -81,7 +81,7 @@ local perrserker = {
     if context.after and context.main_eval and extra.raised > 0 then
       for_each(pokermon.find_pokemon_type("Metal", card), function(j)
         if pokermon.energy.is_energizable(j) then
-          mod_energy(j, get_type(j), -extra.e_amount * extra.raised, true) 
+          mod_energy(j, pokermon.get_type(j), -extra.e_amount * extra.raised, true) 
         end
       end)
       extra.raised = 0
