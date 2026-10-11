@@ -60,18 +60,22 @@ end
 
 PkmnDip.revised_fossil_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
   SMODS.Center.generate_ui(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
-  full_UI_table.main.poke_custom_desc = true
-  full_UI_table.main.poke_box_minh = 0.2
-  full_UI_table.main.align = "bm"
-  full_UI_table.box_colours[1] = G.C.CLEAR
-  local is_ability = function(v) return v[2] and v[2].config.text and string.find(v[2].config.text, ":") end
-  for _, box in ipairs(full_UI_table.multi_box) do
-    for _, node in ipairs(box) do
-      box.poke_custom_desc = true
-      box.poke_box_minh = 0.5
-      if is_ability(node) then
-        box.align = "cl"
-        box.padding = 0.1
+  if not card.debuff then
+    full_UI_table.main.poke_custom_desc = true
+    full_UI_table.main.poke_box_minh = 0.2
+    full_UI_table.main.align = "bm"
+    full_UI_table.box_colours[1] = G.C.CLEAR
+    local is_ability = function(v) return v[2] and v[2].config.text and string.find(v[2].config.text, ":") end
+    if full_UI_table.multibox then
+      for _, box in ipairs(full_UI_table.multi_box) do
+        for _, node in ipairs(box) do
+          box.poke_custom_desc = true
+          box.poke_box_minh = 0.5
+          if is_ability(node) then
+            box.align = "cl"
+            box.padding = 0.1
+          end
+        end
       end
     end
   end
