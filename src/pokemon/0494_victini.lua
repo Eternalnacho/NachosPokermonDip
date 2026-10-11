@@ -1,7 +1,7 @@
 -- Victini 494
 local victini = {
   name = "victini",
-  config = { extra = { Xmult = 1, Xmult_mod = 0.1 } },
+  config = { extra = { Xmult = 1, Xmult_mod = 0.05 } },
   loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.Xmult, card.ability.extra.Xmult_mod } }
   end,
