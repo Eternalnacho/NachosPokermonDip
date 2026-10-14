@@ -18,14 +18,10 @@ local wimpod = {
     local a = card.ability.extra
     if context.before and context.cardarea == G.jokers and not context.blueprint
         and G.GAME.current_round.hands_played >= 1 then
-      PkmnDip.eff.faint(card)
-      a.no_score = true
+      PkmnDip.eff.faint(card, false, true)
     end
-    if context.joker_main and not a.no_score then
+    if context.joker_main then
       return { chips = a.chips }
-    end
-    if context.end_of_round and not context.blueprint then
-      a.no_score = nil
     end
     return pokermon.level_evo(self, card, context, 'j_nacho_golisopod')
   end
@@ -51,11 +47,10 @@ local golisopod = {
     local a = card.ability.extra
     if context.before and context.cardarea == G.jokers and not context.blueprint
         and G.GAME.current_round.hands_played >= 1 then
-      PkmnDip.eff.faint(card)
-      a.no_score = true
       a.ante_debuffed = true
+      PkmnDip.eff.faint(card, false, true)
     end
-    if context.joker_main and not a.no_score then
+    if context.joker_main then
       return { Xmult = a.Xmult }
     end
     if context.end_of_round and context.main_eval and not context.blueprint then
@@ -66,7 +61,6 @@ local golisopod = {
         end
         a.ante_debuffed = nil
       end
-      a.no_score = nil
     end
   end,
   add_to_deck = function(self, card, from_debuff)

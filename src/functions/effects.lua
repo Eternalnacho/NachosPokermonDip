@@ -68,12 +68,18 @@ end
 -- Shorthand for the debuff/undebuff thing
 ---@param card Card
 ---@param undebuff boolean?
-PkmnDip.eff.faint = function(card, undebuff)
-  PkmnDip.defer(function()
+PkmnDip.eff.faint = function(card, undebuff, immediate)
+  if not immediate then
+    PkmnDip.defer(function()
+      card:juice_up()
+      card.ability.fainted = not undebuff and G.GAME.round
+      card:set_debuff()
+    end)
+  else
     card:juice_up()
     card.ability.fainted = not undebuff and G.GAME.round
     card:set_debuff()
-  end)
+  end
 end
 
 --#endregion [[ faint ]]
