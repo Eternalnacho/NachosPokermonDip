@@ -94,6 +94,7 @@ local duosion = {
   attributes = {"generation", "hands", "condition_evo"},
 }
 
+-- Reuniclus 579
 local reuniclus = {
   name = "reuniclus",
   config = { extra = { copies = 2 } },
