@@ -40,6 +40,7 @@ PkmnDip.Hook("around", _G, 'card_eval_status_text', function(orig, card, eval_ty
   end
   return orig(card, eval_type, amt, percent, dir, extra, ...)
 end)
+PkmnDip.Hook("before", Card, 'get_id', function(self) if self.dip_scoring_for then return -math.random(100, 1000000) end end)
 
 --#endregion [[ joker_as_card ]]
 
