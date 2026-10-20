@@ -162,7 +162,6 @@ local mega_baxcalibur = {
       a.no_score = nil
     end
   end,
-  megas = {'mega_baxcalibur'},
   attributes = {"hand_type", "editions", "full_deck", "xmult"}
 }
 
